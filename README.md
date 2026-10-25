@@ -1,56 +1,27 @@
-# sv
+# Are We OSC 7501 Yet?
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Which terminals and programs support OSC 7501, the Program Status Protocol. Live at [areweosc7501yet.com](https://areweosc7501yet.com).
 
-## Creating a project
+## Running it
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
+Node 24 and pnpm 10, pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed. pnpm itself still needs Node 18.12 or newer to start.
 
 ```sh
-# recreate this project
-pnpm dlx sv@1.1.1 create --template minimal --types ts --install pnpm .
+pnpm install
+pnpm dev            # dev server
+pnpm lint           # oxlint, type-aware (options in oxlint.config.ts)
+pnpm format         # oxfmt: TS, Svelte, CSS, JSON, TOML, Markdown
+pnpm check          # svelte-check: types, template types, a11y
+pnpm test           # unit tests
+pnpm build          # static site in build/
 ```
 
-## Adding features
+CI runs `pnpm lint`, `pnpm format:check`, `pnpm check`, `pnpm test` and `pnpm build` on every PR.
 
-Add features to your project with `sv add`:
+## Editor
 
-```sh
-npx sv add
-```
+The repo is set up for Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI.
 
-For example, to add Tailwind CSS:
+## License
 
-```sh
-npx sv add tailwindcss
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Code is [MIT](LICENSE). Data is [CC0](data/LICENSE).

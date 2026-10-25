@@ -1,0 +1,11 @@
+{
+	$schema: 'https://docs.renovatebot.com/renovate-schema.json',
+	// Recommended defaults, plus pinned GitHub Action and Docker digests.
+	extends: ['config:best-practices'],
+	// Dependency PRs follow the repo's Conventional Commits titles: chore(deps): ...
+	semanticCommits: 'enabled',
+	semanticCommitType: 'chore',
+	semanticCommitScope: 'deps',
+	// Pin exact versions, since this is an app, not a library.
+	rangeStrategy: 'pin'
+}
