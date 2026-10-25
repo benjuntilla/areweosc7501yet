@@ -26,9 +26,9 @@ export const buildSite = (data: { spec: Spec; entries: ReadonlyArray<SlugEntry> 
 		sentence: sentenceOf(e)
 	})),
 	changes: data.entries
-		.filter(isFeatured)
-		.flatMap(changeRows)
-		.sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+		.filter((e) => isFeatured(e))
+		.flatMap((e) => changeRows(e))
+		.toSorted((a, b) => Date.parse(b.date) - Date.parse(a.date))
 });
 export type Site = ReturnType<typeof buildSite>;
 
@@ -61,8 +61,14 @@ export const DataJson = Schema.Struct({
 export type DataJson = typeof DataJson.Type;
 
 export const toDataJson = (site: Site, generatedAt: Date): DataJson => {
-	const verdict = ({ verdict, score, done, working, featured }: Site['verdicts']['program']) => ({
-		word: verdict,
+	const verdict = ({
+		verdict: word,
+		score,
+		done,
+		working,
+		featured
+	}: Site['verdicts']['program']) => ({
+		word,
 		score,
 		done,
 		working,

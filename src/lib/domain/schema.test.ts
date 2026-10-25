@@ -24,7 +24,9 @@ describe('isRealDate', () => {
 		['2026-10-12T08:00:00+24:00', false],
 		['2026-10-12T08:00:00+05:60', false],
 		['2026-10-12T08:00:00', false]
-	])('%s is %s', (s, ok) => expect(isRealDate(s)).toBe(ok));
+	])('%s is %s', (s, ok) => {
+		expect(isRealDate(s)).toBe(ok);
+	});
 });
 
 describe('isHttpsUrl', () => {
@@ -37,5 +39,7 @@ describe('isHttpsUrl', () => {
 		['ftp://example.com', false],
 		['https://exa mple.com', false],
 		['not a url', false]
-	])('%s is %s', (s, ok) => expect(isHttpsUrl(s)).toBe(ok));
+	])('%s is %s', (s, ok) => {
+		expect(isHttpsUrl(s)).toBe(ok);
+	});
 });

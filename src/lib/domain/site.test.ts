@@ -8,7 +8,7 @@ describe('site', () => {
 	it.effect('builds change rows from featured entries, newest first', () =>
 		Effect.gen(function* () {
 			const site = buildSite(yield* loadData(fixtureFiles, specToml));
-			expect(site.changes).toMatchSnapshot();
+			expect(site.changes).toMatchSnapshot('change rows');
 		})
 	);
 
@@ -17,7 +17,7 @@ describe('site', () => {
 			const site = buildSite(yield* loadData(fixtureFiles, specToml));
 			const json = toDataJson(site, new Date('2026-10-24T14:00:00Z'));
 			yield* Schema.decodeUnknownEffect(DataJson, { onExcessProperty: 'error' })(json);
-			expect(json).toMatchSnapshot();
+			expect(json).toMatchSnapshot('data.json');
 		})
 	);
 });

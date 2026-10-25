@@ -16,7 +16,7 @@ const plain = (v: unknown): unknown => {
 		if (v.isDate() || v.isLocal()) return v.toISOString();
 		return new Date(v.getTime()).toISOString().replace('.000Z', 'Z');
 	}
-	if (Array.isArray(v)) return v.map(plain);
+	if (Array.isArray(v)) return v.map((x) => plain(x));
 	if (v !== null && typeof v === 'object') {
 		return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, plain(x)]));
 	}
@@ -56,5 +56,5 @@ export const loadData = (entries: Readonly<Record<string, string>>, specText: st
 				}),
 			{ concurrency: 'unbounded' }
 		);
-		return { spec, entries: decoded.sort((a, b) => a.slug.localeCompare(b.slug)) };
+		return { spec, entries: decoded.toSorted((a, b) => a.slug.localeCompare(b.slug)) };
 	});

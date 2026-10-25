@@ -25,8 +25,8 @@ export const isRealDate = (s: string): boolean => {
 			s
 		);
 	if (m === null) return false;
-	const [y, mo, d, h, mi, se, oh, om] = m.slice(1).map((x) => Number(x ?? 0)) as Array<number> &
-		[number, number, number, number, number, number, number, number];
+	const n = (i: number) => Number(m[i] ?? 0);
+	const [y, mo, d, h, mi, se, oh, om] = [n(1), n(2), n(3), n(4), n(5), n(6), n(7), n(8)];
 	return (
 		mo >= 1 &&
 		mo <= 12 &&

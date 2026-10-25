@@ -115,7 +115,8 @@ export const sentenceOf = (e: Entry): string => {
 			if (pr) return `PR #${pr[1]} has been open since ${d}.`;
 			if (/\/commit\//u.test(b.source)) {
 				const tag = e.github?.latest_release_tag;
-				return `Merged on ${d}, not in a release yet.${tag ? ` Latest is ${tag}.` : ''}`;
+				const latest = tag === undefined ? '' : ` Latest is ${tag}.`;
+				return `Merged on ${d}, not in a release yet.${latest}`;
 			}
 			return `Announced on ${d}.`;
 		}

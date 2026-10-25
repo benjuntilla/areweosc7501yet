@@ -12,10 +12,12 @@ const write = (path: string, schema: Schema.Top) =>
 		yield* fs.writeFileString(path, `${JSON.stringify(json, null, '\t')}\n`);
 	});
 
-Effect.gen(function* () {
+const program = Effect.gen(function* () {
 	yield* FileSystem.FileSystem.pipe(
 		Effect.flatMap((fs) => fs.makeDirectory('schema', { recursive: true }))
 	);
 	yield* write('schema/entry.schema.json', Entry);
 	yield* write('schema/data.schema.json', DataJson);
-}).pipe(Effect.provide(NodeServices.layer), NodeRuntime.runMain);
+});
+
+NodeRuntime.runMain(program.pipe(Effect.provide(NodeServices.layer)));

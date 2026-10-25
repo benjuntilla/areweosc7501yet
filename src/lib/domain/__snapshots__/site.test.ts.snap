@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`site > builds a data.json that matches its own schema 1`] = `
+exports[`site > builds a data.json that matches its own schema > data.json 1`] = `
 {
   "entries": [
     {
@@ -137,7 +137,7 @@ exports[`site > builds a data.json that matches its own schema 1`] = `
 }
 `;
 
-exports[`site > builds change rows from featured entries, newest first 1`] = `
+exports[`site > builds change rows from featured entries, newest first > change rows 1`] = `
 [
   {
     "date": "2026-10-20T10:30:00Z",

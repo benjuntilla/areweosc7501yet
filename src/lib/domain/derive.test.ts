@@ -54,7 +54,9 @@ describe('verdict ladder', () => {
 		[0.899, 'Almost'],
 		[0.9, 'Yes'],
 		[1, 'Yes']
-	])('%f is %s', (score, word) => expect(verdictOf(score)).toBe(word));
+	])('%f is %s', (score, word) => {
+		expect(verdictOf(score)).toBe(word);
+	});
 
 	it('scores featured entries, half for working, without libraries and engines', () => {
 		const featured = { github: { stars: 5000 } };
@@ -148,10 +150,10 @@ describe('history', () => {
 	});
 });
 
-describe('popover sentence', () => {
-	const one = (b: HistoryBlock, over: Partial<SlugEntry> = {}) =>
-		sentenceOf(entry({ history: [b], ...over }));
+const one = (b: HistoryBlock, over: Partial<SlugEntry> = {}) =>
+	sentenceOf(entry({ history: [b], ...over }));
 
+describe('popover sentence', () => {
 	it.each([
 		[block('2026-10-08', 'done', 'https://x', 'v2.1.295'), 'Shipped in v2.1.295 on Oct 8.'],
 		[
@@ -172,7 +174,9 @@ describe('popover sentence', () => {
 			block('2026-10-09', 'error', 'https://github.com/o/x/pull/9'),
 			'The implementation PR was closed on Oct 9 without merging.'
 		]
-	])('%o', (b, sentence) => expect(one(b)).toBe(sentence));
+	])('%o', (b, sentence) => {
+		expect(one(b)).toBe(sentence);
+	});
 
 	it('says docs when done has no version', () => {
 		expect(
