@@ -1,10 +1,7 @@
 {
 	$schema: 'https://docs.renovatebot.com/renovate-schema.json',
-	extends: [
-		'config:recommended',
-		// Keep the commit SHAs that pin GitHub Actions up to date.
-		'helpers:pinGitHubActionDigests'
-	],
+	// Recommended defaults, plus pinned GitHub Action and Docker digests.
+	extends: ['config:best-practices'],
 	// Dependency PRs follow the repo's Conventional Commits titles: chore(deps): ...
 	semanticCommits: 'enabled',
 	semanticCommitType: 'chore',

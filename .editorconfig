@@ -1,0 +1,19 @@
+# Matches oxfmt.config.ts, so editors without oxfmt agree with it.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = tab
+indent_size = 2
+max_line_length = 100
+
+# YAML can't be indented with tabs.
+[*.{yml,yaml}]
+indent_style = space
+
+# Two trailing spaces are a hard line break in Markdown.
+[*.md]
+trim_trailing_whitespace = false

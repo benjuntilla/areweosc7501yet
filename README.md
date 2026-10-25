@@ -4,7 +4,7 @@ Which terminals and programs support OSC 7501, the Program Status Protocol. Live
 
 ## Running it
 
-Node 24 and pnpm 10, pinned in `.node-version` and `packageManager`.
+Node 24 and pnpm 10, pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed. pnpm itself still needs Node 18.12 or newer to start.
 
 ```sh
 pnpm install

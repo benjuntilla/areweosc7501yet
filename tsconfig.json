@@ -1,8 +1,4 @@
 {
-	"extends": "$app/tsconfig",
-	"compilerOptions": {
-		"strict": true,
-		"noUncheckedIndexedAccess": true
-	},
+	"extends": ["@tsconfig/strictest/tsconfig.json", "$app/tsconfig"],
 	"include": ["src", "scripts", "vite.config.ts", "oxlint.config.ts", "oxfmt.config.ts"]
 }
