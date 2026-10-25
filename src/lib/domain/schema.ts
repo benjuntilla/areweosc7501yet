@@ -54,7 +54,17 @@ const DateTime = Schema.String.check(
 	realDate
 );
 const DayOrTime = Schema.Union([Day, DateTime]);
-const Url = Schema.String.check(Schema.isPattern(/^https:\/\/\S+$/u));
+export const isHttpsUrl = (s: string): boolean => {
+	if (!URL.canParse(s) || /\s/u.test(s)) return false;
+	const url = new URL(s);
+	return url.protocol === 'https:' && url.hostname !== '';
+};
+const Url = Schema.String.check(
+	Schema.makeFilter(isHttpsUrl, {
+		expected: 'an https URL with a host',
+		toJsonSchema: () => ({ format: 'uri', pattern: '^https://' })
+	})
+);
 const Repo = Schema.String.check(Schema.isPattern(/^[\w.-]+\/[\w.-]+$/u));
 
 const describe =

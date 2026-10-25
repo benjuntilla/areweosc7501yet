@@ -29,7 +29,8 @@
 							},
 							"url": {
 								"type": "string",
-								"pattern": "^https:\\/\\/\\S+$"
+								"format": "uri",
+								"pattern": "^https://"
 							}
 						},
 						"required": ["number", "date", "url"],
@@ -135,7 +136,8 @@
 					},
 					"url": {
 						"type": "string",
-						"pattern": "^https:\\/\\/\\S+$",
+						"format": "uri",
+						"pattern": "^https://",
 						"description": "Homepage or repo"
 					},
 					"repo": {
@@ -221,7 +223,8 @@
 								},
 								"source": {
 									"type": "string",
-									"pattern": "^https:\\/\\/\\S+$",
+									"format": "uri",
+									"pattern": "^https://",
 									"description": "The PR, commit, release, issue or docs page it rests on"
 								},
 								"version": {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@effect/vitest';
-import { isRealDate } from './schema.ts';
+import { isHttpsUrl, isRealDate } from './schema.ts';
 
 describe('isRealDate', () => {
 	it.each([
@@ -25,4 +25,17 @@ describe('isRealDate', () => {
 		['2026-10-12T08:00:00+05:60', false],
 		['2026-10-12T08:00:00', false]
 	])('%s is %s', (s, ok) => expect(isRealDate(s)).toBe(ok));
+});
+
+describe('isHttpsUrl', () => {
+	it.each([
+		['https://github.com/kovidgoyal/kitty/pull/10657', true],
+		['https://www.gnu.org/software/screen/', true],
+		['https://#x', false],
+		['https://', false],
+		['http://example.com', false],
+		['ftp://example.com', false],
+		['https://exa mple.com', false],
+		['not a url', false]
+	])('%s is %s', (s, ok) => expect(isHttpsUrl(s)).toBe(ok));
 });
