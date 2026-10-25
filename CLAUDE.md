@@ -8,7 +8,7 @@ Node 24 and pnpm 10 (pinned in `.node-version` and `packageManager`).
 
 ```sh
 pnpm dev            # dev server; editing data/ hot-reloads
-pnpm lint           # oxlint
+pnpm lint           # oxlint, type-aware (options in .oxlintrc.json)
 pnpm format         # oxfmt (TS, Svelte, CSS, JSON, TOML, Markdown)
 pnpm check          # svelte-check: types, template types, a11y
 pnpm test           # vitest unit tests
@@ -18,6 +18,10 @@ pnpm cf build       # what Workers Builds runs before cf deploy
 ```
 
 CI runs all of these and fails if `schema/` is stale, so run `pnpm schema` after changing a schema.
+
+## Editor
+
+Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI. Tombi validates `data/entries/*.toml` against `schema/entry.schema.json` (mapped in `tombi.toml`) and doesn't format.
 
 ## Layout and the Effect boundary
 
@@ -51,5 +55,6 @@ Commits and PRs:
 - Every PR is squash-merged, so the PR title becomes the one commit on `main`. Title it as a Conventional Commit: `type(scope): summary`. Types: feat, fix, perf, refactor, docs, test, build, ci, chore, revert. Scopes name the area: data, schema, checker, overview, changes, rail, drum, popover, search, theme, feed, og, deps. Lowercase, imperative, no trailing period. CI checks the title.
 - CodeRabbit reviews every PR, and a PR merges only once it has no changes requested. Fix each finding or reply with why it doesn't apply.
 - Commits on a PR branch can be work in progress; they don't reach `main` one by one.
+- Big changes go up as a stack of PRs with `gh stack` (each layer builds, lints and tests on its own, and the stack merges bottom-up with `gh stack merge --squash`). With jj, push the bookmarks and run `gh stack link <bottom> … <top>`.
 - No AI attribution anywhere: no Co-Authored-By trailer, no session links, no "Generated with" lines, in commits, PR titles or PR bodies. CI rejects them in commits and titles.
 - Don't name milestones in titles, bodies or commits. They mean nothing to outside readers.

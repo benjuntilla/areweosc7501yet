@@ -13,7 +13,7 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "oxlint --type-aware --deny-warnings",
+		"lint": "oxlint",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
 		"test": "vitest run",

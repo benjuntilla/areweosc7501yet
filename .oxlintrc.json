@@ -1,5 +1,9 @@
 {
 	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"options": {
+		"typeAware": true,
+		"denyWarnings": true
+	},
 	"plugins": ["typescript", "unicorn", "oxc", "import", "promise", "vitest"],
 	"categories": {
 		"correctness": "error",
@@ -27,6 +31,5 @@
 	],
 	"env": {
 		"builtin": true
-	},
-	"ignorePatterns": [".svelte-kit", "build", ".cloudflare"]
+	}
 }
