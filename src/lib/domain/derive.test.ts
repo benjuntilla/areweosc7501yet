@@ -1,13 +1,6 @@
+import { Option } from 'effect';
 import { describe, expect, it } from '@effect/vitest';
-import {
-	changeRows,
-	isFeatured,
-	sentenceOf,
-	stateStart,
-	summarize,
-	verdictOf,
-	weekStart
-} from './derive.ts';
+import { changeRows, isFeatured, sentenceOf, stateStart, summarize, verdictOf } from './derive.ts';
 import type { SlugEntry } from './load.ts';
 import type { HistoryBlock } from './schema.ts';
 
@@ -91,8 +84,8 @@ describe('history', () => {
 				block('2026-10-13', 'working')
 			]
 		});
-		expect(stateStart(e)?.date).toBe('2026-10-12');
-		expect(stateStart(entry())).toBeUndefined();
+		expect(Option.getOrUndefined(stateStart(e))?.date).toBe('2026-10-12');
+		expect(Option.isNone(stateStart(entry()))).toBe(true);
 	});
 
 	it('skips evidence-only blocks and idle additions', () => {
@@ -141,12 +134,6 @@ describe('history', () => {
 			})
 		);
 		expect(rows.map((r) => r.to)).toEqual(['working']);
-	});
-
-	it('groups days into Monday-start UTC weeks', () => {
-		expect(weekStart('2026-10-12')).toBe('2026-10-12');
-		expect(weekStart('2026-10-18')).toBe('2026-10-12');
-		expect(weekStart('2026-10-19')).toBe('2026-10-19');
 	});
 });
 
