@@ -9,8 +9,8 @@ const entries: Record<string, string> = import.meta.glob('/data/entries/*.toml',
 	eager: true
 });
 
-let site: Promise<Site> | undefined;
+// Loaded, decoded and derived on first use, then reused for the rest of the build.
+const site = Effect.runSync(Effect.cached(loadData(entries, specText).pipe(Effect.map(buildSite))));
 
-/** Loads, decodes and derives the data once per build. A bad file fails the build. */
-export const getSite = (): Promise<Site> =>
-	(site ??= Effect.runPromise(loadData(entries, specText).pipe(Effect.map(buildSite))));
+/** The derived site. A bad data file fails the build. */
+export const getSite = (): Promise<Site> => Effect.runPromise(site);
