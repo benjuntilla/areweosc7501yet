@@ -19,5 +19,5 @@ source = "https://github.com/tmux/tmux/issues/5713"
 
 [[history]]
 date = 2026-10-13
-state = "blocked"
+state = "error"
 source = "https://github.com/tmux/tmux/issues/5713"

@@ -19,5 +19,5 @@ source = "https://github.com/firebase/firebase-tools/pull/11245"
 
 [[history]]
 date = 2026-10-09
-state = "error"
+state = "blocked"
 source = "https://github.com/firebase/firebase-tools/pull/11245"
