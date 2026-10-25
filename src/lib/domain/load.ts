@@ -1,4 +1,15 @@
-import { Data, Effect, Schema } from 'effect';
+import { basename } from 'node:path';
+import {
+	Array,
+	Data,
+	DateTime,
+	Effect,
+	Order,
+	Predicate,
+	Record,
+	Schema,
+	String as Str
+} from 'effect';
 import { parse, TomlDate } from 'smol-toml';
 import { Entry, Spec } from './schema.ts';
 
@@ -13,13 +24,12 @@ export type SlugEntry = Entry & { readonly slug: string };
 const plain = (v: unknown): unknown => {
 	if (v instanceof TomlDate) {
 		// Local dates and times have no zone to convert. The schema rejects local times.
-		if (v.isDate() || v.isLocal()) return v.toISOString();
-		return new Date(v.getTime()).toISOString().replace('.000Z', 'Z');
+		return v.isDate() || v.isLocal()
+			? v.toISOString()
+			: Str.replace('.000Z', 'Z')(DateTime.formatIso(DateTime.makeUnsafe(v)));
 	}
-	if (Array.isArray(v)) return v.map((x) => plain(x));
-	if (v !== null && typeof v === 'object') {
-		return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, plain(x)]));
-	}
+	if (Array.isArray(v)) return Array.map(v, (x) => plain(x));
+	if (Predicate.isObject(v)) return Record.map(v, (x) => plain(x));
 	return v;
 };
 
@@ -34,7 +44,7 @@ const decodeToml = <S extends Schema.Decoder<unknown>>(schema: S, file: string, 
 		)
 	);
 
-const slugOf = (file: string) => file.replace(/^.*\//u, '').replace(/\.toml$/u, '');
+const Slug = Schema.String.check(Schema.isPattern(/^[a-z0-9]+(-[a-z0-9]+)*$/u));
 
 /**
  * Decodes every entry file and the spec. `entries` maps a file path to its text,
@@ -44,17 +54,24 @@ export const loadData = (entries: Readonly<Record<string, string>>, specText: st
 	Effect.gen(function* () {
 		const spec = yield* decodeToml(Spec, 'data/spec.toml', specText);
 		const decoded = yield* Effect.forEach(
-			Object.entries(entries),
+			Record.toEntries(entries),
 			([file, text]) =>
 				Effect.gen(function* () {
-					const slug = slugOf(file);
-					if (!/^[a-z0-9]+(-[a-z0-9]+)*$/u.test(slug)) {
-						return yield* new DataError({ file, message: `bad slug ${slug}` });
-					}
+					const slug = yield* Schema.decodeUnknownEffect(Slug)(basename(file, '.toml')).pipe(
+						Effect.mapError(
+							() => new DataError({ file, message: `bad slug ${basename(file, '.toml')}` })
+						)
+					);
 					const entry = yield* decodeToml(Entry, file, text);
 					return { slug, ...entry } satisfies SlugEntry;
 				}),
 			{ concurrency: 'unbounded' }
 		);
-		return { spec, entries: decoded.toSorted((a, b) => a.slug.localeCompare(b.slug)) };
+		return {
+			spec,
+			entries: Array.sort(
+				decoded,
+				Order.mapInput(Order.String, (e: SlugEntry) => e.slug)
+			)
+		};
 	});
