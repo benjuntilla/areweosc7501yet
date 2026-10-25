@@ -113,6 +113,10 @@ export const entryFields = {
 // oxlint-disable-next-line unicorn/no-thenable
 const ifThen = (cond: object, then: object) => ({ if: cond, then });
 
+/** A github.com URL (any letter case) with owner and name path segments, like githubRepoOf reads it. */
+export const githubRepoUrlPattern =
+	'^https://[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm]/[^/?#]+/[^/?#]+([/?#]|$)';
+
 const entryRulesJsonSchema = () => ({
 	allOf: [
 		...roles.map((role) =>
@@ -125,7 +129,7 @@ const entryRulesJsonSchema = () => ({
 		ifThen(
 			{
 				properties: {
-					url: { pattern: '^https://[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm]/[^/]+/[^/]+' }
+					url: { pattern: githubRepoUrlPattern }
 				},
 				required: ['url']
 			},

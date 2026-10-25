@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@effect/vitest';
 import { Option, Schema } from 'effect';
-import { githubRepoOf, HistoryBlock } from './schema.ts';
+import { githubRepoOf, githubRepoUrlPattern, HistoryBlock } from './schema.ts';
 
 const isHistoryDate = Schema.is(HistoryBlock.fields.date);
 const isSourceUrl = Schema.is(HistoryBlock.fields.source);
@@ -65,5 +65,23 @@ describe('githubRepoOf', () => {
 		['https://www.github.com/a/b', undefined]
 	])('%s is %s', (url, repo) => {
 		expect(Option.getOrUndefined(githubRepoOf(url))).toBe(repo);
+	});
+});
+
+describe('the published GitHub repository URL condition', () => {
+	const pattern = new RegExp(githubRepoUrlPattern, 'u');
+	it.each([
+		'https://github.com/kovidgoyal/kitty',
+		'https://GitHub.com/kovidgoyal/kitty/',
+		'https://github.com/kovidgoyal/kitty.git',
+		'https://github.com/kovidgoyal/kitty/pull/10657',
+		'https://github.com/o/x?tab=readme',
+		'https://github.com/a/?x',
+		'https://github.com/a#x',
+		'https://github.com/kovidgoyal',
+		'https://github.com/',
+		'https://codeberg.org/dnkl/foot'
+	])('agrees with githubRepoOf on %s', (url) => {
+		expect(pattern.test(url)).toBe(Option.isSome(githubRepoOf(url)));
 	});
 });
