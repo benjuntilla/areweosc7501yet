@@ -53,7 +53,7 @@ describe('loadData', () => {
 		[
 			'an impossible date',
 			kittyToml.replace('last_checked_date = 2026-10-24', 'last_checked_date = "2026-02-31"'),
-			/real calendar date/u
+			/a valid date/u
 		],
 		[
 			'an impossible time',

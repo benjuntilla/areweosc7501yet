@@ -1,7 +1,10 @@
 import { describe, expect, it } from '@effect/vitest';
-import { githubRepoOf, isHttpsUrl, isRealDate } from './schema.ts';
+import { Schema } from 'effect';
+import { githubRepoOf, HistoryBlock, isHttpsUrl } from './schema.ts';
 
-describe('isRealDate', () => {
+const isHistoryDate = Schema.is(HistoryBlock.fields.date);
+
+describe('history dates', () => {
 	it.each([
 		['2024-02-29', true],
 		['2026-02-28', true],
@@ -25,7 +28,7 @@ describe('isRealDate', () => {
 		['2026-10-12T08:00:00+05:60', false],
 		['2026-10-12T08:00:00', false]
 	])('%s is %s', (s, ok) => {
-		expect(isRealDate(s)).toBe(ok);
+		expect(isHistoryDate(s)).toBe(ok);
 	});
 });
 

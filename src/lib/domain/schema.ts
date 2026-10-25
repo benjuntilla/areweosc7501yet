@@ -1,3 +1,5 @@
+import Ajv from 'ajv';
+import addFormats from 'ajv-formats';
 import { Schema } from 'effect';
 
 export const states = ['done', 'working', 'blocked', 'idle', 'error'] as const;
@@ -12,47 +14,21 @@ export const categoriesByRole = {
 } as const;
 export type Category = (typeof categoriesByRole)[Role][number];
 
-// Dates stay strings once decoded. TOML writes them as native dates, so the
-// JSON Schema says `format` rather than `pattern`, which is what Tombi checks.
-// The patterns check the shape; this checks each part is in range, without Date
-// parsing, which quietly rolls Feb 30 over to Mar 2.
-const isLeap = (y: number) => y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
-const daysInMonth = (y: number, m: number) =>
-	[31, isLeap(y) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1]!;
-export const isRealDate = (s: string): boolean => {
-	const m =
-		/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|[+-](\d{2}):(\d{2})))?$/u.exec(
-			s
-		);
-	if (m === null) return false;
-	const n = (i: number) => Number(m[i] ?? 0);
-	const [y, mo, d, h, mi, se, oh, om] = [n(1), n(2), n(3), n(4), n(5), n(6), n(7), n(8)];
-	return (
-		mo >= 1 &&
-		mo <= 12 &&
-		d >= 1 &&
-		d <= daysInMonth(y, mo) &&
-		h <= 23 &&
-		mi <= 59 &&
-		se <= 59 &&
-		oh <= 23 &&
-		om <= 59
+// Dates stay strings once decoded. TOML writes them as native dates, so the published
+// JSON Schema says `format: date` or `date-time`, which is what Tombi checks. The decoder
+// runs the same JSON Schema format checks (ajv-formats), so Feb 30 or 24:00 fails here too.
+const ajv = addFormats(new Ajv(), ['date', 'date-time']);
+const jsonSchemaFormat = (format: 'date' | 'date-time') => {
+	const validate = ajv.compile<string>({ type: 'string', format });
+	return Schema.String.check(
+		Schema.makeFilter((s: string) => validate(s), {
+			expected: `a valid ${format}`,
+			toJsonSchema: () => ({ format })
+		})
 	);
 };
-const realDate = Schema.makeFilter(isRealDate, {
-	expected: 'a real calendar date and time',
-	toJsonSchema: () => ({})
-});
-const Day = Schema.String.check(
-	Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/u, { toJsonSchema: () => ({ format: 'date' }) }),
-	realDate
-);
-const DateTime = Schema.String.check(
-	Schema.isPattern(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/u, {
-		toJsonSchema: () => ({ format: 'date-time' })
-	}),
-	realDate
-);
+const Day = jsonSchemaFormat('date');
+const DateTime = jsonSchemaFormat('date-time');
 const DayOrTime = Schema.Union([Day, DateTime]);
 export const isHttpsUrl = (s: string): boolean => {
 	// Lowercase scheme only, matching the JSON Schema pattern; URL would lowercase it.
