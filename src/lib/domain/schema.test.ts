@@ -1,8 +1,9 @@
 import { describe, expect, it } from '@effect/vitest';
-import { Schema } from 'effect';
-import { githubRepoOf, HistoryBlock, isHttpsUrl } from './schema.ts';
+import { Option, Schema } from 'effect';
+import { githubRepoOf, HistoryBlock } from './schema.ts';
 
 const isHistoryDate = Schema.is(HistoryBlock.fields.date);
+const isSourceUrl = Schema.is(HistoryBlock.fields.source);
 
 describe('history dates', () => {
 	it.each([
@@ -33,19 +34,20 @@ describe('history dates', () => {
 	});
 });
 
-describe('isHttpsUrl', () => {
+describe('source URLs', () => {
 	it.each([
 		['https://github.com/kovidgoyal/kitty/pull/10657', true],
 		['https://www.gnu.org/software/screen/', true],
 		['https://#x', false],
 		['https://', false],
+		['https:///x', false],
 		['http://example.com', false],
 		['HTTPS://example.com', false],
 		['ftp://example.com', false],
 		['https://exa mple.com', false],
 		['not a url', false]
 	])('%s is %s', (s, ok) => {
-		expect(isHttpsUrl(s)).toBe(ok);
+		expect(isSourceUrl(s)).toBe(ok);
 	});
 });
 
@@ -60,6 +62,6 @@ describe('githubRepoOf', () => {
 		['https://codeberg.org/dnkl/foot', undefined],
 		['https://www.github.com/a/b', undefined]
 	])('%s is %s', (url, repo) => {
-		expect(githubRepoOf(url)).toBe(repo);
+		expect(Option.getOrUndefined(githubRepoOf(url))).toBe(repo);
 	});
 });

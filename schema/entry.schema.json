@@ -9,7 +9,7 @@
 		"url": {
 			"type": "string",
 			"format": "uri",
-			"pattern": "^https://",
+			"pattern": "^https://[^/?#\\s]+",
 			"description": "Homepage or repo"
 		},
 		"repo": {
@@ -96,7 +96,7 @@
 					"source": {
 						"type": "string",
 						"format": "uri",
-						"pattern": "^https://",
+						"pattern": "^https://[^/?#\\s]+",
 						"description": "The PR, commit, release, issue or docs page it rests on"
 					},
 					"version": {

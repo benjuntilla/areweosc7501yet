@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import { Schema } from 'effect';
+import { Array, Equivalence, Option, Schema, String } from 'effect';
 
 export const states = ['done', 'working', 'blocked', 'idle', 'error'] as const;
 export type State = (typeof states)[number];
@@ -14,48 +14,47 @@ export const categoriesByRole = {
 } as const;
 export type Category = (typeof categoriesByRole)[Role][number];
 
-// Dates stay strings once decoded. TOML writes them as native dates, so the published
-// JSON Schema says `format: date` or `date-time`, which is what Tombi checks. The decoder
-// runs the same JSON Schema format checks (ajv-formats), so Feb 30 or 24:00 fails here too.
-// It also needs a timestamp Date can represent, so history order can be compared: that
-// rules out leap seconds (23:59:60), which the format allows but Date.parse can't read.
-const ajv = addFormats(new Ajv(), ['date', 'date-time']);
-const jsonSchemaFormat = (format: 'date' | 'date-time') => {
-	const validate = ajv.compile<string>({ type: 'string', format });
+// Dates and URLs stay strings once decoded. The published JSON Schema describes them with
+// `format` (TOML writes dates as native dates, which is what Tombi checks), and the decoder
+// runs those same JSON Schema checks with ajv-formats, so Feb 30, 24:00 or https:// fail here too.
+const ajv = addFormats(new Ajv(), ['date', 'date-time', 'uri']);
+const jsonSchemaString = (
+	fragment: { readonly format: string; readonly pattern?: string },
+	expected: string,
+	also: (s: string) => boolean = () => true
+) => {
+	const validate = ajv.compile<string>({ type: 'string', ...fragment });
 	return Schema.String.check(
-		Schema.makeFilter((s: string) => validate(s) && Number.isFinite(Date.parse(s)), {
-			expected: `a valid ${format}`,
-			toJsonSchema: () => ({ format })
+		Schema.makeFilter((s: string) => validate(s) && also(s), {
+			expected,
+			toJsonSchema: () => fragment
 		})
 	);
 };
-const Day = jsonSchemaFormat('date');
-const DateTime = jsonSchemaFormat('date-time');
+// History order compares timestamps, so a date also has to be one Date can represent. That
+// rules out leap seconds (23:59:60), which the format allows but Date.parse can't read.
+const comparable = (s: string) => Number.isFinite(Date.parse(s));
+const Day = jsonSchemaString({ format: 'date' }, 'a valid date', comparable);
+const DateTime = jsonSchemaString({ format: 'date-time' }, 'a valid date-time', comparable);
 const DayOrTime = Schema.Union([Day, DateTime]);
-export const isHttpsUrl = (s: string): boolean => {
-	// Lowercase scheme only, matching the JSON Schema pattern; URL would lowercase it.
-	if (!s.startsWith('https://') || !URL.canParse(s) || /\s/u.test(s)) return false;
-	const url = new URL(s);
-	return url.protocol === 'https:' && url.hostname !== '';
-};
-const Url = Schema.String.check(
-	Schema.makeFilter(isHttpsUrl, {
-		expected: 'an https URL with a host',
-		toJsonSchema: () => ({ format: 'uri', pattern: '^https://' })
-	})
+// A lowercase https scheme followed by a host.
+const Url = jsonSchemaString(
+	{ format: 'uri', pattern: '^https://[^/?#\\s]+' },
+	'an https URL with a host'
 );
 const Repo = Schema.String.check(Schema.isPattern(/^[\w.-]+\/[\w.-]+$/u));
 
-/** owner/name when the URL is a GitHub repository (or a page inside one), else undefined. */
-export const githubRepoOf = (url: string): string | undefined => {
-	if (!URL.canParse(url)) return undefined;
+/** owner/name when the URL is a GitHub repository (or a page inside one). */
+export const githubRepoOf = (url: string): Option.Option<string> => {
+	if (!URL.canParse(url)) return Option.none();
 	const { hostname, pathname } = new URL(url);
-	if (hostname.toLowerCase() !== 'github.com') return undefined;
-	const [owner, name] = pathname.split('/').filter((part) => part !== '');
+	if (String.toLowerCase(hostname) !== 'github.com') return Option.none();
+	const [owner, name] = Array.filter(String.split(pathname, '/'), String.isNonEmpty);
 	return owner === undefined || name === undefined
-		? undefined
-		: `${owner}/${name.replace(/\.git$/u, '')}`;
+		? Option.none()
+		: Option.some(`${owner}/${String.replace(/\.git$/u, '')(name)}`);
 };
+const sameRepo = Equivalence.mapInput(Equivalence.String, (s: string) => String.toLowerCase(s));
 
 const describe =
 	<S extends Schema.Top>(description: string) =>
@@ -145,29 +144,31 @@ export const entryRules = Schema.makeFilter<{
 	readonly category: Category;
 	readonly history: ReadonlyArray<HistoryBlock>;
 }>(
-	(e) => {
-		const issues: Array<Schema.FilterIssue> = [];
-		if (!(categoriesByRole[e.role] as ReadonlyArray<string>).includes(e.category)) {
-			issues.push({ path: ['category'], issue: `${e.category} isn't a ${e.role} category` });
-		}
-		const urlRepo = githubRepoOf(e.url);
-		if (urlRepo !== undefined && e.repo?.toLowerCase() !== urlRepo.toLowerCase()) {
-			issues.push({
-				path: ['repo'],
-				issue: `a GitHub url needs repo = "${urlRepo}" for the checker`
-			});
-		}
-		e.history.forEach((h, i) => {
+	(e): Array<Schema.FilterIssue> => [
+		...(Array.contains(categoriesByRole[e.role] as ReadonlyArray<string>, e.category)
+			? []
+			: [{ path: ['category'], issue: `${e.category} isn't a ${e.role} category` }]),
+		...Option.match(githubRepoOf(e.url), {
+			onNone: () => [],
+			onSome: (urlRepo) =>
+				e.repo !== undefined && sameRepo(e.repo, urlRepo)
+					? []
+					: [{ path: ['repo'], issue: `a GitHub url needs repo = "${urlRepo}" for the checker` }]
+		}),
+		...Array.flatMap(e.history, (h, i) => [
 			// Projects off GitHub can be done from their official docs, with no version.
-			if (h.state === 'done' && h.version === undefined && e.repo !== undefined) {
-				issues.push({ path: ['history', i, 'version'], issue: 'a done block needs a version' });
-			}
-			if (i > 0 && Date.parse(h.date) < Date.parse(e.history[i - 1]!.date)) {
-				issues.push({ path: ['history', i, 'date'], issue: 'history must be in date order' });
-			}
-		});
-		return issues;
-	},
+			...(h.state === 'done' && h.version === undefined && e.repo !== undefined
+				? [{ path: ['history', i, 'version'], issue: 'a done block needs a version' }]
+				: []),
+			...Option.match(Array.get(e.history, i - 1), {
+				onNone: () => [],
+				onSome: (prev) =>
+					Date.parse(h.date) < Date.parse(prev.date)
+						? [{ path: ['history', i, 'date'], issue: 'history must be in date order' }]
+						: []
+			})
+		])
+	],
 	{ toJsonSchema: entryRulesJsonSchema }
 );
 
