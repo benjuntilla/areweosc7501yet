@@ -4,13 +4,17 @@ on:
   pull_request:
     types: [opened, edited, synchronize, reopened]
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   title:
     name: PR title
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: The title is the squash commit, so it must be a Conventional Commit
         env:
           TITLE: ${{ github.event.pull_request.title }}
@@ -20,7 +24,4 @@ jobs:
             echo "::error::\"$TITLE\" isn't a lowercase Conventional Commits header"
             exit 1
           fi
-          if grep -qiE 'claude|anthropic|generated with' <<<"$TITLE"; then
-            echo "::error::The title carries an AI attribution"
-            exit 1
-          fi
+          printf '%s' "$TITLE" | .github/scripts/no-attribution.sh 'The PR title'
