@@ -151,7 +151,7 @@
 			"if": {
 				"properties": {
 					"url": {
-						"pattern": "^https://[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm]/[^/?#]+/[^/?#]+([/?#]|$)"
+						"pattern": "^https://([^/?#\\s@]*@)?[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm](:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)"
 					}
 				},
 				"required": ["url"]

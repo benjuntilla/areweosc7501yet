@@ -65,7 +65,26 @@ export const githubRepoOf = (url: string): Option.Option<string> => {
 		? Option.none()
 		: Option.some(`${owner}/${String.replace(/\.git$/u, '')(name)}`);
 };
+
+/**
+ * A github.com URL (any letter case, optional userinfo and port) with owner and name path
+ * segments, as the JSON Schema publishes it. JSON Schema can't parse URLs, so this reads the
+ * raw text, and the decoder rejects URLs where it and githubRepoOf disagree.
+ */
+export const githubRepoUrlPattern =
+	'^https://([^/?#\\s@]*@)?[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm](:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)';
+const githubRepoUrl = new RegExp(githubRepoUrlPattern, 'u');
+const githubRepoByPattern = (url: string): Option.Option<string> =>
+	Option.map(
+		String.match(githubRepoUrl)(url),
+		([, , , owner, name]) => `${owner}/${String.replace(/\.git$/u, '')(name ?? '')}`
+	);
+
 const sameRepo = Equivalence.mapInput(Equivalence.String, (s: string) => String.toLowerCase(s));
+
+/** True when the published pattern reads the same repo as githubRepoOf, or neither sees one. */
+export const isPlainGithubUrl = (url: string): boolean =>
+	Option.makeEquivalence(sameRepo)(githubRepoOf(url), githubRepoByPattern(url));
 
 const describe =
 	<S extends Schema.Top>(description: string) =>
@@ -113,10 +132,6 @@ export const entryFields = {
 // oxlint-disable-next-line unicorn/no-thenable
 const ifThen = (cond: object, then: object) => ({ if: cond, then });
 
-/** A github.com URL (any letter case) with owner and name path segments, like githubRepoOf reads it. */
-export const githubRepoUrlPattern =
-	'^https://[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm]/[^/?#]+/[^/?#]+([/?#]|$)';
-
 const entryRulesJsonSchema = () => ({
 	allOf: [
 		...roles.map((role) =>
@@ -163,6 +178,9 @@ export const entryRules = Schema.makeFilter<{
 		...(Array.contains(categoriesByRole[e.role] as ReadonlyArray<string>, e.category)
 			? []
 			: [{ path: ['category'], issue: `${e.category} isn't a ${e.role} category` }]),
+		...(isPlainGithubUrl(e.url)
+			? []
+			: [{ path: ['url'], issue: 'write the GitHub URL in its plain form' }]),
 		...Option.match(githubRepoOf(e.url), {
 			onNone: () => [],
 			onSome: (urlRepo) =>

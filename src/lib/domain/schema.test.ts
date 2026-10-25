@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@effect/vitest';
 import { Option, Schema } from 'effect';
-import { githubRepoOf, githubRepoUrlPattern, HistoryBlock } from './schema.ts';
+import { githubRepoOf, githubRepoUrlPattern, HistoryBlock, isPlainGithubUrl } from './schema.ts';
 
 const isHistoryDate = Schema.is(HistoryBlock.fields.date);
 const isSourceUrl = Schema.is(HistoryBlock.fields.source);
@@ -62,7 +62,12 @@ describe('githubRepoOf', () => {
 		['https://github.com/kovidgoyal', undefined],
 		['https://github.com/', undefined],
 		['https://codeberg.org/dnkl/foot', undefined],
-		['https://www.github.com/a/b', undefined]
+		['https://www.github.com/a/b', undefined],
+		['https://x@github.com/a/b', 'a/b'],
+		['https://x:y@GitHub.com:443/a/b', 'a/b'],
+		['https://github.com//a//b', 'a/b'],
+		['https://github.com.evil.com/a/b', undefined],
+		['https://github.com/a', undefined]
 	])('%s is %s', (url, repo) => {
 		expect(Option.getOrUndefined(githubRepoOf(url))).toBe(repo);
 	});
@@ -80,8 +85,27 @@ describe('the published GitHub repository URL condition', () => {
 		'https://github.com/a#x',
 		'https://github.com/kovidgoyal',
 		'https://github.com/',
-		'https://codeberg.org/dnkl/foot'
+		'https://codeberg.org/dnkl/foot',
+		'https://x@github.com/a/b',
+		'https://x:y@GitHub.com:443/a/b',
+		'https://github.com//a//b',
+		'https://github.com.evil.com/a/b'
 	])('agrees with githubRepoOf on %s', (url) => {
 		expect(pattern.test(url)).toBe(Option.isSome(githubRepoOf(url)));
+	});
+});
+
+describe('isPlainGithubUrl', () => {
+	it.each([
+		['https://github.com/kovidgoyal/kitty', true],
+		['https://x@github.com/a/b', true],
+		['https://x:y@GitHub.com:443/a/b', true],
+		['https://github.com//a//b', true],
+		['https://codeberg.org/dnkl/foot', true],
+		['https://github.com/a/b/../c', false],
+		['https://%67ithub.com/a/b', false],
+		['https://github.com/%2e%2e/x/y', false]
+	])('%s is %s', (url, ok) => {
+		expect(isPlainGithubUrl(url)).toBe(ok);
 	});
 });
