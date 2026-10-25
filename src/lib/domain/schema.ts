@@ -37,9 +37,10 @@ const comparable = (s: string) => Number.isFinite(Date.parse(s));
 const Day = jsonSchemaString({ format: 'date' }, 'a valid date', comparable);
 const DateTime = jsonSchemaString({ format: 'date-time' }, 'a valid date-time', comparable);
 const DayOrTime = Schema.Union([Day, DateTime]);
-// A lowercase https scheme followed by a host.
+// A lowercase https scheme, optional userinfo, a nonempty host and an optional port,
+// then the end or a path, query or fragment.
 const Url = jsonSchemaString(
-	{ format: 'uri', pattern: '^https://[^/?#\\s]+' },
+	{ format: 'uri', pattern: '^https://([^/?#\\s@]*@)?[^/?#\\s@:]+(:[0-9]*)?([/?#]|$)' },
 	'an https URL with a host'
 );
 const Repo = Schema.String.check(Schema.isPattern(/^[\w.-]+\/[\w.-]+$/u));

@@ -41,6 +41,8 @@ describe('source URLs', () => {
 		['https://#x', false],
 		['https://', false],
 		['https:///x', false],
+		['https://a@', false],
+		['https://:80', false],
 		['http://example.com', false],
 		['HTTPS://example.com', false],
 		['ftp://example.com', false],
