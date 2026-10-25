@@ -30,7 +30,7 @@
 							"url": {
 								"type": "string",
 								"format": "uri",
-								"pattern": "^https://"
+								"pattern": "^https://([^/?#\\s@]*@)?[^/?#\\s@:]+(:[0-9]*)?([/?#]|$)"
 							}
 						},
 						"required": ["number", "date", "url"],
@@ -121,7 +121,7 @@
 					"url": {
 						"type": "string",
 						"format": "uri",
-						"pattern": "^https://",
+						"pattern": "^https://([^/?#\\s@]*@)?[^/?#\\s@:]+(:[0-9]*)?([/?#]|$)",
 						"description": "Homepage or repo"
 					},
 					"repo": {
@@ -208,7 +208,7 @@
 								"source": {
 									"type": "string",
 									"format": "uri",
-									"pattern": "^https://",
+									"pattern": "^https://([^/?#\\s@]*@)?[^/?#\\s@:]+(:[0-9]*)?([/?#]|$)",
 									"description": "The PR, commit, release, issue or docs page it rests on"
 								},
 								"version": {
@@ -281,7 +281,7 @@
 						"if": {
 							"properties": {
 								"url": {
-									"pattern": "^https://[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm]/[^/]+/[^/]+"
+									"pattern": "^https://([^/?#\\s@]*@)?[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm](:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)"
 								}
 							},
 							"required": ["url"]
