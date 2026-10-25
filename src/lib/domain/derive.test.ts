@@ -1,4 +1,4 @@
-import { Option } from 'effect';
+import { DateTime, Option } from 'effect';
 import { describe, expect, it } from '@effect/vitest';
 import { changeRows, isFeatured, sentenceOf, stateStart, summarize, verdictOf } from './derive.ts';
 import type { SlugEntry } from './load.ts';
@@ -12,7 +12,7 @@ const entry = (over: Partial<SlugEntry> = {}): SlugEntry => ({
 	role: 'program',
 	category: 'coding-agents',
 	spec_revision: '0.4',
-	last_checked_date: '2026-10-24',
+	last_checked_date: DateTime.makeUnsafe('2026-10-24'),
 	history: [],
 	...over
 });
@@ -21,7 +21,12 @@ const block = (
 	state: HistoryBlock['state'],
 	source = 'https://example.com/post',
 	version?: string
-): HistoryBlock => ({ date, state, source, ...(version === undefined ? {} : { version }) });
+): HistoryBlock => ({
+	date: DateTime.makeUnsafe(date),
+	state,
+	source,
+	...(version === undefined ? {} : { version })
+});
 
 describe('featured', () => {
 	it('uses 1,000 stars by default', () => {
@@ -84,7 +89,9 @@ describe('history', () => {
 				block('2026-10-13', 'working')
 			]
 		});
-		expect(Option.getOrUndefined(stateStart(e))?.date).toBe('2026-10-12');
+		expect(Option.map(stateStart(e), (b) => DateTime.formatIsoDateUtc(b.date))).toEqual(
+			Option.some('2026-10-12')
+		);
 		expect(Option.isNone(stateStart(entry()))).toBe(true);
 	});
 
@@ -138,7 +145,7 @@ describe('history', () => {
 });
 
 /** The block, then an evidence-only copy of it on a later day. */
-const later = (b: HistoryBlock) => [b, { ...b, date: '2026-10-20' }];
+const later = (b: HistoryBlock) => [b, { ...b, date: DateTime.makeUnsafe('2026-10-20') }];
 
 const one = (b: HistoryBlock, over: Partial<SlugEntry> = {}) =>
 	sentenceOf(entry({ history: [b], ...over }));

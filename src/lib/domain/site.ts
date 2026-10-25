@@ -1,4 +1,4 @@
-import { Array, Option, Order, Schema, Struct } from 'effect';
+import { Array, DateTime, Option, Order, Schema, Struct } from 'effect';
 import {
 	type ChangeRow,
 	changeRows,
@@ -13,7 +13,7 @@ import {
 import type { SlugEntry } from './load.ts';
 import { entryFields, entryRules, SpecRevision, states, type Spec } from './schema.ts';
 
-const newestFirst = Order.flip(Order.mapInput(Order.Number, (r: ChangeRow) => Date.parse(r.date)));
+const newestFirst = Order.flip(Order.mapInput(DateTime.Order, (r: ChangeRow) => r.date));
 
 /** Everything the pages and endpoints read, derived once per build. */
 export const buildSite = (data: { spec: Spec; entries: ReadonlyArray<SlugEntry> }) => ({
@@ -73,13 +73,15 @@ const verdictJson = (v: RoleSummary) => ({
 	...Struct.pick(v, ['score', 'done', 'working', 'featured'])
 });
 
-export const toDataJson = (site: Site, generatedAt: Date): DataJson => ({
-	schemaVersion: 1,
-	generatedAt: generatedAt.toISOString(),
-	spec: site.spec,
-	verdicts: {
-		program: verdictJson(site.verdicts.program),
-		terminal: verdictJson(site.verdicts.terminal)
-	},
-	entries: Array.map(site.entries, Struct.omit(['since', 'sentence']))
-});
+/** data.json as JSON, with dates encoded back to ISO strings by the schema. */
+export const toDataJson = (site: Site, generatedAt: DateTime.Utc): typeof DataJson.Encoded =>
+	Schema.encodeSync(DataJson)({
+		schemaVersion: 1,
+		generatedAt: DateTime.formatIso(generatedAt),
+		spec: site.spec,
+		verdicts: {
+			program: verdictJson(site.verdicts.program),
+			terminal: verdictJson(site.verdicts.terminal)
+		},
+		entries: Array.map(site.entries, Struct.omit(['since', 'sentence']))
+	});

@@ -35,9 +35,8 @@ export const currentState = (e: Entry): State =>
 		Option.getOrElse((): State => 'idle')
 	);
 
-/** UTC calendar day of a history date, which may be a date or a datetime. */
-export const utcDay = (date: string): string =>
-	DateTime.formatIsoDateUtc(DateTime.makeUnsafe(date));
+/** UTC calendar day of a history date. */
+export const utcDay = (date: DateTime.Utc): string => DateTime.formatIsoDateUtc(date);
 
 /** The first block of the last run of blocks that `same` considers equal. */
 const lastRunStart = (
@@ -62,8 +61,8 @@ export interface ChangeRow {
 	readonly slug: string;
 	readonly name: string;
 	readonly day: string;
-	/** The history date the row comes from: a datetime, or a date for hand edits. */
-	readonly date: string;
+	/** The history date the row comes from. A hand-edited date is midnight UTC. */
+	readonly date: DateTime.Utc;
 	/** undefined when the entry was added in this state. */
 	readonly from: State | undefined;
 	readonly to: State;
@@ -100,8 +99,8 @@ export const changeRows = (e: SlugEntry): ReadonlyArray<ChangeRow> => {
 	});
 };
 
-export const formatDay = (date: string): string =>
-	DateTime.formatUtc(DateTime.makeUnsafe(date), {
+export const formatDay = (date: DateTime.Utc): string =>
+	DateTime.formatUtc(date, {
 		locale: 'en-US',
 		month: 'short',
 		day: 'numeric'
