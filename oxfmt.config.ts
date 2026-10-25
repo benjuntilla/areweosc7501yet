@@ -1,10 +1,9 @@
 import { defineConfig } from 'oxfmt';
 
+// Indentation, line width and line endings come from .editorconfig.
 export default defineConfig({
-	useTabs: true,
 	singleQuote: true,
 	trailingComma: 'none',
-	printWidth: 100,
 	svelte: true,
 	ignorePatterns: ['pnpm-lock.yaml']
 });

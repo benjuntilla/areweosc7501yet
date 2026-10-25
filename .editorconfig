@@ -1,4 +1,4 @@
-# Matches oxfmt.config.ts, so editors without oxfmt agree with it.
+# The single source for indentation, line width and line endings: oxfmt reads it too.
 root = true
 
 [*]
