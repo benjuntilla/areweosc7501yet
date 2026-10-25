@@ -95,14 +95,16 @@
 				"settings": {
 					"run": "onType",
 					"typeAware": true,
-					"unusedDisableDirectives": "deny"
+					"unusedDisableDirectives": "deny",
+					"configPath": "oxlint.config.ts"
 				}
 			}
 		},
 		"oxfmt": {
 			"initialization_options": {
 				"settings": {
-					"run": "onSave"
+					"run": "onSave",
+					"fmt.configPath": "oxfmt.config.ts"
 				}
 			}
 		}
