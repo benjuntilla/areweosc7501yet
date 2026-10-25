@@ -4,13 +4,14 @@ repo = "nowledge-co/con-terminal"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-note = "Only in beta releases, from v0.1.0-beta.122. There’s no stable release yet"
+note = "Every release is a beta, and the newest is GitHub’s Latest release"
 last_checked_date = 2026-10-25
 
 [github]
 stars = 643
 
 [[history]]
-date = 2026-10-09T08:46:30Z
-state = "working"
-source = "https://github.com/nowledge-co/con-terminal/commit/8e8b481e2aa696e6839bb9d2d7b1225fb7fe3055"
+date = 2026-10-09
+state = "done"
+source = "https://github.com/nowledge-co/con-terminal/releases/tag/v0.1.0-beta.122"
+version = "v0.1.0-beta.122"

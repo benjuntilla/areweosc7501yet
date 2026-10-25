@@ -4,7 +4,7 @@ repo = "lassejlv/termy"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-note = "Only in the 1.0.0 release candidates, from rc.2"
+note = "The 1.0.0 release candidates are its Latest releases and what auto-update installs"
 last_checked_date = 2026-10-25
 
 [github]
@@ -13,6 +13,7 @@ latest_release_tag = "v0.2.80"
 latest_release_date = 2026-09-25
 
 [[history]]
-date = 2026-10-08T08:47:08Z
-state = "working"
-source = "https://github.com/lassejlv/termy/commit/282c7dd86f55d661e6195ef4cac34f121bb289cb"
+date = 2026-10-08
+state = "done"
+source = "https://github.com/lassejlv/termy/releases/tag/v1.0.0-rc.2"
+version = "v1.0.0-rc.2"
