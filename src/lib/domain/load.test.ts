@@ -50,6 +50,16 @@ describe('loadData', () => {
 			kittyToml.replace('state = "idle"', 'state = "done"'),
 			/version/u
 		],
+		[
+			'an impossible date',
+			kittyToml.replace('last_checked_date = 2026-10-24', 'last_checked_date = "2026-02-31"'),
+			/real calendar date/u
+		],
+		[
+			'an impossible time',
+			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T25:00:00Z"'),
+			/date/u
+		],
 		['history out of order', kittyToml.replace('2026-10-13', '2026-10-01'), /date order/u],
 		['a category from the other role', kittyToml.replace('"emulators"', '"clis"'), /category/u],
 		['a GitHub url without a repo', kittyToml.replace(/^repo = .*$/mu, ''), /repo/u],

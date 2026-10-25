@@ -14,13 +14,44 @@ export type Category = (typeof categoriesByRole)[Role][number];
 
 // Dates stay strings once decoded. TOML writes them as native dates, so the
 // JSON Schema says `format` rather than `pattern`, which is what Tombi checks.
+// The patterns check the shape; this checks each part is in range, without Date
+// parsing, which quietly rolls Feb 30 over to Mar 2.
+const isLeap = (y: number) => y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
+const daysInMonth = (y: number, m: number) =>
+	[31, isLeap(y) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1]!;
+export const isRealDate = (s: string): boolean => {
+	const m =
+		/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|[+-](\d{2}):(\d{2})))?$/u.exec(
+			s
+		);
+	if (m === null) return false;
+	const [y, mo, d, h, mi, se, oh, om] = m.slice(1).map((x) => Number(x ?? 0)) as Array<number> &
+		[number, number, number, number, number, number, number, number];
+	return (
+		mo >= 1 &&
+		mo <= 12 &&
+		d >= 1 &&
+		d <= daysInMonth(y, mo) &&
+		h <= 23 &&
+		mi <= 59 &&
+		se <= 59 &&
+		oh <= 23 &&
+		om <= 59
+	);
+};
+const realDate = Schema.makeFilter(isRealDate, {
+	expected: 'a real calendar date and time',
+	toJsonSchema: () => ({})
+});
 const Day = Schema.String.check(
-	Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/u, { toJsonSchema: () => ({ format: 'date' }) })
+	Schema.isPattern(/^\d{4}-\d{2}-\d{2}$/u, { toJsonSchema: () => ({ format: 'date' }) }),
+	realDate
 );
 const DateTime = Schema.String.check(
 	Schema.isPattern(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/u, {
 		toJsonSchema: () => ({ format: 'date-time' })
-	})
+	}),
+	realDate
 );
 const DayOrTime = Schema.Union([Day, DateTime]);
 const Url = Schema.String.check(Schema.isPattern(/^https:\/\/\S+$/u));
