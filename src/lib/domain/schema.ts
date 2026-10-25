@@ -17,11 +17,13 @@ export type Category = (typeof categoriesByRole)[Role][number];
 // Dates stay strings once decoded. TOML writes them as native dates, so the published
 // JSON Schema says `format: date` or `date-time`, which is what Tombi checks. The decoder
 // runs the same JSON Schema format checks (ajv-formats), so Feb 30 or 24:00 fails here too.
+// It also needs a timestamp Date can represent, so history order can be compared: that
+// rules out leap seconds (23:59:60), which the format allows but Date.parse can't read.
 const ajv = addFormats(new Ajv(), ['date', 'date-time']);
 const jsonSchemaFormat = (format: 'date' | 'date-time') => {
 	const validate = ajv.compile<string>({ type: 'string', format });
 	return Schema.String.check(
-		Schema.makeFilter((s: string) => validate(s), {
+		Schema.makeFilter((s: string) => validate(s) && Number.isFinite(Date.parse(s)), {
 			expected: `a valid ${format}`,
 			toJsonSchema: () => ({ format })
 		})

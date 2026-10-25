@@ -60,6 +60,16 @@ describe('loadData', () => {
 			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T25:00:00Z"'),
 			/date/u
 		],
+		[
+			'a leap second in the latest block (TOML itself rejects a native one)',
+			kittyToml.replace('date = 2026-10-13\n', 'date = "2026-10-13T23:59:60Z"\n'),
+			/a valid date/u
+		],
+		[
+			'a leap second in an earlier block',
+			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T23:59:60Z"'),
+			/a valid date/u
+		],
 		['history out of order', kittyToml.replace('2026-10-13', '2026-10-01'), /date order/u],
 		['a category from the other role', kittyToml.replace('"emulators"', '"clis"'), /category/u],
 		['a GitHub url without a repo', kittyToml.replace(/^repo = .*$/mu, ''), /repo/u],
