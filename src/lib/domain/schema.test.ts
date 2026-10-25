@@ -2,9 +2,11 @@ import { describe, expect, it } from '@effect/vitest';
 import { Option, Schema } from 'effect';
 import { githubRepoOf, githubRepoUrlPattern, HistoryBlock, isPlainGithubUrl } from './schema.ts';
 
-const isHistoryDate = Schema.is(HistoryBlock.fields.date);
+const isHistoryDate = (s: string) =>
+	Option.isSome(Schema.decodeUnknownOption(HistoryBlock.fields.date)(s));
 const isSourceUrl = Schema.is(HistoryBlock.fields.source);
 
+// Date-times are UTC instants in the form the loader writes native TOML date-times.
 describe('history dates', () => {
 	it.each([
 		['2024-02-29', true],
@@ -17,15 +19,16 @@ describe('history dates', () => {
 		['2026-13-01', false],
 		['2026-00-10', false],
 		['2026-10-00', false],
-		['2026-10-12T23:59:59Z', true],
-		['2026-10-12T08:00:00.123+05:30', true],
+		['2026-10-12T23:59:59.000Z', true],
+		['2026-10-12T23:59:59Z', false],
+		['2026-10-12T08:00:00.123+05:30', false],
 		['2100-02-29', false],
-		['2026-10-12T23:59:60Z', false],
-		['2026-10-12T24:00:00Z', false],
-		['2026-10-12T23:60:00Z', false],
-		['2026-10-12T25:00:00Z', false],
-		['2026-10-12T08:60:00Z', false],
-		['2026-10-12T08:00:60Z', false],
+		['2026-10-12T23:59:60.000Z', false],
+		['2026-10-12T24:00:00.000Z', false],
+		['2026-10-12T23:60:00.000Z', false],
+		['2026-10-12T25:00:00.000Z', false],
+		['2026-10-12T08:60:00.000Z', false],
+		['2026-10-12T08:00:60.000Z', false],
 		['2026-10-12T08:00:00+24:00', false],
 		['2026-10-12T08:00:00+05:60', false],
 		['2026-10-12T08:00:00', false]

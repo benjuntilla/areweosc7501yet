@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@effect/vitest';
-import { Effect } from 'effect';
+import { DateTime, Effect } from 'effect';
 import { fixtureFiles, kittyToml, specToml } from './fixtures.ts';
 import { loadData } from './load.ts';
 
@@ -10,16 +10,16 @@ const failure = (files: Record<string, string>) =>
 	);
 
 describe('loadData', () => {
-	it.effect('decodes good files, sorted by slug, with dates as UTC strings', () =>
+	it.effect('decodes good files, sorted by slug, with dates as UTC DateTimes', () =>
 		Effect.gen(function* () {
 			const { spec, entries } = yield* loadData(fixtureFiles, specToml);
-			expect(spec.revision[0].date).toBe('2026-10-10');
+			expect(DateTime.formatIsoDateUtc(spec.revision[0].date)).toBe('2026-10-10');
 			expect(entries.map((e) => e.slug)).toEqual(['codex', 'kitty', 'rex', 'tiny']);
 			const codex = entries[0]!;
-			expect(codex.history.map((h) => h.date)).toEqual([
-				'2026-10-09T01:00:00Z',
-				'2026-10-09T05:00:00Z',
-				'2026-10-20T10:30:00Z'
+			expect(codex.history.map((h) => DateTime.formatIso(h.date))).toEqual([
+				'2026-10-09T01:00:00.000Z',
+				'2026-10-09T05:00:00.000Z',
+				'2026-10-20T10:30:00.000Z'
 			]);
 			expect(entries[3]!.history).toEqual([]);
 		})
@@ -57,17 +57,17 @@ describe('loadData', () => {
 		],
 		[
 			'an impossible time',
-			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T25:00:00Z"'),
+			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T25:00:00.000Z"'),
 			/date/u
 		],
 		[
 			'a leap second in the latest block (TOML itself rejects a native one)',
-			kittyToml.replace('date = 2026-10-13\n', 'date = "2026-10-13T23:59:60Z"\n'),
+			kittyToml.replace('date = 2026-10-13\n', 'date = "2026-10-13T23:59:60.000Z"\n'),
 			/a valid date/u
 		],
 		[
 			'a leap second in an earlier block',
-			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T23:59:60Z"'),
+			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T23:59:60.000Z"'),
 			/a valid date/u
 		],
 		['history out of order', kittyToml.replace('2026-10-13', '2026-10-01'), /date order/u],
@@ -100,8 +100,8 @@ describe('loadData', () => {
 		);
 	}
 
-	// Unquoted, so the TOML parser sees them as dates. Whichever layer catches them (the
-	// parser or the schema), the load must fail and name the file.
+	// Unquoted, so the TOML parser sees them as dates and must reject them itself. A JS Date
+	// would roll Feb 30 over to Mar 2, which could slip through as a valid date.
 	const nativeDates = [
 		'2026-02-30',
 		'1900-02-29',
@@ -109,21 +109,24 @@ describe('loadData', () => {
 		'2026-02-30T10:00:00Z',
 		'2026-10-12T23:59:60Z'
 	];
+	const invalidDate = /^\/data\/entries\/kitty\.toml: .*Invalid date-time/u;
 	for (const date of nativeDates) {
 		it.effect(`rejects a native ${date} in the latest block`, () =>
 			Effect.gen(function* () {
 				const toml = kittyToml.replace('date = 2026-10-13\n', `date = ${date}\n`);
-				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(
-					/^\/data\/entries\/kitty\.toml: /u
-				);
+				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(invalidDate);
+			})
+		);
+		it.effect(`rejects a native ${date} as last_checked_date`, () =>
+			Effect.gen(function* () {
+				const toml = kittyToml.replace(/^last_checked_date = .*$/mu, `last_checked_date = ${date}`);
+				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(invalidDate);
 			})
 		);
 		it.effect(`rejects a native ${date} in an earlier block`, () =>
 			Effect.gen(function* () {
 				const toml = kittyToml.replace('date = 2026-10-12T08:00:00Z', `date = ${date}`);
-				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(
-					/^\/data\/entries\/kitty\.toml: /u
-				);
+				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(invalidDate);
 			})
 		);
 	}

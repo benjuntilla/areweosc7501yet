@@ -1,16 +1,6 @@
 import { basename } from 'node:path';
-import {
-	Array,
-	Data,
-	DateTime,
-	Effect,
-	Order,
-	Predicate,
-	Record,
-	Schema,
-	String as Str
-} from 'effect';
-import { parse, TomlDate } from 'smol-toml';
+import { Array, Data, DateTime, Effect, Order, Predicate, Record, Schema } from 'effect';
+import { Toml } from 'effect/encoding';
 import { Entry, Spec } from './schema.ts';
 
 export class DataError extends Data.TaggedError('DataError')<{
@@ -20,14 +10,12 @@ export class DataError extends Data.TaggedError('DataError')<{
 
 export type SlugEntry = Entry & { readonly slug: string };
 
-/** smol-toml parses dates as TomlDate objects. The schema wants ISO strings, in UTC. */
+/**
+ * Effect's TOML parser range-checks dates, returns date-times with an offset as Dates and
+ * local dates as strings. The schema reads ISO strings, so Dates become UTC instants.
+ */
 const plain = (v: unknown): unknown => {
-	if (v instanceof TomlDate) {
-		// Local dates and times have no zone to convert. The schema rejects local times.
-		return v.isDate() || v.isLocal()
-			? v.toISOString()
-			: Str.replace('.000Z', 'Z')(DateTime.formatIso(DateTime.makeUnsafe(v)));
-	}
+	if (v instanceof Date) return DateTime.formatIso(DateTime.fromDateUnsafe(v));
 	if (Array.isArray(v)) return Array.map(v, (x) => plain(x));
 	if (Predicate.isObject(v)) return Record.map(v, (x) => plain(x));
 	return v;
@@ -35,7 +23,7 @@ const plain = (v: unknown): unknown => {
 
 const decodeToml = <S extends Schema.Decoder<unknown>>(schema: S, file: string, text: string) =>
 	Effect.try({
-		try: () => plain(parse(text)),
+		try: () => plain(Toml.parse(text)),
 		catch: (e) => new DataError({ file, message: String(e) })
 	}).pipe(
 		Effect.flatMap(Schema.decodeUnknownEffect(schema, { onExcessProperty: 'error' })),

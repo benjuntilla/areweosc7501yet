@@ -1,4 +1,4 @@
-import { Array, DateTime, Equivalence, Option, Schema, String } from 'effect';
+import { Array, DateTime, Equivalence, Option, Schema, SchemaTransformation, String } from 'effect';
 
 export const states = ['done', 'working', 'blocked', 'idle', 'error'] as const;
 export type State = (typeof states)[number];
@@ -12,10 +12,10 @@ export const categoriesByRole = {
 } as const;
 export type Category = (typeof categoriesByRole)[Role][number];
 
-// Dates and URLs stay strings once decoded. The published JSON Schema describes them with
-// `format` (TOML writes dates as native dates, which is what Tombi checks). The decoder is
-// stricter: each value must survive a round trip through Effect's DateTime or URL, so
-// Feb 30, 24:00, leap seconds or a hostless URL fail here.
+// The published JSON Schema describes dates and URLs with `format` (TOML writes dates as
+// native dates, which is what Tombi checks). The decoder is stricter: a URL must parse, and a
+// date must come back unchanged from Effect's DateTime, so a quoted Feb 30 fails here like a
+// native one fails in the TOML parser.
 const formatted = (
 	pattern: RegExp,
 	jsonSchema: { readonly format: string; readonly pattern?: string },
@@ -27,22 +27,33 @@ const formatted = (
 		Schema.makeFilter(valid, { expected, toJsonSchema: () => ({}) })
 	);
 
-const Day = formatted(/^\d{4}-\d{2}-\d{2}$/u, { format: 'date' }, 'a valid date', (s) =>
-	Option.exists(DateTime.make(s), (d) => DateTime.formatIsoDateUtc(d) === s)
-);
-// The wall-clock fields must come back unchanged in the stated offset (Effect parses
-// numeric offsets, so Z is read as +00:00).
-const DateTimeString = formatted(
-	/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/u,
-	{ format: 'date-time' },
-	'a valid date-time',
-	(s) =>
-		Option.exists(
-			DateTime.makeZonedFromString(String.replace(/Z$/u, '+00:00')(s)),
-			(d) => String.takeLeft(DateTime.formatIsoOffset(d), 19) === String.takeLeft(s, 19)
+/** A date string that decodes to a DateTime.Utc and encodes back with `text`. */
+const dateTime = (
+	pattern: RegExp,
+	format: string,
+	expected: string,
+	text: (d: DateTime.DateTime) => string
+) =>
+	formatted(pattern, { format }, expected, (s) =>
+		Option.exists(DateTime.make(s), (d) => text(d) === s)
+	).pipe(
+		Schema.decodeTo(
+			Schema.DateTimeUtc,
+			SchemaTransformation.transform({ decode: (s) => DateTime.makeUnsafe(s), encode: text })
 		)
+	);
+
+/** A calendar day, like 2026-10-13. */
+const Day = dateTime(/^\d{4}-\d{2}-\d{2}$/u, 'date', 'a valid date', DateTime.formatIsoDateUtc);
+/** A UTC instant, in the form the loader writes native TOML date-times. */
+const Instant = dateTime(
+	/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/u,
+	'date-time',
+	'a valid date-time',
+	DateTime.formatIso
 );
-const DayOrTime = Schema.Union([Day, DateTimeString]);
+// Instant first, so encoding writes the full instant.
+const DayOrTime = Schema.Union([Instant, Day]);
 // A lowercase https scheme, optional userinfo, a nonempty host and an optional port, then
 // the end or a path, query or fragment. URL itself must parse it, and only RFC 3986
 // characters may appear (URL would quietly encode spaces or quotes).
@@ -89,7 +100,7 @@ export const isPlainGithubUrl = (url: string): boolean =>
 const describe =
 	<S extends Schema.Top>(description: string) =>
 	(s: S) =>
-		s.annotate({ description });
+		Schema.annotateEncoded<S>({ description })(s);
 
 export const HistoryBlock = Schema.Struct({
 	date: DayOrTime.pipe(describe('When the state or its evidence changed, in UTC')),
@@ -196,7 +207,7 @@ export const entryRules = Schema.makeFilter<{
 			...Option.match(Array.get(e.history, i - 1), {
 				onNone: () => [],
 				onSome: (prev) =>
-					Date.parse(h.date) < Date.parse(prev.date)
+					DateTime.isLessThan(h.date, prev.date)
 						? [{ path: ['history', i, 'date'], issue: 'history must be in date order' }]
 						: []
 			})
