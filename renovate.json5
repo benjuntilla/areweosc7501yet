@@ -1,0 +1,14 @@
+{
+	$schema: 'https://docs.renovatebot.com/renovate-schema.json',
+	extends: [
+		'config:recommended',
+		// Keep the commit SHAs that pin GitHub Actions up to date.
+		'helpers:pinGitHubActionDigests'
+	],
+	// Dependency PRs follow the repo's Conventional Commits titles: chore(deps): ...
+	semanticCommits: 'enabled',
+	semanticCommitType: 'chore',
+	semanticCommitScope: 'deps',
+	// Pin exact versions, since this is an app, not a library.
+	rangeStrategy: 'pin'
+}
