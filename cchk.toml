@@ -1,0 +1,10 @@
+# commit-check policy for the commits on a PR branch. They can be work in
+# progress, since the PR title becomes the squash commit, but none may carry
+# AI attribution: no AI co-author or sign-off, no "Generated with" marker and
+# no session trailer.
+
+[commit]
+conventional_commits = false
+subject_min_length = 1
+subject_max_length = 200
+ai_attribution = "forbid"
