@@ -1,9 +1,11 @@
-import { Schema } from 'effect';
+import { Array, Option, Order, Schema, Struct } from 'effect';
 import {
+	type ChangeRow,
 	changeRows,
 	currentState,
 	isFeatured,
 	ladder,
+	type RoleSummary,
 	sentenceOf,
 	stateStart,
 	summarize
@@ -11,24 +13,29 @@ import {
 import type { SlugEntry } from './load.ts';
 import { entryFields, entryRules, SpecRevision, states, type Spec } from './schema.ts';
 
+const newestFirst = Order.flip(Order.mapInput(Order.Number, (r: ChangeRow) => Date.parse(r.date)));
+
 /** Everything the pages and endpoints read, derived once per build. */
 export const buildSite = (data: { spec: Spec; entries: ReadonlyArray<SlugEntry> }) => ({
-	spec: { current: data.spec.revision.at(-1)!.number, revisions: data.spec.revision },
+	spec: { current: Array.lastNonEmpty(data.spec.revision).number, revisions: data.spec.revision },
 	verdicts: {
 		program: summarize(data.entries, 'program'),
 		terminal: summarize(data.entries, 'terminal')
 	},
-	entries: data.entries.map((e) => ({
+	entries: Array.map(data.entries, (e) => ({
 		...e,
 		state: currentState(e),
-		since: stateStart(e)?.date,
+		since: Option.getOrUndefined(Option.map(stateStart(e), (b) => b.date)),
 		featured: isFeatured(e),
 		sentence: sentenceOf(e)
 	})),
-	changes: data.entries
-		.filter((e) => isFeatured(e))
-		.flatMap((e) => changeRows(e))
-		.toSorted((a, b) => Date.parse(b.date) - Date.parse(a.date))
+	changes: Array.sort(
+		Array.flatMap(
+			Array.filter(data.entries, (e: SlugEntry) => isFeatured(e)),
+			(e: SlugEntry) => changeRows(e)
+		),
+		newestFirst
+	)
 });
 export type Site = ReturnType<typeof buildSite>;
 
@@ -60,28 +67,19 @@ export const DataJson = Schema.Struct({
 });
 export type DataJson = typeof DataJson.Type;
 
-export const toDataJson = (site: Site, generatedAt: Date): DataJson => {
-	const verdict = ({
-		verdict: word,
-		score,
-		done,
-		working,
-		featured
-	}: Site['verdicts']['program']) => ({
-		word,
-		score,
-		done,
-		working,
-		featured
-	});
-	return {
-		schemaVersion: 1,
-		generatedAt: generatedAt.toISOString(),
-		spec: site.spec,
-		verdicts: {
-			program: verdict(site.verdicts.program),
-			terminal: verdict(site.verdicts.terminal)
-		},
-		entries: site.entries.map(({ since: _since, sentence: _sentence, ...e }) => e)
-	};
-};
+/** The public word for a verdict, with the counts, in data.json's field order. */
+const verdictJson = (v: RoleSummary) => ({
+	word: v.verdict,
+	...Struct.pick(v, ['score', 'done', 'working', 'featured'])
+});
+
+export const toDataJson = (site: Site, generatedAt: Date): DataJson => ({
+	schemaVersion: 1,
+	generatedAt: generatedAt.toISOString(),
+	spec: site.spec,
+	verdicts: {
+		program: verdictJson(site.verdicts.program),
+		terminal: verdictJson(site.verdicts.terminal)
+	},
+	entries: Array.map(site.entries, Struct.omit(['since', 'sentence']))
+});
