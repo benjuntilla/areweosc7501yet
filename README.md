@@ -12,6 +12,17 @@ Installing dependencies also installs the git hooks in `lefthook.yml`. A commit 
 
 `.zed/settings.json` sets up Zed to format and lint exactly as CI does.
 
+## Deploying
+
+Cloudflare Workers static assets, deployed with `cf` (pinned exactly, since it's in beta). `cloudflare.config.ts` is the Worker config.
+
+```sh
+pnpm cf deploy                  # build and deploy to production
+pnpm cf previews deploy <name>  # build and deploy a preview named <name>
+```
+
+`scripts/cloudflare-adapter.ts` wraps adapter-static and writes cf's Build Output (`.cloudflare/output/v0`) from `build/`. It exists because cf 1.0.0-beta.21 runs the SvelteKit build but doesn't write that output itself. Remove it, and go back to plain adapter-static, once cf supports SvelteKit.
+
 ## Acknowledgements
 
 - The seed data comes from [awesome-osc7501](https://github.com/hyeebeen/awesome-osc7501) by hyeebeen.
