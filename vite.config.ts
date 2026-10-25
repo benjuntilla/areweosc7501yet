@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from './scripts/cloudflare-adapter.ts';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
 
