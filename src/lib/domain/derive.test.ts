@@ -152,7 +152,7 @@ describe('popover sentence', () => {
 		],
 		[block('2026-10-07T18:03:00Z', 'working', 'https://x.com/post'), 'Announced on Oct 7.'],
 		[
-			block('2026-10-13', 'blocked', 'https://github.com/o/x/issues/5'),
+			block('2026-10-13', 'error', 'https://github.com/o/x/issues/5'),
 			'The maintainer closed the request on Oct 13 without adding support.'
 		],
 		[
@@ -161,7 +161,7 @@ describe('popover sentence', () => {
 		],
 		[block('2026-10-10', 'idle', 'https://example.com/docs'), 'No code yet.'],
 		[
-			block('2026-10-09', 'error', 'https://github.com/o/x/pull/9'),
+			block('2026-10-09', 'blocked', 'https://github.com/o/x/pull/9'),
 			'The implementation PR was closed on Oct 9 without merging.'
 		]
 	])('%o', (b, sentence) => {
@@ -202,12 +202,12 @@ describe('popover sentence', () => {
 	it('dates closed, errored, docs and announced states from the start of their run', () => {
 		expect(
 			sentenceOf(
-				entry({ history: later(block('2026-10-13', 'blocked', 'https://github.com/o/x/issues/5')) })
+				entry({ history: later(block('2026-10-13', 'error', 'https://github.com/o/x/issues/5')) })
 			)
 		).toBe('The maintainer closed the request on Oct 13 without adding support.');
 		expect(
 			sentenceOf(
-				entry({ history: later(block('2026-10-09', 'error', 'https://github.com/o/x/pull/9')) })
+				entry({ history: later(block('2026-10-09', 'blocked', 'https://github.com/o/x/pull/9')) })
 			)
 		).toBe('The implementation PR was closed on Oct 9 without merging.');
 		expect(

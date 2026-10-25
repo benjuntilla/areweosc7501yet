@@ -141,14 +141,17 @@ export const sentenceOf = (e: Entry): string =>
 				),
 				Match.when(
 					'blocked',
-					() => `The maintainer closed the request on ${began} without adding support.`
+					() => `The implementation PR was closed on ${began} without merging.`
 				),
 				Match.when('idle', () =>
 					isIssue(b.source)
 						? `No code yet. The request has been open since ${since}.`
 						: 'No code yet.'
 				),
-				Match.when('error', () => `The implementation PR was closed on ${began} without merging.`),
+				Match.when(
+					'error',
+					() => `The maintainer closed the request on ${began} without adding support.`
+				),
 				Match.exhaustive
 			);
 		}
