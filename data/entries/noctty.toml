@@ -1,0 +1,18 @@
+name = "noctty"
+url = "https://github.com/amanthanvi/noctty"
+repo = "amanthanvi/noctty"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 462
+latest_release_tag = "v1.3.135"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-16
+state = "done"
+source = "https://github.com/amanthanvi/noctty/releases/tag/v1.3.132"
+version = "v1.3.132"

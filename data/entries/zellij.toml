@@ -1,0 +1,22 @@
+name = "zellij"
+url = "https://github.com/zellij-org/zellij"
+repo = "zellij-org/zellij"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 35822
+latest_release_tag = "v0.45.1"
+latest_release_date = 2026-08-28
+
+[[history]]
+date = 2026-10-19
+state = "working"
+source = "https://github.com/zellij-org/zellij/pull/5734"
+
+[[history]]
+date = 2026-10-20
+state = "working"
+source = "https://github.com/zellij-org/zellij/commit/3ce7e7dc719d7945c6ab7cb0f9785099c5a74f58"

@@ -1,0 +1,23 @@
+name = "firebase-tools"
+url = "https://github.com/firebase/firebase-tools"
+repo = "firebase/firebase-tools"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+note = "Closed in favor of a fresh implementation."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 4481
+latest_release_tag = "v15.34.1"
+latest_release_date = 2026-10-22
+
+[[history]]
+date = 2026-10-08
+state = "working"
+source = "https://github.com/firebase/firebase-tools/pull/11245"
+
+[[history]]
+date = 2026-10-09
+state = "error"
+source = "https://github.com/firebase/firebase-tools/pull/11245"

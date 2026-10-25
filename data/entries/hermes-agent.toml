@@ -1,0 +1,18 @@
+name = "Hermes Agent"
+url = "https://github.com/NousResearch/hermes-agent"
+repo = "NousResearch/hermes-agent"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+note = "A maintainer carried it forward in #140837."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 256827
+latest_release_tag = "v0.22.5"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-14
+state = "working"
+source = "https://github.com/NousResearch/hermes-agent/pull/138152"

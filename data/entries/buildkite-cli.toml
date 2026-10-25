@@ -1,0 +1,19 @@
+name = "Buildkite CLI"
+url = "https://github.com/buildkite/cli"
+repo = "buildkite/cli"
+role = "program"
+category = "clis"
+is_featured = true
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 208
+latest_release_tag = "v3.66.0"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-16
+state = "done"
+source = "https://github.com/buildkite/cli/releases/tag/v3.64.0"
+version = "v3.64.0"

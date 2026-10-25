@@ -1,0 +1,17 @@
+name = "charmbracelet/x"
+url = "https://github.com/charmbracelet/x"
+repo = "charmbracelet/x"
+role = "program"
+category = "libraries"
+is_featured = true
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 323
+
+[[history]]
+date = 2026-10-08
+state = "done"
+source = "https://github.com/charmbracelet/x/tree/ansi/v0.11.9"
+version = "ansi v0.11.9"

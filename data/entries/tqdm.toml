@@ -1,0 +1,17 @@
+name = "tqdm"
+url = "https://github.com/tqdm/tqdm"
+repo = "tqdm/tqdm"
+role = "program"
+category = "libraries"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 31362
+latest_release_tag = "v4.70.1"
+latest_release_date = 2026-09-11
+
+[[history]]
+date = 2026-10-16
+state = "working"
+source = "https://github.com/tqdm/tqdm/pull/1884"

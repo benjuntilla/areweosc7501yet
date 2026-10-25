@@ -1,0 +1,19 @@
+name = "ggcode"
+url = "https://github.com/topcheer/ggcode"
+repo = "topcheer/ggcode"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+note = "Opt-in through a status-line option"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 70
+latest_release_tag = "v1.3.266"
+latest_release_date = 2026-10-21
+
+[[history]]
+date = 2026-10-15
+state = "done"
+source = "https://github.com/topcheer/ggcode/releases/tag/v1.3.262"
+version = "v1.3.262"

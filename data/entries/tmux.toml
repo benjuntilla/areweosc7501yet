@@ -1,0 +1,23 @@
+name = "tmux"
+url = "https://github.com/tmux/tmux"
+repo = "tmux/tmux"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+note = "With allow-passthrough on, reports still reach the outer terminal."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 49981
+latest_release_tag = "3.8"
+latest_release_date = 2026-09-09
+
+[[history]]
+date = 2026-10-09
+state = "idle"
+source = "https://github.com/tmux/tmux/issues/5713"
+
+[[history]]
+date = 2026-10-13
+state = "blocked"
+source = "https://github.com/tmux/tmux/issues/5713"

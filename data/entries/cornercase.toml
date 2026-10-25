@@ -1,0 +1,18 @@
+name = "Cornercase"
+url = "https://github.com/usecornercase/cornercase-terminal"
+repo = "usecornercase/cornercase-terminal"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 31
+latest_release_tag = "v0.12.194"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-14
+state = "done"
+source = "https://github.com/usecornercase/cornercase-terminal/releases/tag/v0.12.91"
+version = "v0.12.91"

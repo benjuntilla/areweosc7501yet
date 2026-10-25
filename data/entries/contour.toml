@@ -1,0 +1,17 @@
+name = "Contour"
+url = "https://github.com/contour-terminal/contour"
+repo = "contour-terminal/contour"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 3052
+latest_release_tag = "v0.8.0.9335"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-24
+state = "working"
+source = "https://github.com/contour-terminal/contour/pull/2176"

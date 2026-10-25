@@ -1,0 +1,18 @@
+name = "yolop"
+url = "https://github.com/everruns/yolop"
+repo = "everruns/yolop"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 17
+latest_release_tag = "v0.21.0"
+latest_release_date = 2026-10-11
+
+[[history]]
+date = 2026-10-09
+state = "done"
+source = "https://github.com/everruns/yolop/releases/tag/v0.20.0"
+version = "v0.20.0"

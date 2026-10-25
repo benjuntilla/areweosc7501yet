@@ -1,0 +1,12 @@
+name = "Rex"
+url = "https://www.superlogical.com/rex"
+role = "terminal"
+category = "multiplexers"
+is_featured = true
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[[history]]
+date = 2026-10-06
+state = "done"
+source = "https://www.superlogical.com/rex/docs/build/program-status"

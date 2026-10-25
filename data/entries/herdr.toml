@@ -1,0 +1,17 @@
+name = "Herdr"
+url = "https://github.com/herdrdev/herdr"
+repo = "herdrdev/herdr"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 45704
+latest_release_tag = "v0.9.5"
+latest_release_date = 2026-10-14
+
+[[history]]
+date = 2026-10-11
+state = "working"
+source = "https://github.com/herdrdev/herdr/pull/5172"

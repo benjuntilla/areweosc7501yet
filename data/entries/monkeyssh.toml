@@ -1,0 +1,18 @@
+name = "MonkeySSH"
+url = "https://github.com/depollsoft/MonkeySSH"
+repo = "depollsoft/MonkeySSH"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 7
+latest_release_tag = "v0.10.1"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-18
+state = "done"
+source = "https://github.com/depollsoft/MonkeySSH/releases/tag/v0.10.0"
+version = "v0.10.0"

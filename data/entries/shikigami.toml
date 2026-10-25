@@ -1,0 +1,22 @@
+name = "shikigami"
+url = "https://github.com/Sannrox/shikigami"
+repo = "Sannrox/shikigami"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 0
+latest_release_tag = "v2.0.0"
+latest_release_date = 2026-10-08
+
+[[history]]
+date = 2026-10-09T09:13:44Z
+state = "working"
+source = "https://github.com/Sannrox/shikigami/pull/438"
+
+[[history]]
+date = 2026-10-09T09:20:40Z
+state = "working"
+source = "https://github.com/Sannrox/shikigami/commit/331897846885e4a55697b0f1006d03b4f2a7495e"

@@ -1,0 +1,17 @@
+name = "Neovim"
+url = "https://github.com/neovim/neovim"
+repo = "neovim/neovim"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 103151
+latest_release_tag = "v0.12.6"
+latest_release_date = 2026-10-09
+
+[[history]]
+date = 2026-10-08
+state = "idle"
+source = "https://github.com/neovim/neovim/issues/42276"

@@ -1,0 +1,23 @@
+name = "cmux"
+url = "https://github.com/manaflow-ai/cmux"
+repo = "manaflow-ai/cmux"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 28387
+latest_release_tag = "v0.65.2"
+latest_release_date = 2026-10-16
+
+[[history]]
+date = 2026-10-09
+state = "working"
+source = "https://github.com/manaflow-ai/cmux/pull/18742"
+
+[[history]]
+date = 2026-10-12
+state = "done"
+source = "https://github.com/manaflow-ai/cmux/releases/tag/v0.65.1"
+version = "v0.65.1"

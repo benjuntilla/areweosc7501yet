@@ -1,0 +1,23 @@
+name = "programa"
+url = "https://github.com/darkroomengineering/programa"
+repo = "darkroomengineering/programa"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+note = "Only a rolling tag"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 9
+latest_release_tag = "rolling"
+latest_release_date = 2026-07-07
+
+[[history]]
+date = 2026-10-07T17:43:11Z
+state = "working"
+source = "https://github.com/darkroomengineering/programa/pull/405"
+
+[[history]]
+date = 2026-10-07T19:13:22Z
+state = "working"
+source = "https://github.com/darkroomengineering/programa/commit/c66fae7b0569b0748a8e58029ef676033d7981ce"

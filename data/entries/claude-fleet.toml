@@ -1,0 +1,21 @@
+name = "claude-fleet"
+url = "https://github.com/verkyyi/claude-fleet"
+repo = "verkyyi/claude-fleet"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+note = "Only a rolling stable tag"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 2
+
+[[history]]
+date = 2026-10-09T07:48:26Z
+state = "working"
+source = "https://github.com/verkyyi/claude-fleet/pull/2597"
+
+[[history]]
+date = 2026-10-09T08:26:18Z
+state = "working"
+source = "https://github.com/verkyyi/claude-fleet/commit/52519d0f7f0314c466c91dc9ae993d9cd245cc48"

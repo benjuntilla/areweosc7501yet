@@ -1,0 +1,18 @@
+name = "SwiftTerm"
+url = "https://github.com/migueldeicaza/SwiftTerm"
+repo = "migueldeicaza/SwiftTerm"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 1741
+latest_release_tag = "v1.99.1"
+latest_release_date = 2026-10-21
+
+[[history]]
+date = 2026-10-08
+state = "done"
+source = "https://github.com/migueldeicaza/SwiftTerm/releases/tag/v1.99.0"
+version = "v1.99.0"
