@@ -18,3 +18,5 @@ pre-push:
       run: pnpm check
     - name: test
       run: pnpm test
+    - name: schema
+      run: pnpm schema && git diff --exit-code schema/
