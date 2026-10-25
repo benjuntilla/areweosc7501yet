@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  commits:
+    name: Commit messages
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Check every commit in the PR
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          pattern='^(feat|fix|perf|refactor|docs|test|build|ci|chore|revert)(\([a-z0-9-]+\))?!?: [a-z0-9].*[^.]$'
+          status=0
+          for sha in $(git rev-list "$BASE..$HEAD"); do
+            subject=$(git log -1 --format=%s "$sha")
+            if ! [[ $subject =~ $pattern ]]; then
+              echo "::error::$sha: \"$subject\" isn't a lowercase Conventional Commits header"
+              status=1
+            fi
+            if git log -1 --format=%B "$sha" | grep -qiE 'co-authored-by:.*(claude|anthropic)|claude-session|generated with claude'; then
+              echo "::error::$sha carries a Claude attribution"
+              status=1
+            fi
+          done
+          exit $status
+
+  verify:
+    name: Lint, check, test and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm check
+      - run: pnpm test
+      - name: JSON Schemas are up to date
+        run: pnpm schema && git diff --exit-code schema/
+      - name: Build with cf
+        run: pnpm cf build
+      - name: Build Output exists
+        run: |
+          test -f .cloudflare/output/v0/config.json
+          test -f .cloudflare/output/v0/workers/default/worker.config.json
+          test -f .cloudflare/output/v0/workers/default/assets/index.html
+          test -f .cloudflare/output/v0/workers/default/assets/data.json
