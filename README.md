@@ -4,7 +4,7 @@ Which terminals and programs support OSC 7501, the Program Status Protocol. Live
 
 Each project is one TOML file in [`data/entries/`](data/entries). A weekly check refreshes stars and releases and opens a PR when a state changes. Spotted something out of date? Open an issue or a PR against its file.
 
-The data is also at [`/data.json`](https://areweosc7501yet.com/data.json), described by [`schema/data.schema.json`](schema/data.schema.json).
+The data is also at [`/data.json`](https://areweosc7501yet.com/data.json), described by [`/schema/data.schema.json`](https://areweosc7501yet.com/schema/data.schema.json).
 
 ## Running it
 
