@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# Keep the organization's settings (review profile and so on) for anything not set here.
+inheritance: true
+reviews:
+  auto_review:
+    enabled: true
+    # Review every push; never pause a busy branch.
+    auto_pause_after_reviewed_commits: 0
+    # Stacked PRs target other stack branches, not just main.
+    base_branches:
+      - '.*'
