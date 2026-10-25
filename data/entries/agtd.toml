@@ -1,10 +1,11 @@
-name = "agentd"
+name = "agtd"
 url = "https://github.com/robmorgan/agtd"
 repo = "robmorgan/agtd"
 role = "terminal"
 category = "multiplexers"
+aliases = ["agentd"]
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-25
 
 [github]
 stars = 5

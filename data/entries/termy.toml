@@ -5,7 +5,7 @@ role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
 note = "Only in a release candidate, see the judgment call"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-25
 
 [github]
 stars = 452

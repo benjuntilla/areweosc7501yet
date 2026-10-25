@@ -3,10 +3,5 @@ url = "https://www.gnu.org/software/screen/"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-note = "Per pi’s docs"
-last_checked_date = 2026-10-24
-
-[[history]]
-date = 2026-10-07
-state = "idle"
-source = "https://github.com/earendil-works/pi/blob/v1.1.0/packages/coding-agent/docs/terminal-setup.md"
+last_checked_date = 2026-10-25
+history = []

@@ -6,7 +6,7 @@ category = "multiplexers"
 is_featured = false
 spec_revision = "0.4"
 note = "Off by default, turned on with set -g program-status on"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-25
 
 [github]
 stars = 3736

@@ -4,7 +4,7 @@ repo = "saadnvd1/agent-os"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-25
 
 [github]
 stars = 10
@@ -17,6 +17,6 @@ state = "working"
 source = "https://github.com/saadnvd1/agent-os/pull/100"
 
 [[history]]
-date = 2026-10-07T02:08:40Z
+date = 2026-10-07T02:08:39Z
 state = "working"
-source = "https://github.com/saadnvd1/agent-os/commit/2c67ccc50a0f649c9dd4bcfe586f0224894a539c"
+source = "https://github.com/saadnvd1/agent-os/commit/d3d4303820ce2cdb8ffcecdac7cb6b74283d0a5d"

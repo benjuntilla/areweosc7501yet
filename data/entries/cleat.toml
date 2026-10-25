@@ -5,12 +5,12 @@ role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
 note = "No tag yet"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-25
 
 [github]
 stars = 0
 
 [[history]]
-date = 2026-10-12
+date = 2026-10-12T20:53:14Z
 state = "working"
-source = "https://github.com/flotilla-org/cleat/pull/329"
+source = "https://github.com/flotilla-org/cleat/commit/6efad068759793fcab6f13fe4bd2ec885a7b834c"

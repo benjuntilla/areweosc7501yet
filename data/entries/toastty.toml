@@ -4,7 +4,7 @@ repo = "figelwump/toastty"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-25
 
 [github]
 stars = 14
