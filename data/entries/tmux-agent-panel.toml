@@ -1,8 +1,8 @@
 name = "tmux-agent-panel"
 url = "https://github.com/ahmedelgabri/tmux-agent-panel"
 repo = "ahmedelgabri/tmux-agent-panel"
-role = "terminal"
-category = "multiplexers"
+role = "program"
+category = "clis"
 spec_revision = "0.4"
 last_checked_date = 2026-10-25
 
