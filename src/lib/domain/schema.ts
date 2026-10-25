@@ -67,6 +67,17 @@ const Url = Schema.String.check(
 );
 const Repo = Schema.String.check(Schema.isPattern(/^[\w.-]+\/[\w.-]+$/u));
 
+/** owner/name when the URL is a GitHub repository (or a page inside one), else undefined. */
+export const githubRepoOf = (url: string): string | undefined => {
+	if (!URL.canParse(url)) return undefined;
+	const { hostname, pathname } = new URL(url);
+	if (hostname.toLowerCase() !== 'github.com') return undefined;
+	const [owner, name] = pathname.split('/').filter((part) => part !== '');
+	return owner === undefined || name === undefined
+		? undefined
+		: `${owner}/${name.replace(/\.git$/u, '')}`;
+};
+
 const describe =
 	<S extends Schema.Top>(description: string) =>
 	(s: S) =>
@@ -114,8 +125,12 @@ export const Entry = Schema.Struct(entryFields).check(
 		if (!(categoriesByRole[e.role] as ReadonlyArray<string>).includes(e.category)) {
 			issues.push({ path: ['category'], issue: `${e.category} isn't a ${e.role} category` });
 		}
-		if (e.url.startsWith('https://github.com/') && e.repo === undefined) {
-			issues.push({ path: ['repo'], issue: 'a project on GitHub needs a repo for the checker' });
+		const urlRepo = githubRepoOf(e.url);
+		if (urlRepo !== undefined && e.repo?.toLowerCase() !== urlRepo.toLowerCase()) {
+			issues.push({
+				path: ['repo'],
+				issue: `a GitHub url needs repo = "${urlRepo}" for the checker`
+			});
 		}
 		e.history.forEach((h, i) => {
 			// Projects off GitHub can be done from their official docs, with no version.

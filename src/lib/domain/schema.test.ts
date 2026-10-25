@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@effect/vitest';
-import { isHttpsUrl, isRealDate } from './schema.ts';
+import { githubRepoOf, isHttpsUrl, isRealDate } from './schema.ts';
 
 describe('isRealDate', () => {
 	it.each([
@@ -41,5 +41,20 @@ describe('isHttpsUrl', () => {
 		['not a url', false]
 	])('%s is %s', (s, ok) => {
 		expect(isHttpsUrl(s)).toBe(ok);
+	});
+});
+
+describe('githubRepoOf', () => {
+	it.each([
+		['https://github.com/kovidgoyal/kitty', 'kovidgoyal/kitty'],
+		['https://GitHub.com/kovidgoyal/kitty/', 'kovidgoyal/kitty'],
+		['https://github.com/kovidgoyal/kitty.git', 'kovidgoyal/kitty'],
+		['https://github.com/kovidgoyal/kitty/pull/10657', 'kovidgoyal/kitty'],
+		['https://github.com/kovidgoyal', undefined],
+		['https://github.com/', undefined],
+		['https://codeberg.org/dnkl/foot', undefined],
+		['https://www.github.com/a/b', undefined]
+	])('%s is %s', (url, repo) => {
+		expect(githubRepoOf(url)).toBe(repo);
 	});
 });

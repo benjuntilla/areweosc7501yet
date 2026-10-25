@@ -63,6 +63,18 @@ describe('loadData', () => {
 		['history out of order', kittyToml.replace('2026-10-13', '2026-10-01'), /date order/u],
 		['a category from the other role', kittyToml.replace('"emulators"', '"clis"'), /category/u],
 		['a GitHub url without a repo', kittyToml.replace(/^repo = .*$/mu, ''), /repo/u],
+		[
+			'a mixed-case GitHub url without a repo',
+			kittyToml
+				.replace(/^repo = .*$/mu, '')
+				.replace('https://github.com/kovidgoyal/kitty"', 'https://GitHub.com/kovidgoyal/kitty"'),
+			/repo/u
+		],
+		[
+			'a repo that differs from the url',
+			kittyToml.replace('repo = "kovidgoyal/kitty"', 'repo = "someone/else"'),
+			/repo/u
+		],
 		['an unknown state', kittyToml.replace('"idle"', '"maybe"'), /state/u],
 		[
 			'a non-https source',
