@@ -46,10 +46,10 @@ jj absorb                        # or let jj pick the commits
 jj git push --bookmark <name>    # push; force-pushing your own branch is fine
 ```
 
-Commits:
+Commits and PRs:
 
-- Conventional Commits, `type(scope): summary`. Types: feat, fix, perf, refactor, docs, test, build, ci, chore, revert. Scopes name the area: data, schema, checker, overview, changes, rail, drum, popover, search, theme, feed, og, deps.
-- Summary lowercase and imperative, no trailing period.
-- One logical change per commit. Review fixes get folded into the commit they fix, never added as "address review" commits.
-- No AI attribution: no Co-Authored-By trailer, no session links, no "Generated with" lines in commits or PR bodies. CI rejects them.
-- PRs merge by rebase only, so commits land on `main` as written.
+- Every PR is squash-merged, so the PR title becomes the one commit on `main`. Title it as a Conventional Commit: `type(scope): summary`. Types: feat, fix, perf, refactor, docs, test, build, ci, chore, revert. Scopes name the area: data, schema, checker, overview, changes, rail, drum, popover, search, theme, feed, og, deps. Lowercase, imperative, no trailing period. CI checks the title.
+- CodeRabbit reviews every PR, and a PR merges only once it has no changes requested. Fix each finding or reply with why it doesn't apply.
+- Commits on a PR branch can be work in progress; they don't reach `main` one by one.
+- No AI attribution anywhere: no Co-Authored-By trailer, no session links, no "Generated with" lines, in commits, PR titles or PR bodies. CI rejects them in commits and titles.
+- Don't name milestones in titles, bodies or commits. They mean nothing to outside readers.
