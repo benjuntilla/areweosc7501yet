@@ -55,7 +55,8 @@ const DateTime = Schema.String.check(
 );
 const DayOrTime = Schema.Union([Day, DateTime]);
 export const isHttpsUrl = (s: string): boolean => {
-	if (!URL.canParse(s) || /\s/u.test(s)) return false;
+	// Lowercase scheme only, matching the JSON Schema pattern; URL would lowercase it.
+	if (!s.startsWith('https://') || !URL.canParse(s) || /\s/u.test(s)) return false;
 	const url = new URL(s);
 	return url.protocol === 'https:' && url.hostname !== '';
 };

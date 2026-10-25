@@ -36,6 +36,7 @@ describe('isHttpsUrl', () => {
 		['https://#x', false],
 		['https://', false],
 		['http://example.com', false],
+		['HTTPS://example.com', false],
 		['ftp://example.com', false],
 		['https://exa mple.com', false],
 		['not a url', false]
