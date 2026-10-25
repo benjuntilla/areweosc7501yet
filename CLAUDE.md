@@ -13,7 +13,8 @@ pnpm format         # oxfmt (TS, Svelte, CSS, JSON, TOML, Markdown)
 pnpm check          # svelte-check: types, template types, a11y
 pnpm test           # vitest unit tests
 pnpm schema         # regenerate schema/*.json from the Effect Schemas
-pnpm build          # vite build into build/
+pnpm build          # vite build: build/ plus cf's .cloudflare/output
+pnpm cf build       # what Workers Builds runs before cf deploy
 ```
 
 CI runs all of these and fails if `schema/` is stale, so run `pnpm schema` after changing a schema.
@@ -29,6 +30,12 @@ Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats
 - `src/lib/components/`, `src/lib/client/`, `src/routes/`: plain Svelte and TypeScript. No Effect ships to the browser.
 - `scripts/`: Node scripts run with `NodeRuntime.runMain`.
 - `data/entries/*.toml`: no comments, since the weekly checker rewrites these files. Caveats go in `note`. An empty `history` means idle.
+
+## Deploy
+
+Cloudflare Workers static assets, deployed with `cf` (pinned exactly, it's in beta). `cloudflare.config.ts` is the Worker config.
+
+`scripts/cloudflare-adapter.ts` wraps adapter-static and writes cf's Build Output (`.cloudflare/output/v0`) from `build/`. It exists because cf 1.0.0-beta.21 runs the SvelteKit build but doesn't write that output itself. Remove it, and switch back to plain adapter-static, once cf supports SvelteKit.
 
 ## Version control
 
