@@ -16,15 +16,20 @@
 		"lint": "oxlint",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"test": "vitest run --passWithNoTests"
+		"test": "vitest run",
+		"schema": "node scripts/schema.ts && oxfmt schema"
 	},
 	"devDependencies": {
+		"@effect/platform-node": "4.0.6",
+		"@effect/vitest": "4.0.6",
 		"@sveltejs/adapter-static": "^4.0.0",
 		"@sveltejs/kit": "^3.0.0",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
+		"effect": "4.0.6",
 		"oxfmt": "0.74.0",
 		"oxlint": "1.89.0",
 		"oxlint-tsgolint": "7.0.2005",
+		"smol-toml": "1.9.1",
 		"svelte": "^5.57.1",
 		"svelte-check": "^4.6.0",
 		"typescript": "^6.0.3",

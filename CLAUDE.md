@@ -12,14 +12,15 @@ pnpm lint           # oxlint, type-aware (options in .oxlintrc.json)
 pnpm format         # oxfmt (TS, Svelte, CSS, JSON, TOML, Markdown)
 pnpm check          # svelte-check: types, template types, a11y
 pnpm test           # vitest unit tests
+pnpm schema         # regenerate schema/*.json from the Effect Schemas
 pnpm build          # vite build into build/
 ```
 
-CI runs all of these.
+CI runs all of these and fails if `schema/` is stale, so run `pnpm schema` after changing a schema.
 
 ## Editor
 
-Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI.
+Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI. Tombi validates `data/entries/*.toml` against `schema/entry.schema.json` (mapped in `tombi.toml`) and doesn't format.
 
 ## Layout and the Effect boundary
 

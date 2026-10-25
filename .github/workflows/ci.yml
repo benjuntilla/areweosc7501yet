@@ -50,4 +50,6 @@ jobs:
       - run: pnpm format:check
       - run: pnpm check
       - run: pnpm test
+      - name: JSON Schemas are up to date
+        run: pnpm schema && git diff --exit-code schema/
       - run: pnpm build
