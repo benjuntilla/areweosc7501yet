@@ -10,10 +10,14 @@ import {
 	writeWorkerConfig
 } from '@cloudflare/build-output-utils';
 import { loadAndParseConfig } from '@cloudflare/config';
+import { Config, Effect } from 'effect';
+
+// cf sets this for preview builds.
+const isPreview = Config.Boolean('CLOUDFLARE_PREVIEW_BUILD').pipe(Config.withDefault(false));
 
 const writeBuildOutput = async (root: string) => {
 	// cf only passes --mode to frameworks that support it, so mode stays unset.
-	const ctx = { isPreview: process.env['CLOUDFLARE_PREVIEW_BUILD'] === 'true', mode: undefined };
+	const ctx = { isPreview: await Effect.runPromise(isPreview), mode: undefined };
 	const { result } = await loadAndParseConfig('cloudflare.config.ts', ctx);
 	if (!result.success) throw result.error;
 	const { worker, containers: _containers, ...settings } = result.data;
