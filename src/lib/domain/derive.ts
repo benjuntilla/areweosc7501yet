@@ -116,20 +116,23 @@ export const sentenceOf = (e: Entry): string =>
 	Option.match(currentBlock(e), {
 		onNone: () => 'No code yet.',
 		onSome: (b) => {
+			// The latest block dates releases and merges. A state's own date comes from where it
+			// began, and "open since" from where its source was first cited, so a later
+			// evidence-only block doesn't move either.
 			const d = formatDay(b.date);
-			// "Open since" dates come from when the PR or request was first cited.
+			const began = formatDay(Option.getOrElse(stateStart(e), () => b).date);
 			const since = formatDay(Option.getOrElse(sourceStart(e), () => b).date);
 			return Match.value(b.state).pipe(
 				Match.when('done', () =>
 					b.version === undefined
-						? `In its official docs since ${d}.`
+						? `In its official docs since ${began}.`
 						: `Shipped in ${b.version} on ${d}.`
 				),
 				Match.when('working', () =>
 					Option.match(Str.match(pullRequest)(b.source), {
 						onSome: (pr) => `PR #${pr[1] ?? ''} has been open since ${since}.`,
 						onNone: () => {
-							if (!isCommit(b.source)) return `Announced on ${d}.`;
+							if (!isCommit(b.source)) return `Announced on ${since}.`;
 							const tag = e.github?.latest_release_tag;
 							const latest = tag === undefined ? '' : ` Latest is ${tag}.`;
 							return `Merged on ${d}, not in a release yet.${latest}`;
@@ -138,14 +141,14 @@ export const sentenceOf = (e: Entry): string =>
 				),
 				Match.when(
 					'blocked',
-					() => `The maintainer closed the request on ${d} without adding support.`
+					() => `The maintainer closed the request on ${began} without adding support.`
 				),
 				Match.when('idle', () =>
 					isIssue(b.source)
 						? `No code yet. The request has been open since ${since}.`
 						: 'No code yet.'
 				),
-				Match.when('error', () => `The implementation PR was closed on ${d} without merging.`),
+				Match.when('error', () => `The implementation PR was closed on ${began} without merging.`),
 				Match.exhaustive
 			);
 		}

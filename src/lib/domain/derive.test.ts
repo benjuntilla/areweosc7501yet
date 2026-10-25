@@ -137,6 +137,9 @@ describe('history', () => {
 	});
 });
 
+/** The block, then an evidence-only copy of it on a later day. */
+const later = (b: HistoryBlock) => [b, { ...b, date: '2026-10-20' }];
+
 const one = (b: HistoryBlock, over: Partial<SlugEntry> = {}) =>
 	sentenceOf(entry({ history: [b], ...over }));
 
@@ -194,6 +197,26 @@ describe('popover sentence', () => {
 				entry({ history: [block('2026-10-10', 'idle', issue), block('2026-10-18', 'idle', issue)] })
 			)
 		).toBe('No code yet. The request has been open since Oct 10.');
+	});
+
+	it('dates closed, errored, docs and announced states from the start of their run', () => {
+		expect(
+			sentenceOf(
+				entry({ history: later(block('2026-10-13', 'blocked', 'https://github.com/o/x/issues/5')) })
+			)
+		).toBe('The maintainer closed the request on Oct 13 without adding support.');
+		expect(
+			sentenceOf(
+				entry({ history: later(block('2026-10-09', 'error', 'https://github.com/o/x/pull/9')) })
+			)
+		).toBe('The implementation PR was closed on Oct 9 without merging.');
+		expect(
+			sentenceOf(entry({ history: later(block('2026-10-07', 'working', 'https://x.com/post')) }))
+		).toBe('Announced on Oct 7.');
+		const { repo: _repo, ...offGithub } = entry({ url: 'https://docs' });
+		expect(
+			sentenceOf({ ...offGithub, history: later(block('2026-10-06', 'done', 'https://docs')) })
+		).toBe('In its official docs since Oct 6.');
 	});
 
 	it('says no code yet with no history', () => {
