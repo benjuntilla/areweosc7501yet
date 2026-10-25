@@ -1,0 +1,18 @@
+name = "osc7501 (Go)"
+url = "https://github.com/buildkite/osc7501"
+repo = "buildkite/osc7501"
+role = "program"
+category = "libraries"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 1
+latest_release_tag = "v0.3.0"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-15
+state = "done"
+source = "https://github.com/buildkite/osc7501/releases/tag/v0.1.0"
+version = "v0.1.0"

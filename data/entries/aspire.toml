@@ -1,0 +1,17 @@
+name = "Aspire"
+url = "https://github.com/microsoft/aspire"
+repo = "microsoft/aspire"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 6381
+latest_release_tag = "v13.6.4"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-14
+state = "working"
+source = "https://github.com/microsoft/aspire/pull/20988"

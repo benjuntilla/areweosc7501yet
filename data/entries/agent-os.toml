@@ -1,0 +1,22 @@
+name = "agent-os"
+url = "https://github.com/saadnvd1/agent-os"
+repo = "saadnvd1/agent-os"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 10
+latest_release_tag = "v0.1.0"
+latest_release_date = 2026-01-16
+
+[[history]]
+date = 2026-10-07T02:06:17Z
+state = "working"
+source = "https://github.com/saadnvd1/agent-os/pull/100"
+
+[[history]]
+date = 2026-10-07T02:08:39Z
+state = "working"
+source = "https://github.com/saadnvd1/agent-os/commit/d3d4303820ce2cdb8ffcecdac7cb6b74283d0a5d"

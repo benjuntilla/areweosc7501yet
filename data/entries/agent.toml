@@ -1,0 +1,18 @@
+name = "agent (lydakis)"
+url = "https://github.com/lydakis/agent"
+repo = "lydakis/agent"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 1
+latest_release_tag = "v0.2.0"
+latest_release_date = 2026-10-11
+
+[[history]]
+date = 2026-10-11
+state = "done"
+source = "https://github.com/lydakis/agent/pull/85"
+version = "v0.2.0"

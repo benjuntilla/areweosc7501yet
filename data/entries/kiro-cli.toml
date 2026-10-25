@@ -1,0 +1,13 @@
+name = "Kiro CLI"
+url = "https://kiro.dev/docs/cli/terminal-ui/"
+role = "program"
+category = "coding-agents"
+is_featured = true
+spec_revision = "0.4"
+note = "Version not published"
+last_checked_date = 2026-10-24
+
+[[history]]
+date = 2026-10-15
+state = "done"
+source = "https://kiro.dev/docs/cli/terminal-ui/"

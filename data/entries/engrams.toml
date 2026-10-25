@@ -1,0 +1,18 @@
+name = "engrams"
+url = "https://github.com/cortexapps/engrams"
+repo = "cortexapps/engrams"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+note = "Only release candidates have it, from v0.12.0-rc.4"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 59
+latest_release_tag = "v0.11.0"
+latest_release_date = 2026-10-19
+
+[[history]]
+date = 2026-10-20T12:49:22Z
+state = "working"
+source = "https://github.com/cortexapps/engrams/commit/feb2e5b90c7f52c922cb076d271359b524553d91"

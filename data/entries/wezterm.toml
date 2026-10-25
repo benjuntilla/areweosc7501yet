@@ -1,0 +1,13 @@
+name = "WezTerm"
+url = "https://github.com/wezterm/wezterm"
+repo = "wezterm/wezterm"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+history = []
+
+[github]
+stars = 29333
+latest_release_tag = "20240203-110809-5046fc22"
+latest_release_date = 2024-02-03

@@ -1,0 +1,18 @@
+name = "rove"
+url = "https://github.com/Sma1lboy/rove"
+repo = "Sma1lboy/rove"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 179
+latest_release_tag = "v0.9.270"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-10
+state = "done"
+source = "https://github.com/Sma1lboy/rove/pull/1232"
+version = "v0.9.245"

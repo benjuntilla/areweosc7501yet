@@ -1,0 +1,18 @@
+name = "thurm"
+url = "https://github.com/nklmilojevic/thurm"
+repo = "nklmilojevic/thurm"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 6
+latest_release_tag = "v0.13.0"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-07
+state = "done"
+source = "https://github.com/nklmilojevic/thurm/releases/tag/v0.3.0"
+version = "v0.3.0"

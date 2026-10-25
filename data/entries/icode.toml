@@ -1,0 +1,23 @@
+name = "iCode"
+url = "https://github.com/openJiuwen-ai/iCode"
+repo = "openJiuwen-ai/iCode"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 374
+latest_release_tag = "v0.31.0"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-16
+state = "working"
+source = "https://github.com/openJiuwen-ai/iCode/pull/80"
+
+[[history]]
+date = 2026-10-19
+state = "done"
+source = "https://github.com/openJiuwen-ai/iCode/releases/tag/v0.30.1"
+version = "v0.30.1"

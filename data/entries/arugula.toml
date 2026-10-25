@@ -1,0 +1,18 @@
+name = "Arugula"
+url = "https://github.com/arugula-salad/arugula"
+repo = "arugula-salad/arugula"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 0
+latest_release_tag = "v0.60.19"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-12
+state = "done"
+source = "https://github.com/arugula-salad/arugula/releases/tag/v0.36.0"
+version = "v0.36.0"

@@ -1,0 +1,24 @@
+name = "psmux"
+url = "https://github.com/psmux/psmux"
+repo = "psmux/psmux"
+role = "terminal"
+category = "multiplexers"
+is_featured = false
+spec_revision = "0.4"
+note = "Off by default, turned on with set -g program-status on"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 3736
+latest_release_tag = "v3.4.0"
+latest_release_date = 2026-10-13
+
+[[history]]
+date = 2026-10-13
+state = "working"
+source = "https://github.com/psmux/psmux/pull/797"
+
+[[history]]
+date = 2026-10-14
+state = "working"
+source = "https://github.com/psmux/psmux/commit/daa6be09c00dc5dd943218c9f0f864f3dc415dfd"

@@ -1,0 +1,20 @@
+name = "cyrup"
+url = "https://github.com/cyrup-ai/cyrup"
+repo = "cyrup-ai/cyrup"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 4
+
+[[history]]
+date = 2026-10-10T16:49:35Z
+state = "working"
+source = "https://github.com/cyrup-ai/cyrup/pull/221"
+
+[[history]]
+date = 2026-10-10T17:03:30Z
+state = "working"
+source = "https://github.com/cyrup-ai/cyrup/commit/f40347e82bbc023393b4c071523a026bbd042e97"

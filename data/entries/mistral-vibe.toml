@@ -1,0 +1,18 @@
+name = "Mistral Vibe"
+url = "https://github.com/mistralai/mistral-vibe"
+repo = "mistralai/mistral-vibe"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 5192
+latest_release_tag = "v3.0.2"
+latest_release_date = 2026-10-22
+
+[[history]]
+date = 2026-10-19
+state = "done"
+source = "https://github.com/mistralai/mistral-vibe/releases/tag/v3.0.0"
+version = "v3.0.0"

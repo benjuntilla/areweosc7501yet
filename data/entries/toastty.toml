@@ -1,0 +1,18 @@
+name = "toastty"
+url = "https://github.com/figelwump/toastty"
+repo = "figelwump/toastty"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 14
+latest_release_tag = "v0.9.2"
+latest_release_date = 2026-10-16
+
+[[history]]
+date = 2026-10-11
+state = "done"
+source = "https://github.com/figelwump/toastty/releases/tag/v0.9.1"
+version = "v0.9.1"

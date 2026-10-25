@@ -1,0 +1,14 @@
+name = "VS Code"
+url = "https://github.com/microsoft/vscode"
+repo = "microsoft/vscode"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "Its terminal is xterm.js, which has no code for it."
+last_checked_date = 2026-10-24
+history = []
+
+[github]
+stars = 194258
+latest_release_tag = "1.143.1"
+latest_release_date = 2026-10-22

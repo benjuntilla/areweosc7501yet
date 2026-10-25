@@ -1,0 +1,18 @@
+name = "the-last-harness"
+url = "https://github.com/diegopetrucci/the-last-harness"
+repo = "diegopetrucci/the-last-harness"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 37
+latest_release_tag = "v0.46.0"
+latest_release_date = 2026-10-20
+
+[[history]]
+date = 2026-10-12
+state = "done"
+source = "https://github.com/diegopetrucci/the-last-harness/releases/tag/v0.44.0"
+version = "v0.44.0"

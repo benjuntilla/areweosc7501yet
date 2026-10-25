@@ -1,0 +1,18 @@
+name = "Crush"
+url = "https://github.com/charmbracelet/crush"
+repo = "charmbracelet/crush"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 28800
+latest_release_tag = "v0.98.2"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-08
+state = "done"
+source = "https://github.com/charmbracelet/crush/releases/tag/v0.98.0"
+version = "v0.98.0"

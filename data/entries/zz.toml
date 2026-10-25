@@ -1,0 +1,18 @@
+name = "zz"
+url = "https://github.com/demfabris/zz"
+repo = "demfabris/zz"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 8
+latest_release_tag = "v0.22.0"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-17
+state = "done"
+source = "https://github.com/demfabris/zz/releases/tag/v0.17.0"
+version = "v0.17.0"

@@ -1,0 +1,18 @@
+name = "OxiMux"
+url = "https://github.com/nhtera/OxiMux"
+repo = "nhtera/OxiMux"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 60
+latest_release_tag = "v0.1.44"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-23
+state = "done"
+source = "https://github.com/nhtera/OxiMux/releases/tag/v0.1.43"
+version = "v0.1.43"

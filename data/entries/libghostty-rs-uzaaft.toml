@@ -1,0 +1,17 @@
+name = "libghostty-rs (Uzaaft)"
+url = "https://github.com/Uzaaft/libghostty-rs"
+repo = "Uzaaft/libghostty-rs"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 397
+latest_release_tag = "v0.2.2"
+latest_release_date = 2026-09-28
+
+[[history]]
+date = 2026-10-23
+state = "working"
+source = "https://github.com/Uzaaft/libghostty-rs/commit/c6878f536f77196540be7da1722d1f304c500e94"
