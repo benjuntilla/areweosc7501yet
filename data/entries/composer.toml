@@ -1,0 +1,18 @@
+name = "Composer"
+url = "https://github.com/composer/composer"
+repo = "composer/composer"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+note = "Only in the 2.11.0-RC1 pre-release so far."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 29561
+latest_release_tag = "2.10.3"
+latest_release_date = 2026-08-27
+
+[[history]]
+date = 2026-10-09
+state = "working"
+source = "https://github.com/composer/composer/pull/13117"

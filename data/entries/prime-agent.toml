@@ -1,0 +1,18 @@
+name = "prime-agent"
+url = "https://github.com/PrimeIntellect-ai/prime-agent"
+repo = "PrimeIntellect-ai/prime-agent"
+role = "program"
+category = "coding-agents"
+is_featured = false
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 22309
+latest_release_tag = "v0.10.1"
+latest_release_date = 2026-10-21
+
+[[history]]
+date = 2026-10-09T03:48:09Z
+state = "working"
+source = "https://github.com/PrimeIntellect-ai/prime-agent/pull/3424"

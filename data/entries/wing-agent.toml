@@ -1,0 +1,22 @@
+name = "wing-agent"
+url = "https://github.com/lpdink/wing-agent"
+repo = "lpdink/wing-agent"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 7
+latest_release_tag = "v0.6.0"
+latest_release_date = 2026-10-04
+
+[[history]]
+date = 2026-10-09T13:11:37Z
+state = "working"
+source = "https://github.com/lpdink/wing-agent/pull/177"
+
+[[history]]
+date = 2026-10-09T14:11:58Z
+state = "working"
+source = "https://github.com/lpdink/wing-agent/commit/0c290fb70cde6138298ddd531ec8b30fb7216983"

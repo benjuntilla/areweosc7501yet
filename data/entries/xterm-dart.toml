@@ -1,0 +1,21 @@
+name = "xterm.dart"
+url = "https://github.com/lollipopkit/xterm.dart"
+repo = "lollipopkit/xterm.dart"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+note = "Engine"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 7
+
+[[history]]
+date = 2026-10-08T05:47:10Z
+state = "working"
+source = "https://github.com/lollipopkit/xterm.dart/pull/26"
+
+[[history]]
+date = 2026-10-08T06:21:25Z
+state = "working"
+source = "https://github.com/lollipopkit/xterm.dart/commit/0c9858974591dcc4c21f78618c5498f95704cba2"

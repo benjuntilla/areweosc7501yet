@@ -1,0 +1,13 @@
+name = "Zed"
+url = "https://github.com/zed-industries/zed"
+repo = "zed-industries/zed"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+history = []
+
+[github]
+stars = 92147
+latest_release_tag = "v1.25.3"
+latest_release_date = 2026-10-23

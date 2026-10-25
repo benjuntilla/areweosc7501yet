@@ -1,0 +1,18 @@
+name = "Windows Terminal"
+url = "https://github.com/microsoft/terminal"
+repo = "microsoft/terminal"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "The request moved to Intelligent Terminal as #1096."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 105224
+latest_release_tag = "v1.25.2733.0"
+latest_release_date = 2026-10-02
+
+[[history]]
+date = 2026-10-07
+state = "idle"
+source = "https://github.com/microsoft/terminal/issues/20777"

@@ -1,0 +1,9 @@
+name = "Cursor CLI"
+url = "https://cursor.com/cli"
+role = "program"
+category = "coding-agents"
+is_featured = true
+spec_revision = "0.4"
+note = "Closed source, and the changelog doesn’t mention OSC 7501."
+last_checked_date = 2026-10-24
+history = []

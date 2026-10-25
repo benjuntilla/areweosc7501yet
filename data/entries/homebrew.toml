@@ -1,0 +1,14 @@
+name = "Homebrew"
+url = "https://github.com/Homebrew/brew"
+repo = "Homebrew/brew"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+note = "Mitchell built a proof of concept as a plugin or fork. Nothing upstream."
+last_checked_date = 2026-10-24
+history = []
+
+[github]
+stars = 50097
+latest_release_tag = "7.0.10"
+latest_release_date = 2026-10-19

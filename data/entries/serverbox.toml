@@ -1,0 +1,19 @@
+name = "ServerBox"
+url = "https://github.com/lollipopkit/flutter_server_box"
+repo = "lollipopkit/flutter_server_box"
+role = "terminal"
+category = "emulators"
+is_featured = false
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 8866
+latest_release_tag = "v1.0.1816"
+latest_release_date = 2026-10-20
+
+[[history]]
+date = 2026-10-11
+state = "done"
+source = "https://github.com/lollipopkit/flutter_server_box/releases/tag/v1.0.1765"
+version = "v1.0.1765"

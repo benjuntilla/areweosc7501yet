@@ -1,0 +1,19 @@
+name = "Quay 2"
+url = "https://github.com/seanrobertwright/Quay-2"
+repo = "seanrobertwright/Quay-2"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+note = "Its release notes don’t name OSC 7501"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 1
+latest_release_tag = "v0.3.1"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-22
+state = "done"
+source = "https://github.com/seanrobertwright/Quay-2/releases/tag/v0.3.0"
+version = "v0.3.0"

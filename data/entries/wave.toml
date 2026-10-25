@@ -1,0 +1,13 @@
+name = "Wave"
+url = "https://github.com/wavetermdev/waveterm"
+repo = "wavetermdev/waveterm"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+history = []
+
+[github]
+stars = 22587
+latest_release_tag = "v0.14.5"
+latest_release_date = 2026-04-16

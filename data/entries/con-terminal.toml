@@ -1,0 +1,17 @@
+name = "con-terminal"
+url = "https://github.com/nowledge-co/con-terminal"
+repo = "nowledge-co/con-terminal"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "Every release is a beta"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 643
+
+[[history]]
+date = 2026-10-09
+state = "done"
+source = "https://github.com/nowledge-co/con-terminal/releases/tag/v0.1.0-beta.122"
+version = "v0.1.0-beta.122"

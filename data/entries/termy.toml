@@ -1,0 +1,19 @@
+name = "Termy"
+url = "https://github.com/lassejlv/termy"
+repo = "lassejlv/termy"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "Only in a release candidate, see the judgment call"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 452
+latest_release_tag = "v0.2.80"
+latest_release_date = 2026-09-25
+
+[[history]]
+date = 2026-10-08
+state = "done"
+source = "https://github.com/lassejlv/termy/releases/tag/v1.0.0-rc.2"
+version = "v1.0.0-rc.2"
