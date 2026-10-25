@@ -115,24 +115,23 @@
 						"type": "string"
 					},
 					"name": {
-						"type": "string",
-						"description": "Display name"
+						"type": "string"
 					},
 					"url": {
 						"type": "string",
 						"format": "uri",
 						"pattern": "^https://([^/?#\\s@]*@)?[^/?#\\s@:]+(:[0-9]*)?([/?#]|$)",
-						"description": "Homepage or repo"
+						"description": "The project's homepage, or its repository if it has no homepage."
 					},
 					"repo": {
 						"type": "string",
 						"pattern": "^[\\w.-]+\\/[\\w.-]+$",
-						"description": "GitHub owner/name the checker watches. Leave it out off GitHub"
+						"description": "The GitHub owner/name that the weekly checker watches. Leave it out for projects that aren't on GitHub."
 					},
 					"role": {
 						"type": "string",
 						"enum": ["program", "terminal"],
-						"description": "Programs send reports, terminals show them"
+						"description": "program if it sends status reports, terminal if it shows them."
 					},
 					"category": {
 						"type": "string",
@@ -140,27 +139,26 @@
 					},
 					"is_featured": {
 						"type": "boolean",
-						"description": "Overrides the 1,000-star rule either way"
+						"description": "Set true to feature an entry with fewer than 1,000 stars, or false to hide one with more. Leave it out to go by stars."
 					},
 					"aliases": {
 						"type": "array",
 						"items": {
 							"type": "string"
 						},
-						"description": "Extra search terms"
+						"description": "Other names that search should match, such as agentd for agtd."
 					},
 					"spec_revision": {
 						"type": "string",
-						"description": "Spec revision it was checked against"
+						"description": "The OSC 7501 spec revision of the last check, such as 0.4."
 					},
 					"note": {
 						"type": "string",
-						"description": "Caveat shown in the popover"
+						"description": "A caveat that the popover shows, such as how to turn support on."
 					},
 					"last_checked_date": {
 						"type": "string",
-						"format": "date",
-						"description": "Last re-verification"
+						"format": "date"
 					},
 					"github": {
 						"type": "object",
@@ -180,7 +178,7 @@
 						},
 						"required": ["stars"],
 						"additionalProperties": false,
-						"description": "Written by the weekly checker"
+						"description": "Written by the weekly checker. Don't edit it by hand."
 					},
 					"history": {
 						"type": "array",
@@ -191,35 +189,35 @@
 									"anyOf": [
 										{
 											"type": "string",
-											"format": "date"
+											"format": "date-time"
 										},
 										{
 											"type": "string",
-											"format": "date-time"
+											"format": "date"
 										}
 									],
-									"description": "When the state or its evidence changed, in UTC"
+									"description": "When the state or its evidence changed. A date-time is in UTC."
 								},
 								"state": {
 									"type": "string",
 									"enum": ["done", "working", "blocked", "idle", "error"],
-									"description": "State from this date on"
+									"description": "The state from this date on."
 								},
 								"source": {
 									"type": "string",
 									"format": "uri",
 									"pattern": "^https://([^/?#\\s@]*@)?[^/?#\\s@:]+(:[0-9]*)?([/?#]|$)",
-									"description": "The PR, commit, release, issue or docs page it rests on"
+									"description": "The PR, commit, release, issue or docs page that shows this state."
 								},
 								"version": {
 									"type": "string",
-									"description": "The release that shipped it"
+									"description": "The release that shipped support."
 								}
 							},
 							"required": ["date", "state", "source"],
 							"additionalProperties": false
 						},
-						"description": "Oldest first. The last block is the current state. No blocks means idle"
+						"description": "State changes, oldest first. The last block is the current state, and no blocks means idle."
 					},
 					"state": {
 						"type": "string",
@@ -273,43 +271,6 @@
 							"properties": {
 								"category": {
 									"enum": ["emulators", "multiplexers", "engines"]
-								}
-							}
-						}
-					},
-					{
-						"if": {
-							"properties": {
-								"url": {
-									"pattern": "^https://([^/?#\\s@]*@)?[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm](:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)"
-								}
-							},
-							"required": ["url"]
-						},
-						"then": {
-							"required": ["repo"]
-						}
-					},
-					{
-						"if": {
-							"required": ["repo"]
-						},
-						"then": {
-							"properties": {
-								"history": {
-									"items": {
-										"if": {
-											"properties": {
-												"state": {
-													"const": "done"
-												}
-											},
-											"required": ["state"]
-										},
-										"then": {
-											"required": ["version"]
-										}
-									}
 								}
 							}
 						}
