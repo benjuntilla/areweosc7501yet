@@ -99,4 +99,32 @@ describe('loadData', () => {
 			})
 		);
 	}
+
+	// Unquoted, so the TOML parser sees them as dates. Whichever layer catches them (the
+	// parser or the schema), the load must fail and name the file.
+	const nativeDates = [
+		'2026-02-30',
+		'1900-02-29',
+		'2026-10-12T24:00:00Z',
+		'2026-02-30T10:00:00Z',
+		'2026-10-12T23:59:60Z'
+	];
+	for (const date of nativeDates) {
+		it.effect(`rejects a native ${date} in the latest block`, () =>
+			Effect.gen(function* () {
+				const toml = kittyToml.replace('date = 2026-10-13\n', `date = ${date}\n`);
+				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(
+					/^\/data\/entries\/kitty\.toml: /u
+				);
+			})
+		);
+		it.effect(`rejects a native ${date} in an earlier block`, () =>
+			Effect.gen(function* () {
+				const toml = kittyToml.replace('date = 2026-10-12T08:00:00Z', `date = ${date}`);
+				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(
+					/^\/data\/entries\/kitty\.toml: /u
+				);
+			})
+		);
+	}
 });
