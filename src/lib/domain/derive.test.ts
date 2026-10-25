@@ -192,6 +192,21 @@ describe('popover sentence', () => {
 		expect(one(merged)).toBe('Merged on Oct 13, not in a release yet.');
 	});
 
+	it('dates an open PR or request from when its source was first cited', () => {
+		const pr = 'https://github.com/o/x/pull/7';
+		const issue = 'https://github.com/o/x/issues/3';
+		expect(
+			sentenceOf(
+				entry({ history: [block('2026-10-12', 'working', pr), block('2026-10-20', 'working', pr)] })
+			)
+		).toBe('PR #7 has been open since Oct 12.');
+		expect(
+			sentenceOf(
+				entry({ history: [block('2026-10-10', 'idle', issue), block('2026-10-18', 'idle', issue)] })
+			)
+		).toBe('No code yet. The request has been open since Oct 10.');
+	});
+
 	it('says no code yet with no history', () => {
 		expect(sentenceOf(entry())).toBe('No code yet.');
 	});

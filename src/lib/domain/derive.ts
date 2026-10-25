@@ -100,11 +100,26 @@ const shortDate = new Intl.DateTimeFormat('en-US', {
 export const formatDay = (date: string): string =>
 	shortDate.format(new Date(`${utcDay(date)}T00:00:00Z`));
 
+/** Where the current source was first cited: blocks that repeat the state and source are evidence only. */
+const sourceStart = (e: Entry): HistoryBlock | undefined => {
+	let i = e.history.length - 1;
+	while (
+		i > 0 &&
+		e.history[i - 1]?.state === e.history[i]?.state &&
+		e.history[i - 1]?.source === e.history[i]?.source
+	) {
+		i--;
+	}
+	return e.history[i];
+};
+
 /** The popover sentence, written from the current state and its history block. */
 export const sentenceOf = (e: Entry): string => {
 	const b = currentBlock(e);
 	if (b === undefined) return 'No code yet.';
 	const d = formatDay(b.date);
+	// "Open since" dates come from when the PR or request was first cited.
+	const since = formatDay(sourceStart(e)?.date ?? b.date);
 	switch (b.state) {
 		case 'done':
 			return b.version === undefined
@@ -112,7 +127,7 @@ export const sentenceOf = (e: Entry): string => {
 				: `Shipped in ${b.version} on ${d}.`;
 		case 'working': {
 			const pr = /\/pull\/(\d+)/u.exec(b.source);
-			if (pr) return `PR #${pr[1]} has been open since ${d}.`;
+			if (pr) return `PR #${pr[1]} has been open since ${since}.`;
 			if (/\/commit\//u.test(b.source)) {
 				const tag = e.github?.latest_release_tag;
 				const latest = tag === undefined ? '' : ` Latest is ${tag}.`;
@@ -124,7 +139,7 @@ export const sentenceOf = (e: Entry): string => {
 			return `The maintainer closed the request on ${d} without adding support.`;
 		case 'idle':
 			return /\/issues\/\d+/u.test(b.source)
-				? `No code yet. The request has been open since ${d}.`
+				? `No code yet. The request has been open since ${since}.`
 				: 'No code yet.';
 		case 'error':
 			return `The implementation PR was closed on ${d} without merging.`;
