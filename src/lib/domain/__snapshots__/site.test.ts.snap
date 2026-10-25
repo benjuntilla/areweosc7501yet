@@ -1,0 +1,183 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`site > builds a data.json that matches its own schema 1`] = `
+{
+  "entries": [
+    {
+      "category": "coding-agents",
+      "featured": true,
+      "github": {
+        "stars": 50000,
+      },
+      "history": [
+        {
+          "date": "2026-10-09T01:00:00Z",
+          "source": "https://github.com/openai/codex/issues/1",
+          "state": "idle",
+        },
+        {
+          "date": "2026-10-09T05:00:00Z",
+          "source": "https://github.com/openai/codex/pull/2",
+          "state": "working",
+        },
+        {
+          "date": "2026-10-20T10:30:00Z",
+          "source": "https://github.com/openai/codex/releases/tag/rust-v0.50.0",
+          "state": "done",
+          "version": "rust-v0.50.0",
+        },
+      ],
+      "last_checked_date": "2026-10-24",
+      "name": "Codex",
+      "repo": "openai/codex",
+      "role": "program",
+      "slug": "codex",
+      "spec_revision": "0.4",
+      "state": "done",
+      "url": "https://github.com/openai/codex",
+    },
+    {
+      "category": "emulators",
+      "featured": true,
+      "github": {
+        "latest_release_date": "2026-10-01",
+        "latest_release_tag": "v0.49.2",
+        "stars": 35419,
+      },
+      "history": [
+        {
+          "date": "2026-10-09",
+          "source": "https://github.com/kovidgoyal/kitty/issues/10638",
+          "state": "idle",
+        },
+        {
+          "date": "2026-10-12T08:00:00Z",
+          "source": "https://github.com/kovidgoyal/kitty/pull/10657",
+          "state": "working",
+        },
+        {
+          "date": "2026-10-13",
+          "source": "https://github.com/kovidgoyal/kitty/commit/0e1b7f4",
+          "state": "working",
+        },
+      ],
+      "last_checked_date": "2026-10-24",
+      "name": "kitty",
+      "repo": "kovidgoyal/kitty",
+      "role": "terminal",
+      "slug": "kitty",
+      "spec_revision": "0.4",
+      "state": "working",
+      "url": "https://github.com/kovidgoyal/kitty",
+    },
+    {
+      "category": "multiplexers",
+      "featured": true,
+      "history": [
+        {
+          "date": "2026-10-06",
+          "source": "https://www.superlogical.com/rex/docs/build/program-status",
+          "state": "done",
+        },
+      ],
+      "is_featured": true,
+      "last_checked_date": "2026-10-24",
+      "name": "Rex",
+      "role": "terminal",
+      "slug": "rex",
+      "spec_revision": "0.4",
+      "state": "done",
+      "url": "https://www.superlogical.com/rex",
+    },
+    {
+      "category": "clis",
+      "featured": false,
+      "github": {
+        "stars": 12,
+      },
+      "history": [],
+      "last_checked_date": "2026-10-24",
+      "name": "tiny",
+      "repo": "someone/tiny",
+      "role": "program",
+      "slug": "tiny",
+      "spec_revision": "0.4",
+      "state": "idle",
+      "url": "https://github.com/someone/tiny",
+    },
+  ],
+  "generatedAt": "2026-10-24T14:00:00.000Z",
+  "schemaVersion": 1,
+  "spec": {
+    "current": "0.4",
+    "revisions": [
+      {
+        "date": "2026-10-10",
+        "number": "0.4",
+        "url": "https://example.com/spec",
+      },
+    ],
+  },
+  "verdicts": {
+    "program": {
+      "done": 1,
+      "featured": 1,
+      "score": 1,
+      "word": "Yes",
+      "working": 0,
+    },
+    "terminal": {
+      "done": 1,
+      "featured": 2,
+      "score": 0.75,
+      "word": "Almost",
+      "working": 1,
+    },
+  },
+}
+`;
+
+exports[`site > builds change rows from featured entries, newest first 1`] = `
+[
+  {
+    "date": "2026-10-20T10:30:00Z",
+    "day": "2026-10-20",
+    "from": "working",
+    "name": "Codex",
+    "slug": "codex",
+    "source": "https://github.com/openai/codex/releases/tag/rust-v0.50.0",
+    "to": "done",
+    "version": "rust-v0.50.0",
+  },
+  {
+    "date": "2026-10-12T08:00:00Z",
+    "day": "2026-10-12",
+    "from": "idle",
+    "name": "kitty",
+    "slug": "kitty",
+    "source": "https://github.com/kovidgoyal/kitty/pull/10657",
+    "to": "working",
+    "version": undefined,
+  },
+  {
+    "date": "2026-10-09T05:00:00Z",
+    "day": "2026-10-09",
+    "from": undefined,
+    "name": "Codex",
+    "slug": "codex",
+    "source": "https://github.com/openai/codex/pull/2",
+    "to": "working",
+    "version": undefined,
+  },
+  {
+    "date": "2026-10-06",
+    "day": "2026-10-06",
+    "from": undefined,
+    "name": "Rex",
+    "slug": "rex",
+    "source": "https://www.superlogical.com/rex/docs/build/program-status",
+    "to": "done",
+    "version": undefined,
+  },
+]
+`;
