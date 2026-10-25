@@ -1,56 +1,18 @@
-# sv
+# Are We OSC 7501 Yet?
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Which terminals and programs support OSC 7501, the Program Status Protocol. Live at [areweosc7501yet.com](https://areweosc7501yet.com).
 
-## Creating a project
+Each project is one TOML file in [`data/entries/`](data/entries). A weekly check refreshes stars and releases and opens a PR when a state changes. Spotted something out of date? Open an issue or a PR against its file.
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
+## Running it
 
 ```sh
-# recreate this project
-pnpm dlx sv@1.1.1 create --template minimal --types ts --install pnpm .
+pnpm install
+pnpm dev
 ```
 
-## Adding features
+See [CLAUDE.md](CLAUDE.md) for the other commands and the conventions.
 
-Add features to your project with `sv add`:
+## License
 
-```sh
-npx sv add
-```
-
-For example, to add Tailwind CSS:
-
-```sh
-npx sv add tailwindcss
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Code is [MIT](LICENSE). Data is [CC0](data/LICENSE).

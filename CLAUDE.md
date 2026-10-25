@@ -1,0 +1,52 @@
+# areweosc7501yet
+
+A static SvelteKit site that tracks OSC 7501 (Program Status Protocol) support. Each project is one TOML file in `data/entries/`. The build decodes them, derives every state and verdict, and prerenders the pages plus `/data.json`.
+
+## Commands
+
+Node 24 and pnpm 10 (pinned in `.node-version` and `packageManager`).
+
+```sh
+pnpm dev            # dev server; editing data/ hot-reloads
+pnpm lint           # oxlint, type-aware (options in .oxlintrc.json)
+pnpm format         # oxfmt (TS, Svelte, CSS, JSON, TOML, Markdown)
+pnpm check          # svelte-check: types, template types, a11y
+pnpm test           # vitest unit tests
+pnpm build          # vite build into build/
+```
+
+CI runs all of these.
+
+## Editor
+
+Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI.
+
+## Layout and the Effect boundary
+
+- `src/lib/domain/`: Effect. Schema, loading, derivations, data.json. No SvelteKit imports, so tests and scripts use it directly.
+- `src/lib/server/`: the one place that reads `data/` (through `import.meta.glob`) and caches the derived site.
+- `src/lib/components/`, `src/lib/client/`, `src/routes/`: plain Svelte and TypeScript. No Effect ships to the browser.
+- `scripts/`: Node scripts run with `NodeRuntime.runMain`.
+- `data/entries/*.toml`: no comments, since the weekly checker rewrites these files. Caveats go in `note`. An empty `history` means idle.
+
+## Version control
+
+Use jj; the repo is colocated with git.
+
+```sh
+jj new main                      # start work on a fresh change
+jj describe -m "feat(rail): …"   # name the change
+jj new                           # start the next one
+jj squash --into <change>        # fold a fix into the commit it fixes
+jj absorb                        # or let jj pick the commits
+jj git push --bookmark <name>    # push; force-pushing your own branch is fine
+```
+
+Commits and PRs:
+
+- Every PR is squash-merged, so the PR title becomes the one commit on `main`. Title it as a Conventional Commit: `type(scope): summary`. Types: feat, fix, perf, refactor, docs, test, build, ci, chore, revert. Scopes name the area: data, schema, checker, overview, changes, rail, drum, popover, search, theme, feed, og, deps. Lowercase, imperative, no trailing period. CI checks the title.
+- CodeRabbit reviews every PR, and a PR merges only once it has no changes requested. Fix each finding or reply with why it doesn't apply.
+- Commits on a PR branch can be work in progress; they don't reach `main` one by one.
+- Big changes go up as a stack of PRs with `gh stack` (each layer builds, lints and tests on its own, and the stack merges bottom-up with `gh stack merge --squash`). With jj, push the bookmarks and run `gh stack link <bottom> … <top>`.
+- No AI attribution anywhere: no Co-Authored-By trailer, no session links, no "Generated with" lines, in commits, PR titles or PR bodies. CI rejects them in commits and titles.
+- Don't name milestones in titles, bodies or commits. They mean nothing to outside readers.
