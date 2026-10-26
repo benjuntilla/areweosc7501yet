@@ -4,7 +4,8 @@ repo = "microsoft/intelligent-terminal"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+note = "The pull request adds it as an experimental feature."
+last_checked_date = 2026-10-26
 
 [github]
 stars = 2079
@@ -15,3 +16,8 @@ latest_release_date = 2026-09-14
 date = 2026-10-07
 state = "idle"
 source = "https://github.com/microsoft/intelligent-terminal/issues/1096"
+
+[[history]]
+date = 2026-10-25T13:18:14Z
+state = "working"
+source = "https://github.com/microsoft/intelligent-terminal/pull/1232"

@@ -5,7 +5,7 @@ role = "program"
 category = "coding-agents"
 is_featured = false
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-26
 
 [github]
 stars = 35954
@@ -13,7 +13,7 @@ latest_release_tag = "v2.51.0"
 latest_release_date = 2026-10-24
 
 [[history]]
-date = 2026-10-14
+date = 2026-10-14T01:27:37Z
 state = "done"
-source = "https://github.com/esengine/DeepSeek-Reasonix/pull/12976"
-version = "studio-v2.39.0"
+source = "https://github.com/esengine/DeepSeek-Reasonix/releases/tag/v2.39.0"
+version = "v2.39.0"
