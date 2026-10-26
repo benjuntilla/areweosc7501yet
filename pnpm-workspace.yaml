@@ -3,3 +3,6 @@ engineStrict: true
 allowBuilds:
   esbuild: true
   lefthook: true
+
+patchedDependencies:
+  effect@4.0.6: patches/effect@4.0.6.patch

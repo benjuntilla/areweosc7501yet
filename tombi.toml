@@ -1,0 +1,9 @@
+# Validates and completes data/entries/*.toml in editors with the Tombi extension.
+# oxfmt is the only formatter, so Tombi's is off.
+
+[[schemas]]
+path = "schema/entry.schema.json"
+include = ["data/entries/*.toml"]
+
+[lsp.formatting]
+enabled = false
