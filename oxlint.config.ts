@@ -5,6 +5,7 @@ export default defineConfig({
 		typeAware: true,
 		denyWarnings: true
 	},
+	jsPlugins: [{ name: 'eslint-js', specifier: 'oxlint-plugin-eslint' }],
 	plugins: ['typescript', 'unicorn', 'oxc', 'import', 'promise', 'vitest'],
 	categories: {
 		correctness: 'error',
@@ -22,6 +23,43 @@ export default defineConfig({
 		'vitest/no-standalone-expect': ['error', { additionalTestBlockFunctions: ['it.effect'] }]
 	},
 	overrides: [
+		{
+			// The domain runs under plain Node in tests and scripts, so it can't lean on SvelteKit.
+			files: ['src/lib/domain/**'],
+			rules: {
+				'eslint/no-restricted-imports': [
+					'error',
+					{
+						patterns: [
+							{
+								group: ['$app', '$app/*', '$env/*', '$lib', '$lib/*', '$service-worker'],
+								message:
+									'src/lib/domain/ must not use SvelteKit aliases; import with a relative path.'
+							},
+							{
+								group: ['svelte', 'svelte/*', '@sveltejs/*', '*.svelte'],
+								message: 'src/lib/domain/ must not import Svelte or SvelteKit.'
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			// Scripts run through NodeRuntime.runMain, which wires up logging, errors and signals.
+			files: ['scripts/**'],
+			rules: {
+				'eslint-js/no-restricted-syntax': [
+					'error',
+					{
+						selector:
+							// A call, either NodeRuntime.runMain(program) or program.pipe(NodeRuntime.runMain).
+							"Program:not(:has(CallExpression[callee.object.name='NodeRuntime'][callee.property.name='runMain'], CallExpression > MemberExpression.arguments[object.name='NodeRuntime'][property.name='runMain']))",
+						message: 'Run scripts with NodeRuntime.runMain.'
+					}
+				]
+			}
+		},
 		{
 			files: ['**/*.test.ts'],
 			rules: {
