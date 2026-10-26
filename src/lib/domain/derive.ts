@@ -1,4 +1,5 @@
 import { Array, DateTime, Match, Option, String as Str } from 'effect';
+import * as patterns from './patterns.ts';
 import type { Entry, HistoryBlock, Role, State } from './schema.ts';
 import type { SlugEntry } from './load.ts';
 
@@ -106,10 +107,6 @@ export const formatDay = (date: DateTime.Utc): string =>
 		day: 'numeric'
 	});
 
-const pullRequest = /\/pull\/(\d+)/u;
-const isCommit = (source: string) => Option.isSome(Str.match(/\/commit\//u)(source));
-const isIssue = (source: string) => Option.isSome(Str.match(/\/issues\/\d+/u)(source));
-
 /** The popover sentence, written from the current state and its history block. */
 export const sentenceOf = (e: Entry): string =>
 	Option.match(currentBlock(e), {
@@ -128,10 +125,10 @@ export const sentenceOf = (e: Entry): string =>
 						: `Shipped in ${b.version} on ${d}.`
 				),
 				Match.when('working', () =>
-					Option.match(Str.match(pullRequest)(b.source), {
+					Option.match(Str.match(patterns.pullRequest)(b.source), {
 						onSome: (pr) => `PR #${pr[1] ?? ''} has been open since ${since}.`,
 						onNone: () => {
-							if (!isCommit(b.source)) return `Announced on ${since}.`;
+							if (!patterns.commit.test(b.source)) return `Announced on ${since}.`;
 							const tag = e.github?.latest_release_tag;
 							const latest = tag === undefined ? '' : ` Latest is ${tag}.`;
 							return `Merged on ${d}, not in a release yet.${latest}`;
@@ -143,7 +140,7 @@ export const sentenceOf = (e: Entry): string =>
 					() => `The implementation PR was closed on ${began} without merging.`
 				),
 				Match.when('idle', () =>
-					isIssue(b.source)
+					patterns.issue.test(b.source)
 						? `No code yet. The request has been open since ${since}.`
 						: 'No code yet.'
 				),
