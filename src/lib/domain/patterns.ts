@@ -8,6 +8,12 @@ export const uriCharacters = /^[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=%]*$/u;
 export const repo = /^[\w.-]+\/[\w.-]+$/u;
 /** An entry file's name: lowercase words joined by hyphens. */
 export const slug = /^[a-z0-9]+(-[a-z0-9]+)*$/u;
+/** A pull request link, with its number in group 1. */
+export const pullRequest = /\/pull\/(\d+)/u;
+/** A commit link. */
+export const commit = /\/commit\//u;
+/** An issue link. */
+export const issue = /\/issues\/\d+/u;
 
 // The URL pattern, as JSON Schema regex source.
 const userinfo = '([^/?#\\s@]*@)?';
