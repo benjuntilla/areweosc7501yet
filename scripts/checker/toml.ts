@@ -13,7 +13,7 @@ const str = (v: unknown) => JSON.stringify(v).replaceAll('\u007F', '\\u007F');
 
 const value = (key: string, v: unknown): string => {
 	if (typeof v === 'string') return dateKeys.has(key) ? date(v) : str(v);
-	if (globalThis.Array.isArray(v)) return `[${v.map((x) => str(x)).join(', ')}]`;
+	if (Array.isArray(v)) return `[${v.map((x) => str(x)).join(', ')}]`;
 	return String(v);
 };
 

@@ -9,8 +9,8 @@ import { specToml } from '../../src/lib/domain/fixtures.ts';
 import { checkEntry } from './check.ts';
 import { writeEntry } from './toml.ts';
 
-// Trimmed GitHub responses, recorded on Oct 26, 2026, keyed by path and query.
-type Recorded = Readonly<Record<string, unknown>>;
+// GitHub responses recorded on Oct 26, 2026, trimmed to what the checker reads and keyed by path
+// and query.
 
 const release = (repo: string, tag: string, at: string, prerelease = false) => ({
 	tag_name: tag,
@@ -20,7 +20,7 @@ const release = (repo: string, tag: string, at: string, prerelease = false) => (
 	published_at: at
 });
 
-const pebrel: Recorded = {
+const pebrel = {
 	'/repos/Kuddev/pebrel': { stargazers_count: 3602 },
 	'/repos/Kuddev/pebrel/releases?per_page=30': [
 		release('Kuddev/pebrel', 'v2.3.0', '2026-10-26T05:14:08Z'),
@@ -42,7 +42,7 @@ const pebrel: Recorded = {
 	}
 };
 
-const kitty: Recorded = {
+const kitty = {
 	'/repos/kovidgoyal/kitty': { stargazers_count: 35419 },
 	'/repos/kovidgoyal/kitty/releases?per_page=30': [
 		release('kovidgoyal/kitty', 'v0.49.2', '2026-10-01T04:00:00Z')
@@ -55,7 +55,7 @@ const kitty: Recorded = {
 	}
 };
 
-const tmux = (state: 'open' | 'closed', reason: string | null): Recorded => ({
+const tmux = (state: 'open' | 'closed', reason: string | null) => ({
 	'/repos/tmux/tmux': { stargazers_count: 41000 },
 	'/repos/tmux/tmux/releases?per_page=30': [],
 	'/repos/tmux/tmux/issues/5713': {
@@ -69,7 +69,7 @@ const tmux = (state: 'open' | 'closed', reason: string | null): Recorded => ({
 	]
 });
 
-const termy: Recorded = {
+const termy = {
 	'/repos/lassejlv/termy': { stargazers_count: 452 },
 	'/repos/lassejlv/termy/releases?per_page=30': [
 		release('lassejlv/termy', 'v1.0.0-rc.9', '2026-10-25T08:00:00Z', true),
@@ -82,7 +82,7 @@ const termy: Recorded = {
 	)
 };
 
-const kimi: Recorded = {
+const kimi = {
 	'/repos/MoonshotAI/kimi-code': { stargazers_count: 9000 },
 	'/repos/MoonshotAI/kimi-code/releases?per_page=30': [
 		release('MoonshotAI/kimi-code', 'desktop-v0.4.0', '2026-10-25T00:00:00Z'),
@@ -90,7 +90,7 @@ const kimi: Recorded = {
 	]
 };
 
-const fakeGitHub = (recorded: Recorded) =>
+const fakeGitHub = (recorded: Record<string, unknown>) =>
 	Layer.mergeAll(
 		Gh.credentials({ token: Redacted.make('test') }),
 		Layer.succeed(
@@ -131,7 +131,7 @@ ${history}
 const block = (state: string, source: string, date = '2026-10-12') =>
 	`[[history]]\ndate = ${date}\nstate = "${state}"\nsource = "${source}"\n`;
 
-const run = (text: string, recorded: Recorded) =>
+const run = (text: string, recorded: Record<string, unknown>) =>
 	entry(text).pipe(
 		Effect.flatMap((e) => checkEntry(e, now)),
 		Effect.provide(fakeGitHub(recorded))
@@ -177,7 +177,7 @@ describe('checkEntry', () => {
 		})
 	);
 
-	it.effect('follows a blocked PR that was reopened and merged', () =>
+	it.effect('follows a blocked PR that was later merged', () =>
 		Effect.gen(function* () {
 			const r = yield* run(
 				toml(

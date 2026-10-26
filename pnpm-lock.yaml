@@ -175,6 +175,9 @@ importers:
       '@cloudflare/config':
         specifier: 0.28.0
         version: 0.28.0
+      '@distilled.cloud/core':
+        specifier: 1.0.0-rc.17
+        version: 1.0.0-rc.17(effect@4.0.6(patch_hash=5beb52ddadde961602f3df4e701e1ff7dca34f50df8f81f16cd87557a63a7eb4))
       '@distilled.cloud/github':
         specifier: 1.0.0-rc.17
         version: 1.0.0-rc.17(effect@4.0.6(patch_hash=5beb52ddadde961602f3df4e701e1ff7dca34f50df8f81f16cd87557a63a7eb4))

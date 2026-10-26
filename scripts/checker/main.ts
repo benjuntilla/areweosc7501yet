@@ -1,13 +1,13 @@
 // Rechecks every entry against GitHub, rewrites the files that changed and writes the PR body.
+import { ResponseValidation } from '@distilled.cloud/core';
+import * as Gh from '@distilled.cloud/github';
 import { NodeRuntime, NodeServices } from '@effect/platform-node';
 import { Array, DateTime, Effect, FileSystem, Layer, Option } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { FetchHttpClient } from 'effect/http';
-import { ChildProcess, ChildProcessSpawner } from 'effect/process';
 import { sameRepo } from '../../src/lib/domain/formats.ts';
 import { loadData } from '../../src/lib/domain/load.ts';
 import { checkEntry, type Checked } from './check.ts';
-import * as GitHub from './github.ts';
 import { writeEntry } from './toml.ts';
 
 const dir = 'data/entries';
@@ -16,28 +16,38 @@ const queries = ['"OSC 7501"', '"Program Status Protocol"'];
 const mentions = /osc[\s-]*7501|program status protocol/iu;
 const staleDays = 30;
 
-const day = (d: DateTime.Utc) => DateTime.formatIsoDateUtc(d);
-
 /** One issue or PR per untracked repo that mentioned the protocol in the past week. */
 const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
 	Effect.gen(function* () {
-		const hits = yield* Effect.forEach(queries, (q) =>
-			GitHub.search(`${q} created:>=${day(since)}`)
-		);
+		const hits: Array<Gh.search.IssueSearchResultItem> = [];
+		for (const q of queries) {
+			// Search stops at 1,000 results, ten pages of 100.
+			for (let page = 1; page <= 10; page++) {
+				const s = yield* Gh.search.issuesAndPullRequests({
+					q: `${q} created:>=${DateTime.formatIsoDateUtc(since)}`,
+					per_page: 100,
+					page
+				});
+				// GitHub timed out part of the search, so the hits can't be trusted as complete.
+				if (s.incomplete_results) {
+					return yield* Effect.fail(new Error(`search for ${q} came back incomplete`));
+				}
+				hits.push(...s.items);
+				if (s.items.length < 100) break;
+			}
+		}
 		return Array.dedupeWith(
-			hits
-				.flat()
-				.filter(
-					(h) =>
-						h.user.type !== 'Bot' &&
-						mentions.test(`${h.title}\n${h.body ?? ''}`) &&
-						!tracked.some((r) => sameRepo(r, repoOf(h)))
-				),
+			hits.filter(
+				(h) =>
+					h.user?.type !== 'Bot' &&
+					mentions.test(`${h.title}\n${h.body ?? ''}`) &&
+					!tracked.some((r) => sameRepo(r, repoOf(h)))
+			),
 			(a, b) => repoOf(a) === repoOf(b)
 		);
 	});
 
-const repoOf = (h: GitHub.SearchHit) =>
+const repoOf = (h: Gh.search.IssueSearchResultItem) =>
 	h.repository_url.replace('https://api.github.com/repos/', '');
 
 // Titles come from strangers: keep them from closing the link, pinging people or linking issues here.
@@ -46,7 +56,7 @@ const inert = (s: string) =>
 
 const body = (
 	results: ReadonlyArray<Checked>,
-	found: Option.Option<ReadonlyArray<GitHub.SearchHit>>,
+	found: Option.Option<ReadonlyArray<Gh.search.IssueSearchResultItem>>,
 	stale: ReadonlyArray<{ slug: string; last: string }>
 ) => {
 	const changes = results.flatMap((r) => r.changes);
@@ -88,33 +98,31 @@ const run = (bodyPath: string) =>
 		);
 		const { entries } = yield* loadData(files, yield* fs.readFileString('data/spec.toml'));
 
-		const results = yield* Effect.forEach(entries, (e) => checkEntry(e, now), { concurrency: 4 });
-		const written = yield* Effect.filter(results, ({ entry }) =>
-			Effect.gen(function* () {
-				const path = `${dir}/${entry.slug}.toml`;
-				const text = yield* writeEntry(entry);
-				if (text === files[path]) return false;
+		// Checked against GitHub's schema, so a malformed response becomes that entry's note. Search
+		// stays unchecked: its results break the schema with null bodies.
+		const results = yield* Effect.forEach(entries, (e) => checkEntry(e, now), {
+			concurrency: 4
+		}).pipe(Effect.provide(ResponseValidation.additionalProperties));
+		const written: Array<string> = [];
+		for (const { entry } of results) {
+			const path = `${dir}/${entry.slug}.toml`;
+			const text = yield* writeEntry(entry);
+			if (text !== files[path]) {
 				yield* fs.writeFileString(path, text);
-				return true;
-			})
-		).pipe(Effect.map((rs) => rs.map(({ entry }) => `${dir}/${entry.slug}.toml`)));
-		if (written.length > 0) {
-			const spawner = yield* ChildProcessSpawner.ChildProcessSpawner;
-			yield* spawner.string(ChildProcess.make('pnpm', ['-s', 'oxfmt', ...written]));
+				written.push(path);
+			}
 		}
 
 		const tracked = entries.flatMap((e) => (e.repo === undefined ? [] : [e.repo]));
 		const found = yield* candidates(tracked, DateTime.subtract(now, { days: 7 })).pipe(
-			Effect.map(Option.some),
-			Effect.catch((e) =>
-				Effect.as(Effect.logWarning(`candidate search failed: ${e.message}`), Option.none())
-			)
+			Effect.tapError((e) => Effect.logWarning(`candidate search failed: ${e.message}`)),
+			Effect.option
 		);
 		const cutoff = DateTime.subtract(DateTime.removeTime(now), { days: staleDays });
 		const stale = results
 			.map((r) => r.entry)
 			.filter((e) => DateTime.isLessThan(e.last_checked_date, cutoff))
-			.map((e) => ({ slug: e.slug, last: day(e.last_checked_date) }));
+			.map((e) => ({ slug: e.slug, last: DateTime.formatIsoDateUtc(e.last_checked_date) }));
 		yield* fs.writeFileString(bodyPath, `${body(results, found, stale)}\n`);
 		yield* Effect.log(`rewrote ${written.length} files`);
 	});
@@ -127,8 +135,6 @@ const checker = Command.make(
 
 NodeRuntime.runMain(
 	Command.run(checker, { version: '0.0.0' }).pipe(
-		Effect.provide(
-			Layer.mergeAll(NodeServices.layer, FetchHttpClient.layer, GitHub.CredentialsFromEnv)
-		)
+		Effect.provide(Layer.mergeAll(NodeServices.layer, FetchHttpClient.layer, Gh.CredentialsFromEnv))
 	)
 );
