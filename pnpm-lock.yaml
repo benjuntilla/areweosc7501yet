@@ -187,6 +187,9 @@ importers:
       oxlint:
         specifier: 1.89.0
         version: 1.89.0(oxlint-tsgolint@7.0.2005)
+      oxlint-plugin-eslint:
+        specifier: 1.89.0
+        version: 1.89.0
       oxlint-tsgolint:
         specifier: 7.0.2005
         version: 7.0.2005
@@ -947,6 +950,10 @@ packages:
       vite-plus:
         optional: true
 
+  oxlint-plugin-eslint@1.89.0:
+    resolution: {integrity: sha512-UuYpNpDZmm9E/BAgLy/CNvMN/2v+jo4zw0/fNB49krY+4/7UZ66OWYt9BM271CD83g6qSdPF+nHxTd2M0eMvjQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+
   oxlint-tsgolint@7.0.2005:
     resolution: {integrity: sha512-6ccPGu4u4J9bwYPHXBFPee3RZrX3BboRdU7k14zRDDB1lvN3O7J/vPRFdaEfa1+CWx4xnQQOp4ctoaF66oO0uw==}
     hasBin: true
@@ -1551,6 +1558,8 @@ snapshots:
       '@oxfmt/binding-win32-ia32-msvc': 0.74.0
       '@oxfmt/binding-win32-x64-msvc': 0.74.0
       svelte: 5.57.2
+
+  oxlint-plugin-eslint@1.89.0: {}
 
   oxlint-tsgolint@7.0.2005:
     optionalDependencies:
