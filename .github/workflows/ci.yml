@@ -42,4 +42,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: node scripts/ci.ts
-      - run: pnpm build
+      - name: Build with cf
+        run: pnpm cf build
+      - name: Build Output exists
+        run: |
+          test -f .cloudflare/output/v0/config.json
+          test -f .cloudflare/output/v0/workers/default/worker.config.json
+          test -f .cloudflare/output/v0/workers/default/assets/index.html
+          test -f .cloudflare/output/v0/workers/default/assets/data.json
