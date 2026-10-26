@@ -144,43 +144,6 @@
 					}
 				}
 			}
-		},
-		{
-			"if": {
-				"properties": {
-					"url": {
-						"pattern": "^https://([^/?#\\s@]*@)?github\\.com(:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)"
-					}
-				},
-				"required": ["url"]
-			},
-			"then": {
-				"required": ["repo"]
-			}
-		},
-		{
-			"if": {
-				"required": ["repo"]
-			},
-			"then": {
-				"properties": {
-					"history": {
-						"items": {
-							"if": {
-								"properties": {
-									"state": {
-										"const": "done"
-									}
-								},
-								"required": ["state"]
-							},
-							"then": {
-								"required": ["version"]
-							}
-						}
-					}
-				}
-			}
 		}
 	]
 }

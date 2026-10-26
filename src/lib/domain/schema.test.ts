@@ -1,7 +1,6 @@
 import { describe, expect, it } from '@effect/vitest';
 import { Option, Schema } from 'effect';
-import { githubRepoUrl } from './patterns.ts';
-import { githubRepoOf, isPlainGithubUrl } from './formats.ts';
+import { githubRepoOf } from './formats.ts';
 import { HistoryBlock } from './schema.ts';
 
 const isHistoryDate = (s: string) =>
@@ -75,43 +74,5 @@ describe('githubRepoOf', () => {
 		['https://github.com/a', undefined]
 	])('%s is %s', (url, repo) => {
 		expect(Option.getOrUndefined(githubRepoOf(url))).toBe(repo);
-	});
-});
-
-describe('the published GitHub repository URL condition', () => {
-	const pattern = new RegExp(githubRepoUrl, 'u');
-	it.each([
-		'https://github.com/kovidgoyal/kitty',
-		'https://github.com/kovidgoyal/kitty/',
-		'https://github.com/kovidgoyal/kitty.git',
-		'https://github.com/kovidgoyal/kitty/pull/10657',
-		'https://github.com/o/x?tab=readme',
-		'https://github.com/a/?x',
-		'https://github.com/a#x',
-		'https://github.com/kovidgoyal',
-		'https://github.com/',
-		'https://codeberg.org/dnkl/foot',
-		'https://x@github.com/a/b',
-		'https://x:y@github.com:443/a/b',
-		'https://github.com//a//b',
-		'https://github.com.evil.com/a/b'
-	])('agrees with githubRepoOf on %s', (url) => {
-		expect(pattern.test(url)).toBe(Option.isSome(githubRepoOf(url)));
-	});
-});
-
-describe('isPlainGithubUrl', () => {
-	it.each([
-		['https://github.com/kovidgoyal/kitty', true],
-		['https://x@github.com/a/b', true],
-		['https://x:y@github.com:443/a/b', true],
-		['https://GitHub.com/a/b', false],
-		['https://github.com//a//b', true],
-		['https://codeberg.org/dnkl/foot', true],
-		['https://github.com/a/b/../c', false],
-		['https://%67ithub.com/a/b', false],
-		['https://github.com/%2e%2e/x/y', false]
-	])('%s is %s', (url, ok) => {
-		expect(isPlainGithubUrl(url)).toBe(ok);
 	});
 });

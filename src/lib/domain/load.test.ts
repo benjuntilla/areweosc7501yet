@@ -67,9 +67,9 @@ describe('loadData', () => {
 		['a category from the other role', kittyToml({ category: '"clis"' }), /category/u],
 		['a GitHub url without a repo', kittyToml({ repo: '' }), /repo/u],
 		[
-			'a mixed-case GitHub url',
+			'a mixed-case GitHub url without a repo',
 			kittyToml({ repo: '', url: '"https://GitHub.com/kovidgoyal/kitty"' }),
-			/plain form/u
+			/repo/u
 		],
 		['a repo that differs from the url', kittyToml({ repo: '"someone/else"' }), /repo/u],
 		['an unknown state', kittyToml({ idleState: '"maybe"' }), /state/u],

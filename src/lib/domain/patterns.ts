@@ -9,16 +9,11 @@ export const repo = /^[\w.-]+\/[\w.-]+$/u;
 /** An entry file's name: lowercase words joined by hyphens. */
 export const slug = /^[a-z0-9]+(-[a-z0-9]+)*$/u;
 
-// URL patterns, as JSON Schema regex source. Each optional part is one group, so the GitHub
-// pattern's owner and name are groups 3 and 4.
+// The URL pattern, as JSON Schema regex source.
 const userinfo = '([^/?#\\s@]*@)?';
 const host = '[^/?#\\s@:]+';
 const port = '(:[0-9]*)?';
 /** The end of the URL, or the start of a path, query or fragment. */
 const end = '([/?#]|$)';
-/** A path segment, after one or more slashes. */
-const segment = '/+([^/?#]+)';
 /** A lowercase https scheme, optional userinfo, a nonempty host and an optional port. */
 export const httpsUrl = `^https://${userinfo}${host}${port}${end}`;
-/** A github.com URL (optional userinfo and port) with owner and name. */
-export const githubRepoUrl = `^https://${userinfo}github\\.com${port}${segment}${segment}${end}`;

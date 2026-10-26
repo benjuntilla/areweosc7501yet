@@ -1,6 +1,5 @@
 import { Array, DateTime, Option, Schema } from 'effect';
-import * as patterns from './patterns.ts';
-import { Day, DayOrTime, githubRepoOf, isPlainGithubUrl, Repo, sameRepo, Url } from './formats.ts';
+import { Day, DayOrTime, githubRepoOf, Repo, sameRepo, Url } from './formats.ts';
 
 export const states = ['done', 'working', 'blocked', 'idle', 'error'] as const;
 export type State = (typeof states)[number];
@@ -100,44 +99,19 @@ export const entryFields = {
 	)
 };
 
-// The rules JSON Schema can express, so Tombi and data.json readers get them too.
-// It can't compare the repo to the URL or order the history; the decoder checks those.
+// The category rule as JSON Schema, so Tombi and data.json readers get it too. The other
+// rules run only in the decoder.
 // `then` is JSON Schema's keyword here, never a promise.
 // oxlint-disable-next-line unicorn/no-thenable
 const ifThen = (cond: object, then: object) => ({ if: cond, then });
 
 const entryRulesJsonSchema = () => ({
-	allOf: [
-		...roles.map((role) =>
-			ifThen(
-				{ properties: { role: { const: role } }, required: ['role'] },
-				{ properties: { category: { enum: [...categoriesByRole[role]] } } }
-			)
-		),
-		// A GitHub repository URL needs a repo.
+	allOf: roles.map((role) =>
 		ifThen(
-			{
-				properties: {
-					url: { pattern: patterns.githubRepoUrl }
-				},
-				required: ['url']
-			},
-			{ required: ['repo'] }
-		),
-		ifThen(
-			{ required: ['repo'] },
-			{
-				properties: {
-					history: {
-						items: ifThen(
-							{ properties: { state: { const: 'done' } }, required: ['state'] },
-							{ required: ['version'] }
-						)
-					}
-				}
-			}
+			{ properties: { role: { const: role } }, required: ['role'] },
+			{ properties: { category: { enum: [...categoriesByRole[role]] } } }
 		)
-	]
+	)
 });
 
 type EntryForRules = {
@@ -161,9 +135,6 @@ const categoryFitsRole = (e: EntryForRules) =>
 		['category'],
 		`${e.category} isn't a ${e.role} category`
 	);
-
-const githubUrlIsPlain = (e: EntryForRules) =>
-	issueIf(!isPlainGithubUrl(e.url), ['url'], 'write the GitHub URL in its plain form');
 
 const githubUrlHasRepo = (e: EntryForRules) =>
 	Option.match(githubRepoOf(e.url), {
@@ -202,9 +173,8 @@ const historyInOrder = (e: EntryForRules) =>
 /** Cross-field rules for an entry. Also applied to each entry in data.json. */
 export const entryRules = Schema.makeFilter<EntryForRules>(
 	(e) =>
-		Array.flatMap(
-			[categoryFitsRole, githubUrlIsPlain, githubUrlHasRepo, doneHasVersion, historyInOrder],
-			(rule) => rule(e)
+		Array.flatMap([categoryFitsRole, githubUrlHasRepo, doneHasVersion, historyInOrder], (rule) =>
+			rule(e)
 		),
 	{ toJsonSchema: entryRulesJsonSchema }
 );
