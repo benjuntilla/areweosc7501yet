@@ -1,0 +1,26 @@
+{
+	"version": "2025.10",
+	"resolutionOrder": [
+		{ "type": "set", "name": "primitives", "sources": [{ "$ref": "primitives.tokens.json" }] },
+		{
+			"type": "modifier",
+			"name": "theme",
+			"default": "light",
+			"contexts": {
+				"light": [{ "$ref": "semantic.light.tokens.json" }],
+				"dark": [{ "$ref": "semantic.dark.tokens.json" }]
+			}
+		},
+		{
+			"type": "modifier",
+			"name": "size",
+			"default": "desktop",
+			"contexts": {
+				"desktop": [{ "$ref": "responsive.desktop.tokens.json" }],
+				"tablet": [{ "$ref": "responsive.tablet.tokens.json" }],
+				"phone": [{ "$ref": "responsive.phone.tokens.json" }]
+			}
+		},
+		{ "type": "set", "name": "components", "sources": [{ "$ref": "components.tokens.json" }] }
+	]
+}

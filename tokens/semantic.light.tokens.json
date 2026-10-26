@@ -1,0 +1,198 @@
+{
+	"color": {
+		"ink": {
+			"$type": "color",
+			"$value": "{neutral.777}"
+		},
+		"paper": {
+			"$type": "color",
+			"$value": "{neutral.30}"
+		},
+		"surface": {
+			"$type": "color",
+			"$value": "{neutral.0}"
+		},
+		"soft": {
+			"$type": "color",
+			"$value": "{neutral.777-a720}"
+		},
+		"muted": {
+			"$type": "color",
+			"$value": "{neutral.456}"
+		},
+		"faint": {
+			"$type": "color",
+			"$value": "{neutral.140}"
+		},
+		"rule": {
+			"$type": "color",
+			"$value": "{neutral.777-a122}"
+		},
+		"wash": {
+			"$type": "color",
+			"$value": "{neutral.777-a051}"
+		},
+		"accent": {
+			"$type": "color",
+			"$value": "{orange.245}"
+		},
+		"accent-strong": {
+			"$type": "color",
+			"$value": "{orange.456}"
+		},
+		"on-accent": {
+			"$type": "color",
+			"$value": "{neutral.0}"
+		},
+		"focus": {
+			"$type": "color",
+			"$value": "{violet.481}"
+		},
+		"error": {
+			"$type": "color",
+			"$value": "{red.449}"
+		},
+		"success": {
+			"$type": "color",
+			"$value": "{green.495}"
+		},
+		"hover-lighten": {
+			"$type": "color",
+			"$value": "{neutral.0}"
+		},
+		"press": {
+			"$type": "color",
+			"$value": "{neutral.777-a200}"
+		}
+	},
+	"effect": {
+		"shadow": {
+			"$type": "color",
+			"$value": "{neutral.777-a035}"
+		},
+		"ring": {
+			"$type": "color",
+			"$value": "{neutral.777-a070}"
+		}
+	},
+	"state": {
+		"done": {
+			"$type": "color",
+			"$value": "{color.success}"
+		},
+		"working": {
+			"$type": "color",
+			"$value": "{color.accent-strong}"
+		},
+		"blocked": {
+			"$type": "color",
+			"$value": "{color.focus}"
+		},
+		"idle": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"error": {
+			"$type": "color",
+			"$value": "{color.error}"
+		}
+	},
+	"code": {
+		"comment": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"function": {
+			"$type": "color",
+			"$value": "{color.accent-strong}"
+		},
+		"string": {
+			"$type": "color",
+			"$value": "{color.focus}"
+		}
+	},
+	"gradient": {
+		"lime": {
+			"$type": "color",
+			"$value": "{lime.89}"
+		},
+		"amber": {
+			"$type": "color",
+			"$value": "{amber.179}"
+		},
+		"orange": {
+			"$type": "color",
+			"$value": "{color.accent}"
+		},
+		"pink": {
+			"$type": "color",
+			"$value": "{pink.200}"
+		},
+		"lavender": {
+			"$type": "color",
+			"$value": "{lavender.175}"
+		},
+		"oklab-mid": {
+			"lime-amber": {
+				"$type": "color",
+				"$value": "{mix.lime-amber}"
+			},
+			"amber-orange": {
+				"$type": "color",
+				"$value": "{mix.amber-orange}"
+			},
+			"orange-pink": {
+				"$type": "color",
+				"$value": "{mix.orange-pink}"
+			},
+			"pink-lavender": {
+				"$type": "color",
+				"$value": "{mix.pink-lavender}"
+			}
+		}
+	},
+	"canvas": {
+		"annotation": {
+			"$type": "color",
+			"$value": "{indigo.438}"
+		},
+		"background": {
+			"$type": "color",
+			"$value": "{neutral.0}"
+		},
+		"frame-stroke": {
+			"$type": "color",
+			"$value": "{neutral.1000-a100}"
+		}
+	},
+	"browser": {
+		"light": {
+			"strip": {
+				"$type": "color",
+				"$value": "{gray.91}"
+			},
+			"tab": {
+				"$type": "color",
+				"$value": "{neutral.0}"
+			},
+			"title": {
+				"$type": "color",
+				"$value": "{gray.761}"
+			}
+		},
+		"dark": {
+			"strip": {
+				"$type": "color",
+				"$value": "{gray.752}"
+			},
+			"tab": {
+				"$type": "color",
+				"$value": "{gray.667}"
+			},
+			"title": {
+				"$type": "color",
+				"$value": "{gray.64}"
+			}
+		}
+	}
+}
