@@ -117,10 +117,14 @@ const describe =
 		Schema.annotateEncoded<S>({ description })(s);
 
 export const HistoryBlock = Schema.Struct({
-	date: DayOrTime.pipe(describe('When the state or its evidence changed, in UTC')),
-	state: Schema.Literals(states).pipe(describe('State from this date on')),
-	source: Url.pipe(describe('The PR, commit, release, issue or docs page it rests on')),
-	version: Schema.optionalKey(Schema.String.pipe(describe('The release that shipped it')))
+	date: DayOrTime.pipe(describe('When the state or its evidence changed. A date-time is in UTC.')),
+	state: Schema.Literals(states).pipe(describe('The state from this date on.')),
+	source: Url.pipe(describe('The PR, commit, release, issue or docs page that shows this state.')),
+	version: Schema.optionalKey(
+		Schema.String.pipe(
+			describe('The release that shipped support. Required for done when the entry has a repo.')
+		)
+	)
 });
 export type HistoryBlock = typeof HistoryBlock.Type;
 
@@ -128,26 +132,46 @@ export const Github = Schema.Struct({
 	stars: Schema.Int.check(Schema.isGreaterThanOrEqualTo(0)),
 	latest_release_tag: Schema.optionalKey(Schema.String),
 	latest_release_date: Schema.optionalKey(Day)
-}).pipe(describe('Written by the weekly checker'));
+}).pipe(describe("Written by the weekly checker. Don't edit it by hand."));
 
 export const entryFields = {
-	name: Schema.String.pipe(describe('Display name')),
-	url: Url.pipe(describe('Homepage or repo')),
+	name: Schema.String.pipe(describe("The project's name, as the site shows it.")),
+	url: Url.pipe(describe("The project's homepage, or its repository if it has no homepage.")),
 	repo: Schema.optionalKey(
-		Repo.pipe(describe('GitHub owner/name the checker watches. Leave it out off GitHub'))
+		Repo.pipe(
+			describe(
+				"The GitHub owner/name that the weekly checker watches. Leave it out for projects that aren't on GitHub."
+			)
+		)
 	),
-	role: Schema.Literals(roles).pipe(describe('Programs send reports, terminals show them')),
+	role: Schema.Literals(roles).pipe(
+		describe('program if it sends status reports, terminal if it shows them.')
+	),
 	category: Schema.Literals([...categoriesByRole.program, ...categoriesByRole.terminal]),
 	is_featured: Schema.optionalKey(
-		Schema.Boolean.pipe(describe('Overrides the 1,000-star rule either way'))
+		Schema.Boolean.pipe(
+			describe(
+				'Set true to feature an entry with fewer than 1,000 stars, or false to hide one with more. Leave it out to go by stars.'
+			)
+		)
 	),
-	aliases: Schema.optionalKey(Schema.Array(Schema.String).pipe(describe('Extra search terms'))),
-	spec_revision: Schema.String.pipe(describe('Spec revision it was checked against')),
-	note: Schema.optionalKey(Schema.String.pipe(describe('Caveat shown in the popover'))),
-	last_checked_date: Day.pipe(describe('Last re-verification')),
+	aliases: Schema.optionalKey(
+		Schema.Array(Schema.String).pipe(
+			describe('Other names that search should match, such as agentd for agtd.')
+		)
+	),
+	spec_revision: Schema.String.pipe(
+		describe('The OSC 7501 spec revision of the last check, such as 0.4.')
+	),
+	note: Schema.optionalKey(
+		Schema.String.pipe(describe('A caveat that the popover shows, such as how to turn support on.'))
+	),
+	last_checked_date: Day,
 	github: Schema.optionalKey(Github),
 	history: Schema.Array(HistoryBlock).pipe(
-		describe('Oldest first. The last block is the current state. No blocks means idle')
+		describe(
+			'State changes, oldest first. The last block is the current state, and no blocks means idle.'
+		)
 	)
 };
 
