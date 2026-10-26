@@ -8,7 +8,7 @@
 	import SearchDialog from '#lib/components/SearchDialog.svelte';
 	import Sidebar from '#lib/components/Sidebar.svelte';
 	import TopBar from '#lib/components/TopBar.svelte';
-	import { siteTitle } from '#lib/meta.ts';
+	import { siteTitle, siteUrl } from '#lib/meta.ts';
 	import type { LayoutProps } from './$types';
 
 	let { data, children }: LayoutProps = $props();
@@ -48,6 +48,8 @@
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 	<link rel="preload" href={inter} as="font" type="font/woff2" crossorigin="anonymous" />
 	<link rel="alternate" type="application/atom+xml" title={siteTitle} href="/feed.xml" />
+	<meta property="og:image" content={new URL('/og.png', siteUrl).href} />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <svelte:window {onkeydown} />
