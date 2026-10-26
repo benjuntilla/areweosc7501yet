@@ -380,6 +380,7 @@
 	--search-dialog-backdrop: var(--effect-backdrop);
 	--search-dialog-background: var(--color-surface);
 	--search-dialog-caret: var(--color-accent);
+	--search-dialog-empty-gap: var(--space-6);
 	--search-dialog-empty-padding-bottom: var(--space-20);
 	--search-dialog-empty-padding-top: var(--space-4);
 	--search-dialog-esc-size: var(--font-size-19);

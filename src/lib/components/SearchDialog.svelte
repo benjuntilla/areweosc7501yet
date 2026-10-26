@@ -161,7 +161,15 @@
 			{/each}
 		</div>
 	{:else if find !== undefined && q !== ''}
-		<p class="empty type-h3">Nothing matches “{q}”.</p>
+		<div class="empty">
+			<p class="type-h3">Nothing matches “{q}”.</p>
+			<p class="type-body">
+				If you think it belongs here, <a href="/contribute" onclick={() => dialog?.close()}
+					>add it</a
+				>
+				and we’ll check.
+			</p>
+		</div>
 	{/if}
 	<p class="visually-hidden" role="status">
 		{q === '' ? '' : `${matches.length} ${matches.length === 1 ? 'match' : 'matches'}`}
@@ -292,8 +300,16 @@
 	}
 
 	.empty {
+		display: flex;
+		flex-direction: column;
+		gap: var(--search-dialog-empty-gap);
 		padding: var(--search-dialog-empty-padding-top) var(--search-dialog-input-padding-x)
 			var(--search-dialog-empty-padding-bottom);
+		color: var(--search-dialog-meta);
+	}
+
+	.empty a {
+		color: var(--search-dialog-text);
 	}
 
 	/* The button and the dialog trade places: their snapshots stay unscaled at the top left while

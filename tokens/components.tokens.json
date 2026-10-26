@@ -581,6 +581,10 @@
 		"empty-padding-bottom": {
 			"$type": "dimension",
 			"$value": "{space.20}"
+		},
+		"empty-gap": {
+			"$type": "dimension",
+			"$value": "{space.6}"
 		}
 	},
 	"nav": {
