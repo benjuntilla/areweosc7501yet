@@ -21,7 +21,7 @@ pnpm cf deploy                  # build and deploy to production
 pnpm cf previews deploy <name>  # build and deploy a preview named <name>
 ```
 
-`scripts/cloudflare-adapter.ts` wraps adapter-static and writes cf's Build Output (`.cloudflare/output/v0`) from `build/`. It exists because cf 1.0.0-beta.21 runs the SvelteKit build but doesn't write that output itself. Remove it, and go back to plain adapter-static, once cf supports SvelteKit.
+`cloudflare.adapter.ts` wraps adapter-static and writes cf's Build Output (`.cloudflare/output/v0`) from `build/`. It exists because cf 1.0.0-beta.21 runs the SvelteKit build but doesn't write that output itself. Remove it, and go back to plain adapter-static, once cf supports SvelteKit.
 
 ## Acknowledgements
 
