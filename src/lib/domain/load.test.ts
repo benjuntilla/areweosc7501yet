@@ -70,6 +70,11 @@ describe('loadData', () => {
 			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T23:59:60.000Z"'),
 			/a valid date/u
 		],
+		[
+			'a local date-time with no offset',
+			kittyToml.replace('2026-10-12T08:00:00Z', '2026-10-12T08:00:00'),
+			/a TOML date-time with an offset/u
+		],
 		['history out of order', kittyToml.replace('2026-10-13', '2026-10-01'), /date order/u],
 		['a category from the other role', kittyToml.replace('"emulators"', '"clis"'), /category/u],
 		['a GitHub url without a repo', kittyToml.replace(/^repo = .*$/mu, ''), /repo/u],

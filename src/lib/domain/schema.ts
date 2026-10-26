@@ -20,10 +20,11 @@ const formatted = (
 	pattern: RegExp,
 	jsonSchema: { readonly format: string; readonly pattern?: string },
 	expected: string,
-	valid: (s: string) => boolean
+	valid: (s: string) => boolean,
+	form = expected
 ) =>
 	Schema.String.check(
-		Schema.isPattern(pattern, { toJsonSchema: () => jsonSchema }),
+		Schema.isPattern(pattern, { expected: form, toJsonSchema: () => jsonSchema }),
 		Schema.makeFilter(valid, { expected, toJsonSchema: () => ({}) })
 	);
 
@@ -32,10 +33,15 @@ const dateTime = (
 	pattern: RegExp,
 	format: string,
 	expected: string,
+	form: string,
 	text: (d: DateTime.DateTime) => string
 ) =>
-	formatted(pattern, { format }, expected, (s) =>
-		Option.exists(DateTime.make(s), (d) => text(d) === s)
+	formatted(
+		pattern,
+		{ format },
+		expected,
+		(s) => Option.exists(DateTime.make(s), (d) => text(d) === s),
+		form
 	).pipe(
 		Schema.decodeTo(
 			Schema.DateTimeUtc,
@@ -44,12 +50,19 @@ const dateTime = (
 	);
 
 /** A calendar day, like 2026-10-13. */
-const Day = dateTime(/^\d{4}-\d{2}-\d{2}$/u, 'date', 'a valid date', DateTime.formatIsoDateUtc);
+const Day = dateTime(
+	/^\d{4}-\d{2}-\d{2}$/u,
+	'date',
+	'a valid date',
+	'a TOML date, like 2026-10-13',
+	DateTime.formatIsoDateUtc
+);
 /** A UTC instant, in the form the loader writes native TOML date-times. */
 const Instant = dateTime(
 	/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/u,
 	'date-time',
 	'a valid date-time',
+	'a TOML date-time with an offset, like 2026-10-12T08:00:00Z',
 	DateTime.formatIso
 );
 // Instant first, so encoding writes the full instant.
