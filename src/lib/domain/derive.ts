@@ -71,6 +71,9 @@ export interface ChangeRow {
 	readonly version: string | undefined;
 }
 
+/** The row's id on /changes. Same-day steps collapse into one row, so slug and day are unique. */
+export const changeAnchor = (r: ChangeRow): string => `${r.slug}-${r.day}`;
+
 /**
  * State changes only: evidence-only blocks are skipped, steps on the same UTC day
  * collapse into one row, and an entry added as idle gets no row.
