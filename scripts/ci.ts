@@ -1,5 +1,4 @@
-// Runs lefthook's pre-push jobs in parallel for CI, so lefthook.yml is the one list of checks.
-// Each job's output goes in its own GitHub Actions log group; a failed job's log stays expanded.
+// Runs lefthook's pre-push jobs in parallel for CI, with a log group per job.
 import { NodeRuntime, NodeServices } from '@effect/platform-node';
 import { Console, Effect, Schema, Stream } from 'effect';
 import { ChildProcess, ChildProcessSpawner } from 'effect/process';

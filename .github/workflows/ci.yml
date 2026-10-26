@@ -41,6 +41,5 @@ jobs:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      # The pre-push jobs in lefthook.yml, in parallel, with a log group each.
       - run: node scripts/ci.ts
       - run: pnpm build

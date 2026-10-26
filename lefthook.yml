@@ -7,7 +7,6 @@ pre-commit:
       glob: '*.{js,ts,svelte}'
       run: pnpm oxlint {staged_files}
 
-# The same gates as CI, minus the build.
 pre-push:
   parallel: true
   jobs:
