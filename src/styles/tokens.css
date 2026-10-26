@@ -129,6 +129,7 @@
 	--font-tracking-minus-0-56: -0.56px;
 	--font-tracking-minus-0-225: -0.225px;
 	--font-tracking-minus-1-5: -1.5px;
+	--font-weight-medium: 500;
 	--font-weight-regular: 400;
 	--footer-divider: var(--color-rule);
 	--footer-gap: var(--space-8);
@@ -148,6 +149,7 @@
 	--heading-icon-gap: var(--space-8);
 	--heading-legend-gap: var(--space-16);
 	--heading-note: var(--color-muted);
+	--heading-state-icon-gap: var(--space-9);
 	--heading-text: var(--color-ink);
 	--hero-drum-gap: var(--space-7);
 	--hero-drum-margin-bottom: var(--space-18);
@@ -588,6 +590,7 @@
 	--type-verdict-line-height: var(--font-line-height-32-2);
 	--type-verdict-size: var(--font-size-28);
 	--type-verdict-tracking: var(--font-tracking-minus-0-56);
+	--type-weight-medium: var(--font-weight-medium);
 	--type-weight-regular: var(--font-weight-regular);
 	--verdict-gap: var(--space-4);
 	--verdict-label: var(--color-soft);
@@ -837,6 +840,7 @@
 		--type-verdict-line-height: var(--font-line-height-32-2);
 		--type-verdict-size: var(--font-size-28);
 		--type-verdict-tracking: var(--font-tracking-minus-0-56);
+		--type-weight-medium: var(--font-weight-medium);
 		--type-weight-regular: var(--font-weight-regular);
 	}
 }
@@ -955,6 +959,7 @@
 		--type-verdict-line-height: var(--font-line-height-32-2);
 		--type-verdict-size: var(--font-size-28);
 		--type-verdict-tracking: var(--font-tracking-minus-0-56);
+		--type-weight-medium: var(--font-weight-medium);
 		--type-weight-regular: var(--font-weight-regular);
 	}
 }

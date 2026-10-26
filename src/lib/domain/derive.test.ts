@@ -1,6 +1,14 @@
 import { DateTime, Option } from 'effect';
 import { describe, expect, it } from '@effect/vitest';
-import { changeRows, isFeatured, sentenceOf, stateStart, summarize, verdictOf } from './derive.ts';
+import {
+	changeRows,
+	isFeatured,
+	ladderRows,
+	sentenceOf,
+	stateStart,
+	summarize,
+	verdictOf
+} from './derive.ts';
 import type { SlugEntry } from './load.ts';
 import type { HistoryBlock } from './schema.ts';
 
@@ -54,6 +62,16 @@ describe('verdict ladder', () => {
 		[1, 'Yes']
 	])('%f is %s', (score, word) => {
 		expect(verdictOf(score)).toBe(word);
+	});
+
+	it('writes the ladder as ranges, lowest first', () => {
+		expect(ladderRows).toEqual([
+			{ range: 'Under 10%', word: 'No' },
+			{ range: '10 to under 35%', word: 'Hardly' },
+			{ range: '35 to under 65%', word: 'Halfway' },
+			{ range: '65 to under 90%', word: 'Almost' },
+			{ range: '90% and up', word: 'Yes' }
+		]);
 	});
 
 	it('scores featured entries, half for working, without libraries and engines', () => {

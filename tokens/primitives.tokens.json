@@ -1151,6 +1151,10 @@
 			"regular": {
 				"$type": "fontWeight",
 				"$value": 400
+			},
+			"medium": {
+				"$type": "fontWeight",
+				"$value": 500
 			}
 		},
 		"family": {

@@ -63,6 +63,10 @@
 		"icon-gap": {
 			"$type": "dimension",
 			"$value": "{space.8}"
+		},
+		"state-icon-gap": {
+			"$type": "dimension",
+			"$value": "{space.9}"
 		}
 	},
 	"chip": {
