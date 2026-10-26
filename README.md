@@ -12,10 +12,6 @@ Installing dependencies also installs the git hooks in `lefthook.yml`. A commit 
 
 `.zed/settings.json` sets up Zed to format and lint exactly as CI does.
 
-## Deploying
-
-`pnpm cf deploy` deploys to Cloudflare. `cloudflare.config.ts` is the Worker config.
-
 ## Acknowledgements
 
 - The seed data comes from [awesome-osc7501](https://github.com/hyeebeen/awesome-osc7501) by hyeebeen.
