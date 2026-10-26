@@ -41,23 +41,6 @@ jobs:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      # The pre-push jobs in lefthook.yml, run in parallel, each in its own log group.
-      - name: Pre-push checks
-        run: |
-          names=() pids=()
-          for job in $(pnpm -s lefthook dump --format json | jq -r '."pre-push".jobs[].name'); do
-            pnpm -s lefthook run pre-push --force --no-tty --job "$job" > "$RUNNER_TEMP/$job.log" 2>&1 &
-            names+=("$job") pids+=($!)
-          done
-          [ ${#pids[@]} -gt 0 ] || { echo '::error::lefthook.yml has no pre-push jobs'; exit 1; }
-          failed=0
-          for i in "${!pids[@]}"; do
-            job=${names[$i]}
-            if wait "${pids[$i]}"; then
-              echo "::group::$job"; cat "$RUNNER_TEMP/$job.log"; echo '::endgroup::'
-            else
-              echo "::error title=$job::$job failed"; cat "$RUNNER_TEMP/$job.log"; failed=1
-            fi
-          done
-          exit $failed
+      # The pre-push jobs in lefthook.yml, in parallel, with a log group each.
+      - run: node scripts/ci.ts
       - run: pnpm build
