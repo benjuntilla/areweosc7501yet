@@ -78,7 +78,7 @@ const fromPull = (current: HistoryBlock, n: number, url: string, ctx: Context) =
 	Effect.gen(function* () {
 		const gh = yield* GitHub;
 		const pr = yield* gh.pull(ctx.repo, n);
-		if (current.state === 'working' && pr.merged_at !== null && pr.merge_commit_sha !== null) {
+		if (pr.merged_at !== null && pr.merge_commit_sha !== null) {
 			const commit = `https://github.com/${ctx.repo}/commit/${pr.merge_commit_sha}`;
 			return to(block('working', pr.merged_at, commit));
 		}

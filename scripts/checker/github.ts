@@ -42,7 +42,10 @@ export const SearchHit = Schema.Struct({
 });
 export type SearchHit = typeof SearchHit.Type;
 
-const Search = Schema.Struct({ items: Schema.Array(SearchHit) });
+const Search = Schema.Struct({
+	incomplete_results: Schema.Boolean,
+	items: Schema.Array(SearchHit)
+});
 
 const statusOf = (e: HttpClientError.HttpClientError) => e.response?.status;
 
@@ -74,7 +77,7 @@ export class GitHub extends Context.Service<
 	}
 >()('GitHub') {}
 
-export type GitHubError = HttpClientError.HttpClientError | Schema.SchemaError;
+export type GitHubError = HttpClientError.HttpClientError | Schema.SchemaError | Error;
 
 const authed = (client: HttpClient.HttpClient, token: Redacted.Redacted) =>
 	client.pipe(
@@ -93,6 +96,22 @@ const authed = (client: HttpClient.HttpClient, token: Redacted.Redacted) =>
 			times: 5
 		})
 	);
+
+/** Every page of a search, which stops at 1,000 results, ten pages of 100. */
+const searchAll = <E>(query: string, page: (n: number) => Effect.Effect<typeof Search.Type, E>) =>
+	Effect.gen(function* () {
+		const items: Array<SearchHit> = [];
+		for (let n = 1; n <= 10; n++) {
+			const s = yield* page(n);
+			// GitHub timed out part of the search, so the hits can't be trusted as complete.
+			if (s.incomplete_results) {
+				return yield* Effect.fail(new Error(`search for ${query} came back incomplete`));
+			}
+			items.push(...s.items);
+			if (s.items.length < 100) break;
+		}
+		return items;
+	});
 
 /** GitHub over `client`, authenticated with `token`. */
 export const make = (client: HttpClient.HttpClient, token: Redacted.Redacted) => {
@@ -128,18 +147,10 @@ export const make = (client: HttpClient.HttpClient, token: Redacted.Redacted) =>
 			get(Compare, `/repos/${repo}/compare/${sha}...${encodeURIComponent(ref)}?per_page=1`).pipe(
 				Effect.map((c) => c.status === 'ahead' || c.status === 'identical')
 			),
-		// Search stops at 1,000 results, ten pages of 100.
 		search: (query) =>
-			Effect.gen(function* () {
-				const items: Array<SearchHit> = [];
-				for (let page = 1; page <= 10; page++) {
-					const q = `per_page=100&page=${page}&q=${encodeURIComponent(query)}`;
-					const s = yield* get(Search, `/search/issues?${q}`);
-					items.push(...s.items);
-					if (s.items.length < 100) break;
-				}
-				return items;
-			})
+			searchAll(query, (page) =>
+				get(Search, `/search/issues?per_page=100&page=${page}&q=${encodeURIComponent(query)}`)
+			)
 	});
 };
 

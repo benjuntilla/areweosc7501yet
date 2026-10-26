@@ -177,6 +177,22 @@ describe('checkEntry', () => {
 		})
 	);
 
+	it.effect('follows a blocked PR that was reopened and merged', () =>
+		Effect.gen(function* () {
+			const r = yield* run(
+				toml(
+					'Kuddev/pebrel',
+					block('blocked', 'https://github.com/Kuddev/pebrel/pull/691', '2026-10-15')
+				),
+				pebrel
+			);
+			expect(r.changes.map((c) => `${c.from}>${c.to}`)).toEqual([
+				'blocked>working',
+				'working>done'
+			]);
+		})
+	);
+
 	it.effect('marks a PR closed without merging as blocked', () =>
 		Effect.gen(function* () {
 			const r = yield* run(
@@ -250,8 +266,10 @@ describe('checkEntry', () => {
 
 	it.effect('reports a failed check instead of failing the run', () =>
 		Effect.gen(function* () {
-			const r = yield* run(toml('gone/away', ''), {});
+			const text = toml('gone/away', '');
+			const r = yield* run(text, {});
 			expect(r.notes[0]).toMatch(/^Couldn't check x: /u);
+			expect(r.entry).toEqual(yield* entry(text));
 		})
 	);
 });

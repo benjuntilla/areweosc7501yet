@@ -1,6 +1,6 @@
 // Rechecks every entry against GitHub, rewrites the files that changed and writes the PR body.
 import { NodeRuntime, NodeServices } from '@effect/platform-node';
-import { Array, Config, DateTime, Effect, FileSystem, Layer } from 'effect';
+import { Array, Config, DateTime, Effect, FileSystem, Layer, Option } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { FetchHttpClient } from 'effect/http';
 import { ChildProcess, ChildProcessSpawner } from 'effect/process';
@@ -18,7 +18,7 @@ const staleDays = 30;
 
 const day = (d: DateTime.Utc) => DateTime.formatIsoDateUtc(d);
 
-/** Issues and PRs mentioning the protocol in the past week, outside tracked repos. */
+/** One issue or PR per untracked repo that mentioned the protocol in the past week. */
 const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
 	Effect.gen(function* () {
 		const gh = yield* GitHub;
@@ -32,7 +32,7 @@ const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
 						mentions.test(`${h.title}\n${h.body ?? ''}`) &&
 						!tracked.some((r) => sameRepo(r, repoOf(h)))
 				),
-			(a, b) => a.html_url === b.html_url
+			(a, b) => repoOf(a) === repoOf(b)
 		);
 	});
 
@@ -44,7 +44,7 @@ const inert = (s: string) =>
 
 const body = (
 	results: ReadonlyArray<Checked>,
-	found: ReadonlyArray<SearchHit>,
+	found: Option.Option<ReadonlyArray<SearchHit>>,
 	stale: ReadonlyArray<{ slug: string; last: string }>
 ) => {
 	const changes = results.flatMap((r) => r.changes);
@@ -60,9 +60,13 @@ const body = (
 				].join('\n'),
 		...(notes.length === 0 ? [] : ['## Needs a look', notes.map((n) => `- ${n}`).join('\n')]),
 		'## Candidates',
-		found.length === 0
-			? 'None.'
-			: found.map((h) => `- ${repoOf(h)}: [${inert(h.title)}](${h.html_url})`).join('\n'),
+		Option.match(found, {
+			onNone: () => "The search failed or came back incomplete. The run's log has the error.",
+			onSome: (hits) =>
+				hits.length === 0
+					? 'None.'
+					: hits.map((h) => `- ${repoOf(h)}: [${inert(h.title)}](${h.html_url})`).join('\n')
+		}),
 		`## Not verified in ${staleDays} days`,
 		stale.length === 0
 			? 'None.'
@@ -99,7 +103,10 @@ const run = (bodyPath: string) =>
 
 		const tracked = entries.flatMap((e) => (e.repo === undefined ? [] : [e.repo]));
 		const found = yield* candidates(tracked, DateTime.subtract(now, { days: 7 })).pipe(
-			Effect.catch((e) => Effect.as(Effect.logWarning(`candidate search failed: ${e.message}`), []))
+			Effect.map(Option.some),
+			Effect.catch((e) =>
+				Effect.as(Effect.logWarning(`candidate search failed: ${e.message}`), Option.none())
+			)
 		);
 		const cutoff = DateTime.subtract(DateTime.removeTime(now), { days: staleDays });
 		const stale = results
