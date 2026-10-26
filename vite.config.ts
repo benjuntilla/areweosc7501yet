@@ -14,7 +14,9 @@ export default defineConfig(({ mode }) => {
 					runes: ({ filename }) =>
 						filename.split(/[/\\]/u).includes('node_modules') ? undefined : true
 				},
-				...(screenshots ? {} : { adapter: adapter() })
+				...(screenshots ? {} : { adapter: adapter() }),
+				// 404.html is served at any depth, where relative asset paths would miss.
+				paths: { relative: false }
 			})
 		],
 		resolve: {

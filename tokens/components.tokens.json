@@ -306,6 +306,10 @@
 		}
 	},
 	"error-card": {
+		"field": {
+			"$type": "gradient",
+			"$value": "{field.ramp}"
+		},
 		"content": {
 			"$type": "color",
 			"$value": "{color.on-accent}"
@@ -313,6 +317,14 @@
 		"code-opacity": {
 			"$type": "number",
 			"$value": "{opacity.dim}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.16}"
+		},
+		"grain-opacity": {
+			"$type": "number",
+			"$value": "{opacity.16}"
 		}
 	},
 	"meter": {
