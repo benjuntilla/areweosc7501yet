@@ -3,7 +3,6 @@
 	import '../styles/base.css';
 	import inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { page } from '$app/state';
 	import Footer from '#lib/components/Footer.svelte';
 	import Rail from '#lib/components/Rail.svelte';
 	import SearchDialog from '#lib/components/SearchDialog.svelte';
@@ -16,10 +15,6 @@
 
 	let searchDialog: SearchDialog | undefined = $state();
 	let current: string | undefined = $state();
-
-	const sectionIds = $derived(
-		data.sides.flatMap((side) => [side.id].concat(side.categories.map((c) => c.id)))
-	);
 
 	const onsearch = (trigger: HTMLElement) => void searchDialog?.open(trigger);
 
@@ -47,21 +42,6 @@
 	afterNavigate(() => {
 		document.documentElement.style.scrollBehavior = '';
 	});
-
-	// The overview's sections come and go with the page, so look them up on each scroll.
-	const onscroll = () => {
-		const sections = sectionIds.flatMap((id) => document.querySelector(`#${id}`) ?? []);
-		current = sections.findLast((s) => s.getBoundingClientRect().top < innerHeight / 3)?.id;
-	};
-
-	$effect(() => {
-		if (page.url.pathname !== '/') return;
-		onscroll();
-		addEventListener('scroll', onscroll, { passive: true });
-		return () => {
-			removeEventListener('scroll', onscroll);
-		};
-	});
 </script>
 
 <svelte:head>
@@ -74,7 +54,7 @@
 
 <a class="skip-link" href="#content">Skip to content</a>
 
-<Sidebar sides={data.sides} {current} {onsearch} />
+<Sidebar sides={data.sides} bind:current {onsearch} />
 
 <div class="column">
 	<TopBar sides={data.sides} {current} {onsearch} />

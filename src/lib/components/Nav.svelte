@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import type { Side } from '#lib/domain/overview.ts';
+	import { tocs } from '#lib/toc.ts';
 	import Icon from './Icon.svelte';
+	import StateGlyph from './StateGlyph.svelte';
 
 	interface Props {
 		sides: ReadonlyArray<Side>;
@@ -14,7 +16,10 @@
 	// The sidebar and the phone menu each render a nav, so its ids need a per-instance prefix.
 	const uid = $props.id();
 
-	const about = [{ href: '/test', label: 'Test your terminal' }];
+	const about = [
+		{ href: '/test', label: 'Test your terminal' },
+		{ href: '/contribute', label: 'Contribute' }
+	];
 	const resources = [
 		{ href: '/feed.xml', label: 'Atom feed', reload: true },
 		{ href: '/data.json', label: 'Data as JSON', reload: true },
@@ -22,8 +27,32 @@
 	];
 
 	const here = (href: string) => (page.url.pathname === href ? 'page' : undefined);
-	const at = (id: string) => (page.url.pathname === '/' && current === id ? 'location' : undefined);
+	const at = (path: string, id: string) =>
+		page.url.pathname === path && current === id ? 'location' : undefined;
 </script>
+
+{#snippet toc(path: string)}
+	{@const entries = tocs[path]}
+	{#if entries}
+		<!-- Only the current page's sections unfold; the others fold away and leave the tab order. -->
+		<div class="unfold" class:open={here(path)} inert={!here(path)}>
+			<ul class="toc">
+				{#each entries as entry (entry.id)}
+					<li>
+						<a
+							class="toc-link"
+							href="{path}#{entry.id}"
+							aria-current={at(path, entry.id)}
+							onclick={onnavigate}
+						>
+							{#if entry.state}<StateGlyph state={entry.state} size={12} />{/if}{entry.label}
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
+{/snippet}
 
 <nav class="nav" aria-label="Sections">
 	<ul>
@@ -37,7 +66,7 @@
 						<a
 							class="toc-link side"
 							href="/#{side.id}"
-							aria-current={at(side.id)}
+							aria-current={at('/', side.id)}
 							onclick={onnavigate}
 						>
 							<Icon name={side.role} size={12} />{side.name}
@@ -48,7 +77,7 @@
 									<a
 										class="toc-link"
 										href="/#{category.id}"
-										aria-current={at(category.id)}
+										aria-current={at('/', category.id)}
 										onclick={onnavigate}>{category.name}</a
 									>
 								</li>
@@ -66,6 +95,7 @@
 				<a class="item" href={link.href} aria-current={here(link.href)} onclick={onnavigate}
 					>{link.label}</a
 				>
+				{@render toc(link.href)}
 			</li>
 		{/each}
 	</ul>
@@ -80,6 +110,7 @@
 					data-sveltekit-reload={link.reload ? '' : undefined}
 					onclick={onnavigate}>{link.label}</a
 				>
+				{@render toc(link.href)}
 			</li>
 		{/each}
 	</ul>
@@ -183,6 +214,36 @@
 
 	.toc-link:hover {
 		color: var(--nav-item-hover);
+	}
+
+	.unfold {
+		display: grid;
+		grid-template-rows: 0fr;
+		opacity: 0;
+		transition:
+			grid-template-rows var(--motion-toc-unfold-duration) var(--motion-ease-unfold),
+			opacity var(--motion-toc-unfold-duration) var(--motion-ease-unfold);
+	}
+
+	.unfold.open {
+		grid-template-rows: 1fr;
+		opacity: 1;
+	}
+
+	.unfold > .toc {
+		min-block-size: 0;
+		overflow: hidden;
+	}
+
+	/* A 0fr row still shows its item's padding, so a folded list drops it. */
+	.unfold:not(.open) > .toc {
+		padding-block-end: 0;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.unfold {
+			transition: none;
+		}
 	}
 
 	.side :global(svg) {

@@ -127,6 +127,12 @@
 	{#each data.roles as role (role.id)}
 		<Role {role} bind:expanded {highlight} />
 	{/each}
+
+	<p class="cta">
+		Missing a project, or see a state that’s out of date? <a href="/contribute"
+			>Add or fix an entry</a
+		>.
+	</p>
 </section>
 
 <style>
@@ -190,5 +196,9 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--heading-legend-gap);
+	}
+
+	.cta a {
+		color: var(--content-text-strong);
 	}
 </style>
