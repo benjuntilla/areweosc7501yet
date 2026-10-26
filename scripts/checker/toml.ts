@@ -8,9 +8,12 @@ const dateKeys = new Set(['last_checked_date', 'latest_release_date', 'date']);
 // ponytail: an instant at exactly midnight UTC is written as a day
 const date = (v: string) => v.replace(/T00:00:00\.000Z$/u, '').replace(/\.000Z$/u, 'Z');
 
+// JSON escapes every control character TOML bans except DEL.
+const str = (v: unknown) => JSON.stringify(v).replaceAll('\u007F', '\\u007F');
+
 const value = (key: string, v: unknown): string => {
-	if (typeof v === 'string') return dateKeys.has(key) ? date(v) : JSON.stringify(v);
-	if (globalThis.Array.isArray(v)) return `[${v.map((x) => JSON.stringify(x)).join(', ')}]`;
+	if (typeof v === 'string') return dateKeys.has(key) ? date(v) : str(v);
+	if (globalThis.Array.isArray(v)) return `[${v.map((x) => str(x)).join(', ')}]`;
 	return String(v);
 };
 

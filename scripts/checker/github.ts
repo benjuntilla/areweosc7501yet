@@ -128,10 +128,18 @@ export const make = (client: HttpClient.HttpClient, token: Redacted.Redacted) =>
 			get(Compare, `/repos/${repo}/compare/${sha}...${encodeURIComponent(ref)}?per_page=1`).pipe(
 				Effect.map((c) => c.status === 'ahead' || c.status === 'identical')
 			),
+		// Search stops at 1,000 results, ten pages of 100.
 		search: (query) =>
-			get(Search, `/search/issues?per_page=100&q=${encodeURIComponent(query)}`).pipe(
-				Effect.map((s) => s.items)
-			)
+			Effect.gen(function* () {
+				const items: Array<SearchHit> = [];
+				for (let page = 1; page <= 10; page++) {
+					const q = `per_page=100&page=${page}&q=${encodeURIComponent(query)}`;
+					const s = yield* get(Search, `/search/issues?${q}`);
+					items.push(...s.items);
+					if (s.items.length < 100) break;
+				}
+				return items;
+			})
 	});
 };
 

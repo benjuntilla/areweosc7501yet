@@ -269,4 +269,13 @@ describe('writeEntry', () => {
 			}
 		})
 	);
+
+	it.effect('escapes DEL, which TOML bans raw', () =>
+		Effect.gen(function* () {
+			const e = yield* entry(toml('a/b', ''));
+			const text = yield* writeEntry({ ...e, note: 'a\u007Fb' });
+			const again = yield* loadData({ '/data/entries/x.toml': text }, specToml);
+			expect(again.entries[0]!.note).toBe('a\u007Fb');
+		})
+	);
 });
