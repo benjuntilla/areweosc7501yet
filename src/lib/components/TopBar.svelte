@@ -46,7 +46,7 @@
 		<Icon name="search" />
 	</button>
 	<button
-		class="button"
+		class="button menu-button"
 		type="button"
 		aria-label="Menu"
 		aria-expanded={menuOpen}
