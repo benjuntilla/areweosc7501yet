@@ -10,7 +10,7 @@ Installing dependencies also installs the git hooks in `lefthook.yml`. A commit 
 
 ### Editor
 
-The repo is set up for Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI.
+The repo is set up for Zed in `.zed/settings.json`.
 
 ## Acknowledgements
 
