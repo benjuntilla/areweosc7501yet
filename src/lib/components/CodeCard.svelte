@@ -57,11 +57,7 @@
 		overflow: hidden;
 		background: var(--card-background);
 		border-radius: var(--card-radius);
-		box-shadow:
-			0 4px 6px -3px var(--card-shadow),
-			0 2px 2px -1px var(--card-shadow),
-			0 1px 1px 0 var(--card-shadow),
-			0 0 0 1px var(--card-ring);
+		box-shadow: var(--card-elevation);
 	}
 
 	.head {

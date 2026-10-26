@@ -18,6 +18,7 @@
 
 	const about = [
 		{ href: '/test', label: 'Test your terminal' },
+		{ href: '/methodology', label: 'Methodology' },
 		{ href: '/contribute', label: 'Contribute' }
 	];
 	const resources = [

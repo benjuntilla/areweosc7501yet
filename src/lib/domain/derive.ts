@@ -25,6 +25,24 @@ export const verdictOf = (score: number): Verdict =>
 		Option.getOrElse((): Verdict => 'No')
 	);
 
+const percent = (score: number) => Math.round(score * 100);
+
+/** The ladder as Methodology's table, lowest word first: "Under 10%", "10 to under 35%" … "90% and up". */
+const ascending = Array.reverse(ladder);
+export const ladderRows: ReadonlyArray<{ readonly range: string; readonly word: Verdict }> =
+	Array.map(ascending, (step, i) =>
+		Option.match(Array.get(ascending, i + 1), {
+			onNone: () => ({ range: `${percent(step.min)}% and up`, word: step.word }),
+			onSome: (next) => ({
+				range:
+					step.min === 0
+						? `Under ${percent(next.min)}%`
+						: `${percent(step.min)} to under ${percent(next.min)}%`,
+				word: step.word
+			})
+		})
+	);
+
 export const isFeatured = (e: Entry): boolean => e.is_featured ?? e.github?.popular ?? false;
 
 export const currentBlock = (e: Entry): Option.Option<HistoryBlock> => Array.last(e.history);
