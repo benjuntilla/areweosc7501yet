@@ -10,7 +10,7 @@ Installing dependencies also installs the git hooks in `lefthook.yml`. A commit 
 
 ### Editor
 
-The repo is set up for Zed in `.zed/settings.json`.
+`.zed/settings.json` sets up Zed to format and lint exactly as CI does.
 
 ## Acknowledgements
 
