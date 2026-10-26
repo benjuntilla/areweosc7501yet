@@ -1,9 +1,10 @@
+import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from '@effect/vitest';
-import { DateTime, Effect, Layer, Redacted, Schema } from 'effect';
+import { DateTime, Effect, Layer, Redacted } from 'effect';
 import { HttpClient, HttpClientResponse } from 'effect/http';
 import { loadData } from '../../src/lib/domain/load.ts';
 import { Entry } from '../../src/lib/domain/schema.ts';
-import { fixtureFiles, specToml } from '../../src/lib/domain/fixtures.ts';
+import { specToml } from '../../src/lib/domain/fixtures.ts';
 import { checkEntry } from './check.ts';
 import { GitHub, make } from './github.ts';
 import { writeEntry } from './toml.ts';
@@ -256,15 +257,15 @@ describe('checkEntry', () => {
 });
 
 describe('writeEntry', () => {
-	it.effect('writes the fixture files back as they were', () =>
+	it.effect('writes every entry file back byte for byte', () =>
 		Effect.gen(function* () {
-			const { entries } = yield* loadData(fixtureFiles, specToml);
+			const dir = 'data/entries';
+			const files = Object.fromEntries(
+				readdirSync(dir).map((f) => [`${dir}/${f}`, readFileSync(`${dir}/${f}`, 'utf8')])
+			);
+			const { entries } = yield* loadData(files, specToml);
 			for (const e of entries) {
-				const again = yield* loadData(
-					{ [`/data/entries/${e.slug}.toml`]: yield* writeEntry(e) },
-					specToml
-				);
-				expect(Schema.encodeSync(Entry)(again.entries[0]!)).toEqual(Schema.encodeSync(Entry)(e));
+				expect(yield* writeEntry(e)).toBe(files[`${dir}/${e.slug}.toml`]);
 			}
 		})
 	);

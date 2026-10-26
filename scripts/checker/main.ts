@@ -38,7 +38,9 @@ const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
 
 const repoOf = (h: SearchHit) => h.repository_url.replace('https://api.github.com/repos/', '');
 
-const cell = (s: string) => s.replaceAll('|', '\\|');
+// Titles come from strangers: keep them from closing the link, pinging people or linking issues here.
+const inert = (s: string) =>
+	s.replaceAll(/[[\]\\|]/gu, (c) => `\\${c}`).replaceAll(/[@#]/gu, (c) => `${c}\u200B`);
 
 const body = (
 	results: ReadonlyArray<Checked>,
@@ -60,7 +62,7 @@ const body = (
 		'## Candidates',
 		found.length === 0
 			? 'None.'
-			: found.map((h) => `- ${repoOf(h)}: [${cell(h.title)}](${h.html_url})`).join('\n'),
+			: found.map((h) => `- ${repoOf(h)}: [${inert(h.title)}](${h.html_url})`).join('\n'),
 		`## Not verified in ${staleDays} days`,
 		stale.length === 0
 			? 'None.'
@@ -96,7 +98,9 @@ const run = (bodyPath: string) =>
 		}
 
 		const tracked = entries.flatMap((e) => (e.repo === undefined ? [] : [e.repo]));
-		const found = yield* candidates(tracked, DateTime.subtract(now, { days: 7 }));
+		const found = yield* candidates(tracked, DateTime.subtract(now, { days: 7 })).pipe(
+			Effect.catch((e) => Effect.as(Effect.logWarning(`candidate search failed: ${e.message}`), []))
+		);
 		const cutoff = DateTime.subtract(DateTime.removeTime(now), { days: staleDays });
 		const stale = results
 			.map((r) => r.entry)
