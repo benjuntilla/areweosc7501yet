@@ -1,13 +1,13 @@
 // Rechecks every entry against GitHub, rewrites the files that changed and writes the PR body.
 import { NodeRuntime, NodeServices } from '@effect/platform-node';
-import { Array, Config, DateTime, Effect, FileSystem, Layer, Option } from 'effect';
+import { Array, DateTime, Effect, FileSystem, Layer, Option } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { FetchHttpClient } from 'effect/http';
 import { ChildProcess, ChildProcessSpawner } from 'effect/process';
 import { sameRepo } from '../../src/lib/domain/formats.ts';
 import { loadData } from '../../src/lib/domain/load.ts';
 import { checkEntry, type Checked } from './check.ts';
-import { GitHub, layer, type SearchHit } from './github.ts';
+import * as GitHub from './github.ts';
 import { writeEntry } from './toml.ts';
 
 const dir = 'data/entries';
@@ -21,8 +21,9 @@ const day = (d: DateTime.Utc) => DateTime.formatIsoDateUtc(d);
 /** One issue or PR per untracked repo that mentioned the protocol in the past week. */
 const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
 	Effect.gen(function* () {
-		const gh = yield* GitHub;
-		const hits = yield* Effect.forEach(queries, (q) => gh.search(`${q} created:>=${day(since)}`));
+		const hits = yield* Effect.forEach(queries, (q) =>
+			GitHub.search(`${q} created:>=${day(since)}`)
+		);
 		return Array.dedupeWith(
 			hits
 				.flat()
@@ -36,7 +37,8 @@ const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
 		);
 	});
 
-const repoOf = (h: SearchHit) => h.repository_url.replace('https://api.github.com/repos/', '');
+const repoOf = (h: GitHub.SearchHit) =>
+	h.repository_url.replace('https://api.github.com/repos/', '');
 
 // Titles come from strangers: keep them from closing the link, pinging people or linking issues here.
 const inert = (s: string) =>
@@ -44,7 +46,7 @@ const inert = (s: string) =>
 
 const body = (
 	results: ReadonlyArray<Checked>,
-	found: Option.Option<ReadonlyArray<SearchHit>>,
+	found: Option.Option<ReadonlyArray<GitHub.SearchHit>>,
 	stale: ReadonlyArray<{ slug: string; last: string }>
 ) => {
 	const changes = results.flatMap((r) => r.changes);
@@ -120,15 +122,13 @@ const run = (bodyPath: string) =>
 const checker = Command.make(
 	'checker',
 	{ body: Flag.String('body').pipe(Flag.withDescription('Where to write the PR body')) },
-	({ body: bodyPath }) =>
-		Effect.gen(function* () {
-			const token = yield* Config.Redacted('GITHUB_TOKEN');
-			yield* run(bodyPath).pipe(Effect.provide(layer(token)));
-		})
+	({ body: bodyPath }) => run(bodyPath)
 );
 
 NodeRuntime.runMain(
 	Command.run(checker, { version: '0.0.0' }).pipe(
-		Effect.provide(Layer.mergeAll(NodeServices.layer, FetchHttpClient.layer))
+		Effect.provide(
+			Layer.mergeAll(NodeServices.layer, FetchHttpClient.layer, GitHub.CredentialsFromEnv)
+		)
 	)
 );

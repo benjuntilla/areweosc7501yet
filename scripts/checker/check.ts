@@ -2,7 +2,7 @@ import { Array, DateTime, Effect, Option, Order } from 'effect';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
 import type { Entry, HistoryBlock, State } from '../../src/lib/domain/schema.ts';
-import { GitHub, type GitHubError, type Release } from './github.ts';
+import * as GitHub from './github.ts';
 
 export interface Change {
 	readonly slug: string;
@@ -44,7 +44,7 @@ const preTag =
  */
 const isStable =
 	(latestTag: Option.Option<string>) =>
-	(r: Release): r is Release & { published_at: DateTime.Utc } =>
+	(r: GitHub.Release): r is GitHub.Release & { published_at: DateTime.Utc } =>
 		!r.draft &&
 		r.published_at !== null &&
 		(Option.contains(latestTag, r.tag_name) || (!r.prerelease && !preTag.test(r.tag_name)));
@@ -62,7 +62,7 @@ const block = (state: State, date: DateTime.Utc, source: string, version?: strin
 
 interface Context {
 	readonly repo: string;
-	readonly stable: ReadonlyArray<Release & { published_at: DateTime.Utc }>;
+	readonly stable: ReadonlyArray<GitHub.Release & { published_at: DateTime.Utc }>;
 	readonly now: DateTime.Utc;
 }
 
@@ -76,8 +76,7 @@ const to = (b: HistoryBlock): Step => ({ ...none, next: Option.some(b) });
 
 const fromPull = (current: HistoryBlock, n: number, url: string, ctx: Context) =>
 	Effect.gen(function* () {
-		const gh = yield* GitHub;
-		const pr = yield* gh.pull(ctx.repo, n);
+		const pr = yield* GitHub.pull(ctx.repo, n);
 		if (pr.merged_at !== null && pr.merge_commit_sha !== null) {
 			const commit = `https://github.com/${ctx.repo}/commit/${pr.merge_commit_sha}`;
 			return to(block('working', pr.merged_at, commit));
@@ -86,7 +85,7 @@ const fromPull = (current: HistoryBlock, n: number, url: string, ctx: Context) =
 			return to(block('blocked', pr.closed_at ?? ctx.now, url));
 		}
 		if (current.state === 'blocked' && pr.state === 'open') {
-			const at = yield* gh.reopenedAt(ctx.repo, n);
+			const at = yield* GitHub.reopenedAt(ctx.repo, n);
 			return to(
 				block(
 					'working',
@@ -100,14 +99,13 @@ const fromPull = (current: HistoryBlock, n: number, url: string, ctx: Context) =
 
 const fromCommit = (current: HistoryBlock, sha: string, ctx: Context) =>
 	Effect.gen(function* () {
-		const gh = yield* GitHub;
 		// ponytail: tries the 10 oldest stable releases since the merge, enough for weekly runs
 		const candidates = ctx.stable
 			.filter((r) => DateTime.isGreaterThanOrEqualTo(r.published_at, current.date))
 			.toSorted(byPublished)
 			.slice(0, 10);
 		for (const r of candidates) {
-			if (yield* gh.contains(ctx.repo, r.tag_name, sha)) {
+			if (yield* GitHub.contains(ctx.repo, r.tag_name, sha)) {
 				return to(block('done', r.published_at, r.html_url, r.tag_name));
 			}
 		}
@@ -116,10 +114,9 @@ const fromCommit = (current: HistoryBlock, sha: string, ctx: Context) =>
 
 const fromIssue = (current: HistoryBlock, n: number, url: string, ctx: Context) =>
 	Effect.gen(function* () {
-		const gh = yield* GitHub;
-		const issue = yield* gh.issue(ctx.repo, n);
+		const issue = yield* GitHub.issue(ctx.repo, n);
 		if (current.state === 'error' && issue.state === 'open') {
-			const at = yield* gh.reopenedAt(ctx.repo, n);
+			const at = yield* GitHub.reopenedAt(ctx.repo, n);
 			return to(
 				block(
 					'idle',
@@ -137,7 +134,7 @@ const fromIssue = (current: HistoryBlock, n: number, url: string, ctx: Context) 
 	});
 
 /** The next history block the evidence calls for, plus any note. */
-const step = (current: HistoryBlock, ctx: Context): Effect.Effect<Step, GitHubError, GitHub> =>
+const step = (current: HistoryBlock, ctx: Context) =>
 	Option.match(refOf(current.source, ctx.repo), {
 		onNone: () => Effect.succeed(none),
 		onSome: ({ kind, id, url }) => {
@@ -155,9 +152,8 @@ const step = (current: HistoryBlock, ctx: Context): Effect.Effect<Step, GitHubEr
 /** Stars, the newest stable release, and the stable releases on the entry's release line. */
 const refresh = (repo: string, previous: Entry['github']) =>
 	Effect.gen(function* () {
-		const gh = yield* GitHub;
 		const [stars, releases, latest] = yield* Effect.all(
-			[gh.stars(repo), gh.releases(repo), gh.latest(repo)],
+			[GitHub.stars(repo), GitHub.releases(repo), GitHub.latest(repo)],
 			{ concurrency: 3 }
 		);
 		// A monorepo's entry follows the release line it already tracks.
