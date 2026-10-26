@@ -31,8 +31,16 @@
 	--chip-padding-right: var(--space-6);
 	--chip-padding-y: var(--space-2);
 	--chip-radius: var(--radius-6);
+	--code-block-button-padding: var(--space-4);
+	--code-block-button-radius: var(--radius-6);
 	--code-block-comment: var(--code-comment);
 	--code-block-function: var(--code-function);
+	--code-block-head-gap: var(--space-8);
+	--code-block-head-padding-right: var(--space-12);
+	--code-block-head-padding-y: var(--space-8);
+	--code-block-padding-bottom: var(--space-14);
+	--code-block-padding-top: var(--space-12);
+	--code-block-padding-x: var(--space-16);
 	--code-block-string: var(--code-string);
 	--code-comment: var(--color-muted);
 	--code-function: var(--color-accent-strong);
@@ -61,6 +69,7 @@
 	--content-divider: var(--color-rule);
 	--content-icon: var(--color-muted);
 	--content-icon-strong: var(--color-ink);
+	--content-section-gap: var(--space-12);
 	--content-text: var(--color-soft);
 	--content-text-muted: var(--color-muted);
 	--content-text-strong: var(--color-ink);

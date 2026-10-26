@@ -55,6 +55,7 @@
 		"oxlint-plugin-eslint": "1.89.0",
 		"oxlint-tsgolint": "7.0.2005",
 		"postcss-html": "2.0.0",
+		"shiki": "^4.5.0",
 		"stylelint": "17.16.0",
 		"stylelint-config-html": "2.0.0",
 		"stylelint-config-recess-order": "7.9.0",

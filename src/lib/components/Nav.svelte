@@ -14,6 +14,7 @@
 	// The sidebar and the phone menu each render a nav, so its ids need a per-instance prefix.
 	const uid = $props.id();
 
+	const about = [{ href: '/test', label: 'Test your terminal' }];
 	const resources = [
 		{ href: '/feed.xml', label: 'Atom feed', reload: true },
 		{ href: '/data.json', label: 'Data as JSON', reload: true },
@@ -57,6 +58,16 @@
 				{/each}
 			</ul>
 		</li>
+	</ul>
+	<p class="group" id="{uid}-about">About</p>
+	<ul aria-labelledby="{uid}-about">
+		{#each about as link (link.href)}
+			<li>
+				<a class="item" href={link.href} aria-current={here(link.href)} onclick={onnavigate}
+					>{link.label}</a
+				>
+			</li>
+		{/each}
 	</ul>
 	<p class="group" id="{uid}-resources">Resources</p>
 	<ul aria-labelledby="{uid}-resources">

@@ -1,7 +1,7 @@
 <script lang="ts">
-	// Lucide icons (ISC).
+	// Lucide icons (ISC), plus our copy icon and the done glyph's check.
 	interface Props {
-		name: 'program' | 'terminal' | 'search' | 'menu' | 'close';
+		name: 'program' | 'terminal' | 'search' | 'menu' | 'close' | 'copy' | 'check';
 		size?: number;
 		class?: string;
 	}
@@ -16,7 +16,7 @@
 	viewBox="0 0 14 14"
 	fill="none"
 	stroke="currentColor"
-	stroke-width={name === 'search' ? 1.4 : 1.17}
+	stroke-width={name === 'search' ? 1.4 : name === 'copy' ? 1.2 : name === 'check' ? 1.5 : 1.17}
 	stroke-linecap="round"
 	stroke-linejoin="round"
 	aria-hidden="true"
@@ -41,6 +41,15 @@
 		<path d="M9.25 9.25L12 12" />
 	{:else if name === 'menu'}
 		<path d="M2.33 3.5h9.34M2.33 7h9.34M2.33 10.5h9.34" />
+	{:else if name === 'copy'}
+		<path
+			d="M6 4.5H10C10.8284 4.5 11.5 5.17157 11.5 6V10C11.5 10.8284 10.8284 11.5 10 11.5H6C5.17157 11.5 4.5 10.8284 4.5 10V6C4.5 5.17157 5.17157 4.5 6 4.5Z"
+		/>
+		<path
+			d="M9.5 2.5H4.5C3.96957 2.5 3.46086 2.71071 3.08579 3.08579C2.71071 3.46086 2.5 3.96957 2.5 4.5V9.5"
+		/>
+	{:else if name === 'check'}
+		<path d="M3.25 7.25L5.75 9.75L10.75 4.25" />
 	{:else}
 		<path d="m3.5 3.5 7 7m0-7-7 7" />
 	{/if}

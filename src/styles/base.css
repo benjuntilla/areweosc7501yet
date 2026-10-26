@@ -221,3 +221,32 @@ a[href^='http']::after {
 	vertical-align: -0.075em;
 }
 /* stylelint-enable declaration-property-unit-allowed-list */
+
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: var(--layout-content-gap);
+}
+
+.page-head,
+.page section {
+	display: flex;
+	flex-direction: column;
+	gap: var(--content-section-gap);
+}
+
+.page h2 {
+	scroll-margin-block-start: var(--layout-page-padding-top);
+}
+
+.page a {
+	color: var(--content-text-strong);
+}
+
+/* Inline code is only as tall as its text, so it never makes its line taller. */
+.page code {
+	font-family: var(--type-family-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: var(--type-code-size);
+	line-height: var(--type-code-size);
+	letter-spacing: var(--type-code-tracking);
+}
