@@ -1,0 +1,53 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`writes the change rows and spec revisions as Atom, newest first 1`] = `
+"<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://areweosc7501yet.com/</id>
+    <title>Are we OSC 7501 yet?</title>
+    <updated>2026-10-20T10:30:00.000Z</updated>
+    <author>
+        <name>Ben Juntilla &amp; community</name>
+        <uri>https://areweosc7501yet.com/</uri>
+    </author>
+    <link rel="alternate" href="https://areweosc7501yet.com/changes"/>
+    <link rel="self" href="https://areweosc7501yet.com/feed.xml"/>
+    <subtitle>Every state change for a featured entry, newest first.</subtitle>
+    <rights>Data is CC0.</rights>
+    <entry>
+        <title type="html"><![CDATA[Codex: working → done]]></title>
+        <id>tag:areweosc7501yet.com,2026:codex/2026-10-20T10:30:00.000Z/done</id>
+        <link href="https://areweosc7501yet.com/changes#codex-2026-10-20"/>
+        <updated>2026-10-20T10:30:00.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://github.com/openai/codex/releases/tag/rust-v0.50.0">Source</a></p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[kitty: idle → working]]></title>
+        <id>tag:areweosc7501yet.com,2026:kitty/2026-10-12T08:00:00.000Z/working</id>
+        <link href="https://areweosc7501yet.com/changes#kitty-2026-10-12"/>
+        <updated>2026-10-12T08:00:00.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://github.com/kovidgoyal/kitty/pull/10657">Source</a></p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Spec revision 0.4]]></title>
+        <id>tag:areweosc7501yet.com,2026:spec/0.4</id>
+        <link href="https://areweosc7501yet.com/changes#spec-0.4"/>
+        <updated>2026-10-10T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://example.com/spec">Source</a></p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Codex: added as working]]></title>
+        <id>tag:areweosc7501yet.com,2026:codex/2026-10-09T05:00:00.000Z/working</id>
+        <link href="https://areweosc7501yet.com/changes#codex-2026-10-09"/>
+        <updated>2026-10-09T05:00:00.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://github.com/openai/codex/pull/2">Source</a></p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Rex: added as done]]></title>
+        <id>tag:areweosc7501yet.com,2026:rex/2026-10-06T00:00:00.000Z/done</id>
+        <link href="https://areweosc7501yet.com/changes#rex-2026-10-06"/>
+        <updated>2026-10-06T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.superlogical.com/rex/docs/build/program-status">Source</a></p>]]></content>
+    </entry>
+</feed>"
+`;
