@@ -1,0 +1,46 @@
+name: Weekly check
+
+on:
+  schedule:
+    - cron: '0 14 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checker
+
+jobs:
+  check:
+    name: Recheck entries
+    runs-on: ubuntu-latest
+    steps:
+      # A GitHub App token, so CI and previews run on the PR it opens.
+      - uses: actions/create-github-app-token@v3.3.0
+        id: token
+        with:
+          client-id: ${{ vars.CHECKER_CLIENT_ID }}
+          private-key: ${{ secrets.CHECKER_PRIVATE_KEY }}
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6.1.0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: node scripts/checker/main.ts --body "$RUNNER_TEMP/body.md"
+        env:
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+      - uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          token: ${{ steps.token.outputs.token }}
+          sign-commits: true
+          add-paths: data/entries
+          branch: checker/weekly
+          delete-branch: true
+          commit-message: 'chore(data): recheck entries upstream'
+          title: 'chore(data): recheck entries upstream'
+          body-path: ${{ runner.temp }}/body.md
