@@ -54,10 +54,25 @@ const Instant = dateTime(
 );
 // Instant first, so encoding writes the full instant.
 const DayOrTime = Schema.Union([Instant, Day]);
+// URL patterns, as JSON Schema regex source. Each optional part is one group, so the GitHub
+// pattern's owner and name are groups 3 and 4.
+const userinfo = '([^/?#\\s@]*@)?';
+const host = '[^/?#\\s@:]+';
+const port = '(:[0-9]*)?';
+/** The end of the URL, or the start of a path, query or fragment. */
+const end = '([/?#]|$)';
+/** A path segment, after one or more slashes. */
+const segment = '/+([^/?#]+)';
+/** `text` in any letter case, with regex characters escaped. */
+const anyCase = (text: string) =>
+	Array.map(String.split(text, ''), (c) =>
+		/[a-z]/u.test(c) ? `[${String.toUpperCase(c)}${c}]` : `\\${c}`
+	).join('');
+
 // A lowercase https scheme, optional userinfo, a nonempty host and an optional port, then
 // the end or a path, query or fragment. URL itself must parse it, and only RFC 3986
 // characters may appear (URL would quietly encode spaces or quotes).
-const urlPattern = '^https://([^/?#\\s@]*@)?[^/?#\\s@:]+(:[0-9]*)?([/?#]|$)';
+const urlPattern = `^https://${userinfo}${host}${port}${end}`;
 const Url = formatted(
 	new RegExp(urlPattern, 'u'),
 	{ format: 'uri', pattern: urlPattern },
@@ -82,8 +97,7 @@ export const githubRepoOf = (url: string): Option.Option<string> => {
  * segments, as the JSON Schema publishes it. JSON Schema can't parse URLs, so this reads the
  * raw text, and the decoder rejects URLs where it and githubRepoOf disagree.
  */
-export const githubRepoUrlPattern =
-	'^https://([^/?#\\s@]*@)?[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm](:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)';
+export const githubRepoUrlPattern = `^https://${userinfo}${anyCase('github.com')}${port}${segment}${segment}${end}`;
 const githubRepoUrl = new RegExp(githubRepoUrlPattern, 'u');
 const githubRepoByPattern = (url: string): Option.Option<string> =>
 	Option.map(
