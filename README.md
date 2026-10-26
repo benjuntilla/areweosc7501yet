@@ -6,7 +6,7 @@ Which terminals and programs support OSC 7501, the Program Status Protocol. Live
 
 Node 24 and pnpm 10, pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed. pnpm itself still needs Node 18.12 or newer to start.
 
-Installing dependencies also installs the git hooks in `lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's checks except the build. jj doesn't run git hooks, so run `pnpm lefthook run pre-push` before `jj git push`.
+Installing dependencies also installs the git hooks in `lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's checks except the build. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
 
 ## Editor
 
