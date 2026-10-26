@@ -115,7 +115,7 @@
 			Thus the verdict can change before a release. The entry counts as half because users cannot use
 			it yet.
 		</p>
-		<table class="ladder type-small">
+		<table class="type-small">
 			<thead>
 				<tr><th scope="col">Score</th><th scope="col">Word</th></tr>
 			</thead>
@@ -176,10 +176,8 @@
 			Each entry shows the date of its last check. If the action cannot follow the last history
 			block of an entry, a person SHOULD check that entry manually at least every 30 days. The
 			action can follow a PR, an issue, a commit, or a release in the GitHub repo of the project. If
-			a featured entry changes state, the change shows in the <a
-				href="/feed.xml"
-				data-sveltekit-reload>Atom feed</a
-			>.
+			a featured entry changes state, the change shows on <a href="/changes">Changes</a> and in the
+			<a href="/feed.xml" data-sveltekit-reload>Atom feed</a>.
 		</p>
 	</section>
 
@@ -212,32 +210,8 @@
 		font-weight: var(--type-weight-medium);
 	}
 
-	.ladder {
-		inline-size: 100%;
-		border-collapse: collapse;
-		background: var(--card-background);
-		border-radius: var(--card-radius);
-		box-shadow: var(--card-elevation);
-	}
-
-	th,
-	td {
-		padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
-		font-weight: inherit;
-		text-align: start;
-	}
-
-	thead th {
-		color: var(--content-text-muted);
-	}
-
 	tbody th {
 		inline-size: 160px;
 		color: var(--content-text-strong);
-	}
-
-	tr + tr,
-	tbody tr {
-		border-block-start: 1px solid var(--content-divider);
 	}
 </style>
