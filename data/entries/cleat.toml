@@ -1,0 +1,16 @@
+name = "cleat"
+url = "https://github.com/flotilla-org/cleat"
+repo = "flotilla-org/cleat"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+note = "No tag yet"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 0
+
+[[history]]
+date = 2026-10-12T20:53:14Z
+state = "working"
+source = "https://github.com/flotilla-org/cleat/commit/6efad068759793fcab6f13fe4bd2ec885a7b834c"

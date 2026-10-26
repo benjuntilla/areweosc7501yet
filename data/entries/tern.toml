@@ -1,0 +1,12 @@
+name = "Tern"
+url = "https://stencil.so/tern"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "Closed beta"
+last_checked_date = 2026-10-24
+
+[[history]]
+date = 2026-10-09
+state = "working"
+source = "https://x.com/_can1357/status/2108468517217665065"

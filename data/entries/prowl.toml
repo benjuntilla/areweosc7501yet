@@ -1,0 +1,24 @@
+name = "Prowl"
+url = "https://github.com/onevcat/Prowl"
+repo = "onevcat/Prowl"
+role = "terminal"
+category = "multiplexers"
+is_featured = true
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 657
+latest_release_tag = "v2026.10.21"
+latest_release_date = 2026-10-20
+
+[[history]]
+date = 2026-10-10
+state = "working"
+source = "https://github.com/onevcat/Prowl/pull/887"
+
+[[history]]
+date = 2026-10-11
+state = "done"
+source = "https://github.com/onevcat/Prowl/releases/tag/v2026.10.11"
+version = "v2026.10.11"

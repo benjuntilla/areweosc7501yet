@@ -1,0 +1,23 @@
+name = "fx"
+url = "https://github.com/vercel-labs/fx"
+repo = "vercel-labs/fx"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 3596
+latest_release_tag = "v0.0.14"
+latest_release_date = 2026-10-16
+
+[[history]]
+date = 2026-10-07
+state = "working"
+source = "https://github.com/vercel-labs/fx/pull/1181"
+
+[[history]]
+date = 2026-10-16
+state = "done"
+source = "https://github.com/vercel-labs/fx/releases/tag/v0.0.14"
+version = "v0.0.14"

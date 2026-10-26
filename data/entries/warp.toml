@@ -1,0 +1,18 @@
+name = "Warp"
+url = "https://github.com/warpdotdev/warp"
+repo = "warpdotdev/warp"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "An outside contributor’s #16460 only adds specs."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 65681
+latest_release_tag = "v0.2026.06.03.09.49.stable_00"
+latest_release_date = 2026-06-03
+
+[[history]]
+date = 2026-10-10
+state = "idle"
+source = "https://github.com/warpdotdev/warp/issues/16407"

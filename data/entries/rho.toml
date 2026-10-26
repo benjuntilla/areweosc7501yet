@@ -1,0 +1,18 @@
+name = "rho"
+url = "https://github.com/matthewyjiang/rho"
+repo = "matthewyjiang/rho"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-26
+
+[github]
+stars = 15
+latest_release_tag = "rho-coding-agent-v2.30.0"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-10
+state = "done"
+source = "https://github.com/matthewyjiang/rho/releases/tag/rho-coding-agent-v2.20.0"
+version = "rho-coding-agent-v2.20.0"

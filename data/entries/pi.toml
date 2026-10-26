@@ -1,0 +1,19 @@
+name = "pi"
+url = "https://github.com/earendil-works/pi"
+repo = "earendil-works/pi"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+note = "Only sends after the terminal answers the query. Its docs say tmux and screen don’t forward reports."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 117620
+latest_release_tag = "v1.4.0"
+latest_release_date = 2026-10-21
+
+[[history]]
+date = 2026-10-07
+state = "done"
+source = "https://github.com/earendil-works/pi/releases/tag/v1.1.0"
+version = "v1.1.0"

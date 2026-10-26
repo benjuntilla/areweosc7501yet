@@ -1,0 +1,23 @@
+name = "Orca"
+url = "https://github.com/stablyai/orca"
+repo = "stablyai/orca"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 104986
+latest_release_tag = "v1.4.239"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-18
+state = "working"
+source = "https://github.com/stablyai/orca/pull/30261"
+
+[[history]]
+date = 2026-10-20
+state = "done"
+source = "https://github.com/stablyai/orca/releases/tag/v1.4.232"
+version = "v1.4.232"

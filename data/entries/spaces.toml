@@ -1,0 +1,18 @@
+name = "Spaces"
+url = "https://github.com/yogesh-dhande/spaces"
+repo = "yogesh-dhande/spaces"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+note = "Only a pre-release has it"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 3
+latest_release_tag = "v0.23.0"
+latest_release_date = 2026-10-12
+
+[[history]]
+date = 2026-10-13
+state = "working"
+source = "https://github.com/yogesh-dhande/spaces/pull/921"

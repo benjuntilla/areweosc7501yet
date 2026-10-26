@@ -1,0 +1,18 @@
+name = "tuika"
+url = "https://github.com/everruns/tuika"
+repo = "everruns/tuika"
+role = "program"
+category = "libraries"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 16
+latest_release_tag = "v0.13.0"
+latest_release_date = 2026-10-07
+
+[[history]]
+date = 2026-10-07
+state = "done"
+source = "https://github.com/everruns/tuika/releases/tag/v0.13.0"
+version = "v0.13.0"

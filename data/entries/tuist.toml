@@ -1,0 +1,23 @@
+name = "tuist"
+url = "https://github.com/tuist/tuist"
+repo = "tuist/tuist"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 5848
+latest_release_tag = "tuist-ex@0.9.0"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-08
+state = "working"
+source = "https://github.com/tuist/tuist/pull/13956"
+
+[[history]]
+date = 2026-10-21
+state = "done"
+source = "https://github.com/tuist/tuist/releases/tag/4.213.0"
+version = "4.213.0"

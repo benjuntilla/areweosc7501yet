@@ -1,0 +1,17 @@
+name = "MSBuild"
+url = "https://github.com/dotnet/msbuild"
+repo = "dotnet/msbuild"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 5551
+latest_release_tag = "v18.11.0"
+latest_release_date = 2026-10-15
+
+[[history]]
+date = 2026-10-12
+state = "working"
+source = "https://github.com/dotnet/msbuild/pull/15263"

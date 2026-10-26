@@ -1,0 +1,19 @@
+name = "pi-subagents"
+url = "https://github.com/nicobailon/pi-subagents"
+repo = "nicobailon/pi-subagents"
+role = "program"
+category = "coding-agents"
+is_featured = false
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 4017
+latest_release_tag = "v0.82.0"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-10
+state = "done"
+source = "https://github.com/nicobailon/pi-subagents/releases/tag/v0.77.0"
+version = "v0.77.0"

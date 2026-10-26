@@ -1,0 +1,19 @@
+name = "go-term"
+url = "https://github.com/go-gui-org/go-term"
+repo = "go-gui-org/go-term"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+note = "Engine"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 6
+latest_release_tag = "v0.17.1"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-11
+state = "done"
+source = "https://github.com/go-gui-org/go-term/releases/tag/v0.16.0"
+version = "v0.16.0"

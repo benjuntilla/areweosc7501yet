@@ -1,0 +1,20 @@
+name = "botmux"
+url = "https://github.com/deepcoldy/botmux"
+repo = "deepcoldy/botmux"
+role = "terminal"
+category = "multiplexers"
+is_featured = false
+spec_revision = "0.4"
+note = "Reads Claude Code’s reports"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 1749
+latest_release_tag = "v3.50.0"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-10
+state = "done"
+source = "https://github.com/deepcoldy/botmux/pull/1781"
+version = "v3.40.0"

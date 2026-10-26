@@ -1,0 +1,23 @@
+name = "goose"
+url = "https://github.com/aaif-goose/goose"
+repo = "aaif-goose/goose"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 55659
+latest_release_tag = "v1.56.0"
+latest_release_date = 2026-10-23
+
+[[history]]
+date = 2026-10-15
+state = "working"
+source = "https://github.com/aaif-goose/goose/pull/12928"
+
+[[history]]
+date = 2026-10-23
+state = "done"
+source = "https://github.com/aaif-goose/goose/releases/tag/v1.56.0"
+version = "v1.56.0"

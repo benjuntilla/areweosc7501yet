@@ -1,0 +1,18 @@
+name = "tui-lipan"
+url = "https://github.com/tui-lipan/tui-lipan"
+repo = "tui-lipan/tui-lipan"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 5
+latest_release_tag = "v0.29.0"
+latest_release_date = 2026-10-24
+
+[[history]]
+date = 2026-10-13
+state = "done"
+source = "https://github.com/tui-lipan/tui-lipan/releases/tag/v0.22.6"
+version = "v0.22.6"

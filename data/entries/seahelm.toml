@@ -1,0 +1,18 @@
+name = "Seahelm"
+url = "https://github.com/BetaYao/seahelm"
+repo = "BetaYao/seahelm"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 18
+latest_release_tag = "v2.0.72"
+latest_release_date = 2026-10-21
+
+[[history]]
+date = 2026-10-16
+state = "done"
+source = "https://github.com/BetaYao/seahelm/releases/tag/v2.0.67"
+version = "v2.0.67"

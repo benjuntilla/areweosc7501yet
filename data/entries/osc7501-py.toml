@@ -1,0 +1,18 @@
+name = "osc7501 (Python)"
+url = "https://github.com/ysskrishna/osc7501"
+repo = "ysskrishna/osc7501"
+role = "program"
+category = "libraries"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 0
+latest_release_tag = "v1.0.2"
+latest_release_date = 2026-10-12
+
+[[history]]
+date = 2026-10-12
+state = "done"
+source = "https://github.com/ysskrishna/osc7501/releases/tag/v1.0.0"
+version = "v1.0.0"

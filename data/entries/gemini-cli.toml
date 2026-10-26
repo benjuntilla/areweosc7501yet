@@ -1,0 +1,22 @@
+name = "Gemini CLI"
+url = "https://github.com/google-gemini/gemini-cli"
+repo = "google-gemini/gemini-cli"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-26
+
+[github]
+stars = 108076
+latest_release_tag = "v0.65.0"
+latest_release_date = 2026-10-20
+
+[[history]]
+date = 2026-10-10
+state = "idle"
+source = "https://github.com/google-gemini/gemini-cli/issues/29710"
+
+[[history]]
+date = 2026-10-24T20:19:23Z
+state = "working"
+source = "https://github.com/google-gemini/gemini-cli/pull/29918"

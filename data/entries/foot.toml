@@ -1,0 +1,9 @@
+name = "foot"
+url = "https://codeberg.org/dnkl/foot"
+role = "terminal"
+category = "emulators"
+is_featured = true
+spec_revision = "0.4"
+note = "Lives on Codeberg, so it’s checked by hand."
+last_checked_date = 2026-10-24
+history = []

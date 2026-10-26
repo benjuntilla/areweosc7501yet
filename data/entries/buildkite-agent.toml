@@ -1,0 +1,24 @@
+name = "Buildkite Agent"
+url = "https://github.com/buildkite/agent"
+repo = "buildkite/agent"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+note = "Behind the program-status experiment flag."
+last_checked_date = 2026-10-24
+
+[github]
+stars = 1100
+latest_release_tag = "v4.8.1"
+latest_release_date = 2026-10-22
+
+[[history]]
+date = 2026-10-19
+state = "working"
+source = "https://github.com/buildkite/agent/pull/4534"
+
+[[history]]
+date = 2026-10-22
+state = "done"
+source = "https://github.com/buildkite/agent/releases/tag/v4.8.0"
+version = "v4.8.0"

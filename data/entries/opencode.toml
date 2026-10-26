@@ -1,0 +1,23 @@
+name = "opencode"
+url = "https://github.com/anomalyco/opencode"
+repo = "anomalyco/opencode"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+note = "On dev and in the unreleased v2.1 tags. The stable 1.x line doesn’t have it."
+last_checked_date = 2026-10-25
+
+[github]
+stars = 221101
+latest_release_tag = "v1.19.4"
+latest_release_date = 2026-10-22
+
+[[history]]
+date = 2026-10-10
+state = "working"
+source = "https://github.com/anomalyco/opencode/pull/54402"
+
+[[history]]
+date = 2026-10-19T14:47:33Z
+state = "working"
+source = "https://github.com/anomalyco/opencode/commit/c7ddff776c59426e7dd63fe5a0d2a348864592ba"

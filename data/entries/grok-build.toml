@@ -1,0 +1,16 @@
+name = "Grok Build"
+url = "https://x.ai/changelog/build"
+repo = "xai-org/grok-build"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+stars = 27530
+
+[[history]]
+date = 2026-10-11
+state = "done"
+source = "https://x.ai/changelog/build"
+version = "v1.0.52"

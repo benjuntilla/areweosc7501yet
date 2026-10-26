@@ -1,0 +1,18 @@
+name = "RoyalTerminal"
+url = "https://github.com/royalapplications/RoyalTerminal"
+repo = "royalapplications/RoyalTerminal"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+note = "The v0.7.0-preview.2 prerelease was built from the open PR"
+last_checked_date = 2026-10-25
+
+[github]
+stars = 28
+latest_release_tag = "v0.6.3"
+latest_release_date = 2026-10-10
+
+[[history]]
+date = 2026-10-09T16:54:31Z
+state = "working"
+source = "https://github.com/royalapplications/RoyalTerminal/pull/121"
