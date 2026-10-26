@@ -6,7 +6,7 @@ import { loadData } from '../../src/lib/domain/load.ts';
 import { Entry } from '../../src/lib/domain/schema.ts';
 import { specToml } from '../../src/lib/domain/fixtures.ts';
 import { checkEntry } from './check.ts';
-import { GitHub, make } from './github.ts';
+import { layer } from './github.ts';
 import { writeEntry } from './toml.ts';
 
 // Trimmed GitHub responses, recorded on Oct 26, 2026, keyed by path and query.
@@ -91,20 +91,21 @@ const kimi: Recorded = {
 };
 
 const fakeGitHub = (recorded: Recorded) =>
-	Layer.succeed(
-		GitHub,
-		make(
-			HttpClient.make((req, url) =>
-				Effect.succeed(
-					HttpClientResponse.fromWeb(
-						req,
-						`${url.pathname}${url.search}` in recorded
-							? Response.json(recorded[`${url.pathname}${url.search}`])
-							: new Response('{"message":"Not Found"}', { status: 404 })
+	layer(Redacted.make('test')).pipe(
+		Layer.provide(
+			Layer.succeed(
+				HttpClient.HttpClient,
+				HttpClient.make((req, url) =>
+					Effect.succeed(
+						HttpClientResponse.fromWeb(
+							req,
+							`${url.pathname}${url.search}` in recorded
+								? Response.json(recorded[`${url.pathname}${url.search}`])
+								: new Response('{"message":"Not Found"}', { status: 404 })
+						)
 					)
 				)
-			),
-			Redacted.make('test')
+			)
 		)
 	);
 
