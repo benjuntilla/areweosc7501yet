@@ -2,13 +2,13 @@
 
 Which terminals and programs support OSC 7501, the Program Status Protocol. Live at [areweosc7501yet.com](https://areweosc7501yet.com).
 
-## Running it
+## Development
 
-Node 24 and pnpm 10, pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed. pnpm itself still needs Node 18.12 or newer to start.
+The Node and pnpm versions are pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed.
 
 Installing dependencies also installs the git hooks in `lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's checks except the build. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
 
-## Editor
+### Editor
 
 The repo is set up for Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI.
 
