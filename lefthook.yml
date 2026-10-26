@@ -1,0 +1,20 @@
+# Git hooks, installed by `pnpm install`. jj doesn't run git hooks, so run
+# `pnpm lefthook run pre-push` before `jj git push`.
+
+pre-commit:
+  jobs:
+    - name: format
+      run: pnpm oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+    - name: lint
+      glob: '*.{js,ts,svelte}'
+      run: pnpm oxlint {staged_files}
+
+# The same gates as CI, minus the build.
+pre-push:
+  parallel: true
+  jobs:
+    - run: pnpm format:check
+    - run: pnpm lint
+    - run: pnpm check
+    - run: pnpm test
