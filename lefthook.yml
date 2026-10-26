@@ -1,6 +1,3 @@
-# Git hooks, installed by `pnpm install`. jj doesn't run git hooks, so run
-# `pnpm lefthook run pre-push` before `jj git push`.
-
 pre-commit:
   jobs:
     - name: format
