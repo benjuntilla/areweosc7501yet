@@ -108,7 +108,7 @@
 				>
 			</span>
 			<span class="bar">
-				<span class="fill"><span class="field" {@attach warpOnce}></span></span>
+				<span class="fill grain"><span class="field" {@attach warpOnce}></span></span>
 			</span>
 		</a>
 	{/each}
@@ -181,6 +181,8 @@
 
 	/* Done shows the field in full; working above it shows the field faintly. */
 	.fill {
+		--grain-opacity: var(--rail-grain-opacity);
+
 		position: absolute;
 		inset: 0;
 		mask: linear-gradient(
@@ -190,23 +192,6 @@
 				calc(var(--done) + var(--working)),
 			transparent 0
 		);
-	}
-
-	/* White noise, blended overlay, so the grain lightens and darkens without shifting hue. */
-	.fill::after {
-		position: absolute;
-		inset: 0;
-		content: '';
-		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 1.48 0 0 -0.24  0 1.48 0 0 -0.24  0 1.48 0 0 -0.24  0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-		mix-blend-mode: overlay;
-		opacity: calc(var(--rail-grain-opacity) / 100);
-	}
-
-	/* One grain dot per screen pixel. */
-	@media (resolution >= 2x) {
-		.fill::after {
-			background-size: 100px;
-		}
 	}
 
 	/* The ramp is twice the bar's height. Scrolling the page slides the field up, from the ramp's
