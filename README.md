@@ -2,30 +2,20 @@
 
 Which terminals and programs support OSC 7501, the Program Status Protocol. Live at [areweosc7501yet.com](https://areweosc7501yet.com).
 
-## Running it
+## Development
 
-Node 24 and pnpm 10, pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed. pnpm itself still needs Node 18.12 or newer to start.
+The Node and pnpm versions are pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed.
 
-```sh
-pnpm install
-pnpm dev            # dev server
-pnpm lint           # oxlint, type-aware (options in oxlint.config.ts)
-pnpm format         # oxfmt: TS, Svelte, CSS, JSON, TOML, Markdown
-pnpm check          # svelte-check: types, template types, a11y
-pnpm test           # unit tests
-pnpm build          # static site in build/
-```
+Installing dependencies also installs the git hooks in `lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's checks except the build. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
 
-CI runs `pnpm lint`, `pnpm format:check`, `pnpm check`, `pnpm test` and `pnpm build` on every PR.
+### Editor
 
-## Editor
-
-The repo is set up for Zed. `.zed/settings.json` installs the Oxc, Svelte and Tombi extensions, formats on save with oxfmt and lints with oxlint, both from `node_modules`, so the editor agrees with CI.
+`.zed/settings.json` sets up Zed to format and lint exactly as CI does.
 
 ## Acknowledgements
 
 - The seed data comes from [awesome-osc7501](https://github.com/hyeebeen/awesome-osc7501) by hyeebeen.
-- The layout follows [Superlogical](https://www.superlogical.com)'s [Rex docs](https://www.superlogical.com/rex/docs), and the drum and rail follow superlogical.com.
+- The layout follows [Superlogical](https://www.superlogical.com)'s [Rex docs](https://www.superlogical.com/rex/docs), and other design motifs come from superlogical.com.
 - The idea comes from the "Are we X yet?" sites: [Are we Wayland yet?](https://arewewaylandyet.com), [Are we anti-cheat yet?](https://areweanticheatyet.com), [Are we fast yet?](https://arewefastyet.com), [Are we web yet?](https://www.arewewebyet.org), [Are we GUI yet?](https://areweguiyet.com), [Are we game yet?](https://arewegameyet.rs) and [Are we learning yet?](https://www.arewelearningyet.com).
 
 ## License

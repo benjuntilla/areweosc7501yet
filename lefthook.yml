@@ -1,0 +1,20 @@
+pre-commit:
+  jobs:
+    - name: format
+      run: pnpm oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+    - name: lint
+      glob: '*.{js,ts,svelte}'
+      run: pnpm oxlint {staged_files}
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: format
+      run: pnpm format:check
+    - name: lint
+      run: pnpm lint
+    - name: check
+      run: pnpm check
+    - name: test
+      run: pnpm test
