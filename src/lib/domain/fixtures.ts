@@ -7,14 +7,26 @@ date = 2026-10-10
 url = "https://example.com/spec"
 `;
 
-export const kittyToml = `
+/** kitty's entry. Each option is TOML source text, so a test can write a quoted or native value. */
+export const kittyToml = ({
+	url = '"https://github.com/kovidgoyal/kitty"',
+	/** An empty string leaves the repo line out. */
+	repo = '"kovidgoyal/kitty"',
+	category = '"emulators"',
+	lastChecked = '2026-10-24',
+	idleDate = '2026-10-09',
+	idleState = '"idle"',
+	idleSource = '"https://github.com/kovidgoyal/kitty/issues/10638"',
+	prDate = '2026-10-12T08:00:00Z',
+	commitDate = '2026-10-13'
+} = {}) => `
 name = "kitty"
-url = "https://github.com/kovidgoyal/kitty"
-repo = "kovidgoyal/kitty"
+url = ${url}
+${repo === '' ? '' : `repo = ${repo}`}
 role = "terminal"
-category = "emulators"
+category = ${category}
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = ${lastChecked}
 
 [github]
 stars = 35419
@@ -22,17 +34,17 @@ latest_release_tag = "v0.49.2"
 latest_release_date = 2026-10-01
 
 [[history]]
-date = 2026-10-09
-state = "idle"
-source = "https://github.com/kovidgoyal/kitty/issues/10638"
+date = ${idleDate}
+state = ${idleState}
+source = ${idleSource}
 
 [[history]]
-date = 2026-10-12T08:00:00Z
+date = ${prDate}
 state = "working"
 source = "https://github.com/kovidgoyal/kitty/pull/10657"
 
 [[history]]
-date = 2026-10-13
+date = ${commitDate}
 state = "working"
 source = "https://github.com/kovidgoyal/kitty/commit/0e1b7f4"
 `;
@@ -95,7 +107,7 @@ stars = 12
 
 export const fixtureFiles = {
 	'/data/entries/codex.toml': codexToml,
-	'/data/entries/kitty.toml': kittyToml,
+	'/data/entries/kitty.toml': kittyToml(),
 	'/data/entries/rex.toml': rexToml,
 	'/data/entries/tiny.toml': smallToml
 };

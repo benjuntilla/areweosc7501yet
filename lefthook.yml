@@ -19,4 +19,4 @@ pre-push:
     - name: test
       run: pnpm test
     - name: schema
-      run: pnpm schema && git diff --exit-code schema/
+      run: pnpm schema && test -z "$(git status --porcelain -- schema/)"

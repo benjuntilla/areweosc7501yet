@@ -1,6 +1,8 @@
 import { describe, expect, it } from '@effect/vitest';
 import { Option, Schema } from 'effect';
-import { githubRepoOf, githubRepoUrlPattern, HistoryBlock, isPlainGithubUrl } from './schema.ts';
+import { githubRepoUrl } from './patterns.ts';
+import { githubRepoOf, isPlainGithubUrl } from './formats.ts';
+import { HistoryBlock } from './schema.ts';
 
 const isHistoryDate = (s: string) =>
 	Option.isSome(Schema.decodeUnknownOption(HistoryBlock.fields.date)(s));
@@ -77,10 +79,10 @@ describe('githubRepoOf', () => {
 });
 
 describe('the published GitHub repository URL condition', () => {
-	const pattern = new RegExp(githubRepoUrlPattern, 'u');
+	const pattern = new RegExp(githubRepoUrl, 'u');
 	it.each([
 		'https://github.com/kovidgoyal/kitty',
-		'https://GitHub.com/kovidgoyal/kitty/',
+		'https://github.com/kovidgoyal/kitty/',
 		'https://github.com/kovidgoyal/kitty.git',
 		'https://github.com/kovidgoyal/kitty/pull/10657',
 		'https://github.com/o/x?tab=readme',
@@ -90,7 +92,7 @@ describe('the published GitHub repository URL condition', () => {
 		'https://github.com/',
 		'https://codeberg.org/dnkl/foot',
 		'https://x@github.com/a/b',
-		'https://x:y@GitHub.com:443/a/b',
+		'https://x:y@github.com:443/a/b',
 		'https://github.com//a//b',
 		'https://github.com.evil.com/a/b'
 	])('agrees with githubRepoOf on %s', (url) => {
@@ -102,7 +104,8 @@ describe('isPlainGithubUrl', () => {
 	it.each([
 		['https://github.com/kovidgoyal/kitty', true],
 		['https://x@github.com/a/b', true],
-		['https://x:y@GitHub.com:443/a/b', true],
+		['https://x:y@github.com:443/a/b', true],
+		['https://GitHub.com/a/b', false],
 		['https://github.com//a//b', true],
 		['https://codeberg.org/dnkl/foot', true],
 		['https://github.com/a/b/../c', false],

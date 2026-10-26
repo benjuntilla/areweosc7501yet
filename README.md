@@ -12,11 +12,6 @@ Installing dependencies also installs the git hooks in `lefthook.yml`. A commit 
 
 `.zed/settings.json` sets up Zed to format and lint exactly as CI does.
 
-## How the code is laid out
-
-- `src/lib/domain/`: the entry and spec schemas and the TOML loader, written with [Effect](https://effect.website). No SvelteKit imports, so tests and scripts use it directly.
-- `scripts/`: Node scripts, run with Effect's `NodeRuntime.runMain`.
-
 ## Acknowledgements
 
 - The seed data comes from [awesome-osc7501](https://github.com/hyeebeen/awesome-osc7501) by hyeebeen.

@@ -3,8 +3,7 @@
 	"type": "object",
 	"properties": {
 		"name": {
-			"type": "string",
-			"description": "The project's name, as the site shows it."
+			"type": "string"
 		},
 		"url": {
 			"type": "string",
@@ -100,7 +99,7 @@
 					},
 					"version": {
 						"type": "string",
-						"description": "The release that shipped support. Required for done when the entry has a repo."
+						"description": "The release that shipped support."
 					}
 				},
 				"required": ["date", "state", "source"],
@@ -150,7 +149,7 @@
 			"if": {
 				"properties": {
 					"url": {
-						"pattern": "^https://([^/?#\\s@]*@)?[Gg][Ii][Tt][Hh][Uu][Bb]\\.[Cc][Oo][Mm](:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)"
+						"pattern": "^https://([^/?#\\s@]*@)?github\\.com(:[0-9]*)?/+([^/?#]+)/+([^/?#]+)([/?#]|$)"
 					}
 				},
 				"required": ["url"]

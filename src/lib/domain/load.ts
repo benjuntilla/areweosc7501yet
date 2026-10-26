@@ -1,6 +1,7 @@
 import { basename } from 'node:path';
-import { Array, Data, DateTime, Effect, Order, Predicate, Record, Schema } from 'effect';
+import { Array, Data, Effect, Order, Record, Schema } from 'effect';
 import { Toml } from 'effect/encoding';
+import * as patterns from './patterns.ts';
 import { Entry, Spec } from './schema.ts';
 
 export class DataError extends Data.TaggedError('DataError')<{
@@ -10,29 +11,22 @@ export class DataError extends Data.TaggedError('DataError')<{
 
 export type SlugEntry = Entry & { readonly slug: string };
 
-/**
- * Effect's TOML parser range-checks dates, returns date-times with an offset as Dates and
- * local dates as strings. The schema reads ISO strings, so Dates become UTC instants.
- */
-const plain = (v: unknown): unknown => {
-	if (v instanceof Date) return DateTime.formatIso(DateTime.fromDateUnsafe(v));
-	if (Array.isArray(v)) return Array.map(v, (x) => plain(x));
-	if (Predicate.isObject(v)) return Record.map(v, (x) => plain(x));
-	return v;
-};
-
-const decodeToml = <S extends Schema.Decoder<unknown>>(schema: S, file: string, text: string) =>
+// Effect's TOML parser range-checks dates and returns date-times with an offset as Dates.
+// JSON turns those into the ISO strings the schema reads.
+const decodeToml = <S extends Schema.Top>(schema: S, file: string, text: string) =>
 	Effect.try({
-		try: () => plain(Toml.parse(text)),
+		try: () => JSON.stringify(Toml.parse(text)),
 		catch: (e) => new DataError({ file, message: String(e) })
 	}).pipe(
-		Effect.flatMap(Schema.decodeUnknownEffect(schema, { onExcessProperty: 'error' })),
+		Effect.flatMap(
+			Schema.decodeUnknownEffect(Schema.fromJsonString(schema), { onExcessProperty: 'error' })
+		),
 		Effect.mapError((e) =>
 			e instanceof DataError ? e : new DataError({ file, message: String(e) })
 		)
 	);
 
-const Slug = Schema.String.check(Schema.isPattern(/^[a-z0-9]+(-[a-z0-9]+)*$/u));
+const Slug = Schema.String.check(Schema.isPattern(patterns.slug));
 
 /**
  * Decodes every entry file and the spec. `entries` maps a file path to its text,

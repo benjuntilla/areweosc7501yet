@@ -27,7 +27,7 @@ describe('loadData', () => {
 
 	it.effect('rejects unknown keys and names the file', () =>
 		Effect.gen(function* () {
-			const msg = yield* failure({ '/data/entries/kitty.toml': `summary = "x"\n${kittyToml}` });
+			const msg = yield* failure({ '/data/entries/kitty.toml': `summary = "x"\n${kittyToml()}` });
 			expect(msg).toMatch(/^\/data\/entries\/kitty\.toml: .*summary/su);
 		})
 	);
@@ -40,62 +40,40 @@ describe('loadData', () => {
 
 	it.effect('rejects a bad slug', () =>
 		Effect.gen(function* () {
-			expect(yield* failure({ '/data/entries/Kitty.toml': kittyToml })).toMatch(/bad slug/u);
+			expect(yield* failure({ '/data/entries/Kitty.toml': kittyToml() })).toMatch(/bad slug/u);
 		})
 	);
 
 	const broken: Array<[string, string, RegExp]> = [
-		[
-			'a done block without a version',
-			kittyToml.replace('state = "idle"', 'state = "done"'),
-			/version/u
-		],
-		[
-			'an impossible date',
-			kittyToml.replace('last_checked_date = 2026-10-24', 'last_checked_date = "2026-02-31"'),
-			/a valid date/u
-		],
-		[
-			'an impossible time',
-			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T25:00:00.000Z"'),
-			/date/u
-		],
+		['a done block without a version', kittyToml({ idleState: '"done"' }), /version/u],
+		['an impossible date', kittyToml({ lastChecked: '"2026-02-31"' }), /a valid date/u],
+		['an impossible time', kittyToml({ prDate: '"2026-10-12T25:00:00.000Z"' }), /date/u],
 		[
 			'a leap second in the latest block (TOML itself rejects a native one)',
-			kittyToml.replace('date = 2026-10-13\n', 'date = "2026-10-13T23:59:60.000Z"\n'),
+			kittyToml({ commitDate: '"2026-10-13T23:59:60.000Z"' }),
 			/a valid date/u
 		],
 		[
 			'a leap second in an earlier block',
-			kittyToml.replace('2026-10-12T08:00:00Z', '"2026-10-12T23:59:60.000Z"'),
+			kittyToml({ prDate: '"2026-10-12T23:59:60.000Z"' }),
 			/a valid date/u
 		],
 		[
 			'a local date-time with no offset',
-			kittyToml.replace('2026-10-12T08:00:00Z', '2026-10-12T08:00:00'),
+			kittyToml({ prDate: '2026-10-12T08:00:00' }),
 			/a TOML date-time with an offset/u
 		],
-		['history out of order', kittyToml.replace('2026-10-13', '2026-10-01'), /date order/u],
-		['a category from the other role', kittyToml.replace('"emulators"', '"clis"'), /category/u],
-		['a GitHub url without a repo', kittyToml.replace(/^repo = .*$/mu, ''), /repo/u],
+		['history out of order', kittyToml({ commitDate: '2026-10-01' }), /date order/u],
+		['a category from the other role', kittyToml({ category: '"clis"' }), /category/u],
+		['a GitHub url without a repo', kittyToml({ repo: '' }), /repo/u],
 		[
-			'a mixed-case GitHub url without a repo',
-			kittyToml
-				.replace(/^repo = .*$/mu, '')
-				.replace('https://github.com/kovidgoyal/kitty"', 'https://GitHub.com/kovidgoyal/kitty"'),
-			/repo/u
+			'a mixed-case GitHub url',
+			kittyToml({ repo: '', url: '"https://GitHub.com/kovidgoyal/kitty"' }),
+			/plain form/u
 		],
-		[
-			'a repo that differs from the url',
-			kittyToml.replace('repo = "kovidgoyal/kitty"', 'repo = "someone/else"'),
-			/repo/u
-		],
-		['an unknown state', kittyToml.replace('"idle"', '"maybe"'), /state/u],
-		[
-			'a non-https source',
-			kittyToml.replace('https://github.com/kovidgoyal/kitty/issues', 'ftp://x'),
-			/source/u
-		]
+		['a repo that differs from the url', kittyToml({ repo: '"someone/else"' }), /repo/u],
+		['an unknown state', kittyToml({ idleState: '"maybe"' }), /state/u],
+		['a non-https source', kittyToml({ idleSource: '"ftp://x/10638"' }), /source/u]
 	];
 	for (const [name, text, pattern] of broken) {
 		it.effect(`rejects ${name}`, () =>
@@ -118,19 +96,19 @@ describe('loadData', () => {
 	for (const date of nativeDates) {
 		it.effect(`rejects a native ${date} in the latest block`, () =>
 			Effect.gen(function* () {
-				const toml = kittyToml.replace('date = 2026-10-13\n', `date = ${date}\n`);
+				const toml = kittyToml({ commitDate: date });
 				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(invalidDate);
 			})
 		);
 		it.effect(`rejects a native ${date} as last_checked_date`, () =>
 			Effect.gen(function* () {
-				const toml = kittyToml.replace(/^last_checked_date = .*$/mu, `last_checked_date = ${date}`);
+				const toml = kittyToml({ lastChecked: date });
 				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(invalidDate);
 			})
 		);
 		it.effect(`rejects a native ${date} in an earlier block`, () =>
 			Effect.gen(function* () {
-				const toml = kittyToml.replace('date = 2026-10-12T08:00:00Z', `date = ${date}`);
+				const toml = kittyToml({ prDate: date });
 				expect(yield* failure({ '/data/entries/kitty.toml': toml })).toMatch(invalidDate);
 			})
 		);
