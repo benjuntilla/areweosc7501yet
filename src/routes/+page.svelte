@@ -20,10 +20,12 @@
 	let highlight: string | undefined = $state();
 
 	// A link to /#kitty unfolds kitty's tail, scrolls to the chip, flashes it and opens its popover.
+	// A deep link wins over a search that would hide its target.
 	const followHash = async () => {
 		const hash = decodeURIComponent(page.url.hash.slice(1));
 		const all = /^(.*)-all$/u.exec(hash)?.[1];
 		if (all !== undefined) {
+			search.query = '';
 			expanded[all] = true;
 			await tick();
 			document.querySelector(`#${CSS.escape(all)}`)?.scrollIntoView();
@@ -31,7 +33,6 @@
 		}
 		const category = categoryOf(categories, hash);
 		if (!category) return;
-		// A deep link wins over a search that would hide its chip.
 		search.query = '';
 		if (category.more.some((chip) => chip.slug === hash)) expanded[category.id] = true;
 		await tick();
