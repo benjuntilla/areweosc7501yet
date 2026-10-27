@@ -8,7 +8,8 @@ pre-commit:
       run: pnpm oxlint {staged_files}
     - name: stylelint
       glob: 'src/**/*.{css,svelte}'
-      run: pnpm stylelint --allow-empty-input {staged_files}
+      run: pnpm stylelint --allow-empty-input --fix {staged_files}
+      stage_fixed: true
 
 pre-push:
   parallel: true
