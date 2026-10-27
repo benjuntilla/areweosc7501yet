@@ -4,10 +4,9 @@ repo = "anomalyco/opentui"
 role = "program"
 category = "libraries"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 13613
+popular = true
 latest_release_tag = "v0.6.8"
 latest_release_date = 2026-10-23
 

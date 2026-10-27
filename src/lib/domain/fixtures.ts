@@ -7,6 +7,8 @@ date = 2026-10-10
 url = "https://example.com/spec"
 `;
 
+export const checkerToml = 'last_run = 2026-10-24\n';
+
 /** kitty's entry. Each option is TOML source text, so a test can write a quoted or native value. */
 export const kittyToml = ({
 	url = '"https://github.com/kovidgoyal/kitty"',
@@ -29,7 +31,7 @@ spec_revision = "0.4"
 last_checked_date = ${lastChecked}
 
 [github]
-stars = 35419
+popular = true
 latest_release_tag = "v0.49.2"
 latest_release_date = 2026-10-01
 
@@ -72,7 +74,7 @@ role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
 last_checked_date = 2026-10-24
-github = { stars = 50000 }
+github = { popular = true }
 
 [[history]]
 date = 2026-10-09T01:00:00Z
@@ -102,7 +104,7 @@ last_checked_date = 2026-10-24
 history = []
 
 [github]
-stars = 12
+popular = false
 `;
 
 export const fixtureFiles = {

@@ -34,12 +34,14 @@ jobs:
       - run: node scripts/checker/main.ts --body "$RUNNER_TEMP/body.md"
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
-      - run: pnpm format data/entries
+      - run: pnpm format data/entries data/checker.toml
       - uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ steps.token.outputs.token }}
           sign-commits: true
-          add-paths: data/entries
+          add-paths: |
+            data/entries
+            data/checker.toml
           branch: checker/weekly
           delete-branch: true
           commit-message: 'chore(data): recheck entries upstream'

@@ -4,10 +4,9 @@ repo = "usecornercase/cornercase-terminal"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 31
+popular = false
 latest_release_tag = "v0.12.194"
 latest_release_date = 2026-10-24
 

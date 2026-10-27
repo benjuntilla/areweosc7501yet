@@ -4,10 +4,9 @@ repo = "vercel-labs/fx"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 3596
+popular = true
 latest_release_tag = "v0.0.14"
 latest_release_date = 2026-10-16
 

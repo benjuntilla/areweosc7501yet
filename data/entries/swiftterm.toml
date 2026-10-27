@@ -4,10 +4,9 @@ repo = "migueldeicaza/SwiftTerm"
 role = "terminal"
 category = "engines"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 1741
+popular = true
 latest_release_tag = "v1.99.1"
 latest_release_date = 2026-10-21
 

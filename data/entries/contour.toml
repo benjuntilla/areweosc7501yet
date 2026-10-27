@@ -4,10 +4,9 @@ repo = "contour-terminal/contour"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 3052
+popular = true
 latest_release_tag = "v0.8.0.9335"
 latest_release_date = 2026-10-23
 

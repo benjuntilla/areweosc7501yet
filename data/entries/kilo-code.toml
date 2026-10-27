@@ -4,10 +4,9 @@ repo = "Kilo-Org/kilocode"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 27741
+popular = true
 latest_release_tag = "v7.8.17"
 latest_release_date = 2026-10-23
 

@@ -4,10 +4,9 @@ repo = "BunnyWay/cli"
 role = "program"
 category = "clis"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 34
+popular = false
 latest_release_tag = "v0.20.3"
 latest_release_date = 2026-10-23
 

@@ -34,7 +34,9 @@ export const HistoryBlock = Schema.Struct({
 export type HistoryBlock = typeof HistoryBlock.Type;
 
 export const Github = Schema.Struct({
-	stars: Schema.Int.check(Schema.isGreaterThanOrEqualTo(0)),
+	popular: Schema.Boolean.pipe(
+		Schema.annotateEncoded({ description: 'At least 1,000 GitHub stars at the last check.' })
+	),
 	latest_release_tag: Schema.optionalKey(Schema.String),
 	latest_release_date: Schema.optionalKey(Day)
 }).pipe(
@@ -89,7 +91,14 @@ export const entryFields = {
 			})
 		)
 	),
-	last_checked_date: Day,
+	last_checked_date: Schema.optionalKey(
+		Day.pipe(
+			Schema.annotateEncoded({
+				description:
+					'When a person last checked this entry. Leave it out if the weekly checker can follow its last history block.'
+			})
+		)
+	),
 	github: Schema.optionalKey(Github),
 	history: Schema.Array(HistoryBlock).pipe(
 		Schema.annotateEncoded({
@@ -184,6 +193,9 @@ export const Entry = Schema.Struct(entryFields).check(entryRules);
 export type Entry = typeof Entry.Type;
 
 export const SpecRevision = Schema.Struct({ number: Schema.String, date: Day, url: Url });
+
+/** data/checker.toml, written by the weekly checker. */
+export const Checker = Schema.Struct({ last_run: Day });
 
 /** data/spec.toml */
 export const Spec = Schema.Struct({

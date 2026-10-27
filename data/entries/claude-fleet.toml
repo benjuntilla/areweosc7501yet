@@ -5,10 +5,9 @@ role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
 note = "Only a rolling stable tag"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 2
+popular = false
 
 [[history]]
 date = 2026-10-09T07:48:26Z
