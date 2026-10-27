@@ -253,14 +253,7 @@
 		color: inherit;
 	}
 
-	.title a {
-		text-decoration-line: none;
-	}
-
-	.title a:hover {
-		text-decoration-line: underline;
-	}
-
+	.title a:hover,
 	.meta a:hover {
 		color: var(--link-text-hover);
 	}
