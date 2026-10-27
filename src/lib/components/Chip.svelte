@@ -90,7 +90,7 @@
 		<div class="head">
 			<StateGlyph state={chip.state} />
 			<p class="title type-small" id="popover-{chip.slug}-name">
-				<a bind:this={link} href={chip.url}>{chip.name} ↗</a>
+				<a bind:this={link} href={chip.url}>{chip.name}</a>
 			</p>
 			<p
 				class="state type-caption"
@@ -105,7 +105,7 @@
 		{/if}
 		<div class="meta type-caption">
 			{#if chip.source}
-				<a href={chip.source}>{chip.sourceLabel} ↗</a>
+				<a href={chip.source}>{chip.sourceLabel}</a>
 			{/if}
 			<p>spec {chip.specRevision} · checked {chip.checked}</p>
 		</div>

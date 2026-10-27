@@ -18,7 +18,7 @@
 	const resources = [
 		{ href: '/feed.xml', label: 'Atom feed', reload: true },
 		{ href: '/data.json', label: 'Data as JSON', reload: true },
-		{ href: 'https://github.com/benjuntilla/areweosc7501yet', label: 'GitHub ↗', reload: true }
+		{ href: 'https://github.com/benjuntilla/areweosc7501yet', label: 'GitHub', reload: true }
 	];
 
 	// A section link clears the search, so the section it points to is on the page.

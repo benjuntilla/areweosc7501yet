@@ -114,6 +114,11 @@ a:active {
 	color: var(--link-text-pressed);
 }
 
+/* Links to other sites end in an arrow that never wraps alone. Screen readers skip it. */
+a[href^='http']::after {
+	content: '\a0↗' / '';
+}
+
 :focus-visible {
 	outline: var(--focus-ring-stroke-width) solid var(--focus-ring-stroke);
 	outline-offset: 2px;
