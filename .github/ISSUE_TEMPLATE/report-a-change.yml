@@ -1,0 +1,22 @@
+name: Report a change
+description: A program or terminal changed its OSC 7501 support.
+body:
+  - type: input
+    id: project
+    attributes:
+      label: Project
+      description: The name of the program or terminal.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: A link that shows the state, such as the PR or the release notes.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: If a release contains the support, give the version.
