@@ -2,6 +2,7 @@
 	import '../styles/tokens.css';
 	import '../styles/base.css';
 	import inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import Footer from '#lib/components/Footer.svelte';
 	import Rail from '#lib/components/Rail.svelte';
@@ -33,6 +34,15 @@
 			topBarInput?.focus();
 		}
 	};
+
+	// A new page lands at once. Only moves within a page glide.
+	beforeNavigate(({ from, to }) => {
+		if (from?.url.pathname !== to?.url.pathname)
+			document.documentElement.style.scrollBehavior = 'auto';
+	});
+	afterNavigate(() => {
+		document.documentElement.style.scrollBehavior = '';
+	});
 
 	// Search removes and recreates sections, so look them up on each scroll.
 	const onscroll = () => {

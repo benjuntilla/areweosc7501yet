@@ -33,6 +33,13 @@
 	-webkit-font-smoothing: antialiased;
 }
 
+/* Links within a page glide to their target. The layout turns this off for page changes. */
+@media (prefers-reduced-motion: no-preference) {
+	:root {
+		scroll-behavior: smooth;
+	}
+}
+
 :root[data-theme='light'] {
 	color-scheme: light;
 }
