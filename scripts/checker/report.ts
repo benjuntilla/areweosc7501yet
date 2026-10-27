@@ -39,7 +39,7 @@ export const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) 
 			),
 			(a, b) => repoOf(a) === repoOf(b)
 		);
-		// A fork of a tracked repo is covered by that repo's entry.
+		// A fork whose parent or source is tracked is covered by that repo's entry.
 		return yield* Effect.filter(
 			found,
 			(h) => {
@@ -48,8 +48,10 @@ export const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) 
 					.get({ owner, repo })
 					.pipe(
 						Effect.map(
-							({ source }) =>
-								source === undefined || !tracked.some((r) => sameRepo(r, source.full_name))
+							({ parent, source }) =>
+								![parent, source].some(
+									(f) => f !== undefined && tracked.some((r) => sameRepo(r, f.full_name))
+								)
 						)
 					);
 			},
