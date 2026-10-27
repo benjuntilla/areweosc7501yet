@@ -3,7 +3,6 @@
 	import '../styles/base.css';
 	import inter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 	import { page } from '$app/state';
-	import favicon from '#lib/assets/favicon.svg';
 	import Footer from '#lib/components/Footer.svelte';
 	import Rail from '#lib/components/Rail.svelte';
 	import Sidebar from '#lib/components/Sidebar.svelte';
@@ -52,7 +51,7 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 	<link rel="preload" href={inter} as="font" type="font/woff2" crossorigin="anonymous" />
 	<link rel="alternate" type="application/atom+xml" title={siteTitle} href="/feed.xml" />
 </svelte:head>
