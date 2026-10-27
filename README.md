@@ -4,19 +4,21 @@ Which terminals and programs support OSC 7501, the Program Status Protocol. Live
 
 ## Development
 
-Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jdx.dev/getting-started.html#activate-mise) in your shell. It installs the Node and pnpm versions pinned in `.config/mise.toml`, then the dependencies.
+Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jdx.dev/getting-started.html#activate-mise) in your shell. It installs the pinned tools, the dependencies, and the git hooks.
 
-Installing dependencies also installs the git hooks in `.config/lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's checks except the build. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
+A commit formats and lints its staged files. A push runs CI's checks except the cf build. If the push changes `schema/` or `src/styles/tokens.css`, commit the new files and push again. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
+
+Screenshots differ between machines, so only CI compares them. When they change, CI fails and uploads the new ones: run `pnpm screenshots` and commit them.
 
 ### Editor
 
-`.zed/settings.json` sets up Zed to format and lint exactly as CI does.
+`.zed/settings.json` sets up Zed with oxfmt, oxlint, and Tombi.
 
 ## Acknowledgements
 
 - The seed data comes from [awesome-osc7501](https://github.com/hyeebeen/awesome-osc7501) by hyeebeen.
 - The layout follows [Superlogical](https://www.superlogical.com)'s [Rex docs](https://www.superlogical.com/rex/docs), and other design motifs come from superlogical.com.
-- The idea comes from the "Are we X yet?" sites: [Are we Wayland yet?](https://arewewaylandyet.com), [Are we anti-cheat yet?](https://areweanticheatyet.com), [Are we fast yet?](https://arewefastyet.com), [Are we web yet?](https://www.arewewebyet.org), [Are we GUI yet?](https://areweguiyet.com), [Are we game yet?](https://arewegameyet.rs) and [Are we learning yet?](https://www.arewelearningyet.com).
+- The idea comes from the "Are we X yet?" sites: [Are we Wayland yet?](https://arewewaylandyet.com), [Are we anti-cheat yet?](https://areweanticheatyet.com), [Are we fast yet?](https://arewefastyet.com), [Are we web yet?](https://www.arewewebyet.org), [Are we GUI yet?](https://areweguiyet.com), [Are we game yet?](https://arewegameyet.rs), and [Are we learning yet?](https://www.arewelearningyet.com).
 
 ## License
 

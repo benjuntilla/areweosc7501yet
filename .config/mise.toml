@@ -1,5 +1,6 @@
 [tools]
 actionlint = "1.7.12"
+gh = "2.103.2"
 lychee = "0.24.2"
 node = "24.22.1"
 pnpm = "12.15.0"

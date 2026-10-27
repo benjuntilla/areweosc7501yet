@@ -55,6 +55,6 @@ pre-push:
                       - name: html
                         run: pnpm html-validate --preset standard build
                       - name: browser
-                        run: pnpm playwright test --config .config/playwright.config.ts
+                        run: pnpm playwright test --config .config/playwright.config.ts && test -z "$(git status --porcelain -- browser/screenshots/)"
                 - name: lighthouse
                   run: CHROME_PATH="$(node -p "require('@playwright/test').chromium.executablePath()")" pnpm lhci autorun --config .config/lighthouserc.json
