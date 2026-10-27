@@ -51,15 +51,20 @@
 	};
 
 	// Every arrival on the overview, including a ?q= change while on it, takes the URL's query.
+	let arrived = $state(false);
 	afterNavigate(() => {
 		search.query = page.url.searchParams.get('q') ?? '';
+		arrived = true;
 		void followHash();
 	});
 
 	// Typing keeps ?q= in the URL so a search can be shared.
 	// It reads location, not page.url, which replaceState doesn't update, so it can't loop.
+	// It starts after the arrival: SvelteKit applies a replaceState from before then only after it,
+	// so the URL would lose the ?q= of a shared search link.
 	$effect(() => {
 		const q = query;
+		if (!arrived) return;
 		untrack(() => {
 			const url = new URL(location.href);
 			if (q === '') url.searchParams.delete('q');
