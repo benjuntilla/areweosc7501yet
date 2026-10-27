@@ -97,6 +97,19 @@ const crossterm = (status: 'ahead' | 'diverged') => ({
 	'/repos/crossterm-rs/crossterm/compare/0.28...0.29?per_page=1': { status }
 });
 
+// A letter after the version: tmux's 3.6a is a full release, and a Python-style 3.7a1 is a
+// pre-release, here without GitHub's flag.
+const letterTags = {
+	'/repos/tmux/tmux': { stargazers_count: 41000 },
+	'/repos/tmux/tmux/releases?per_page=30': [
+		release('tmux/tmux', '3.7a1', '2026-10-25T00:00:00Z'),
+		release('tmux/tmux', '3.6a', '2026-10-20T00:00:00Z'),
+		release('tmux/tmux', '3.6', '2026-10-10T00:00:00Z')
+	],
+	'/repos/tmux/tmux/releases/latest': release('tmux/tmux', '3.6', '2026-10-10T00:00:00Z'),
+	'/repos/tmux/tmux/compare/3.6...3.6a?per_page=1': { status: 'ahead' }
+};
+
 const kimi = {
 	'/repos/MoonshotAI/kimi-code': { stargazers_count: 9000 },
 	'/repos/MoonshotAI/kimi-code/releases?per_page=30': [
@@ -267,6 +280,13 @@ describe('checkEntry', () => {
 		Effect.gen(function* () {
 			const r = yield* run(yield* entry({ repo: 'crossterm-rs/crossterm' }), crossterm('diverged'));
 			expect(r.entry.github?.latest_release_tag).toBe('0.28');
+		})
+	);
+
+	it.effect("skips a pre-release tag GitHub doesn't flag, but keeps 3.6a", () =>
+		Effect.gen(function* () {
+			const r = yield* run(yield* entry({ repo: 'tmux/tmux' }), letterTags);
+			expect(r.entry.github?.latest_release_tag).toBe('3.6a');
 		})
 	);
 
