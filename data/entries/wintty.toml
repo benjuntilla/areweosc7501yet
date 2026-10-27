@@ -5,10 +5,10 @@ role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
 note = "w1.0.0-rc.7 doesn’t include it"
-last_checked_date = 2026-10-25
+last_checked_date = 2026-10-27
 
 [github]
-stars = 98
+stars = 97
 
 [[history]]
 date = 2026-10-12T01:58:42Z

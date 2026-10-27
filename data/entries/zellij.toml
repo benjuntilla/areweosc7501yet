@@ -4,10 +4,10 @@ repo = "zellij-org/zellij"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 35822
+stars = 35851
 latest_release_tag = "v0.45.1"
 latest_release_date = 2026-08-28
 

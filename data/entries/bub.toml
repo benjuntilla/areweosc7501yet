@@ -6,10 +6,10 @@ category = "coding-agents"
 is_featured = false
 spec_revision = "0.4"
 note = "0.6.0a3 doesn’t include it"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 1689
+stars = 1688
 latest_release_tag = "0.5.1"
 latest_release_date = 2026-10-11
 
@@ -17,3 +17,8 @@ latest_release_date = 2026-10-11
 date = 2026-10-19
 state = "working"
 source = "https://github.com/bubbuild/bub/pull/345"
+
+[[history]]
+date = 2026-10-19T01:36:24Z
+state = "working"
+source = "https://github.com/bubbuild/bub/commit/ed696c08b96d169a983e3a0e012125a077fa2431"

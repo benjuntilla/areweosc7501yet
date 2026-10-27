@@ -5,10 +5,10 @@ role = "program"
 category = "coding-agents"
 is_featured = false
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 30880
+stars = 31055
 latest_release_tag = "cua-spacesd-v0.8.0"
 latest_release_date = 2026-10-24
 

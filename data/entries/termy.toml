@@ -5,10 +5,10 @@ role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
 note = "The 1.0.0 release candidates are its Latest releases and what auto-update installs"
-last_checked_date = 2026-10-25
+last_checked_date = 2026-10-27
 
 [github]
-stars = 452
+stars = 454
 latest_release_tag = "v1.0.0-rc.8"
 latest_release_date = 2026-10-23
 

@@ -4,7 +4,7 @@ repo = "buildkite/osc7501"
 role = "program"
 category = "libraries"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
 stars = 1

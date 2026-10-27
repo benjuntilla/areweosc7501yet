@@ -5,12 +5,12 @@ role = "program"
 category = "coding-agents"
 is_featured = false
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 36475
-latest_release_tag = "v18.12.6"
-latest_release_date = 2026-10-21
+stars = 36752
+latest_release_tag = "v18.13.1"
+latest_release_date = 2026-10-27
 
 [[history]]
 date = 2026-10-09

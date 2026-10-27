@@ -4,10 +4,10 @@ repo = "manaflow-ai/cmux"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 28387
+stars = 28541
 latest_release_tag = "v0.65.2"
 latest_release_date = 2026-10-16
 

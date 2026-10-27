@@ -5,12 +5,17 @@ role = "program"
 category = "libraries"
 spec_revision = "0.4"
 note = "No tag contains it, checked Oct 22"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 397
+stars = 398
 
 [[history]]
 date = 2026-10-08
 state = "working"
 source = "https://github.com/charmbracelet/ultraviolet/pull/207"
+
+[[history]]
+date = 2026-10-08T17:31:34Z
+state = "working"
+source = "https://github.com/charmbracelet/ultraviolet/commit/6b8d4baf91b4c933e6613b0eefc8f180f6eda002"

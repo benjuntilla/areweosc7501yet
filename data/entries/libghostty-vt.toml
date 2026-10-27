@@ -4,12 +4,17 @@ repo = "ghostty-org/ghostty"
 role = "terminal"
 category = "engines"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 62570
+stars = 62630
 
 [[history]]
 date = 2026-10-06
 state = "working"
 source = "https://github.com/ghostty-org/ghostty/pull/14560"
+
+[[history]]
+date = 2026-10-06T21:59:44Z
+state = "working"
+source = "https://github.com/ghostty-org/ghostty/commit/a4aacd918ba9e79929ff608034c60a4341773ef0"

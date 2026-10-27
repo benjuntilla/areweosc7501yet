@@ -4,10 +4,10 @@ repo = "BetaYao/seahelm"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 18
+stars = 17
 latest_release_tag = "v2.0.72"
 latest_release_date = 2026-10-21
 

@@ -4,10 +4,10 @@ repo = "aaif-goose/goose"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 55659
+stars = 55798
 latest_release_tag = "v1.56.0"
 latest_release_date = 2026-10-23
 

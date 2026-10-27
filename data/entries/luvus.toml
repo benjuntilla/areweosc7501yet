@@ -4,10 +4,10 @@ repo = "RizRiyz/luvus"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
+last_checked_date = 2026-10-27
 
 [github]
-stars = 982
+stars = 985
 latest_release_tag = "v0.14.3"
 latest_release_date = 2026-09-30
 

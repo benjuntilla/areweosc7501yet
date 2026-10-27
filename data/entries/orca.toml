@@ -4,12 +4,12 @@ repo = "stablyai/orca"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 104986
-latest_release_tag = "v1.4.239"
-latest_release_date = 2026-10-24
+stars = 107394
+latest_release_tag = "v1.4.242"
+latest_release_date = 2026-10-27
 
 [[history]]
 date = 2026-10-18

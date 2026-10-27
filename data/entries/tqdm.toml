@@ -4,10 +4,10 @@ repo = "tqdm/tqdm"
 role = "program"
 category = "libraries"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 31362
+stars = 31367
 latest_release_tag = "v4.70.1"
 latest_release_date = 2026-09-11
 

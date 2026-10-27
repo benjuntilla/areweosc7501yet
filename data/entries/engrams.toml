@@ -5,14 +5,20 @@ role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
 note = "Only release candidates have it, from v0.12.0-rc.4"
-last_checked_date = 2026-10-25
+last_checked_date = 2026-10-27
 
 [github]
 stars = 59
-latest_release_tag = "v0.11.0"
-latest_release_date = 2026-10-19
+latest_release_tag = "v0.12.0"
+latest_release_date = 2026-10-26
 
 [[history]]
 date = 2026-10-20T12:49:22Z
 state = "working"
 source = "https://github.com/cortexapps/engrams/commit/feb2e5b90c7f52c922cb076d271359b524553d91"
+
+[[history]]
+date = 2026-10-26T15:40:07Z
+state = "done"
+source = "https://github.com/cortexapps/engrams/releases/tag/v0.12.0"
+version = "v0.12.0"
