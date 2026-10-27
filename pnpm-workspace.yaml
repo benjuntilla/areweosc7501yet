@@ -9,6 +9,11 @@ overrides:
   # get-uri, under @lhci/cli and lighthouse, still allows only 5.x, which has GHSA-c475-qrg2-pj4r.
   # 6.x has the fix, and its one breaking change doesn't affect get-uri.
   basic-ftp: 6.2.3
+  # stylelint 17 asks for 9.x, which compiles a TypeScript config to a temporary .mjs file next to
+  # it, and knip lists that file when both run at once. 10.x imports the config with Node's type
+  # stripping and writes no file. Its breaking changes (Node ^22.18 or >=24, no typescript loader,
+  # plain JSON.parse) don't affect stylelint. Drop this once stylelint 18, which uses 10.x, is out.
+  cosmiconfig: 10.0.1
   # @lhci/cli pins 12, whose puppeteer-core pulls in extract-zip, which has GHSA-jmr9-qjv8-65gv
   # and GHSA-7pqw-9j4j-h8q3 and no fixed release. 13 drops extract-zip.
   lighthouse: 13.5.0
