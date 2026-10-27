@@ -10,11 +10,11 @@ Installing dependencies also installs the git hooks in `.config/lefthook.yml`. A
 
 The push first regenerates `schema/` from the Effect schemas in `src/lib/domain/` and `src/styles/tokens.css` from `tokens/`, and fails if either changed. Commit the regenerated files and push again.
 
-On Linux, the browser check compares each page with its screenshot in `browser/screenshots/`. Screenshots differ between machines, so CI's are the baselines: when a change alters a page, the failed run uploads the new ones as the `screenshots` artifact.
+In CI, the browser check compares each page with its screenshot in `browser/screenshots/`. Screenshots differ between machines, so CI's are the baselines: when a change alters a page, the failed run uploads the new ones as the `screenshots` artifact.
 
 ### Weekly checker
 
-Every Monday, `.github/workflows/checker.yml` updates the entries from GitHub and opens a PR with the changes. This runs it locally, rewriting `data/entries/` and writing the PR body to `/tmp/body.md`:
+Every Monday, `.github/workflows/checker.yml` updates the entries from GitHub and opens a PR if any changed. This runs it locally, rewriting `data/entries/` and writing the PR body to `/tmp/body.md`:
 
 ```sh
 GITHUB_TOKEN=$(gh auth token) node scripts/checker/main.ts --body /tmp/body.md
