@@ -4,7 +4,7 @@ Which terminals and programs support OSC 7501, the Program Status Protocol. Live
 
 ## Development
 
-The Node and pnpm versions are pinned in `package.json` (`devEngines`). pnpm runs the project's scripts on that Node and downloads it if needed.
+Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jdx.dev/getting-started.html#activate-mise) in your shell. It installs the Node and pnpm versions pinned in `mise.toml`, then the dependencies.
 
 Installing dependencies also installs the git hooks in `lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's checks except the build. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
 

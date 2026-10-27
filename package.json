@@ -53,21 +53,5 @@
 		"typescript": "^6.0.3",
 		"vite": "^8.3.0",
 		"vitest": "5.0.5"
-	},
-	"devEngines": {
-		"packageManager": {
-			"name": "pnpm",
-			"version": "12.15.0",
-			"onFail": "error"
-		},
-		"runtime": {
-			"name": "node",
-			"version": "24.22.1",
-			"onFail": "download"
-		}
-	},
-	"engines": {
-		"node": ">=24.22"
-	},
-	"packageManager": "pnpm@12.15.0"
+	}
 }
