@@ -35,8 +35,8 @@ jobs:
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
+      # mise.toml's postinstall hook runs pnpm install, which uses the frozen lockfile in CI.
       - uses: jdx/mise-action@v5.2.3
-      - run: pnpm install --frozen-lockfile
       - run: node scripts/ci.ts
       - name: Build with cf
         run: pnpm cf build
