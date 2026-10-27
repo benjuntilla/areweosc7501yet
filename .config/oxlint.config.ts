@@ -22,10 +22,11 @@ export default defineConfig({
 		'typescript/consistent-return': 'off',
 		'vitest/no-standalone-expect': ['error', { additionalTestBlockFunctions: ['it.effect'] }]
 	},
+	// Paths match from .config/, so each starts with **/.
 	overrides: [
 		{
 			// The domain runs under plain Node in tests and scripts, so it can't lean on SvelteKit.
-			files: ['src/lib/domain/**'],
+			files: ['**/src/lib/domain/**'],
 			rules: {
 				'eslint/no-restricted-imports': [
 					'error',
@@ -47,7 +48,7 @@ export default defineConfig({
 		},
 		{
 			// Scripts run through NodeRuntime.runMain, which wires up logging, errors and signals.
-			files: ['scripts/*.ts', 'scripts/*/main.ts'],
+			files: ['**/scripts/*.ts', '**/scripts/*/main.ts'],
 			rules: {
 				'eslint-js/no-restricted-syntax': [
 					'error',

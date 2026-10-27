@@ -22,8 +22,15 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      # Policy in cchk.toml: any message is fine, but no AI attribution.
+      # Commits on a PR branch can be work in progress, since the PR title becomes the
+      # squash commit, but none may carry AI attribution: no AI co-author or sign-off,
+      # no "Generated with" marker and no session trailer.
       - uses: commit-check/commit-check-action@v2.18.2
+        env:
+          CCHK_CONVENTIONAL_COMMITS: false
+          CCHK_SUBJECT_MIN_LENGTH: 1
+          CCHK_SUBJECT_MAX_LENGTH: 200
+          CCHK_AI_ATTRIBUTION: forbid
         with:
           message: true
           branch: false
@@ -35,7 +42,7 @@ jobs:
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
-      # mise.toml's postinstall hook runs pnpm install, which uses the frozen lockfile in CI.
+      # The postinstall hook in .config/mise.toml runs pnpm install, which uses the frozen lockfile in CI.
       - uses: jdx/mise-action@v5.2.3
       - run: node scripts/ci.ts
       - name: Build with cf

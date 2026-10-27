@@ -5,88 +5,26 @@
 		"tombi": true
 	},
 	"format_on_save": "on",
-	"hard_tabs": true,
-	"tab_size": 2,
-	"preferred_line_length": 100,
+	"formatter": {
+		"language_server": {
+			"name": "oxfmt"
+		}
+	},
 	"prettier": {
 		"allowed": false
 	},
 	"languages": {
 		"TypeScript": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			],
 			"language_servers": ["oxlint", "oxfmt", "!eslint", "..."]
 		},
 		"JavaScript": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			],
 			"language_servers": ["oxlint", "oxfmt", "!eslint", "..."]
 		},
 		"Svelte": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			],
 			"language_servers": ["oxlint", "oxfmt", "!eslint", "..."]
 		},
-		"JSON": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			]
-		},
-		"JSONC": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			]
-		},
 		"TOML": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			],
 			"language_servers": ["tombi", "oxfmt", "..."]
-		},
-		"Markdown": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			]
-		},
-		"CSS": {
-			"formatter": [
-				{
-					"language_server": {
-						"name": "oxfmt"
-					}
-				}
-			]
 		}
 	},
 	"lsp": {
@@ -96,7 +34,7 @@
 					"run": "onType",
 					"typeAware": true,
 					"unusedDisableDirectives": "deny",
-					"configPath": "oxlint.config.ts"
+					"configPath": ".config/oxlint.config.ts"
 				}
 			}
 		},
@@ -104,7 +42,7 @@
 			"initialization_options": {
 				"settings": {
 					"run": "onSave",
-					"fmt.configPath": "oxfmt.config.ts"
+					"fmt.configPath": ".config/oxfmt.config.ts"
 				}
 			}
 		}
