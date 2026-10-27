@@ -1,0 +1,3 @@
+[default.extend-words]
+# The name of an entry in data/entries.
+programa = "programa"

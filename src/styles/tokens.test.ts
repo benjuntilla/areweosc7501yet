@@ -4,13 +4,9 @@ import components from '../../tokens/components.tokens.json' with { type: 'json'
 import primitives from '../../tokens/primitives.tokens.json' with { type: 'json' };
 import dark from '../../tokens/semantic.dark.tokens.json' with { type: 'json' };
 import light from '../../tokens/semantic.light.tokens.json' with { type: 'json' };
+import { Oklch } from './oklch.ts';
 
-const Color = Schema.Struct({
-	colorSpace: Schema.Literal('oklch'),
-	components: Schema.Tuple([Schema.Finite, Schema.Finite, Schema.Finite]),
-	alpha: Schema.optionalKey(Schema.Finite)
-});
-const Token = Schema.Struct({ $value: Schema.Union([Schema.String, Color, Schema.Unknown]) });
+const Token = Schema.Struct({ $value: Schema.Union([Schema.String, Oklch, Schema.Unknown]) });
 type Token = typeof Token.Type;
 
 const flatten = (
@@ -80,7 +76,7 @@ const resolve = (tokens: HashMap.HashMap<string, Token>, name: string): Rgba => 
 	const value = Option.getOrThrow(HashMap.get(tokens, name)).$value;
 	if (Predicate.isString(value))
 		return resolve(tokens, `--${value.slice(1, -1).replaceAll('.', '-')}`);
-	if (!Schema.is(Color)(value)) throw new Error(`${name} isn't a color`);
+	if (!Schema.is(Oklch)(value)) throw new Error(`${name} isn't a color`);
 	const [l, c, h] = value.components;
 	return { rgb: oklchToSrgb(l, c, h), alpha: value.alpha ?? 1 };
 };

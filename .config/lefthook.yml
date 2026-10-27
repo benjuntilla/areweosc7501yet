@@ -22,7 +22,32 @@ pre-push:
       run: pnpm check
     - name: test
       run: pnpm test
+    - name: knip
+      run: pnpm knip
+    - name: duplicates
+      run: pnpm jscpd .
     - name: schema
       run: pnpm schema && test -z "$(git status --porcelain -- schema/)"
     - name: tokens
       run: pnpm tokens && test -z "$(git status --porcelain -- src/styles/tokens.css)"
+    - name: typos
+      run: mise exec -- typos --config .config/typos.toml
+    - name: workflows
+      run: mise exec -- actionlint && mise exec -- zizmor --quiet --config .config/zizmor.yml .github/workflows
+    - name: site
+      group:
+        piped: true
+        jobs:
+          - name: build
+            run: pnpm build && pnpm playwright install chromium
+          - group:
+              parallel: true
+              jobs:
+                - name: links
+                  run: mise exec -- lychee --offline --no-progress --root-dir "$PWD/build" 'build/**/*.html'
+                - name: html
+                  run: pnpm html-validate --preset standard build
+                - name: browser
+                  run: pnpm playwright test --config .config/playwright.config.ts
+          - name: lighthouse
+            run: CHROME_PATH="$(node -p "require('@playwright/test').chromium.executablePath()")" pnpm lhci autorun --config .config/lighthouserc.json

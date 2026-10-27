@@ -127,6 +127,12 @@ const block = (state: string, source: string, date = '2026-10-12') => ({ date, s
 const run = (e: SlugEntry, recorded: Record<string, unknown>) =>
 	checkEntry(e, now).pipe(Effect.provide(fakeGitHub(recorded)));
 
+const idleTmuxClosedAs = (reason: string) =>
+	entry({
+		repo: 'tmux/tmux',
+		history: [block('idle', 'https://github.com/tmux/tmux/issues/5713')]
+	}).pipe(Effect.flatMap((e) => run(e, tmux('closed', reason))));
+
 const tail = (e: Entry) =>
 	e.history.slice(-1).map((h) => ({
 		date: DateTime.formatIso(h.date),
@@ -192,22 +198,14 @@ describe('checkEntry', () => {
 
 	it.effect('marks a request closed as not planned as error, dated from the close', () =>
 		Effect.gen(function* () {
-			const e = yield* entry({
-				repo: 'tmux/tmux',
-				history: [block('idle', 'https://github.com/tmux/tmux/issues/5713')]
-			});
-			const r = yield* run(e, tmux('closed', 'not_planned'));
+			const r = yield* idleTmuxClosedAs('not_planned');
 			expect(tail(r.entry)).toMatchObject({ state: 'error', date: '2026-10-13T07:50:10.000Z' });
 		})
 	);
 
 	it.effect('leaves a request closed as completed for a person', () =>
 		Effect.gen(function* () {
-			const e = yield* entry({
-				repo: 'tmux/tmux',
-				history: [block('idle', 'https://github.com/tmux/tmux/issues/5713')]
-			});
-			const r = yield* run(e, tmux('closed', 'completed'));
+			const r = yield* idleTmuxClosedAs('completed');
 			expect(r.entry.history).toHaveLength(1);
 			expect(r.notes).toEqual(['https://github.com/tmux/tmux/issues/5713 was closed as completed']);
 		})

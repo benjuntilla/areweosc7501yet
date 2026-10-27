@@ -1,0 +1,6 @@
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        # actions.lock pins every tag to a commit, and the Actions lockfile workflow verifies it.
+        '*': ref-pin

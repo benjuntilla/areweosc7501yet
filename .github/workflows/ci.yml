@@ -35,6 +35,13 @@ jobs:
           message: true
           branch: false
 
+  dependencies:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/dependency-review-action@v5.0.0
+
   verify:
     name: Lint, check, test and build
     runs-on: ubuntu-latest
@@ -44,7 +51,16 @@ jobs:
           persist-credentials: false
       # The postinstall hook in .config/mise.toml runs pnpm install, which uses the frozen lockfile in CI.
       - uses: jdx/mise-action@v5.2.3
+      - run: pnpm playwright install --with-deps chromium
       - run: node scripts/ci.ts
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: screenshots
+          path: |
+            browser/screenshots
+            test-results
       - name: Build with cf
         run: pnpm cf build
       - name: Build Output exists
