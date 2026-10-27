@@ -38,6 +38,15 @@ describe('loadData', () => {
 		})
 	);
 
+	it.effect('rejects an integer too big for JSON and names the file', () =>
+		Effect.gen(function* () {
+			const msg = yield* failure({
+				'/data/entries/kitty.toml': `extra = 9007199254740993\n${kittyToml()}`
+			});
+			expect(msg).toMatch(/^\/data\/entries\/kitty\.toml: .*BigInt/u);
+		})
+	);
+
 	it.effect('rejects a bad slug', () =>
 		Effect.gen(function* () {
 			expect(yield* failure({ '/data/entries/Kitty.toml': kittyToml() })).toMatch(/bad slug/u);
@@ -49,7 +58,7 @@ describe('loadData', () => {
 		['an impossible date', kittyToml({ lastChecked: '"2026-02-31"' }), /a valid date/u],
 		['an impossible time', kittyToml({ prDate: '"2026-10-12T25:00:00.000Z"' }), /date/u],
 		[
-			'a leap second in the latest block (TOML itself rejects a native one)',
+			'a leap second in the latest block',
 			kittyToml({ commitDate: '"2026-10-13T23:59:60.000Z"' }),
 			/a valid date/u
 		],
@@ -57,6 +66,17 @@ describe('loadData', () => {
 			'a leap second in an earlier block',
 			kittyToml({ prDate: '"2026-10-12T23:59:60.000Z"' }),
 			/a valid date/u
+		],
+		// TOML allows a native leap second, but DateTime can't hold one.
+		[
+			'a native leap second in the latest block',
+			kittyToml({ commitDate: '2026-10-13T23:59:60Z' }),
+			/a TOML date-time with an offset/u
+		],
+		[
+			'a native leap second in an earlier block',
+			kittyToml({ prDate: '2026-10-12T23:59:60Z' }),
+			/a TOML date-time with an offset/u
 		],
 		[
 			'a local date-time with no offset',
@@ -85,14 +105,8 @@ describe('loadData', () => {
 
 	// Unquoted, so the TOML parser sees them as dates and must reject them itself. A JS Date
 	// would roll Feb 30 over to Mar 2, which could slip through as a valid date.
-	const nativeDates = [
-		'2026-02-30',
-		'1900-02-29',
-		'2026-10-12T24:00:00Z',
-		'2026-02-30T10:00:00Z',
-		'2026-10-12T23:59:60Z'
-	];
-	const invalidDate = /^\/data\/entries\/kitty\.toml: .*Invalid date-time/u;
+	const nativeDates = ['2026-02-30', '1900-02-29', '2026-10-12T24:00:00Z', '2026-02-30T10:00:00Z'];
+	const invalidDate = /^\/data\/entries\/kitty\.toml: .*InvalidDateTime/u;
 	for (const date of nativeDates) {
 		it.effect(`rejects a native ${date} in the latest block`, () =>
 			Effect.gen(function* () {
