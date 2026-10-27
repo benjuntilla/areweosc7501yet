@@ -62,9 +62,7 @@
 		padding: var(--theme-toggle-padding) var(--theme-toggle-option-padding-x);
 		color: var(--theme-toggle-label);
 		border-radius: var(--theme-toggle-option-radius);
-		transition:
-			color var(--motion-state-duration) var(--motion-ease-state),
-			background-color var(--motion-state-duration) var(--motion-ease-state);
+		transition: var(--transition-state);
 	}
 
 	button:hover {

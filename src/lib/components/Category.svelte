@@ -124,17 +124,13 @@
 	.tail-inner > * {
 		opacity: 0;
 		translate: 0 var(--motion-rail-label-distance);
-		transition:
-			opacity var(--motion-rail-label-exit-duration) ease-out,
-			translate var(--motion-rail-label-exit-duration) ease-in;
+		transition: var(--transition-lift-out);
 	}
 
 	.open .tail-inner > * {
 		opacity: 1;
 		translate: 0 0;
-		transition:
-			opacity var(--motion-rail-label-duration) var(--motion-ease-reveal),
-			translate var(--motion-rail-label-duration) var(--motion-ease-reveal);
+		transition: var(--transition-lift-in);
 	}
 
 	.more-label {

@@ -78,7 +78,6 @@
 			<p>{matchCount} {matchCount === 1 ? 'match' : 'matches'} for “{query}”</p>
 		{:else if query !== ''}
 			<p class="empty-title">Nothing matches “{query}”.</p>
-			<p>If you think it belongs here, <a href="/contribute">add it</a> and we’ll check.</p>
 		{/if}
 	</div>
 
@@ -87,12 +86,6 @@
 			<Role {role} {query} bind:expanded {highlight} />
 		{/if}
 	{/each}
-
-	<p class="cta">
-		Missing a project, or see a state that’s out of date? <a href="/contribute"
-			>Add or fix an entry</a
-		>.
-	</p>
 </section>
 
 <style>
@@ -125,11 +118,6 @@
 	}
 
 	.empty-title {
-		color: var(--content-text-strong);
-	}
-
-	.cta a,
-	.results a {
 		color: var(--content-text-strong);
 	}
 </style>

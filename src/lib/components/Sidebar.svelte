@@ -14,12 +14,12 @@
 	let { sides, current, searchInput = $bindable() }: Props = $props();
 </script>
 
-<div class="sidebar">
+<header class="sidebar">
 	<Logo />
 	<SearchField bind:input={searchInput} />
 	<Nav {sides} {current} />
 	<ThemeToggle />
-</div>
+</header>
 
 <style>
 	.sidebar {

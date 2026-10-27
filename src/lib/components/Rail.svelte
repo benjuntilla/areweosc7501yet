@@ -8,14 +8,12 @@
 	let { sides }: { sides: ReadonlyArray<Side> } = $props();
 
 	// A side's label shows once its verdict has scrolled past the top of the window. Pages
-	// without verdicts show both labels.
+	// without verdicts show both labels from the start.
+	const overview = $derived(page.url.pathname === '/');
 	let past: Record<string, boolean> = $state({});
 
 	$effect(() => {
-		if (page.url.pathname !== '/') {
-			past = Object.fromEntries(sides.map((s) => [s.id, true]));
-			return;
-		}
+		if (!overview) return;
 		past = {};
 		const observer = new IntersectionObserver((entries) => {
 			for (const entry of entries) {
@@ -39,11 +37,15 @@
 			class="segment"
 			href="/#{side.id}"
 			onclick={() => (search.query = '')}
-			aria-label="{side.name}: {side.done} of {side.featured} done, jump to list"
+			aria-label="{side.name}: {side.done} of {side.featured} done, {side.working} working, jump to list"
 			style:--done="{pct(side, side.done)}%"
 			style:--working="{pct(side, side.working)}%"
 		>
-			<span class="label type-caption" class:shown={past[side.id] === true} aria-hidden="true">
+			<span
+				class="label type-caption"
+				class:shown={!overview || past[side.id] === true}
+				aria-hidden="true"
+			>
 				<span class="line name" style:--i="0"><Icon name={side.role} size={12} />{side.name}</span>
 				<span class="line" style:--i="1"
 					><StateGlyph state="done" size={12} />{side.done} of {side.featured} done</span
@@ -171,17 +173,13 @@
 		color: var(--rail-label-count);
 		opacity: 0;
 		translate: 0 var(--motion-rail-label-distance);
-		transition:
-			opacity var(--motion-rail-label-exit-duration) ease-out,
-			translate var(--motion-rail-label-exit-duration) ease-in;
+		transition: var(--transition-lift-out);
 	}
 
 	.shown .line {
 		opacity: 1;
 		translate: 0 0;
-		transition:
-			opacity var(--motion-rail-label-duration) var(--motion-ease-reveal),
-			translate var(--motion-rail-label-duration) var(--motion-ease-reveal);
+		transition: var(--transition-lift-in);
 		transition-delay: calc(var(--i) * var(--motion-rail-label-stagger));
 	}
 

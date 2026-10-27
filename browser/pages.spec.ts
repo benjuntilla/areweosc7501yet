@@ -10,11 +10,19 @@ const pages = globSync('**/*.html', { cwd: 'build' }).map((file) => {
 for (const { name, path } of pages) {
 	for (const colorScheme of ['light', 'dark'] as const) {
 		test(`${name} in ${colorScheme}`, async ({ page }) => {
-			await page.emulateMedia({ colorScheme });
+			// Reduced motion stops the logo and the drum from turning, so the screenshots are stable.
+			await page.emulateMedia({ colorScheme, reducedMotion: 'reduce' });
 			const response = await page.goto(path);
 			expect(response?.ok()).toBe(true);
-			const { violations } = await new AxeBuilder({ page }).analyze();
-			expect(violations).toEqual([]);
+			// The drum's faded rows are decoration, which WCAG exempts from contrast, so only the contrast
+			// rule skips the drum. This test checks contrast everywhere else, so Lighthouse skips its own
+			// contrast audit.
+			const contrast = await new AxeBuilder({ page })
+				.withRules('color-contrast')
+				.exclude('.drum')
+				.analyze();
+			const rest = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+			expect([...contrast.violations, ...rest.violations]).toEqual([]);
 			await expect(page).toHaveScreenshot(`${name}-${colorScheme}.png`, { fullPage: true });
 		});
 	}
