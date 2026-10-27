@@ -4,10 +4,10 @@ repo = "contour-terminal/contour"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 3052
+stars = 3060
 latest_release_tag = "v0.8.0.9335"
 latest_release_date = 2026-10-23
 
@@ -15,3 +15,8 @@ latest_release_date = 2026-10-23
 date = 2026-10-24
 state = "working"
 source = "https://github.com/contour-terminal/contour/pull/2176"
+
+[[history]]
+date = 2026-10-24T10:30:27Z
+state = "working"
+source = "https://github.com/contour-terminal/contour/commit/4637e4a65d9b9ea9836c202ab0d6465734759578"

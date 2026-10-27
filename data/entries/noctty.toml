@@ -4,10 +4,10 @@ repo = "amanthanvi/noctty"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
+last_checked_date = 2026-10-27
 
 [github]
-stars = 462
+stars = 469
 latest_release_tag = "v1.3.135"
 latest_release_date = 2026-10-24
 

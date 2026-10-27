@@ -5,10 +5,10 @@ role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
 note = "With allow-passthrough on, reports still reach the outer terminal."
-last_checked_date = 2026-10-26
+last_checked_date = 2026-10-27
 
 [github]
-stars = 49981
+stars = 50018
 latest_release_tag = "3.8"
 latest_release_date = 2026-09-09
 

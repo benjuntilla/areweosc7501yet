@@ -5,12 +5,12 @@ role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
 note = "Setting AGY_CLI_OSC7501=off turns it off."
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
-stars = 2627
-latest_release_tag = "1.4.7"
-latest_release_date = 2026-10-24
+stars = 2644
+latest_release_tag = "1.4.8"
+latest_release_date = 2026-10-27
 
 [[history]]
 date = 2026-10-16

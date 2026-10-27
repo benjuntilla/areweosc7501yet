@@ -5,7 +5,7 @@ role = "terminal"
 category = "engines"
 spec_revision = "0.4"
 note = "The v0.7.0-preview.2 prerelease was built from the open PR"
-last_checked_date = 2026-10-25
+last_checked_date = 2026-10-27
 
 [github]
 stars = 28

@@ -5,12 +5,12 @@ role = "program"
 category = "libraries"
 spec_revision = "0.4"
 note = "A maintainer wants related event-handling changes to land first."
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-27
 
 [github]
 stars = 4251
-latest_release_tag = "0.29"
-latest_release_date = 2025-04-05
+latest_release_tag = "0.28"
+latest_release_date = 2024-07-31
 
 [[history]]
 date = 2026-10-14

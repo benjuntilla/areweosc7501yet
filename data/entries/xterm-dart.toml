@@ -5,7 +5,7 @@ role = "terminal"
 category = "engines"
 spec_revision = "0.4"
 note = "ServerBox’s fork of xterm.dart. Upstream TerminalStudio/xterm.dart doesn’t have it"
-last_checked_date = 2026-10-25
+last_checked_date = 2026-10-27
 
 [github]
 stars = 7

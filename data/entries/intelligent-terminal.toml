@@ -5,10 +5,10 @@ role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
 note = "The pull request adds it as an experimental feature."
-last_checked_date = 2026-10-26
+last_checked_date = 2026-10-27
 
 [github]
-stars = 2079
+stars = 2084
 latest_release_tag = "v0.2.2572"
 latest_release_date = 2026-09-14
 
