@@ -144,15 +144,17 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 			.pipe(Effect.catchTag('NotFound', () => Effect.succeed(null)));
 		const tracked = previous?.latest_release_tag;
 		// Stable means a full release, or whatever GitHub marks Latest, even with an rc tag. A
-		// monorepo's entry stays on the release line it already tracks.
-		const stable = releases.flatMap((r) =>
-			!r.draft &&
-			r.published_at !== null &&
-			(r.tag_name === latest?.tag_name || (!r.prerelease && !preTag.test(r.tag_name))) &&
-			(tracked === undefined || prefixOf(r.tag_name) === prefixOf(tracked))
-				? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
-				: []
-		);
+		// monorepo's entry stays on the release line it already tracks. Newest published first.
+		const stable = releases
+			.flatMap((r) =>
+				!r.draft &&
+				r.published_at !== null &&
+				(r.tag_name === latest?.tag_name || (!r.prerelease && !preTag.test(r.tag_name))) &&
+				(tracked === undefined || prefixOf(r.tag_name) === prefixOf(tracked))
+					? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
+					: []
+			)
+			.toSorted((a, b) => DateTime.Order(b.published, a.published));
 		// GitHub's Latest, unless a release published after it contains it: some projects leave the
 		// badge on an old release. A backport also comes after Latest, but it doesn't contain it.
 		// A monorepo's Latest can be on another line, and then it's the newest on this one.
@@ -161,9 +163,7 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 				onNone: () => Effect.succeed(Array.head(stable)),
 				onSome: (l) =>
 					Effect.findFirst(
-						stable
-							.filter((r) => DateTime.isGreaterThan(r.published, l.published))
-							.toSorted((a, b) => DateTime.Order(b.published, a.published)),
+						stable.filter((r) => DateTime.isGreaterThan(r.published, l.published)),
 						(r) =>
 							Gh.repos
 								.compareCommits({ owner, repo: name, basehead: `${l.tag}...${r.tag}`, per_page: 1 })
