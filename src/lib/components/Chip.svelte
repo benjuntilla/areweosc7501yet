@@ -176,7 +176,10 @@
 		}
 	}
 
+	/* The layout lives here, not under :popover-open, so the popover keeps its shape while it fades out. */
 	.popover {
+		flex-direction: column;
+		gap: var(--popover-gap);
 		inline-size: min(300px, 100vi - 32px);
 		padding: var(--popover-padding-y) var(--popover-padding-x);
 		margin: 0;
@@ -198,8 +201,6 @@
 
 	.popover:popover-open {
 		display: flex;
-		flex-direction: column;
-		gap: var(--popover-gap);
 		opacity: 1;
 	}
 
