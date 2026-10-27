@@ -1,0 +1,21 @@
+name = "iTerm2"
+url = "https://github.com/gnachman/iTerm2"
+repo = "gnachman/iTerm2"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-09
+state = "working"
+source = "https://github.com/gnachman/iTerm2/commit/49936d3a515d4c78653025676305422976ee2eda"
+
+[[history]]
+date = 2026-10-15
+state = "done"
+source = "https://iterm2.com/downloads.html"
+version = "v3.7.5"

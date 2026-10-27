@@ -1,0 +1,15 @@
+name = "crossterm"
+url = "https://github.com/crossterm-rs/crossterm"
+repo = "crossterm-rs/crossterm"
+role = "program"
+category = "libraries"
+spec_revision = "0.4"
+note = "A maintainer wants related event-handling changes to land first."
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-14
+state = "working"
+source = "https://github.com/crossterm-rs/crossterm/pull/1144"

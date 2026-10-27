@@ -1,0 +1,11 @@
+name = "xterm.js"
+url = "https://github.com/xtermjs/xterm.js"
+repo = "xtermjs/xterm.js"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+history = []
+
+[github]
+popular = true

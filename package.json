@@ -69,6 +69,7 @@
 	},
 	"jscpd": {
 		"ignore": [
+			"browser/screenshot-data/**",
 			"schema/**",
 			"src/styles/tokens.css",
 			"tokens/**"

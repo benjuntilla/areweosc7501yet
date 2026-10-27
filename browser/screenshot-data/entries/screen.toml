@@ -1,0 +1,7 @@
+name = "screen"
+url = "https://www.gnu.org/software/screen/"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+last_checked_date = 2026-10-25
+history = []

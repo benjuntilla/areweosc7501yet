@@ -1,0 +1,15 @@
+name = "Claude Code"
+url = "https://github.com/anthropics/claude-code"
+repo = "anthropics/claude-code"
+role = "program"
+category = "coding-agents"
+spec_revision = "0.4"
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-08
+state = "done"
+source = "https://github.com/anthropics/claude-code/releases/tag/v2.1.295"
+version = "v2.1.295"

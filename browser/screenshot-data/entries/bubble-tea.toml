@@ -1,0 +1,16 @@
+name = "Bubble Tea"
+url = "https://github.com/charmbracelet/bubbletea"
+repo = "charmbracelet/bubbletea"
+role = "program"
+category = "libraries"
+spec_revision = "0.4"
+note = "A fix for stale reports after quit or suspend, #1845, is still open."
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-08
+state = "done"
+source = "https://github.com/charmbracelet/bubbletea/releases/tag/v2.1.0"
+version = "v2.1.0"

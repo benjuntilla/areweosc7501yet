@@ -1,0 +1,25 @@
+name = "kitty"
+url = "https://github.com/kovidgoyal/kitty"
+repo = "kovidgoyal/kitty"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "Caps ids at 263 bytes, the spec says 128."
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-09
+state = "idle"
+source = "https://github.com/kovidgoyal/kitty/issues/10638"
+
+[[history]]
+date = 2026-10-12
+state = "working"
+source = "https://github.com/kovidgoyal/kitty/pull/10657"
+
+[[history]]
+date = 2026-10-13
+state = "working"
+source = "https://github.com/kovidgoyal/kitty/commit/0e1b7f4812bf297639999a362672c4271e42ed0c"

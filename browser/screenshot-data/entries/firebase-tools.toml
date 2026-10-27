@@ -1,0 +1,20 @@
+name = "firebase-tools"
+url = "https://github.com/firebase/firebase-tools"
+repo = "firebase/firebase-tools"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+note = "Closed in favor of a fresh implementation."
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-08
+state = "working"
+source = "https://github.com/firebase/firebase-tools/pull/11245"
+
+[[history]]
+date = 2026-10-09
+state = "blocked"
+source = "https://github.com/firebase/firebase-tools/pull/11245"
