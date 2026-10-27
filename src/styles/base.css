@@ -10,6 +10,16 @@
 		U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Fontsource's Latin file has no ↗, so the arrow after outside links comes from this cut of Inter 4.1. */
+@font-face {
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('./inter-arrow.woff2') format('woff2-variations');
+	font-display: swap;
+	unicode-range: U+2197;
+}
+
 :root {
 	/* Lift: an item rises into place as it fades in, and sinks as it fades out. */
 	--transition-lift-in:
