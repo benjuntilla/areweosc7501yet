@@ -12,3 +12,8 @@ popular = false
 date = 2026-10-10
 state = "working"
 source = "https://github.com/digitallyinduced/haskell-agent/pull/1389"
+
+[[history]]
+date = 2026-10-10T22:07:05Z
+state = "working"
+source = "https://github.com/digitallyinduced/haskell-agent/commit/36cecef950abb69604b94782f3a1b9702069b6b8"

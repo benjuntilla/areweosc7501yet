@@ -18,3 +18,9 @@ source = "https://github.com/anomalyco/opencode/pull/54402"
 date = 2026-10-19T14:47:33Z
 state = "working"
 source = "https://github.com/anomalyco/opencode/commit/c7ddff776c59426e7dd63fe5a0d2a348864592ba"
+
+[[history]]
+date = 2026-10-27T09:04:44Z
+state = "done"
+source = "https://github.com/anomalyco/opencode/releases/tag/v2.2.0"
+version = "v2.2.0"

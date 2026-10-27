@@ -14,3 +14,8 @@ popular = true
 date = 2026-10-09
 state = "working"
 source = "https://github.com/expo/expo/pull/51289"
+
+[[history]]
+date = 2026-10-27T17:25:46Z
+state = "working"
+source = "https://github.com/expo/expo/commit/9bd718d7e2725316d10cf8d47b214508bb4473d1"
