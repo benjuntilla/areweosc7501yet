@@ -17,6 +17,7 @@
 
 	let toggle: HTMLButtonElement | undefined = $state();
 	let tail: HTMLDivElement | undefined = $state();
+	let folded = $state(false);
 
 	const featured = $derived(category.featured.filter((c) => matches(c, query)));
 	const more = $derived(category.more.filter((c) => matches(c, query)));
@@ -28,6 +29,7 @@
 	// which comes before the toggle in tab order. Otherwise the toggle keeps focus and stays in view.
 	const onclick = async () => {
 		expanded = !expanded;
+		folded = !expanded;
 		const url = new URL(location.href);
 		url.hash = expanded ? `${category.id}-all` : '';
 		replaceState(url, {});
@@ -66,6 +68,7 @@
 						bind:this={toggle}
 						class="more-chip type-small"
 						class:open
+						class:folded
 						type="button"
 						aria-expanded={open}
 						aria-controls="{category.id}-more"
@@ -101,17 +104,21 @@
 		display: contents;
 	}
 
+	/* Folding hides the tail only once it has closed, so its rows can fade out first. */
 	.tail {
 		display: grid;
 		flex-basis: 100%;
 		grid-template-rows: 0fr;
 		order: 2;
-		transition: grid-template-rows var(--motion-toc-unfold-duration) cubic-bezier(0.4, 0, 0.2, 1);
+		transition:
+			grid-template-rows var(--motion-toc-unfold-duration) cubic-bezier(0.4, 0, 0.2, 1),
+			visibility 0s var(--motion-toc-unfold-duration);
 	}
 
 	.tail.open,
 	:global(html:not(.js)) .tail {
 		grid-template-rows: 1fr;
+		transition-delay: 0s;
 		transition-timing-function: var(--motion-ease-unfold);
 	}
 
@@ -161,6 +168,18 @@
 		order: 3;
 	}
 
+	/* After "Show fewer", "+ N more" fades back in while the rows fade out. */
+	.more-chip.folded {
+		animation: fade-in var(--motion-state-duration) var(--motion-ease-state)
+			var(--motion-state-duration) backwards;
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+	}
+
 	.more-chip:hover {
 		background: var(--more-chip-background-hover);
 	}
@@ -186,6 +205,10 @@
 		.open .tail-inner > * {
 			translate: 0 0;
 			transition: opacity var(--motion-state-duration) ease-out;
+		}
+
+		.more-chip.folded {
+			animation: none;
 		}
 	}
 </style>
