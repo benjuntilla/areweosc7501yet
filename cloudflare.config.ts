@@ -7,6 +7,7 @@ export default defineConfig({
 		compatibilityDate: '2026-10-24',
 		assets: { notFoundHandling: '404-page', htmlHandling: 'drop-trailing-slash' },
 		domains: [siteUrl.host],
-		previewUrls: true
+		previewUrls: true,
+		observability: { enabled: true, traces: { enabled: true }, issues: { enabled: true } }
 	})
 });
