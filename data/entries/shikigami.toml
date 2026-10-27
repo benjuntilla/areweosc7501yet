@@ -7,7 +7,6 @@ spec_revision = "0.4"
 
 [github]
 popular = false
-latest_release_tag = "v2.0.0"
 
 [[history]]
 date = 2026-10-09T09:13:44Z

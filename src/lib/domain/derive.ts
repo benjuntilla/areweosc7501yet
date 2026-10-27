@@ -129,12 +129,10 @@ export const sentenceOf = (e: Entry): string =>
 				Match.when('working', () =>
 					Option.match(Str.match(patterns.pullRequest)(b.source), {
 						onSome: (pr) => `PR #${pr[1] ?? ''} has been open since ${since}.`,
-						onNone: () => {
-							if (!patterns.commit.test(b.source)) return `Announced on ${since}.`;
-							const tag = e.github?.latest_release_tag;
-							const latest = tag === undefined ? '' : ` Latest is ${tag}.`;
-							return `Merged on ${d}, not in a release yet.${latest}`;
-						}
+						onNone: () =>
+							patterns.commit.test(b.source)
+								? `Merged on ${d}, not in a release yet.`
+								: `Announced on ${since}.`
 					})
 				),
 				Match.when(

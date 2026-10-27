@@ -1,13 +1,13 @@
 name = "Kimi Code"
 url = "https://github.com/MoonshotAI/kimi-code"
 repo = "MoonshotAI/kimi-code"
+release_prefix = "@moonshot-ai/kimi-code@"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
 
 [github]
 popular = true
-latest_release_tag = "@moonshot-ai/kimi-code@2.3.1"
 
 [[history]]
 date = 2026-10-22

@@ -8,7 +8,6 @@ note = "Only a pre-release has it"
 
 [github]
 popular = false
-latest_release_tag = "v0.23.0"
 
 [[history]]
 date = 2026-10-13

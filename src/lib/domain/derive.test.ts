@@ -157,6 +157,10 @@ describe('popover sentence', () => {
 			block('2026-10-12', 'working', 'https://github.com/o/x/pull/13994'),
 			'PR #13994 has been open since Oct 12.'
 		],
+		[
+			block('2026-10-13', 'working', 'https://github.com/o/x/commit/0e1b7f4'),
+			'Merged on Oct 13, not in a release yet.'
+		],
 		[block('2026-10-07T18:03:00Z', 'working', 'https://x.com/post'), 'Announced on Oct 7.'],
 		[
 			block('2026-10-13', 'error', 'https://github.com/o/x/issues/5'),
@@ -181,14 +185,6 @@ describe('popover sentence', () => {
 		expect(
 			sentenceOf({ ...offGithub, history: [block('2026-10-06', 'done', 'https://docs')] })
 		).toBe('In its official docs since Oct 6.');
-	});
-
-	it('names the latest release for a merged commit, when there is one', () => {
-		const merged = block('2026-10-13', 'working', 'https://github.com/o/x/commit/0e1b7f4');
-		expect(one(merged, { github: { popular: false, latest_release_tag: 'v0.49.2' } })).toBe(
-			'Merged on Oct 13, not in a release yet. Latest is v0.49.2.'
-		);
-		expect(one(merged)).toBe('Merged on Oct 13, not in a release yet.');
 	});
 
 	it('dates an open PR or request from when its source was first cited', () => {

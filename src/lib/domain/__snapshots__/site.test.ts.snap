@@ -40,7 +40,6 @@ exports[`site > builds a data.json that matches its own schema > data.json 1`] =
       "category": "emulators",
       "featured": true,
       "github": {
-        "latest_release_tag": "v0.49.2",
         "popular": true,
       },
       "history": [

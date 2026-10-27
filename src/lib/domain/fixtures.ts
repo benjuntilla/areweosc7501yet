@@ -32,7 +32,6 @@ last_checked_date = ${lastChecked}
 
 [github]
 popular = true
-latest_release_tag = "v0.49.2"
 
 [[history]]
 date = ${idleDate}

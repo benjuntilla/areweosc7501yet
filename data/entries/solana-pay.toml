@@ -1,6 +1,7 @@
 name = "Solana Pay CLI"
 url = "https://github.com/solana-foundation/pay"
 repo = "solana-foundation/pay"
+release_prefix = "pay-v"
 role = "program"
 category = "clis"
 is_featured = false
@@ -9,7 +10,6 @@ note = "pay-v0.29.0 doesn’t include it"
 
 [github]
 popular = true
-latest_release_tag = "pay-v0.29.0"
 
 [[history]]
 date = 2026-10-16

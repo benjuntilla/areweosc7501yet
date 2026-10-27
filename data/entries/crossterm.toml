@@ -8,7 +8,6 @@ note = "A maintainer wants related event-handling changes to land first."
 
 [github]
 popular = true
-latest_release_tag = "0.29"
 
 [[history]]
 date = 2026-10-14
