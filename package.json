@@ -19,7 +19,7 @@
 		"test": "vitest run",
 		"schema": "node scripts/schema.ts && pnpm format schema",
 		"tokens": "tz build --quiet --config .config/terrazzo.config.ts && pnpm format src/styles/tokens.css",
-		"checker": "GITHUB_TOKEN=$(gh auth token) node scripts/checker/main.ts --body /tmp/body.md",
+		"checker": "GITHUB_TOKEN=$(gh auth token) GITHUB_REPOSITORY=$(gh api 'repos/{owner}/{repo}' --jq .full_name) node scripts/checker/main.ts --body /tmp/body.md",
 		"screenshots": "rm -rf browser/screenshots && gh run download -D browser/screenshots -n screenshots"
 	},
 	"devDependencies": {
