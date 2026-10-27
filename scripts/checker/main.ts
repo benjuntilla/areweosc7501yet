@@ -50,9 +50,9 @@ const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
 const repoOf = (h: Gh.search.IssueSearchResultItem) =>
 	h.repository_url.replace('https://api.github.com/repos/', '');
 
-// Titles come from strangers: keep them from closing the link, pinging people or linking issues here.
+// Titles come from strangers: show them as plain text, without pinging people or linking issues here.
 const inert = (s: string) =>
-	s.replaceAll(/[[\]\\|]/gu, (c) => `\\${c}`).replaceAll(/[@#]/gu, (c) => `${c}\u200B`);
+	s.replaceAll(/[[\]\\|<>`*_~]/gu, (c) => `\\${c}`).replaceAll(/[@#]/gu, (c) => `${c}\u200B`);
 
 const body = (
 	results: ReadonlyArray<Checked>,
