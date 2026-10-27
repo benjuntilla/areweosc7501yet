@@ -24,8 +24,10 @@ jobs:
           private-key: ${{ secrets.CHECKER_PRIVATE_KEY }}
           permission-contents: write
           permission-pull-requests: write
+      # create-pull-request takes its base from the checkout, so a manual run from another branch still targets main.
       - uses: actions/checkout@v7.0.1
         with:
+          ref: main
           persist-credentials: false
       # The postinstall hook in .config/mise.toml runs pnpm install, which uses the frozen lockfile in CI.
       - uses: jdx/mise-action@v5.2.3
