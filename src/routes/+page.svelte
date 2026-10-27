@@ -1,5 +1,9 @@
+<script lang="ts">
+	import { siteTitle } from '#lib/meta.ts';
+</script>
+
 <svelte:head>
-	<title>Are we OSC 7501 yet?</title>
+	<title>{siteTitle}</title>
 </svelte:head>
 
 <main>
