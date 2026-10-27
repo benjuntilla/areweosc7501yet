@@ -7,10 +7,21 @@ spec_revision = "0.4"
 
 [github]
 popular = true
-latest_release_tag = "v2.2.2"
-latest_release_date = 2026-10-17
+latest_release_tag = "v2.3.1"
+latest_release_date = 2026-10-27
 
 [[history]]
 date = 2026-10-21
 state = "working"
 source = "https://github.com/Kuddev/pebrel/pull/691"
+
+[[history]]
+date = 2026-10-21T05:55:09Z
+state = "working"
+source = "https://github.com/Kuddev/pebrel/commit/c57f4c9e12d30645117ac90c9df46cc71379a120"
+
+[[history]]
+date = 2026-10-26T05:14:08Z
+state = "done"
+source = "https://github.com/Kuddev/pebrel/releases/tag/v2.3.0"
+version = "v2.3.0"

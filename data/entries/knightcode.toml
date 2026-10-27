@@ -7,8 +7,8 @@ spec_revision = "0.4"
 
 [github]
 popular = false
-latest_release_tag = "@knightcodeai/cli@0.20.0"
-latest_release_date = 2026-10-22
+latest_release_tag = "@knightcodeai/cli@0.22.0"
+latest_release_date = 2026-10-25
 
 [[history]]
 date = 2026-10-08

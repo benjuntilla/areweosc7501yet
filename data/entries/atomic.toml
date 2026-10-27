@@ -8,8 +8,8 @@ note = "#3558 is a fix, the first implementation PR wasn’t found"
 
 [github]
 popular = false
-latest_release_tag = "0.9.43"
-latest_release_date = 2026-10-24
+latest_release_tag = "0.9.45"
+latest_release_date = 2026-10-25
 
 [[history]]
 date = 2026-10-10

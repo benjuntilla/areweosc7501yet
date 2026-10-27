@@ -8,8 +8,8 @@ note = "Setting AGY_CLI_OSC7501=off turns it off."
 
 [github]
 popular = true
-latest_release_tag = "1.4.7"
-latest_release_date = 2026-10-24
+latest_release_tag = "1.4.8"
+latest_release_date = 2026-10-27
 
 [[history]]
 date = 2026-10-16

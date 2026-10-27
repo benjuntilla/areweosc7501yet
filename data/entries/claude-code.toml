@@ -7,8 +7,8 @@ spec_revision = "0.4"
 
 [github]
 popular = true
-latest_release_tag = "v2.1.310"
-latest_release_date = 2026-10-23
+latest_release_tag = "v2.1.311"
+latest_release_date = 2026-10-26
 
 [[history]]
 date = 2026-10-08
