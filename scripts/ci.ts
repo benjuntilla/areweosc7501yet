@@ -1,4 +1,5 @@
-// Runs lefthook's pre-push jobs in parallel for CI, with a log group per job.
+// Runs lefthook's pre-push groups in order for CI, and the jobs in each group in parallel, with a
+// log group per job.
 import { NodeRuntime, NodeServices } from '@effect/platform-node';
 import { Console, Effect, Schema, Stream } from 'effect';
 import { ChildProcess, ChildProcessSpawner } from 'effect/process';
@@ -6,7 +7,13 @@ import { ChildProcess, ChildProcessSpawner } from 'effect/process';
 const Config = Schema.fromJsonString(
 	Schema.Struct({
 		'pre-push': Schema.Struct({
-			jobs: Schema.NonEmptyArray(Schema.Struct({ name: Schema.String }))
+			jobs: Schema.NonEmptyArray(
+				Schema.Struct({
+					group: Schema.Struct({
+						jobs: Schema.NonEmptyArray(Schema.Struct({ name: Schema.String }))
+					})
+				})
+			)
 		})
 	})
 );
@@ -41,10 +48,10 @@ const program = Effect.gen(function* () {
 		ChildProcess.make('pnpm', ['-s', 'lefthook', 'dump', '--format', 'json'])
 	);
 	const config = yield* Schema.decodeUnknownEffect(Config)(dump);
-	const results = yield* Effect.all(
-		config['pre-push'].jobs.map(({ name }) => run(name)),
-		{ concurrency: 'unbounded' }
+	const groups = yield* Effect.forEach(config['pre-push'].jobs, ({ group }) =>
+		Effect.forEach(group.jobs, ({ name }) => run(name), { concurrency: 'unbounded' })
 	);
+	const results = groups.flat();
 	for (const { job, log, ok } of results) {
 		yield* ok
 			? Console.log(`::group::${job}\n${log.trimEnd()}\n::endgroup::`)
