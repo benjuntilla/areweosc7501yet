@@ -6,11 +6,11 @@ Which terminals and programs support OSC 7501, the Program Status Protocol. Live
 
 Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jdx.dev/getting-started.html#activate-mise) in your shell. It installs Node, pnpm and the check tools pinned in `.config/mise.toml`, then the dependencies.
 
-Installing dependencies also installs the git hooks in `.config/lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's "Lint, check, test and build" job except `pnpm cf build`. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
+Installing dependencies also installs the git hooks in `.config/lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's "Lint, check, test and build" job except `pnpm cf build` and the checks on its output. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
 
-The push first regenerates `schema/` from `src/lib/domain/schema.ts` and `src/styles/tokens.css` from `tokens/`, and fails if either changed. Commit the regenerated files and push again.
+The push first regenerates `schema/` from the Effect schemas in `src/lib/domain/` and `src/styles/tokens.css` from `tokens/`, and fails if either changed. Commit the regenerated files and push again.
 
-The browser check compares each page with its screenshot in `browser/screenshots/`. Screenshots differ between machines, so CI's are the baselines: when a change alters a page, the failed run uploads the new ones as the `screenshots` artifact.
+On Linux, the browser check compares each page with its screenshot in `browser/screenshots/`. Screenshots differ between machines, so CI's are the baselines: when a change alters a page, the failed run uploads the new ones as the `screenshots` artifact.
 
 ### Weekly checker
 
