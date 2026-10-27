@@ -1,9 +1,9 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import * as Gh from '@distilled.cloud/github';
 import { describe, expect, it } from '@effect/vitest';
-import { DateTime, Effect, Layer, Redacted } from 'effect';
+import { DateTime, Effect, Layer, Redacted, Schema } from 'effect';
 import { HttpClient, HttpClientResponse } from 'effect/http';
-import { loadData } from '../../src/lib/domain/load.ts';
+import { loadData, type SlugEntry } from '../../src/lib/domain/load.ts';
 import { Entry } from '../../src/lib/domain/schema.ts';
 import { specToml } from '../../src/lib/domain/fixtures.ts';
 import { checkEntry } from './check.ts';
@@ -110,32 +110,22 @@ const fakeGitHub = (recorded: Record<string, unknown>) =>
 
 const now = DateTime.makeUnsafe('2026-10-26T14:00:00Z');
 
-const entry = (toml: string) =>
-	loadData({ '/data/entries/x.toml': toml }, specToml).pipe(
-		Effect.map(({ entries }) => entries[0]!)
-	);
+const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?: object }) =>
+	Schema.decodeUnknownEffect(Entry)({
+		name: 'X',
+		url: 'https://example.com',
+		role: 'terminal',
+		category: 'emulators',
+		spec_revision: '0.4',
+		last_checked_date: '2026-10-24',
+		history: [],
+		...fields
+	}).pipe(Effect.map((e) => ({ slug: 'x', ...e })));
 
-const toml = (repo: string, history: string, github = '') => `
-name = "X"
-url = "https://example.com"
-repo = "${repo}"
-role = "terminal"
-category = "emulators"
-spec_revision = "0.4"
-last_checked_date = 2026-10-24
-${history === '' ? 'history = []' : ''}
-${github}
-${history}
-`;
+const block = (state: string, source: string, date = '2026-10-12') => ({ date, state, source });
 
-const block = (state: string, source: string, date = '2026-10-12') =>
-	`[[history]]\ndate = ${date}\nstate = "${state}"\nsource = "${source}"\n`;
-
-const run = (text: string, recorded: Record<string, unknown>) =>
-	entry(text).pipe(
-		Effect.flatMap((e) => checkEntry(e, now)),
-		Effect.provide(fakeGitHub(recorded))
-	);
+const run = (e: SlugEntry, recorded: Record<string, unknown>) =>
+	checkEntry(e, now).pipe(Effect.provide(fakeGitHub(recorded)));
 
 const tail = (e: Entry) =>
 	e.history.slice(-1).map((h) => ({
@@ -148,13 +138,11 @@ const tail = (e: Entry) =>
 describe('checkEntry', () => {
 	it.effect('follows a merged PR to the stable release that contains it', () =>
 		Effect.gen(function* () {
-			const r = yield* run(
-				toml(
-					'Kuddev/pebrel',
-					block('working', 'https://github.com/Kuddev/pebrel/pull/691', '2026-10-21')
-				),
-				pebrel
-			);
+			const e = yield* entry({
+				repo: 'Kuddev/pebrel',
+				history: [block('working', 'https://github.com/Kuddev/pebrel/pull/691', '2026-10-21')]
+			});
+			const r = yield* run(e, pebrel);
 			expect(r.changes.map((c) => `${c.from}>${c.to}`)).toEqual([
 				'working>working',
 				'working>done'
@@ -179,13 +167,11 @@ describe('checkEntry', () => {
 
 	it.effect('follows a blocked PR that was later merged', () =>
 		Effect.gen(function* () {
-			const r = yield* run(
-				toml(
-					'Kuddev/pebrel',
-					block('blocked', 'https://github.com/Kuddev/pebrel/pull/691', '2026-10-15')
-				),
-				pebrel
-			);
+			const e = yield* entry({
+				repo: 'Kuddev/pebrel',
+				history: [block('blocked', 'https://github.com/Kuddev/pebrel/pull/691', '2026-10-15')]
+			});
+			const r = yield* run(e, pebrel);
 			expect(r.changes.map((c) => `${c.from}>${c.to}`)).toEqual([
 				'blocked>working',
 				'working>done'
@@ -195,33 +181,33 @@ describe('checkEntry', () => {
 
 	it.effect('marks a PR closed without merging as blocked', () =>
 		Effect.gen(function* () {
-			const r = yield* run(
-				toml(
-					'kovidgoyal/kitty',
-					block('working', 'https://github.com/kovidgoyal/kitty/pull/10657')
-				),
-				kitty
-			);
+			const e = yield* entry({
+				repo: 'kovidgoyal/kitty',
+				history: [block('working', 'https://github.com/kovidgoyal/kitty/pull/10657')]
+			});
+			const r = yield* run(e, kitty);
 			expect(tail(r.entry)).toMatchObject({ state: 'blocked', date: '2026-10-13T03:58:18.000Z' });
 		})
 	);
 
 	it.effect('marks a request closed as not planned as error, dated from the close', () =>
 		Effect.gen(function* () {
-			const r = yield* run(
-				toml('tmux/tmux', block('idle', 'https://github.com/tmux/tmux/issues/5713')),
-				tmux('closed', 'not_planned')
-			);
+			const e = yield* entry({
+				repo: 'tmux/tmux',
+				history: [block('idle', 'https://github.com/tmux/tmux/issues/5713')]
+			});
+			const r = yield* run(e, tmux('closed', 'not_planned'));
 			expect(tail(r.entry)).toMatchObject({ state: 'error', date: '2026-10-13T07:50:10.000Z' });
 		})
 	);
 
 	it.effect('leaves a request closed as completed for a person', () =>
 		Effect.gen(function* () {
-			const r = yield* run(
-				toml('tmux/tmux', block('idle', 'https://github.com/tmux/tmux/issues/5713')),
-				tmux('closed', 'completed')
-			);
+			const e = yield* entry({
+				repo: 'tmux/tmux',
+				history: [block('idle', 'https://github.com/tmux/tmux/issues/5713')]
+			});
+			const r = yield* run(e, tmux('closed', 'completed'));
 			expect(r.entry.history).toHaveLength(1);
 			expect(r.notes).toEqual(['https://github.com/tmux/tmux/issues/5713 was closed as completed']);
 		})
@@ -229,17 +215,17 @@ describe('checkEntry', () => {
 
 	it.effect('turns a reopened declined request back to idle', () =>
 		Effect.gen(function* () {
-			const r = yield* run(
-				toml(
-					'tmux/tmux',
+			const e = yield* entry({
+				repo: 'tmux/tmux',
+				history: [
 					block(
 						'error',
 						'https://github.com/tmux/tmux/issues/5713#issuecomment-6079182674',
 						'2026-10-13'
 					)
-				),
-				tmux('open', 'reopened')
-			);
+				]
+			});
+			const r = yield* run(e, tmux('open', 'reopened'));
 			expect(tail(r.entry)).toEqual({
 				date: '2026-10-20T09:00:00.000Z',
 				state: 'idle',
@@ -251,25 +237,28 @@ describe('checkEntry', () => {
 
 	it.effect('counts the Latest rc as stable and skips pre-releases', () =>
 		Effect.gen(function* () {
-			const r = yield* run(toml('lassejlv/termy', ''), termy);
+			const r = yield* run(yield* entry({ repo: 'lassejlv/termy' }), termy);
 			expect(r.entry.github?.latest_release_tag).toBe('v1.0.0-rc.8');
 		})
 	);
 
 	it.effect('keeps a monorepo entry on its own release line', () =>
 		Effect.gen(function* () {
-			const github = '[github]\nstars = 1\nlatest_release_tag = "@moonshot-ai/kimi-code@2.3.1"\n';
-			const r = yield* run(toml('MoonshotAI/kimi-code', '', github), kimi);
+			const e = yield* entry({
+				repo: 'MoonshotAI/kimi-code',
+				github: { stars: 1, latest_release_tag: '@moonshot-ai/kimi-code@2.3.1' }
+			});
+			const r = yield* run(e, kimi);
 			expect(r.entry.github?.latest_release_tag).toBe('@moonshot-ai/kimi-code@2.3.2');
 		})
 	);
 
 	it.effect('reports a failed check instead of failing the run', () =>
 		Effect.gen(function* () {
-			const text = toml('gone/away', '');
-			const r = yield* run(text, {});
+			const e = yield* entry({ repo: 'gone/away' });
+			const r = yield* run(e, {});
 			expect(r.notes[0]).toMatch(/^Couldn't check x: /u);
-			expect(r.entry).toEqual(yield* entry(text));
+			expect(r.entry).toEqual(e);
 		})
 	);
 });
@@ -288,12 +277,12 @@ describe('writeEntry', () => {
 		})
 	);
 
-	it.effect('escapes DEL, which TOML bans raw', () =>
+	it.effect('writes a note that TOML has to escape so it reads back the same', () =>
 		Effect.gen(function* () {
-			const e = yield* entry(toml('a/b', ''));
-			const text = yield* writeEntry({ ...e, note: 'a\u007Fb' });
+			const note = 'say "hi" \\ a\u007Fb\nnext line';
+			const text = yield* writeEntry({ ...(yield* entry({ repo: 'a/b' })), note });
 			const again = yield* loadData({ '/data/entries/x.toml': text }, specToml);
-			expect(again.entries[0]!.note).toBe('a\u007Fb');
+			expect(again.entries[0]!.note).toBe(note);
 		})
 	);
 });
