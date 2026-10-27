@@ -19,7 +19,9 @@
 	let sheet: HTMLDialogElement | undefined = $state();
 	let menuOpen = $state(false);
 
-	// The menu opens and closes through invoker commands, so it works without JavaScript too.
+	// Invoker commands open and close the menu without JavaScript. These handlers do the same in
+	// browsers without them (Safari before 26.2); the command then finds the menu already in that state.
+	const openMenu = () => sheet?.showModal();
 	const closeMenu = () => sheet?.close();
 
 	let searchButton: HTMLButtonElement | undefined = $state();
@@ -66,6 +68,7 @@
 			aria-haspopup="dialog"
 			commandfor="menu"
 			command="show-modal"
+			onclick={openMenu}
 		>
 			<Icon name="menu" />
 		</button>
@@ -82,7 +85,14 @@
 	<div class="top-bar">
 		<Logo size={36} />
 		<span class="spacer"></span>
-		<button class="button" type="button" aria-label="Close menu" commandfor="menu" command="close">
+		<button
+			class="button"
+			type="button"
+			aria-label="Close menu"
+			commandfor="menu"
+			command="close"
+			onclick={closeMenu}
+		>
 			<Icon name="close" />
 		</button>
 	</div>
