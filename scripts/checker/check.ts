@@ -1,5 +1,5 @@
 import * as Gh from '@distilled.cloud/github';
-import { Array, DateTime, Effect, Option, Struct } from 'effect';
+import { Array, DateTime, Effect, Equivalence, Option, Struct } from 'effect';
 import { featuredStars } from '../../src/lib/domain/derive.ts';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
@@ -43,6 +43,9 @@ export const followable = ({ repo, history }: Entry) =>
 // Python's `0.6.0a1`. tmux's `3.6a` is a full release.
 const preTag =
 	/(?:^|[-._/])(?:nightly|tip|canary|alpha|beta|rc|pre|preview|dev|snapshot)\d*(?:[-._]|$)|\.\d+(?:a|b|rc)\d+$/iu;
+
+/** Two releases with the same tag. */
+const sameTag = Equivalence.mapInput(Equivalence.String, (r: { tag_name: string }) => r.tag_name);
 
 /** The package part of a monorepo tag, like `radius-cli@` in `radius-cli@0.5.0`. */
 const prefixOf = (tag: string) => tag.replace(/v?\d[\w.+-]*$/u, '');
@@ -150,9 +153,10 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 			.getLatestRelease({ owner, repo: name })
 			.pipe(Effect.catchTag('NotFound', () => Effect.succeed(null)));
 		const tracked = previous?.latest_release_tag;
-		// Stable means a full release, or whatever GitHub marks Latest, even with an rc tag. A
-		// monorepo's entry stays on the release line it already tracks. Newest published first.
-		const stable = releases
+		// Stable means a full release, or whatever GitHub marks Latest, even with an rc tag. Latest
+		// can be older than the newest 30 releases, so it joins them. A monorepo's entry stays on
+		// the release line it already tracks. Newest published first.
+		const stable = Array.unionWith(releases, latest === null ? [] : [latest], sameTag)
 			.flatMap((r) =>
 				!r.draft &&
 				r.published_at !== null &&
