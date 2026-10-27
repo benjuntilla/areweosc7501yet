@@ -35,12 +35,14 @@
 		}
 	};
 
+	// Search removes and recreates sections, so look them up on each scroll.
+	const onscroll = () => {
+		const sections = sectionIds.flatMap((id) => document.querySelector(`#${id}`) ?? []);
+		current = sections.findLast((s) => s.getBoundingClientRect().top < innerHeight / 3)?.id;
+	};
+
 	$effect(() => {
 		if (page.url.pathname !== '/') return;
-		const sections = sectionIds.flatMap((id) => document.querySelector(`#${id}`) ?? []);
-		const onscroll = () => {
-			current = sections.findLast((s) => s.getBoundingClientRect().top < innerHeight / 3)?.id;
-		};
 		onscroll();
 		addEventListener('scroll', onscroll, { passive: true });
 		return () => {
