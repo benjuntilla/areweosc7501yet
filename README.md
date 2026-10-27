@@ -10,7 +10,7 @@ Installing dependencies also installs the git hooks in `.config/lefthook.yml`. A
 
 The push first regenerates `schema/` from the Effect schemas in `src/lib/domain/` and `src/styles/tokens.css` from `tokens/`, and fails if either changed. Commit the regenerated files and push again.
 
-In CI, the browser check compares each page with its screenshot in `browser/screenshots/`. Screenshots differ between machines, so CI's are the baselines: when the browser check fails, take the new ones from the run's `screenshots` artifact.
+In CI, the browser check compares each page with its screenshot in `browser/screenshots/`. Screenshots differ between machines, so CI's are the baselines. When the browser check fails, take the new ones from `test-results/` in the run's `screenshots` artifact. For example, copy `test-results/pages-index-in-light-desktop/index-light-actual.png` to `browser/screenshots/index-light-desktop.png`.
 
 ### Weekly checker
 
