@@ -1,9 +1,24 @@
 import { describe, expect, it } from '@effect/vitest';
 import { Effect } from 'effect';
-import { checkerToml, fixtureFiles, specToml } from './fixtures.ts';
+import { checkerToml, specToml } from './fixtures.ts';
 import { loadData } from './load.ts';
 import { overview, sourceLabel } from './overview.ts';
 import { buildSite } from './site.ts';
+
+const entry = (name: string, state: string, featured: boolean) => `
+name = "${name}"
+url = "https://example.com/${name}"
+role = "program"
+category = "coding-agents"
+is_featured = ${featured}
+spec_revision = "0.4"
+last_checked_date = 2026-10-24
+
+[[history]]
+date = 2026-10-06
+state = "${state}"
+source = "https://example.com/${name}"
+`;
 
 describe('overview', () => {
 	it('names sources by repo', () => {
@@ -18,13 +33,18 @@ describe('overview', () => {
 
 	it.effect('puts featured chips first, by state then name, and folds the rest', () =>
 		Effect.gen(function* () {
-			const roles = overview(buildSite(yield* loadData(fixtureFiles, specToml, checkerToml)));
+			const files = {
+				'/data/entries/beta.toml': entry('beta', 'working', true),
+				'/data/entries/zeta.toml': entry('zeta', 'done', true),
+				'/data/entries/alpha.toml': entry('alpha', 'working', true),
+				'/data/entries/gamma.toml': entry('gamma', 'idle', false),
+				'/data/entries/delta.toml': entry('delta', 'done', false)
+			};
+			const roles = overview(buildSite(yield* loadData(files, specToml, checkerToml)));
 			const categories = roles.flatMap((r) => r.categories);
-			for (const c of categories) {
-				const order = ['done', 'working', 'blocked', 'idle', 'error'];
-				const ranks = c.featured.map((chip) => order.indexOf(chip.state));
-				expect(ranks).toEqual(ranks.toSorted((a, b) => a - b));
-			}
+			const agents = categories.find((c) => c.id === 'coding-agents');
+			expect(agents?.featured.map((c) => c.name)).toEqual(['zeta', 'alpha', 'beta']);
+			expect(agents?.more.map((c) => c.name)).toEqual(['delta', 'gamma']);
 			expect(categories.map((c) => c.id)).toEqual([
 				'coding-agents',
 				'clis',
