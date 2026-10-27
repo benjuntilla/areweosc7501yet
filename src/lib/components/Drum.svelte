@@ -1,6 +1,18 @@
 <script lang="ts">
-	import { autoTurn, flick, restingPosition, rows, wordAt } from '#lib/client/drum.ts';
+	import {
+		autoTurn,
+		dragSpeed,
+		type Motion,
+		release,
+		restingPosition,
+		rows,
+		type Sample,
+		turn,
+		wheelSpeed,
+		wordAt
+	} from '#lib/client/drum.ts';
 	import { forkScoped, prefersReducedMotion } from '#lib/client/fiber.ts';
+	import { Effect } from 'effect';
 	import { onMount } from 'svelte';
 
 	const step = 360 / rows;
@@ -8,14 +20,46 @@
 
 	let position = $state(restingPosition);
 	let dragging = $state(false);
-	let still = $state(true);
 	let hovered = false;
 	let visible = true;
 	let lastInput = 0;
+	let frame = 0;
 	let drum: HTMLDivElement | undefined = $state();
 
 	const held = () =>
-		hovered || dragging || !visible || document.hidden || performance.now() - lastInput < 2000;
+		hovered ||
+		dragging ||
+		frame !== 0 ||
+		!visible ||
+		document.hidden ||
+		performance.now() - lastInput < 2000;
+
+	const stop = () => {
+		cancelAnimationFrame(frame);
+		frame = 0;
+	};
+
+	// Moves the drum once a frame until the motion rests, then lines its row up exactly.
+	const play = (motion: Motion) => {
+		stop();
+		let start: number | undefined;
+		const tick = (now: number) => {
+			start ??= now;
+			const next = motion((now - start) / 1000);
+			position = next ?? Math.round(position);
+			frame = next === undefined ? 0 : requestAnimationFrame(tick);
+		};
+		frame = requestAnimationFrame(tick);
+	};
+
+	// A thrown drum coasts for about this long, in seconds. A drag throws farther than the wheel.
+	const glide = { drag: 0.25, wheel: 0.09 };
+
+	const settle = (speed: number, coast: number) => {
+		lastInput = performance.now();
+		if (prefersReducedMotion()) position = Math.round(position);
+		else play(release(position, speed, coast));
+	};
 
 	onMount(() => {
 		if (!drum) return;
@@ -23,64 +67,75 @@
 			visible = entry?.isIntersecting ?? true;
 		});
 		observer.observe(drum);
-		still = false;
-		const stop = prefersReducedMotion()
+		const stopTurning = prefersReducedMotion()
 			? () => {}
-			: forkScoped(
-					autoTurn({
-						interval: 1500,
-						held,
-						turn: () => {
-							position += 1;
-						}
-					})
-				);
+			: forkScoped(autoTurn({ interval: 1500, held, turn: () => play(turn(position, 0.62)) }));
 		return () => {
 			observer.disconnect();
+			stopTurning();
 			stop();
 		};
 	});
 
-	let dragStart = { y: 0, position: 0 };
+	let samples: Array<Sample> = [];
 
 	// Preventing the default keeps a drag from selecting text.
 	const onpointerdown = (event: PointerEvent) => {
+		if (!event.isPrimary || event.button !== 0) return;
 		event.preventDefault();
+		stop();
 		dragging = true;
-		dragStart = { y: event.clientY, position };
+		samples = [{ time: event.timeStamp, y: event.clientY }];
 		drum?.setPointerCapture(event.pointerId);
 	};
 
+	// The drum turns one row for each row height the pointer moves. The last 100 ms of moves tell
+	// how fast it was going when let go.
 	const onpointermove = (event: PointerEvent) => {
-		if (!dragging) return;
-		position = dragStart.position + (dragStart.y - event.clientY) / rowHeight;
+		const last = samples.at(-1);
+		if (!dragging || last === undefined) return;
+		position += (last.y - event.clientY) / rowHeight;
+		samples = [...samples, { time: event.timeStamp, y: event.clientY }].filter(
+			(s) => s.time >= event.timeStamp - 100
+		);
 	};
 
-	const onpointerup = () => {
+	// A pause before letting go puts the drum down instead of throwing it.
+	const onpointerup = (event: PointerEvent) => {
 		if (!dragging) return;
 		dragging = false;
-		position = Math.round(position);
-		lastInput = performance.now();
+		const last = samples.at(-1);
+		const thrown =
+			event.type === 'pointerup' && last !== undefined && event.timeStamp - last.time <= 80;
+		settle(thrown ? dragSpeed(samples, rowHeight) : 0, glide.drag);
 	};
 
-	let wheelStart = restingPosition;
-	let wheelTarget = restingPosition;
-	let wheelTimer: ReturnType<typeof setTimeout> | undefined;
+	let speed = 0;
+	let lastWheel = 0;
+	let cancelSettle = () => {};
 
+	// The wheel turns the drum as far as it would scroll the page, and the drum coasts on once the
+	// wheel stops.
 	const onwheel = (event: WheelEvent) => {
 		event.preventDefault();
-		if (wheelTimer === undefined) {
-			wheelStart = position;
-			wheelTarget = position;
-		}
-		wheelTarget += event.deltaY / 100;
-		position = wheelTarget;
+		stop();
+		const pixels =
+			event.deltaMode === WheelEvent.DOM_DELTA_LINE
+				? event.deltaY * rowHeight
+				: event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+					? event.deltaY * innerHeight
+					: event.deltaY;
+		position += pixels / rowHeight;
+		speed = wheelSpeed(speed, pixels / rowHeight, event.timeStamp - lastWheel);
+		lastWheel = event.timeStamp;
 		lastInput = performance.now();
-		clearTimeout(wheelTimer);
-		wheelTimer = setTimeout(() => {
-			position = flick(wheelStart, wheelTarget);
-			wheelTimer = undefined;
-		}, 120);
+		cancelSettle();
+		cancelSettle = forkScoped(
+			Effect.delay(
+				Effect.sync(() => settle(speed, glide.wheel)),
+				'55 millis'
+			)
+		);
 	};
 
 	$effect(() => {
@@ -93,7 +148,6 @@
 <div
 	class="drum"
 	class:dragging
-	class:still
 	bind:this={drum}
 	aria-hidden="true"
 	onpointerenter={() => (hovered = true)}
@@ -141,12 +195,6 @@
 		inset: 0;
 		transform-style: preserve-3d;
 		translate: 0 0 -58.4px;
-		transition: rotate var(--motion-drum-step-duration) var(--motion-ease-turn);
-	}
-
-	.dragging .ring,
-	.still .ring {
-		transition: none;
 	}
 
 	.row {
@@ -176,12 +224,6 @@
 		from {
 			opacity: 0;
 			translate: 0 8px;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.ring {
-			transition: none;
 		}
 	}
 </style>
