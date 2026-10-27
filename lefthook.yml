@@ -20,3 +20,5 @@ pre-push:
       run: pnpm test
     - name: schema
       run: pnpm schema && test -z "$(git status --porcelain -- schema/)"
+    - name: tokens
+      run: pnpm tokens && test -z "$(git status --porcelain -- src/styles/tokens.css)"

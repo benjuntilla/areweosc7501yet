@@ -1,0 +1,784 @@
+{
+	"page": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.paper}"
+		}
+	},
+	"content": {
+		"divider": {
+			"$type": "color",
+			"$value": "{color.rule}"
+		},
+		"text": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"text-strong": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"text-muted": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"icon": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"icon-strong": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		}
+	},
+	"heading": {
+		"text": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"note": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"count": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"icon": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"category-gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		}
+	},
+	"chip": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.wash}"
+		},
+		"background-hover": {
+			"$type": "color",
+			"$value": "{color.wash}"
+		},
+		"background-pressed": {
+			"$type": "color",
+			"$value": "{color.rule}"
+		},
+		"label": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"label-muted": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"padding-left": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"padding-right": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		},
+		"padding-y": {
+			"$type": "dimension",
+			"$value": "{space.2}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.5}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.6}"
+		},
+		"list-gap": {
+			"$type": "dimension",
+			"$value": "{space.2}"
+		}
+	},
+	"more-chip": {
+		"background-hover": {
+			"$type": "color",
+			"$value": "{color.rule}"
+		},
+		"background-pressed": {
+			"$type": "color",
+			"$value": "{color.press}"
+		},
+		"padding-x": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"padding-y": {
+			"$type": "dimension",
+			"$value": "{space.2}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.full}"
+		}
+	},
+	"card": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.surface}"
+		},
+		"ring": {
+			"$type": "color",
+			"$value": "{effect.ring}"
+		},
+		"shadow": {
+			"$type": "color",
+			"$value": "{effect.shadow}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.12}"
+		}
+	},
+	"focus-ring": {
+		"stroke": {
+			"$type": "color",
+			"$value": "{color.focus}"
+		},
+		"stroke-width": {
+			"$type": "dimension",
+			"$value": "{stroke.2}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.16}"
+		}
+	},
+	"status": {
+		"done": {
+			"$type": "color",
+			"$value": "{state.done}"
+		},
+		"working": {
+			"$type": "color",
+			"$value": "{state.working}"
+		},
+		"working-text": {
+			"$type": "color",
+			"$value": "{color.accent-strong}"
+		},
+		"blocked": {
+			"$type": "color",
+			"$value": "{state.blocked}"
+		},
+		"idle": {
+			"$type": "color",
+			"$value": "{state.idle}"
+		},
+		"error": {
+			"$type": "color",
+			"$value": "{state.error}"
+		}
+	},
+	"rail": {
+		"track": {
+			"$type": "color",
+			"$value": "{color.wash}"
+		},
+		"segment-radius": {
+			"$type": "dimension",
+			"$value": "{radius.14}"
+		},
+		"label-gap": {
+			"$type": "dimension",
+			"$value": "{space.5}"
+		},
+		"ghost-opacity": {
+			"$type": "number",
+			"$value": "{opacity.ghost}"
+		}
+	},
+	"rail-link": {
+		"hover-overlay": {
+			"$type": "color",
+			"$value": "{color.hover-lighten}"
+		},
+		"hover-opacity": {
+			"$type": "number",
+			"$value": "{opacity.hover}"
+		}
+	},
+	"popover": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.surface}"
+		},
+		"ring": {
+			"$type": "color",
+			"$value": "{effect.ring}"
+		},
+		"shadow": {
+			"$type": "color",
+			"$value": "{effect.shadow}"
+		},
+		"title": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"body": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"meta": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"padding-x": {
+			"$type": "dimension",
+			"$value": "{space.14}"
+		},
+		"padding-y": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.12}"
+		}
+	},
+	"error-card": {
+		"content": {
+			"$type": "color",
+			"$value": "{color.on-accent}"
+		},
+		"code-opacity": {
+			"$type": "number",
+			"$value": "{opacity.dim}"
+		}
+	},
+	"meter": {
+		"track": {
+			"$type": "color",
+			"$value": "{color.wash}"
+		},
+		"count": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"gradient-lime": {
+			"$type": "color",
+			"$value": "{gradient.lime}"
+		},
+		"gradient-lime-amber": {
+			"$type": "color",
+			"$value": "{gradient.oklab-mid.lime-amber}"
+		},
+		"gradient-amber": {
+			"$type": "color",
+			"$value": "{gradient.amber}"
+		},
+		"gradient-amber-orange": {
+			"$type": "color",
+			"$value": "{gradient.oklab-mid.amber-orange}"
+		},
+		"gradient-orange": {
+			"$type": "color",
+			"$value": "{gradient.orange}"
+		},
+		"gradient-orange-pink": {
+			"$type": "color",
+			"$value": "{gradient.oklab-mid.orange-pink}"
+		},
+		"gradient-pink": {
+			"$type": "color",
+			"$value": "{gradient.pink}"
+		},
+		"gradient-pink-lavender": {
+			"$type": "color",
+			"$value": "{gradient.oklab-mid.pink-lavender}"
+		},
+		"gradient-lavender": {
+			"$type": "color",
+			"$value": "{gradient.lavender}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.4}"
+		},
+		"count-gap": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"count-item-gap": {
+			"$type": "dimension",
+			"$value": "{space.5}"
+		},
+		"ghost-opacity": {
+			"$type": "number",
+			"$value": "{opacity.ghost}"
+		}
+	},
+	"footer": {
+		"divider": {
+			"$type": "color",
+			"$value": "{color.rule}"
+		},
+		"text": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"link": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		}
+	},
+	"rail-label": {
+		"name": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"count": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		}
+	},
+	"logo-tile": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.surface}"
+		},
+		"ring": {
+			"$type": "color",
+			"$value": "{effect.ring}"
+		},
+		"shadow": {
+			"$type": "color",
+			"$value": "{effect.shadow}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.12}"
+		}
+	},
+	"search": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.surface}"
+		},
+		"ring": {
+			"$type": "color",
+			"$value": "{effect.ring}"
+		},
+		"shadow": {
+			"$type": "color",
+			"$value": "{effect.shadow}"
+		},
+		"icon": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"placeholder": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"padding-x": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"padding-y": {
+			"$type": "dimension",
+			"$value": "{space.7}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.24}"
+		},
+		"focus-stroke-width": {
+			"$type": "dimension",
+			"$value": "{stroke.2}"
+		},
+		"icon-size": {
+			"$type": "dimension",
+			"$value": "{icon.size-sm}"
+		}
+	},
+	"nav": {
+		"divider": {
+			"$type": "color",
+			"$value": "{color.rule}"
+		},
+		"group-label": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"item": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"item-active": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"item-hover": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"item-background-hover": {
+			"$type": "color",
+			"$value": "{color.wash}"
+		},
+		"item-background-pressed": {
+			"$type": "color",
+			"$value": "{color.rule}"
+		},
+		"toc-guide": {
+			"$type": "color",
+			"$value": "{color.faint}",
+			"$description": "Tree guide line and ticks in the nav table of contents (Rex: --color-faint)."
+		},
+		"item-padding-x": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		},
+		"item-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"item-radius": {
+			"$type": "dimension",
+			"$value": "{radius.6}"
+		},
+		"group-gap": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		},
+		"group-padding-top": {
+			"$type": "dimension",
+			"$value": "{space.24}"
+		},
+		"group-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"toc-indent": {
+			"$type": "dimension",
+			"$value": "{space.20}",
+			"$description": "Left padding of a TOC entry; the guide sits at 4 px, the tick runs 4→12 px (Rex: 1.5em at 13 px)."
+		},
+		"toc-item-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.4}",
+			"$description": "Vertical padding of a TOC entry (Rex: 4px)."
+		}
+	},
+	"theme-toggle": {
+		"track": {
+			"$type": "color",
+			"$value": "{color.wash}"
+		},
+		"thumb": {
+			"$type": "color",
+			"$value": "{color.surface}"
+		},
+		"thumb-ring": {
+			"$type": "color",
+			"$value": "{effect.ring}"
+		},
+		"thumb-shadow": {
+			"$type": "color",
+			"$value": "{effect.shadow}"
+		},
+		"label": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"label-active": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"padding": {
+			"$type": "dimension",
+			"$value": "{space.3}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.2}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.9}"
+		},
+		"option-padding-x": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"option-radius": {
+			"$type": "dimension",
+			"$value": "{radius.6}"
+		}
+	},
+	"top-bar": {
+		"button-background": {
+			"$type": "color",
+			"$value": "{color.surface}"
+		},
+		"button-ring": {
+			"$type": "color",
+			"$value": "{effect.ring}"
+		},
+		"button-shadow": {
+			"$type": "color",
+			"$value": "{effect.shadow}"
+		},
+		"icon": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"icon-strong": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"on-accent": {
+			"$type": "color",
+			"$value": "{color.on-accent}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"button-padding": {
+			"$type": "dimension",
+			"$value": "{space.11}"
+		},
+		"button-radius": {
+			"$type": "dimension",
+			"$value": "{radius.18}"
+		}
+	},
+	"code-block": {
+		"string": {
+			"$type": "color",
+			"$value": "{code.string}"
+		},
+		"function": {
+			"$type": "color",
+			"$value": "{code.function}"
+		},
+		"comment": {
+			"$type": "color",
+			"$value": "{code.comment}"
+		}
+	},
+	"legend": {
+		"state-name": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"description": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.18}"
+		},
+		"item-gap": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		}
+	},
+	"verdict": {
+		"label": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"word": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"note": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"label-gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.12}"
+		}
+	},
+	"link": {
+		"text": {
+			"$type": "color",
+			"$value": "{color.soft}"
+		},
+		"text-hover": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"text-pressed": {
+			"$type": "color",
+			"$value": "{color.accent-strong}"
+		}
+	},
+	"state-glyph": {
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.5}"
+		},
+		"icon-opacity": {
+			"$type": "number",
+			"$value": "{opacity.subtle}"
+		},
+		"icon-stroke-width": {
+			"$type": "dimension",
+			"$value": "{stroke.1_5}"
+		}
+	},
+	"table": {
+		"cell-padding-x": {
+			"$type": "dimension",
+			"$value": "{space.14}"
+		},
+		"cell-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"cell-gap": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		}
+	},
+	"motion": {
+		"drum-step-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 620,
+				"unit": "ms"
+			},
+			"$description": "One drum turn to the next word."
+		},
+		"drum-interval": {
+			"$type": "duration",
+			"$value": {
+				"value": 1500,
+				"unit": "ms"
+			},
+			"$description": "Between turns (turn + hold)."
+		},
+		"drum-start-delay": {
+			"$type": "duration",
+			"$value": {
+				"value": 1000,
+				"unit": "ms"
+			},
+			"$description": "After the hero has revealed, before the first turn."
+		},
+		"drum-reveal-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 1000,
+				"unit": "ms"
+			},
+			"$description": "Entrance fade/lift of the drum lines."
+		},
+		"drum-reveal-stagger": {
+			"$type": "duration",
+			"$value": {
+				"value": 80,
+				"unit": "ms"
+			},
+			"$description": "Between drum lines on entrance."
+		},
+		"rail-hue-max": {
+			"$type": "number",
+			"$value": 30,
+			"$description": "deg. Rail hue-rotate at the bottom of the page; 0 at the top."
+		},
+		"state-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 120,
+				"unit": "ms"
+			},
+			"$description": "Hover/pressed color changes on chips, nav and links."
+		},
+		"ease-turn": {
+			"$type": "cubicBezier",
+			"$value": [0.33, 1, 0.68, 1],
+			"$description": "Ease-out cubic, 1 − (1 − t)³. Drum turns."
+		},
+		"ease-reveal": {
+			"$type": "cubicBezier",
+			"$value": [0.22, 1, 0.36, 1],
+			"$description": "Ease-out quint-ish. Drum entrance."
+		},
+		"ease-state": {
+			"$type": "cubicBezier",
+			"$value": [0, 0, 0.58, 1],
+			"$description": "Hover and pressed state changes (ease-out)."
+		},
+		"toc-unfold-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 200,
+				"unit": "ms"
+			},
+			"$description": "Nav TOC unfold/fold: grid-template-rows 0fr↔1fr + opacity (Rex: 200ms)."
+		},
+		"ease-unfold": {
+			"$type": "cubicBezier",
+			"$value": [0, 0, 0.2, 1],
+			"$description": "Tailwind ease-out, used by the nav TOC unfold (Rex)."
+		},
+		"rail-label-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 360,
+				"unit": "ms"
+			},
+			"$description": "Rail label entrance per line (Lift)."
+		},
+		"rail-label-stagger": {
+			"$type": "duration",
+			"$value": {
+				"value": 40,
+				"unit": "ms"
+			},
+			"$description": "Delay between rail label lines, top first (Lift)."
+		},
+		"rail-label-distance": {
+			"$type": "dimension",
+			"$value": {
+				"value": 6,
+				"unit": "px"
+			},
+			"$description": "Rail label lines rise this many px while fading in (Lift)."
+		},
+		"rail-label-exit-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 160,
+				"unit": "ms"
+			},
+			"$description": "Rail label exit: all lines together, opacity ease-out, movement ease-in."
+		}
+	}
+}

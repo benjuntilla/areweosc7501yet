@@ -17,7 +17,8 @@
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
 		"test": "vitest run",
-		"schema": "node scripts/schema.ts && oxfmt schema"
+		"schema": "node scripts/schema.ts && oxfmt schema",
+		"tokens": "tz build --quiet && oxfmt src/styles/tokens.css"
 	},
 	"devDependencies": {
 		"@cloudflare/build-output-utils": "0.9.4",
@@ -27,6 +28,8 @@
 		"@sveltejs/adapter-static": "^4.0.0",
 		"@sveltejs/kit": "^3.0.0",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
+		"@terrazzo/cli": "2.10.0",
+		"@terrazzo/plugin-css": "2.10.0",
 		"@tsconfig/strictest": "2.0.8",
 		"cf": "1.0.0-beta.21",
 		"effect": "4.0.6",
