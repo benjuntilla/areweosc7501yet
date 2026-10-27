@@ -15,6 +15,7 @@ jobs:
   check:
     name: Recheck entries
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       # A GitHub App token, so CI and previews run on the PR it opens.
       - uses: actions/create-github-app-token@v3.3.0
