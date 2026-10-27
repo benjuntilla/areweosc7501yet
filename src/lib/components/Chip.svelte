@@ -32,7 +32,7 @@
 		if (event.key !== 'Enter' && event.key !== ' ') return;
 		event.preventDefault();
 		popover?.showPopover();
-		source?.focus();
+		(source ?? popover)?.focus();
 	};
 
 	// A mouse click on an open popover keeps it open; touch toggles it natively.

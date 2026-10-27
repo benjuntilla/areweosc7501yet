@@ -1,18 +1,17 @@
 <script lang="ts">
-	import { applyTheme, readTheme, type Theme, themes } from '#lib/client/theme.ts';
+	import { applyTheme, choice, readTheme, type Theme, themes } from '#lib/client/theme.svelte.ts';
 	import { Effect } from 'effect';
 	import { onMount } from 'svelte';
 
-	let current: Theme = $state('auto');
 	const buttons: Array<HTMLButtonElement> = [];
 	const labels: Record<Theme, string> = { auto: 'Auto', light: 'Light', dark: 'Dark' };
 
 	onMount(() => {
-		current = Effect.runSync(readTheme);
+		choice.theme = Effect.runSync(readTheme);
 	});
 
 	const choose = (theme: Theme, focus = false) => {
-		current = theme;
+		choice.theme = theme;
 		Effect.runSync(applyTheme(theme));
 		if (focus) buttons[themes.indexOf(theme)]?.focus();
 	};
@@ -22,7 +21,7 @@
 		const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
 		if (step === undefined) return;
 		event.preventDefault();
-		const next = themes[(themes.indexOf(current) + step + themes.length) % themes.length];
+		const next = themes[(themes.indexOf(choice.theme) + step + themes.length) % themes.length];
 		if (next !== undefined) choose(next, true);
 	};
 </script>
@@ -39,8 +38,8 @@
 			bind:this={buttons[i]}
 			type="button"
 			role="radio"
-			aria-checked={current === theme}
-			tabindex={current === theme ? 0 : -1}
+			aria-checked={choice.theme === theme}
+			tabindex={choice.theme === theme ? 0 : -1}
 			onclick={() => choose(theme)}>{labels[theme]}</button
 		>
 	{/each}

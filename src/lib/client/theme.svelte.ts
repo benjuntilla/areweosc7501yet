@@ -3,6 +3,9 @@ import { Array, Effect } from 'effect';
 export const themes = ['auto', 'light', 'dark'] as const;
 export type Theme = (typeof themes)[number];
 
+/** The chosen theme. The sidebar and the phone menu each have a toggle, and both show this one. */
+export const choice = $state<{ theme: Theme }>({ theme: 'auto' });
+
 /** The saved theme, or auto when nothing valid is saved or storage is blocked. */
 export const readTheme: Effect.Effect<Theme> = Effect.try(() => localStorage.getItem('theme')).pipe(
 	Effect.map((saved) => Array.findFirst(themes, (t) => t === saved)),
