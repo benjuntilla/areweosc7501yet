@@ -3,12 +3,28 @@ import * as Gh from '@distilled.cloud/github';
 import { Array, DateTime, Effect, Option } from 'effect';
 import { markdownTable } from 'markdown-table';
 import { sameRepo } from '../../src/lib/domain/formats.ts';
-import type { Checked } from './check.ts';
+import type { SlugEntry } from '../../src/lib/domain/load.ts';
+import { type Checked, followable } from './check.ts';
 
 const queries = ['"OSC 7501"', '"Program Status Protocol"'];
 // Search also matches issue #7501 and words apart, so a hit must name the protocol itself.
 const mentions = /osc[\s-]*7501|program status protocol/iu;
-export const staleDays = 30;
+const staleDays = 30;
+
+/** Entries the checker can't follow that a person last checked over `staleDays` ago, or never. */
+export const staleEntries = (entries: ReadonlyArray<SlugEntry>, now: DateTime.Utc) => {
+	const cutoff = DateTime.subtract(DateTime.removeTime(now), { days: staleDays });
+	return entries
+		.filter((e) => !followable(e))
+		.filter(
+			(e) => e.last_checked_date === undefined || DateTime.isLessThan(e.last_checked_date, cutoff)
+		)
+		.map((e) => ({
+			slug: e.slug,
+			last:
+				e.last_checked_date === undefined ? 'never' : DateTime.formatIsoDateUtc(e.last_checked_date)
+		}));
+};
 
 /** One issue or PR per untracked repo that mentioned the protocol in the past week. */
 export const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) =>
@@ -30,7 +46,7 @@ export const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) 
 				if (s.items.length < 100) break;
 			}
 		}
-		return Array.dedupeWith(
+		const found = Array.dedupeWith(
 			hits.filter(
 				(h) =>
 					h.user?.type !== 'Bot' &&
@@ -38,6 +54,24 @@ export const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) 
 					!tracked.some((r) => sameRepo(r, repoOf(h)))
 			),
 			(a, b) => repoOf(a) === repoOf(b)
+		);
+		// A fork whose parent or source is tracked is covered by that repo's entry.
+		return yield* Effect.filter(
+			found,
+			(h) => {
+				const [owner = '', repo = ''] = repoOf(h).split('/');
+				return Gh.repos
+					.get({ owner, repo })
+					.pipe(
+						Effect.map(
+							({ parent, source }) =>
+								![parent, source].some(
+									(f) => f !== undefined && tracked.some((r) => sameRepo(r, f.full_name))
+								)
+						)
+					);
+			},
+			{ concurrency: 4 }
 		);
 	});
 
@@ -55,7 +89,7 @@ export const body = (
 ) => {
 	const changes = results.flatMap((r) => r.changes);
 	const notes = results.flatMap((r) => r.notes);
-	return [
+	const text = [
 		'## History changes',
 		changes.length === 0
 			? 'None.'
@@ -77,4 +111,7 @@ export const body = (
 			? 'None.'
 			: stale.map((s) => `- ${s.slug}, last checked ${s.last}`).join('\n')
 	].join('\n\n');
+	// GitHub adds a "mentioned this" event to each issue or PR that a PR body links to.
+	// redirect.github.com links don't add one, which is why Dependabot uses them.
+	return text.replaceAll('https://github.com/', 'https://redirect.github.com/');
 };

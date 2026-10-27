@@ -5,10 +5,9 @@ role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
 note = "#3558 is a fix, the first implementation PR wasn’t found"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 868
+popular = false
 latest_release_tag = "0.9.43"
 latest_release_date = 2026-10-24
 

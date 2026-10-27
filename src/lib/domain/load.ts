@@ -8,7 +8,7 @@ import {
 } from '@effected/toml';
 import { Array, Data, DateTime, Effect, Option, Order, Record, Schema } from 'effect';
 import * as patterns from './patterns.ts';
-import { Entry, Spec } from './schema.ts';
+import { Checker, Entry, Spec } from './schema.ts';
 
 export class DataError extends Data.TaggedError('DataError')<{
 	readonly file: string;
@@ -46,12 +46,17 @@ const decodeToml = <S extends Schema.Top>(schema: S, file: string, text: string)
 const Slug = Schema.String.check(Schema.isPattern(patterns.slug));
 
 /**
- * Decodes every entry file and the spec. `entries` maps a file path to its text,
- * as `import.meta.glob(..., { query: '?raw' })` returns it.
+ * Decodes every entry file, the spec and the checker's last run. `entries` maps a file path to
+ * its text, as `import.meta.glob(..., { query: '?raw' })` returns it.
  */
-export const loadData = (entries: Readonly<Record<string, string>>, specText: string) =>
+export const loadData = (
+	entries: Readonly<Record<string, string>>,
+	specText: string,
+	checkerText: string
+) =>
 	Effect.gen(function* () {
 		const spec = yield* decodeToml(Spec, 'data/spec.toml', specText);
+		const checker = yield* decodeToml(Checker, 'data/checker.toml', checkerText);
 		const decoded = yield* Effect.forEach(
 			Record.toEntries(entries),
 			([file, text]) =>
@@ -68,6 +73,7 @@ export const loadData = (entries: Readonly<Record<string, string>>, specText: st
 		);
 		return {
 			spec,
+			checker,
 			entries: Array.sort(
 				decoded,
 				Order.mapInput(Order.String, (e: SlugEntry) => e.slug)

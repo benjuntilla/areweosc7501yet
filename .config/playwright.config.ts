@@ -4,8 +4,8 @@ export default defineConfig({
 	testDir: '../browser',
 	outputDir: '../test-results',
 	forbidOnly: process.env['CI'] !== undefined,
-	// Screenshots render differently on each OS, so only Linux, which CI runs, compares them.
-	ignoreSnapshots: process.platform !== 'linux',
+	// Screenshots render differently on each machine, so only CI compares them.
+	ignoreSnapshots: process.env['CI'] === undefined,
 	snapshotPathTemplate: '{testDir}/screenshots/{arg}-{projectName}{ext}',
 	webServer: {
 		command: 'pnpm preview --port 4799 --strictPort',

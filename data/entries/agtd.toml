@@ -5,10 +5,9 @@ role = "terminal"
 category = "multiplexers"
 aliases = ["agentd"]
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 5
+popular = false
 latest_release_tag = "v0.1.1"
 latest_release_date = 2026-10-22
 

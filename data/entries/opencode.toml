@@ -5,10 +5,9 @@ role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
 note = "On dev and in the unreleased v2.1 tags. The stable 1.x line doesn’t have it."
-last_checked_date = 2026-10-25
 
 [github]
-stars = 221101
+popular = true
 latest_release_tag = "v1.19.4"
 latest_release_date = 2026-10-22
 

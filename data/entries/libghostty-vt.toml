@@ -4,10 +4,9 @@ repo = "ghostty-org/ghostty"
 role = "terminal"
 category = "engines"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 62570
+popular = true
 
 [[history]]
 date = 2026-10-06

@@ -4,10 +4,9 @@ repo = "m-m-n/emterm"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 0
+popular = false
 latest_release_tag = "v1.14.0"
 latest_release_date = 2026-10-24
 

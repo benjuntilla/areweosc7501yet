@@ -5,10 +5,9 @@ role = "program"
 category = "libraries"
 spec_revision = "0.4"
 note = "A fix for stale reports after quit or suspend, #1845, is still open."
-last_checked_date = 2026-10-24
 
 [github]
-stars = 45499
+popular = true
 latest_release_tag = "v2.1.0"
 latest_release_date = 2026-10-08
 

@@ -6,10 +6,9 @@ category = "multiplexers"
 is_featured = false
 spec_revision = "0.4"
 note = "Off by default, turned on with set -g program-status on"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 3736
+popular = true
 latest_release_tag = "v3.4.0"
 latest_release_date = 2026-10-13
 

@@ -1,5 +1,6 @@
 import * as Gh from '@distilled.cloud/github';
-import { DateTime, Effect, Option } from 'effect';
+import { Array, DateTime, Effect, Option, Struct } from 'effect';
+import { featuredStars } from '../../src/lib/domain/derive.ts';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
 import type { Entry, HistoryBlock, State } from '../../src/lib/domain/schema.ts';
@@ -32,6 +33,11 @@ const refOf = (url: string, repo: string) =>
 				})
 			: Option.none();
 	});
+
+/** Whether the checker can follow the entry's last history block. */
+export const followable = ({ repo, history }: Entry) =>
+	repo !== undefined &&
+	Option.isSome(Option.flatMap(Array.last(history), (b) => refOf(b.source, repo)));
 
 // Pre-release tags that a project may still publish as a full release.
 const preTag =
@@ -133,10 +139,11 @@ const step = (current: HistoryBlock, ctx: Context) =>
 		}
 	});
 
-/** Stars, the newest stable release, and the stable releases on the entry's release line. */
+/** Whether it's popular, the newest stable release, and the stable releases on its release line. */
 const refresh = (owner: string, name: string, previous: Entry['github']) =>
 	Effect.gen(function* () {
-		const { stargazers_count: stars } = yield* Gh.repos.get({ owner, repo: name });
+		const { stargazers_count } = yield* Gh.repos.get({ owner, repo: name });
+		const popular = stargazers_count >= featuredStars;
 		const releases = yield* Gh.repos.listReleases({ owner, repo: name, per_page: 30 });
 		const latest = yield* Gh.repos
 			.getLatestRelease({ owner, repo: name })
@@ -152,21 +159,24 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 				? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
 				: []
 		);
-		// GitHub lists releases newest tag first, which publish dates of backports don't follow.
-		const [newest] = stable;
-		const github =
-			newest === undefined
-				? { ...previous, stars }
-				: {
-						stars,
-						latest_release_tag: newest.tag,
-						latest_release_date: DateTime.removeTime(newest.published)
-					};
+		// GitHub's Latest, because a backport published after it comes first in the list. A
+		// monorepo's Latest can be on another line, and then it's the newest on this one.
+		const newest = Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
+			Option.orElse(() => Array.head(stable))
+		);
+		const github = Option.match(newest, {
+			onNone: () => ({ ...previous, popular }),
+			onSome: (r) => ({
+				popular,
+				latest_release_tag: r.tag,
+				latest_release_date: DateTime.removeTime(r.published)
+			})
+		});
 		return { github, stable };
 	});
 
 /** Refreshes `[github]` and walks the history forward as far as the evidence goes. */
-export const checkEntry = (entry: SlugEntry, now: DateTime.Utc) =>
+export const checkEntry = (entry: SlugEntry, now: DateTime.Utc, lastRun: DateTime.Utc) =>
 	Effect.gen(function* () {
 		const { repo } = entry;
 		if (repo === undefined) return { entry, changes: [], notes: [] } satisfies Checked;
@@ -186,15 +196,22 @@ export const checkEntry = (entry: SlugEntry, now: DateTime.Utc) =>
 			history.push(b);
 			changes.push({ slug: entry.slug, from: current.state, to: b.state, source: b.source });
 		}
-		const last = history.at(-1);
-		const verified = last !== undefined && Option.isSome(refOf(last.source, repo));
-		const last_checked_date = verified ? DateTime.removeTime(now) : entry.last_checked_date;
-		const updated = { ...entry, github, history, last_checked_date };
-		return { entry: updated, changes, notes } satisfies Checked;
+		if (entry.note !== undefined && changes.some((c) => c.from !== c.to)) {
+			notes.push(`${entry.slug} has a new state. Make sure its note is still true: ${entry.note}`);
+		}
+		// The run's date goes in data/checker.toml, so only entries checked by hand keep a date.
+		const updated = { ...entry, github, history };
+		const rechecked: SlugEntry = followable(updated)
+			? Struct.omit(updated, ['last_checked_date'])
+			: updated;
+		return { entry: rechecked, changes, notes } satisfies Checked;
 	}).pipe(
 		Effect.catch((e) =>
 			Effect.succeed({
-				entry,
+				// This run didn't check it, so it keeps the date of the last run that did.
+				entry: followable(entry)
+					? { ...entry, last_checked_date: entry.last_checked_date ?? lastRun }
+					: entry,
 				changes: [],
 				notes: [`Couldn't check ${entry.slug}: ${e.message}`]
 			} satisfies Checked)

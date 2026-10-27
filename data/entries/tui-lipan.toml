@@ -4,10 +4,9 @@ repo = "tui-lipan/tui-lipan"
 role = "terminal"
 category = "engines"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 5
+popular = false
 latest_release_tag = "v0.29.0"
 latest_release_date = 2026-10-24
 

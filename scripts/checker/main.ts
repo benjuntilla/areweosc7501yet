@@ -2,13 +2,13 @@
 import { ResponseValidation } from '@distilled.cloud/core';
 import * as Gh from '@distilled.cloud/github';
 import { NodeRuntime, NodeServices } from '@effect/platform-node';
-import { DateTime, Effect, FileSystem, Layer } from 'effect';
+import { Config, DateTime, Effect, FileSystem, Layer } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { FetchHttpClient } from 'effect/http';
 import { loadData } from '../../src/lib/domain/load.ts';
 import { checkEntry } from './check.ts';
-import { body, candidates, staleDays } from './report.ts';
-import { writeEntry } from './toml.ts';
+import { body, candidates, staleEntries } from './report.ts';
+import { writeChecker, writeEntry } from './toml.ts';
 
 const dir = 'data/entries';
 
@@ -22,11 +22,15 @@ const run = (bodyPath: string) =>
 				Effect.map(fs.readFileString(`${dir}/${f}`), (t) => [`${dir}/${f}`, t] as const)
 			)
 		);
-		const { entries } = yield* loadData(files, yield* fs.readFileString('data/spec.toml'));
+		const { entries, checker } = yield* loadData(
+			files,
+			yield* fs.readFileString('data/spec.toml'),
+			yield* fs.readFileString('data/checker.toml')
+		);
 
 		// Checked against GitHub's schema, so a malformed response becomes that entry's note. Search
 		// stays unchecked: its results break the schema with null bodies.
-		const results = yield* Effect.forEach(entries, (e) => checkEntry(e, now), {
+		const results = yield* Effect.forEach(entries, (e) => checkEntry(e, now, checker.last_run), {
 			concurrency: 4
 		}).pipe(Effect.provide(ResponseValidation.additionalProperties));
 		const written: Array<string> = [];
@@ -38,17 +42,19 @@ const run = (bodyPath: string) =>
 				written.push(path);
 			}
 		}
+		yield* fs.writeFileString('data/checker.toml', yield* writeChecker(now));
 
+		// This repo's own PRs mention the protocol too.
+		const self = yield* Config.String('GITHUB_REPOSITORY');
 		const tracked = entries.flatMap((e) => (e.repo === undefined ? [] : [e.repo]));
-		const found = yield* candidates(tracked, DateTime.subtract(now, { days: 7 })).pipe(
+		const found = yield* candidates([self, ...tracked], DateTime.subtract(now, { days: 7 })).pipe(
 			Effect.tapError((e) => Effect.logWarning(`candidate search failed: ${e.message}`)),
 			Effect.option
 		);
-		const cutoff = DateTime.subtract(DateTime.removeTime(now), { days: staleDays });
-		const stale = results
-			.map((r) => r.entry)
-			.filter((e) => DateTime.isLessThan(e.last_checked_date, cutoff))
-			.map((e) => ({ slug: e.slug, last: DateTime.formatIsoDateUtc(e.last_checked_date) }));
+		const stale = staleEntries(
+			results.map((r) => r.entry),
+			now
+		);
 		yield* fs.writeFileString(bodyPath, `${body(results, found, stale)}\n`);
 		yield* Effect.log(`rewrote ${written.length} files`);
 	});

@@ -4,10 +4,9 @@ repo = "lydakis/agent"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 1
+popular = false
 latest_release_tag = "v0.2.0"
 latest_release_date = 2026-10-11
 

@@ -9,12 +9,25 @@ overrides:
   # get-uri, under @lhci/cli and lighthouse, still allows only 5.x, which has GHSA-c475-qrg2-pj4r.
   # 6.x has the fix, and its one breaking change doesn't affect get-uri.
   basic-ftp: 6.2.3
+  # stylelint 17 asks for 9.x, which compiles a TypeScript config to a temporary .mjs file next to
+  # it, and knip lists that file when both run at once. 10.x imports the config with Node's type
+  # stripping and writes no file. Its breaking changes (Node ^22.18 or >=24, no typescript loader,
+  # plain JSON.parse) don't affect stylelint. Drop this once stylelint 18, which uses 10.x, is out.
+  cosmiconfig: 10.0.1
   # @lhci/cli pins 12, whose puppeteer-core pulls in extract-zip, which has GHSA-jmr9-qjv8-65gv
   # and GHSA-7pqw-9j4j-h8q3 and no fixed release. 13 drops extract-zip.
   lighthouse: 13.5.0
   # @lhci/cli and its prompt library ask for 0.1.x and 0.0.x, which have GHSA-ph9p-34f9-6g65
   # and GHSA-52f5-9888-hmc6. 0.2.7 fixes both and keeps fileSync and tmpNameSync, which they call.
   tmp: 0.2.7
+  # miniflare, under cf, pins 7.29.1, which has GHSA-xjj6-f33q-929c, GHSA-4qv8-2p9j-2685 and
+  # GHSA-f72v-6w45-q472. 7.30.1 fixes all three. Only the 7.x copy changes, because
+  # @effect/platform-node uses 8.x. Drop this once cf is on 1.0.0-beta.23, whose miniflare pins 7.30.1.
+  undici@7: 7.30.1
   # @lhci/cli asks for 8.x, which has GHSA-w5hq-g745-h8pq. 11.1.1 has the fix and still supports
   # require and v4, the only function it calls.
   uuid: 11.1.1
+  # @cloudflare/config and miniflare pin 4.6.5, which has GHSA-mrhx-c7xc-m3w5, and knip and
+  # chromium-bidi share that copy. 4.6.6 has the fix. Drop this once @cloudflare/config is on 0.28.1
+  # and cf on 1.0.0-beta.23, which pin 4.6.6 or drop zod.
+  zod: 4.6.6

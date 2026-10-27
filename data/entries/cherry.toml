@@ -4,10 +4,9 @@ repo = "patrick91/cherry"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 1
+popular = false
 latest_release_tag = "v2026.10.14.5"
 latest_release_date = 2026-10-14
 
