@@ -8,7 +8,7 @@ Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jd
 
 A commit formats and lints its staged files. A push runs CI's checks except the cf build. If the push changes `schema/` or `src/styles/tokens.css`, commit the new files and push again. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
 
-Screenshots differ between machines, so only CI compares them. When they change, CI fails and uploads the new ones: run `pnpm screenshots <run-id>` and commit them.
+Screenshots differ between machines, so only CI compares them. When they change, CI fails and uploads the new ones: run `pnpm screenshots` and commit them.
 
 ### Editor
 

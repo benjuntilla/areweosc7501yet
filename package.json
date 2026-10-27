@@ -20,7 +20,7 @@
 		"schema": "node scripts/schema.ts && pnpm format schema",
 		"tokens": "tz build --quiet --config .config/terrazzo.config.ts && pnpm format src/styles/tokens.css",
 		"checker": "GITHUB_TOKEN=$(gh auth token) GITHUB_REPOSITORY=$(gh api 'repos/{owner}/{repo}' --jq .full_name) node scripts/checker/main.ts --body /tmp/body.md",
-		"screenshots": "rm -rf browser/screenshots && gh run download -D browser/screenshots -n screenshots"
+		"screenshots": "run=$(gh run list --commit $(git rev-parse HEAD) --workflow ci.yml --limit 1 --json databaseId --jq '.[0].databaseId // error(\"no CI run for this commit\")') && gh run download $run -n screenshots -D test-results/screenshots && rm -rf browser/screenshots && mv test-results/screenshots browser/screenshots"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "4.14.0",
