@@ -34,7 +34,9 @@ const tomlDates = (_key: string, v: unknown) => {
 
 const decodeToml = <S extends Schema.Top>(schema: S, file: string, text: string) =>
 	Toml.parse(text).pipe(
-		Effect.map((toml) => JSON.stringify(toml, tomlDates)),
+		Effect.flatMap((toml) =>
+			Effect.try({ try: () => JSON.stringify(toml, tomlDates), catch: String })
+		),
 		Effect.flatMap(
 			Schema.decodeUnknownEffect(Schema.fromJsonString(schema), { onExcessProperty: 'error' })
 		),

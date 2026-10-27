@@ -38,6 +38,15 @@ describe('loadData', () => {
 		})
 	);
 
+	it.effect('rejects an integer too big for JSON and names the file', () =>
+		Effect.gen(function* () {
+			const msg = yield* failure({
+				'/data/entries/kitty.toml': `extra = 9007199254740993\n${kittyToml()}`
+			});
+			expect(msg).toMatch(/^\/data\/entries\/kitty\.toml: .*BigInt/u);
+		})
+	);
+
 	it.effect('rejects a bad slug', () =>
 		Effect.gen(function* () {
 			expect(yield* failure({ '/data/entries/Kitty.toml': kittyToml() })).toMatch(/bad slug/u);
