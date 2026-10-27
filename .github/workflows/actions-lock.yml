@@ -12,6 +12,7 @@ jobs:
   verify:
     name: Actions lockfile
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       GH_TOKEN: ${{ github.token }}
       # renovate: datasource=github-releases depName=github/gh-actions-lock

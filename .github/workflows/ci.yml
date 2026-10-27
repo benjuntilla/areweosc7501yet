@@ -17,6 +17,7 @@ jobs:
     name: Commit messages
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -39,19 +40,23 @@ jobs:
     name: Dependency review
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/dependency-review-action@v5.0.0
 
   verify:
     name: Lint, check, test and build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       # The postinstall hook in .config/mise.toml runs pnpm install, which uses the frozen lockfile in CI.
       - uses: jdx/mise-action@v5.2.3
+      # Usually about 30 s, but the runner's apt mirror can slow it to 10 minutes.
       - run: pnpm playwright install --with-deps chromium
+        timeout-minutes: 3
       - run: node scripts/ci.ts
       - name: Upload screenshots
         if: failure()
