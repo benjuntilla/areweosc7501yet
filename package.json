@@ -38,6 +38,8 @@
 		"cf": "1.0.0-beta.21",
 		"effect": "4.0.6",
 		"feed": "6.0.0",
+		"jscpd": "5.4.2",
+		"knip": "6.43.0",
 		"lefthook": "2.2.2",
 		"markdown-table": "3.0.4",
 		"oxfmt": "0.74.0",

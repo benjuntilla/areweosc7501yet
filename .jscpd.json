@@ -1,0 +1,4 @@
+{
+	"ignore": ["schema/**"],
+	"exitCode": 1
+}
