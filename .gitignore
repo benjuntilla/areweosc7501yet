@@ -28,4 +28,3 @@ vite.config.ts.timestamp-*
 # Browser checks
 /.lighthouseci
 /test-results
-/playwright-report

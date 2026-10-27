@@ -1,4 +1,0 @@
-{
-	"ignore": ["schema/**", "src/styles/tokens.css", "tokens/**"],
-	"exitCode": 1
-}

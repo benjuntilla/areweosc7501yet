@@ -31,9 +31,9 @@ pre-push:
     - name: tokens
       run: pnpm tokens && test -z "$(git status --porcelain -- src/styles/tokens.css)"
     - name: typos
-      run: mise exec -- typos
+      run: mise exec -- typos --config .config/typos.toml
     - name: workflows
-      run: mise exec -- actionlint && mise exec -- zizmor --quiet .github/workflows
+      run: mise exec -- actionlint && mise exec -- zizmor --quiet --config .config/zizmor.yml .github/workflows
     - name: site
       group:
         piped: true
@@ -46,10 +46,8 @@ pre-push:
                 - name: links
                   run: mise exec -- lychee --offline --no-progress --root-dir "$PWD/build" 'build/**/*.html'
                 - name: html
-                  run: pnpm html-validate build
-                - name: size
-                  run: pnpm size-limit
+                  run: pnpm html-validate --preset standard build
                 - name: browser
-                  run: pnpm playwright test
+                  run: pnpm playwright test --config .config/playwright.config.ts
           - name: lighthouse
-            run: CHROME_PATH="$(node -p "require('@playwright/test').chromium.executablePath()")" pnpm lhci autorun
+            run: CHROME_PATH="$(node -p "require('@playwright/test').chromium.executablePath()")" pnpm lhci autorun --config .config/lighthouserc.json

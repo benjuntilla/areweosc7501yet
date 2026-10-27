@@ -1,13 +1,4 @@
 {
 	"extends": ["@tsconfig/strictest/tsconfig.json", "$app/tsconfig"],
-	"include": [
-		"src",
-		"scripts",
-		"browser",
-		".config/*.ts",
-		"playwright.config.ts",
-		".size-limit.ts",
-		"vite.config.ts",
-		"cloudflare.config.ts"
-	]
+	"include": ["src", "scripts", "browser", ".config/*.ts", "vite.config.ts", "cloudflare.config.ts"]
 }

@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-	testDir: 'browser',
+	testDir: '../browser',
+	outputDir: '../test-results',
 	forbidOnly: process.env['CI'] !== undefined,
 	// Screenshots render differently on each OS, so only Linux, which CI runs, compares them.
 	ignoreSnapshots: process.platform !== 'linux',
