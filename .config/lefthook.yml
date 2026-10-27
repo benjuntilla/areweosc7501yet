@@ -30,3 +30,26 @@ pre-push:
       run: pnpm schema && test -z "$(git status --porcelain -- schema/)"
     - name: tokens
       run: pnpm tokens && test -z "$(git status --porcelain -- src/styles/tokens.css)"
+    - name: typos
+      run: mise exec -- typos
+    - name: workflows
+      run: mise exec -- actionlint && mise exec -- zizmor --quiet .github/workflows
+    - name: site
+      group:
+        piped: true
+        jobs:
+          - name: build
+            run: pnpm build && pnpm playwright install chromium
+          - group:
+              parallel: true
+              jobs:
+                - name: links
+                  run: mise exec -- lychee --offline --no-progress --root-dir "$PWD/build" 'build/**/*.html'
+                - name: html
+                  run: pnpm html-validate build
+                - name: size
+                  run: pnpm size-limit
+                - name: browser
+                  run: pnpm playwright test
+          - name: lighthouse
+            run: CHROME_PATH="$(node -p "require('@playwright/test').chromium.executablePath()")" pnpm lhci autorun

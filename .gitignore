@@ -24,3 +24,8 @@ vite.config.ts.timestamp-*
 
 # cf Build Output
 .cloudflare
+
+# Browser checks
+/.lighthouseci
+/test-results
+/playwright-report
