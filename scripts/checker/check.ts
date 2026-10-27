@@ -1,5 +1,5 @@
 import * as Gh from '@distilled.cloud/github';
-import { Array, DateTime, Effect, Option, Struct } from 'effect';
+import { Array, DateTime, Effect, Equivalence, Option, Struct } from 'effect';
 import { featuredStars } from '../../src/lib/domain/derive.ts';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
@@ -39,9 +39,13 @@ export const followable = ({ repo, history }: Entry) =>
 	repo !== undefined &&
 	Option.isSome(Option.flatMap(Array.last(history), (b) => refOf(b.source, repo)));
 
-// Pre-release tags that a project may still publish as a full release.
+// Pre-release tags that a project may still publish as a full release, like `v1.0.0-rc.1` and
+// Python's `0.6.0a1`. tmux's `3.6a` is a full release.
 const preTag =
-	/(?:^|[-._/])(?:nightly|tip|canary|alpha|beta|rc|pre|preview|dev|snapshot)\d*(?:[-._]|$)/iu;
+	/(?:^|[-._/])(?:nightly|tip|canary|alpha|beta|rc|pre|preview|dev|snapshot)\d*(?:[-._]|$)|\.\d+(?:a|b|rc)\d+$/iu;
+
+/** Two releases with the same tag. */
+const sameTag = Equivalence.mapInput(Equivalence.String, (r: { tag_name: string }) => r.tag_name);
 
 /** The package part of a monorepo tag, like `radius-cli@` in `radius-cli@0.5.0`. */
 const prefixOf = (tag: string) => tag.replace(/v?\d[\w.+-]*$/u, '');
@@ -139,7 +143,7 @@ const step = (current: HistoryBlock, ctx: Context) =>
 		}
 	});
 
-/** Whether it's popular, the newest stable release, and the stable releases on its release line. */
+/** Whether it's popular, the current stable release, and the stable releases on its release line. */
 const refresh = (owner: string, name: string, previous: Entry['github']) =>
 	Effect.gen(function* () {
 		const { stargazers_count } = yield* Gh.repos.get({ owner, repo: name });
@@ -149,22 +153,36 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 			.getLatestRelease({ owner, repo: name })
 			.pipe(Effect.catchTag('NotFound', () => Effect.succeed(null)));
 		const tracked = previous?.latest_release_tag;
-		// Stable means a full release, or whatever GitHub marks Latest, even with an rc tag. A
-		// monorepo's entry stays on the release line it already tracks.
-		const stable = releases.flatMap((r) =>
-			!r.draft &&
-			r.published_at !== null &&
-			(r.tag_name === latest?.tag_name || (!r.prerelease && !preTag.test(r.tag_name))) &&
-			(tracked === undefined || prefixOf(r.tag_name) === prefixOf(tracked))
-				? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
-				: []
+		// Stable means a full release, or whatever GitHub marks Latest, even with an rc tag. Latest
+		// can be older than the newest 30 releases, so it joins them. A monorepo's entry stays on
+		// the release line it already tracks. Newest published first.
+		const stable = Array.unionWith(releases, latest === null ? [] : [latest], sameTag)
+			.flatMap((r) =>
+				!r.draft &&
+				r.published_at !== null &&
+				(r.tag_name === latest?.tag_name || (!r.prerelease && !preTag.test(r.tag_name))) &&
+				(tracked === undefined || prefixOf(r.tag_name) === prefixOf(tracked))
+					? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
+					: []
+			)
+			.toSorted((a, b) => DateTime.Order(b.published, a.published));
+		// GitHub's Latest, unless a release published after it contains it: some projects leave the
+		// badge on an old release. A backport also comes after Latest, but it doesn't contain it.
+		// A monorepo's Latest can be on another line, and then it's the newest on this one.
+		const current = yield* Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
+			Option.match({
+				onNone: () => Effect.succeed(Array.head(stable)),
+				onSome: (l) =>
+					Effect.findFirst(
+						stable.filter((r) => DateTime.isGreaterThan(r.published, l.published)),
+						(r) =>
+							Gh.repos
+								.compareCommits({ owner, repo: name, basehead: `${l.tag}...${r.tag}`, per_page: 1 })
+								.pipe(Effect.map(({ status }) => status === 'ahead' || status === 'identical'))
+					).pipe(Effect.map(Option.orElse(() => Option.some(l))))
+			})
 		);
-		// GitHub's Latest, because a backport published after it comes first in the list. A
-		// monorepo's Latest can be on another line, and then it's the newest on this one.
-		const newest = Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
-			Option.orElse(() => Array.head(stable))
-		);
-		const github = Option.match(newest, {
+		const github = Option.match(current, {
 			onNone: () => ({ ...previous, popular }),
 			onSome: (r) => ({
 				popular,

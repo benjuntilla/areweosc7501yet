@@ -64,8 +64,9 @@ export default defineConfig({
 		{
 			files: ['**/*.test.ts'],
 			rules: {
-				// A describe block groups many short tests.
-				'eslint/max-lines-per-function': 'off'
+				// A describe block groups many short tests, and a test file holds their fixtures.
+				'eslint/max-lines-per-function': 'off',
+				'eslint/max-lines': 'off'
 			}
 		}
 	],
