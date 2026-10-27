@@ -26,7 +26,9 @@
 	let frame = 0;
 	let drum: HTMLDivElement | undefined = $state();
 
+	// Reduced motion is read on every check, so changing the setting stops or resumes the turns.
 	const held = () =>
+		prefersReducedMotion() ||
 		hovered ||
 		dragging ||
 		frame !== 0 ||
@@ -67,9 +69,9 @@
 			visible = entry?.isIntersecting ?? true;
 		});
 		observer.observe(drum);
-		const stopTurning = prefersReducedMotion()
-			? () => {}
-			: forkScoped(autoTurn({ interval: 1500, held, turn: () => play(turn(position, 0.62)) }));
+		const stopTurning = forkScoped(
+			autoTurn({ interval: 1500, held, turn: () => play(turn(position, 0.62)) })
+		);
 		return () => {
 			observer.disconnect();
 			stopTurning();
