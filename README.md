@@ -10,14 +10,6 @@ A commit formats and lints its staged files. A push runs CI's checks except the 
 
 Screenshots differ between machines, so only CI compares them. When the browser check fails, copy each `-actual.png` from `test-results/` in the run's `screenshots` artifact over its baseline in `browser/screenshots/`.
 
-### Weekly checker
-
-`.github/workflows/checker.yml` updates the entries from GitHub every Monday. To run it locally:
-
-```sh
-GITHUB_TOKEN=$(gh auth token) node scripts/checker/main.ts --body /tmp/body.md
-```
-
 ### Editor
 
 `.zed/settings.json` sets up Zed with oxfmt, oxlint, and Tombi.

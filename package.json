@@ -18,7 +18,8 @@
 		"format:check": "pnpm format --check",
 		"test": "vitest run",
 		"schema": "node scripts/schema.ts && pnpm format schema",
-		"tokens": "tz build --quiet --config .config/terrazzo.config.ts && pnpm format src/styles/tokens.css"
+		"tokens": "tz build --quiet --config .config/terrazzo.config.ts && pnpm format src/styles/tokens.css",
+		"checker": "GITHUB_TOKEN=$(gh auth token) node scripts/checker/main.ts --body /tmp/body.md"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "4.14.0",
