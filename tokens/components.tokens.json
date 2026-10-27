@@ -108,7 +108,7 @@
 		},
 		"list-row-gap": {
 			"$type": "dimension",
-			"$value": "{space.4}"
+			"$value": "{space.8}"
 		},
 		"list-label-gap": {
 			"$type": "dimension",

@@ -89,6 +89,12 @@
 		flex-wrap: wrap;
 		gap: var(--chip-list-row-gap) var(--chip-list-gap);
 		align-items: center;
+		transition: margin-block-end var(--motion-toc-unfold-duration) cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	/* A folded tail still starts a flex line of its own, so take back the row gap above it. */
+	:global(html.js) :has(> .tail:not(.open)) {
+		margin-block-end: calc(var(--chip-list-row-gap) * -1);
 	}
 
 	.list {
@@ -174,6 +180,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.chips,
 		.tail,
 		.tail-inner > *,
 		.open .tail-inner > * {
