@@ -3,7 +3,6 @@
 inheritance: true
 reviews:
   auto_review:
-    enabled: true
     # Review every push; never pause a busy branch.
     auto_pause_after_reviewed_commits: 0
     # Stacked PRs target other stack branches, not just main.
