@@ -1,5 +1,6 @@
 import * as Gh from '@distilled.cloud/github';
-import { Array, DateTime, Effect, Option } from 'effect';
+import { Array, DateTime, Effect, Option, Order } from 'effect';
+import { coerce, compare } from 'semver';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
 import type { Entry, HistoryBlock, State } from '../../src/lib/domain/schema.ts';
@@ -33,12 +34,19 @@ const refOf = (url: string, repo: string) =>
 			: Option.none();
 	});
 
-// Pre-release tags that a project may still publish as a full release.
+// Pre-release tags that a project may still publish as a full release, like `v1.0.0-rc.1` and
+// Python's `0.6.0a1`. tmux's `3.6a` is a full release.
 const preTag =
-	/(?:^|[-._/])(?:nightly|tip|canary|alpha|beta|rc|pre|preview|dev|snapshot)\d*(?:[-._]|$)/iu;
+	/(?:^|[-._/])(?:nightly|tip|canary|alpha|beta|rc|pre|preview|dev|snapshot)\d*(?:[-._]|$)|\.\d+(?:a|b|rc)\d+$/iu;
 
 /** The package part of a monorepo tag, like `radius-cli@` in `radius-cli@0.5.0`. */
 const prefixOf = (tag: string) => tag.replace(/v?\d[\w.+-]*$/u, '');
+
+// Tags that aren't semver still compare: `0.29` reads as 0.29.0 and `v0.2027.01.07` as 0.2027.1.
+const lenient = { loose: true, includePrerelease: true };
+const byVersion = Order.make<{ readonly tag: string }>((a, b) =>
+	compare(coerce(a.tag, lenient) ?? '0.0.0', coerce(b.tag, lenient) ?? '0.0.0', lenient)
+);
 
 interface Context {
 	readonly repo: string;
@@ -133,7 +141,7 @@ const step = (current: HistoryBlock, ctx: Context) =>
 		}
 	});
 
-/** Stars, the newest stable release, and the stable releases on the entry's release line. */
+/** Stars, the current stable release, and the stable releases on the entry's release line. */
 const refresh = (owner: string, name: string, previous: Entry['github']) =>
 	Effect.gen(function* () {
 		const { stargazers_count: stars } = yield* Gh.repos.get({ owner, repo: name });
@@ -152,12 +160,18 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 				? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
 				: []
 		);
-		// GitHub's Latest, because a backport published after it comes first in the list. A
-		// monorepo's Latest can be on another line, and then it's the newest on this one.
-		const newest = Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
-			Option.orElse(() => Array.head(stable))
+		// GitHub's Latest, unless a release published after it has a higher version: some projects
+		// leave the badge on an old release. A backport also comes after Latest, but it's lower.
+		// A monorepo's Latest can be on another line, and then it's the highest on this one.
+		const since = Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
+			Option.match({
+				onNone: () => stable,
+				onSome: (l) =>
+					stable.filter((r) => DateTime.isGreaterThanOrEqualTo(r.published, l.published))
+			})
 		);
-		const github = Option.match(newest, {
+		const current = Array.head(Array.sort(since, Order.flip(byVersion)));
+		const github = Option.match(current, {
 			onNone: () => ({ ...previous, stars }),
 			onSome: (r) => ({
 				stars,

@@ -66,6 +66,9 @@ importers:
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
+      '@types/semver':
+        specifier: 7.8.0
+        version: 7.8.0
       cf:
         specifier: 1.0.0-beta.21
         version: 1.0.0-beta.21(@types/node@26.6.5)
@@ -105,6 +108,9 @@ importers:
       postcss-html:
         specifier: 2.0.0
         version: 2.0.0(postcss@8.5.31)
+      semver:
+        specifier: 7.8.5
+        version: 7.8.5
       stylelint:
         specifier: 17.16.0
         version: 17.16.0(supports-color@10.2.2)
@@ -1418,6 +1424,9 @@ packages:
 
   '@types/node@26.6.5':
     resolution: {integrity: sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==}
+
+  '@types/semver@7.8.0':
+    resolution: {integrity: sha512-1mAINjtQCXXeLkJ9ehXkwOcBpqtLxiVtKhpUf83DdRNdQKV0iXZpaHYqRr7nj+wvxuJzoAmAwXI+sCNMv1CzLQ==}
 
   '@types/ws@8.18.2':
     resolution: {integrity: sha512-67MQl+fpWKVTT1NYdnmo3U4sc/xPo/zQBncVnI74qmQa0z/b+1g6iYqNmGCPbxO+zz2aklb08a0oHfegiVd0/w==}
@@ -4796,6 +4805,8 @@ snapshots:
   '@types/node@26.6.5':
     dependencies:
       undici-types: 8.9.0
+
+  '@types/semver@7.8.0': {}
 
   '@types/ws@8.18.2':
     dependencies:
