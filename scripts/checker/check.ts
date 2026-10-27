@@ -176,7 +176,7 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 	});
 
 /** Refreshes `[github]` and walks the history forward as far as the evidence goes. */
-export const checkEntry = (entry: SlugEntry, now: DateTime.Utc) =>
+export const checkEntry = (entry: SlugEntry, now: DateTime.Utc, lastRun: DateTime.Utc) =>
 	Effect.gen(function* () {
 		const { repo } = entry;
 		if (repo === undefined) return { entry, changes: [], notes: [] } satisfies Checked;
@@ -208,7 +208,10 @@ export const checkEntry = (entry: SlugEntry, now: DateTime.Utc) =>
 	}).pipe(
 		Effect.catch((e) =>
 			Effect.succeed({
-				entry,
+				// This run didn't check it, so it keeps the date of the last run that did.
+				entry: followable(entry)
+					? { ...entry, last_checked_date: entry.last_checked_date ?? lastRun }
+					: entry,
 				changes: [],
 				notes: [`Couldn't check ${entry.slug}: ${e.message}`]
 			} satisfies Checked)

@@ -22,7 +22,7 @@ const run = (bodyPath: string) =>
 				Effect.map(fs.readFileString(`${dir}/${f}`), (t) => [`${dir}/${f}`, t] as const)
 			)
 		);
-		const { entries } = yield* loadData(
+		const { entries, checker } = yield* loadData(
 			files,
 			yield* fs.readFileString('data/spec.toml'),
 			yield* fs.readFileString('data/checker.toml')
@@ -30,7 +30,7 @@ const run = (bodyPath: string) =>
 
 		// Checked against GitHub's schema, so a malformed response becomes that entry's note. Search
 		// stays unchecked: its results break the schema with null bodies.
-		const results = yield* Effect.forEach(entries, (e) => checkEntry(e, now), {
+		const results = yield* Effect.forEach(entries, (e) => checkEntry(e, now, checker.last_run), {
 			concurrency: 4
 		}).pipe(Effect.provide(ResponseValidation.additionalProperties));
 		const written: Array<string> = [];

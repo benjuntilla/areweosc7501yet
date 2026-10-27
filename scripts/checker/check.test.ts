@@ -109,6 +109,7 @@ const fakeGitHub = (recorded: Record<string, unknown>) =>
 	);
 
 const now = DateTime.makeUnsafe('2026-10-26T14:00:00Z');
+const lastRun = DateTime.makeUnsafe('2026-10-19');
 
 const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?: object }) =>
 	Schema.decodeUnknownEffect(Entry)({
@@ -125,7 +126,7 @@ const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?:
 const block = (state: string, source: string, date = '2026-10-12') => ({ date, state, source });
 
 const run = (e: SlugEntry, recorded: Record<string, unknown>) =>
-	checkEntry(e, now).pipe(Effect.provide(fakeGitHub(recorded)));
+	checkEntry(e, now, lastRun).pipe(Effect.provide(fakeGitHub(recorded)));
 
 const idleTmuxClosedAs = (reason: string) =>
 	entry({
