@@ -1,13 +1,4 @@
 {
 	"extends": ["@tsconfig/strictest/tsconfig.json", "$app/tsconfig"],
-	"include": [
-		"src",
-		"scripts",
-		"vite.config.ts",
-		"oxlint.config.ts",
-		"oxfmt.config.ts",
-		"cloudflare.config.ts",
-		"cloudflare.adapter.ts",
-		"terrazzo.config.ts"
-	]
+	"include": ["src", "scripts", ".config/*.ts", "vite.config.ts", "cloudflare.config.ts"]
 }

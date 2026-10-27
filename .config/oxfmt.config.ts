@@ -4,6 +4,5 @@ import { defineConfig } from 'oxfmt';
 export default defineConfig({
 	singleQuote: true,
 	trailingComma: 'none',
-	svelte: true,
-	ignorePatterns: ['pnpm-lock.yaml']
+	svelte: true
 });

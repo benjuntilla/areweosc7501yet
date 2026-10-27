@@ -13,12 +13,12 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "oxlint && stylelint \"src/**/*.{css,svelte}\"",
-		"format": "oxfmt",
-		"format:check": "oxfmt --check",
+		"lint": "oxlint --config .config/oxlint.config.ts && stylelint --config .config/stylelint.config.ts \"src/**/*.{css,svelte}\"",
+		"format": "oxfmt --config .config/oxfmt.config.ts",
+		"format:check": "pnpm format --check",
 		"test": "vitest run",
-		"schema": "node scripts/schema.ts && oxfmt schema",
-		"tokens": "tz build --quiet && oxfmt src/styles/tokens.css"
+		"schema": "node scripts/schema.ts && pnpm format schema",
+		"tokens": "tz build --quiet --config .config/terrazzo.config.ts && pnpm format src/styles/tokens.css"
 	},
 	"devDependencies": {
 		"@cloudflare/build-output-utils": "0.9.4",

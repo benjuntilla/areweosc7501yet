@@ -11,7 +11,7 @@ export default {
 		'stylelint-declaration-strict-value',
 		'stylelint-plugin-use-baseline'
 	],
-	ignoreFiles: ['src/styles/tokens.css'],
+	ignoreFiles: ['../src/styles/tokens.css'],
 	// The site is English only, so the layout rules can map physical properties and fix them.
 	languageOptions: { directionality: { block: 'top-to-bottom', inline: 'left-to-right' } },
 	reportDescriptionlessDisables: true,
