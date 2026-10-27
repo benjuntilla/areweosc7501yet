@@ -2,7 +2,7 @@
 import { ResponseValidation } from '@distilled.cloud/core';
 import * as Gh from '@distilled.cloud/github';
 import { NodeRuntime, NodeServices } from '@effect/platform-node';
-import { DateTime, Effect, FileSystem, Layer } from 'effect';
+import { Config, DateTime, Effect, FileSystem, Layer } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { FetchHttpClient } from 'effect/http';
 import { loadData } from '../../src/lib/domain/load.ts';
@@ -39,8 +39,10 @@ const run = (bodyPath: string) =>
 			}
 		}
 
+		// This repo's own PRs mention the protocol too.
+		const self = yield* Config.String('GITHUB_REPOSITORY');
 		const tracked = entries.flatMap((e) => (e.repo === undefined ? [] : [e.repo]));
-		const found = yield* candidates(tracked, DateTime.subtract(now, { days: 7 })).pipe(
+		const found = yield* candidates([self, ...tracked], DateTime.subtract(now, { days: 7 })).pipe(
 			Effect.tapError((e) => Effect.logWarning(`candidate search failed: ${e.message}`)),
 			Effect.option
 		);
