@@ -48,7 +48,7 @@ export default defineConfig({
 		},
 		{
 			// Scripts run through NodeRuntime.runMain, which wires up logging, errors and signals.
-			files: ['**/scripts/**'],
+			files: ['**/scripts/*.ts', '**/scripts/*/main.ts'],
 			rules: {
 				'eslint-js/no-restricted-syntax': [
 					'error',

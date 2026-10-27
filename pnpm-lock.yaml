@@ -14,6 +14,12 @@ importers:
       '@cloudflare/config':
         specifier: 0.28.0
         version: 0.28.0
+      '@distilled.cloud/core':
+        specifier: 1.0.0-rc.17
+        version: 1.0.0-rc.17(effect@4.0.6)
+      '@distilled.cloud/github':
+        specifier: 1.0.0-rc.17
+        version: 1.0.0-rc.17(effect@4.0.6)
       '@double-great/stylelint-a11y':
         specifier: 3.8.1
         version: 3.8.1(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))
@@ -56,6 +62,9 @@ importers:
       lefthook:
         specifier: 2.2.2
         version: 2.2.2
+      markdown-table:
+        specifier: 3.0.4
+        version: 3.0.4
       oxfmt:
         specifier: 0.74.0
         version: 0.74.0(svelte@5.57.2)
@@ -218,6 +227,16 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       postcss-selector-parser: ^7.1.1
+
+  '@distilled.cloud/core@1.0.0-rc.17':
+    resolution: {integrity: sha512-BHcVEtqIbyyqU3S3o8DjUtqoAJ4FLnsb4BX3nTK2+mcDARS2Puc+Qak6sn+b+W5CRKOOWyrhltbc+kaYDUwxeQ==}
+    peerDependencies:
+      effect: ^4.0.5
+
+  '@distilled.cloud/github@1.0.0-rc.17':
+    resolution: {integrity: sha512-3+ffKs7k1+CJzRFvUEDEne/JCcCqhCGvYYFQ3P/9L/c/0yyUicU7nMQBCFHrVU5yL2UbaFAc2wa+a3ysn1PEJg==}
+    peerDependencies:
+      effect: ^4.0.5
 
   '@double-great/stylelint-a11y@3.8.1':
     resolution: {integrity: sha512-UpqFwJJXFBVevkQg2PpgiieTiwCR86y3q5AlW5eq+n5EdibjHISb4Iah4+ywVSUsLEMwKUH8m5ny+tDp+EV3Hw==}
@@ -1781,6 +1800,9 @@ packages:
   magic-string@1.4.3:
     resolution: {integrity: sha512-z12OxmaPGE0F4xlpGdjuAUckipLpQlTAuAmyGhNoD7ODpYUzvDfvtxUbjM/jwznyP178oju/KDdyi220wNJ0RQ==}
 
+  markdown-table@3.0.4:
+    resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
+
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -2559,6 +2581,15 @@ snapshots:
   '@csstools/selector-specificity@6.0.1(postcss-selector-parser@7.1.7)':
     dependencies:
       postcss-selector-parser: 7.1.7
+
+  '@distilled.cloud/core@1.0.0-rc.17(effect@4.0.6)':
+    dependencies:
+      effect: 4.0.6
+
+  '@distilled.cloud/github@1.0.0-rc.17(effect@4.0.6)':
+    dependencies:
+      '@distilled.cloud/core': 1.0.0-rc.17(effect@4.0.6)
+      effect: 4.0.6
 
   '@double-great/stylelint-a11y@3.8.1(stylelint@17.16.0(supports-color@10.2.2)(typescript@6.0.3))':
     dependencies:
@@ -3891,6 +3922,8 @@ snapshots:
   magic-string@1.4.3:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
+
+  markdown-table@3.0.4: {}
 
   math-intrinsics@1.1.0: {}
 
