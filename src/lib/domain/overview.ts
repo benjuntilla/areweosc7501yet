@@ -40,6 +40,7 @@ export const sourceLabel = (url: string): string =>
 export interface Chip {
 	readonly slug: string;
 	readonly name: string;
+	readonly url: string;
 	readonly state: State;
 	readonly sentence: string;
 	readonly note: string | undefined;
@@ -77,6 +78,7 @@ const toChip = (e: SiteEntry): Chip => {
 	return {
 		slug: e.slug,
 		name: e.name,
+		url: e.url,
 		state: e.state,
 		sentence: e.sentence,
 		note: e.note,

@@ -7,7 +7,7 @@
 
 	let button: HTMLButtonElement | undefined = $state();
 	let popover: HTMLDivElement | undefined = $state();
-	let source: HTMLAnchorElement | undefined = $state();
+	let link: HTMLAnchorElement | undefined = $state();
 	let open = $state(false);
 
 	const intent = $derived(popover ? hoverIntent(popover) : undefined);
@@ -32,7 +32,7 @@
 		if (event.key !== 'Enter' && event.key !== ' ') return;
 		event.preventDefault();
 		popover?.showPopover();
-		(source ?? popover)?.focus();
+		link?.focus();
 	};
 
 	// A mouse click on an open popover keeps it open; touch toggles it natively.
@@ -89,7 +89,9 @@
 	>
 		<div class="head">
 			<StateGlyph state={chip.state} />
-			<p class="title type-small" id="popover-{chip.slug}-name">{chip.name}</p>
+			<p class="title type-small" id="popover-{chip.slug}-name">
+				<a bind:this={link} href={chip.url}>{chip.name} ↗</a>
+			</p>
 			<p
 				class="state type-caption"
 				style:--state-color="var(--status-{chip.state === 'working' ? 'working-text' : chip.state})"
@@ -103,7 +105,7 @@
 		{/if}
 		<div class="meta type-caption">
 			{#if chip.source}
-				<a bind:this={source} href={chip.source}>{chip.sourceLabel} ↗</a>
+				<a href={chip.source}>{chip.sourceLabel} ↗</a>
 			{/if}
 			<p>spec {chip.specRevision} · checked {chip.checked}</p>
 		</div>
@@ -246,11 +248,24 @@
 		color: var(--popover-meta);
 	}
 
+	.title a,
 	.meta a {
 		color: inherit;
 	}
 
+	.title a {
+		text-decoration-line: none;
+	}
+
+	.title a:hover {
+		text-decoration-line: underline;
+	}
+
 	.meta a:hover {
 		color: var(--link-text-hover);
+	}
+
+	.title a:active {
+		color: var(--link-text-pressed);
 	}
 </style>
