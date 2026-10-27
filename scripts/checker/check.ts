@@ -1,6 +1,5 @@
 import * as Gh from '@distilled.cloud/github';
-import { Array, DateTime, Effect, Option, Order } from 'effect';
-import { coerce, compare } from 'semver';
+import { Array, DateTime, Effect, Option } from 'effect';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
 import type { Entry, HistoryBlock, State } from '../../src/lib/domain/schema.ts';
@@ -41,12 +40,6 @@ const preTag =
 
 /** The package part of a monorepo tag, like `radius-cli@` in `radius-cli@0.5.0`. */
 const prefixOf = (tag: string) => tag.replace(/v?\d[\w.+-]*$/u, '');
-
-// Tags that aren't semver still compare: `0.29` reads as 0.29.0 and `v0.2027.01.07` as 0.2027.1.
-const lenient = { loose: true, includePrerelease: true };
-const byVersion = Order.make<{ readonly tag: string }>((a, b) =>
-	compare(coerce(a.tag, lenient) ?? '0.0.0', coerce(b.tag, lenient) ?? '0.0.0', lenient)
-);
 
 interface Context {
 	readonly repo: string;
@@ -160,17 +153,22 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 				? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
 				: []
 		);
-		// GitHub's Latest, unless a release published after it has a higher version: some projects
-		// leave the badge on an old release. A backport also comes after Latest, but it's lower.
-		// A monorepo's Latest can be on another line, and then it's the highest on this one.
-		const since = Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
+		// GitHub's Latest, unless a release published after it contains it: some projects leave the
+		// badge on an old release. A backport also comes after Latest, but it doesn't contain it.
+		// A monorepo's Latest can be on another line, and then it's the newest on this one.
+		const current = yield* Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
 			Option.match({
-				onNone: () => stable,
+				onNone: () => Effect.succeed(Array.head(stable)),
 				onSome: (l) =>
-					stable.filter((r) => DateTime.isGreaterThanOrEqualTo(r.published, l.published))
+					Effect.findFirst(
+						stable.filter((r) => DateTime.isGreaterThan(r.published, l.published)),
+						(r) =>
+							Gh.repos
+								.compareCommits({ owner, repo: name, basehead: `${l.tag}...${r.tag}`, per_page: 1 })
+								.pipe(Effect.map(({ status }) => status === 'ahead'))
+					).pipe(Effect.map(Option.orElse(() => Option.some(l))))
 			})
 		);
-		const current = Array.head(Array.sort(since, Order.flip(byVersion)));
 		const github = Option.match(current, {
 			onNone: () => ({ ...previous, stars }),
 			onSome: (r) => ({
