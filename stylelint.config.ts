@@ -48,17 +48,14 @@ export default {
 			'oklch',
 			'color'
 		],
+		// Unlike declaration-strict-value, this also sees lengths inside calc(), min() and max().
+		'declaration-property-unit-allowed-list': {
+			'/^(margin|padding)|gap$|radius$|^(font-size|letter-spacing)$/': ['%']
+		},
+		// Weights and line heights are often unitless, so the unit rule can't see them.
 		'scale-unlimited/declaration-strict-value': [
-			[
-				'/^(margin|padding)/',
-				'/gap$/',
-				'/radius$/',
-				'font-size',
-				'font-weight',
-				'line-height',
-				'letter-spacing'
-			],
-			{ ignoreValues: ['0', 'auto', 'inherit'], ignoreAtRules: ['@font-face'] }
+			['font-weight', 'line-height'],
+			{ ignoreValues: ['inherit'], ignoreAtRules: ['@font-face'] }
 		],
 		// The space, radius and stroke steps are named by value and alias one size each in every mode,
 		// so they count as primitives too.
