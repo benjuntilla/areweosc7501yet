@@ -9,7 +9,7 @@
 
 <footer class="footer type-small">
 	<p>
-		Made by <a href="https://benjuntilla.com">Ben Juntilla</a> & community-maintained. Not affiliated
+		Made by <a href="https://benjuntilla.com">Ben Juntilla</a> and community-maintained. Not affiliated
 		with Superlogical.
 	</p>
 	<p>
