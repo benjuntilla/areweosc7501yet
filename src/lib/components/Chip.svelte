@@ -61,7 +61,6 @@
 		aria-haspopup="dialog"
 		aria-expanded={open}
 		aria-label="{chip.name}, {chip.state}"
-		title={chip.name}
 		onpointerenter={(e) => intent?.enter(e)}
 		onpointerleave={(e) => intent?.leave(e)}
 		{onfocus}
