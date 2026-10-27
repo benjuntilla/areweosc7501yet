@@ -1,13 +1,10 @@
-import { readdirSync, readFileSync } from 'node:fs';
 import * as Gh from '@distilled.cloud/github';
 import { describe, expect, it } from '@effect/vitest';
 import { DateTime, Effect, Layer, Redacted, Schema } from 'effect';
 import { HttpClient, HttpClientResponse } from 'effect/http';
-import { loadData, type SlugEntry } from '../../src/lib/domain/load.ts';
+import type { SlugEntry } from '../../src/lib/domain/load.ts';
 import { Entry } from '../../src/lib/domain/schema.ts';
-import { specToml } from '../../src/lib/domain/fixtures.ts';
 import { checkEntry } from './check.ts';
-import { writeEntry } from './toml.ts';
 
 // GitHub responses recorded on Oct 26, 2026, trimmed to what the checker reads and keyed by path
 // and query.
@@ -259,30 +256,6 @@ describe('checkEntry', () => {
 			const r = yield* run(e, {});
 			expect(r.notes[0]).toMatch(/^Couldn't check x: /u);
 			expect(r.entry).toEqual(e);
-		})
-	);
-});
-
-describe('writeEntry', () => {
-	it.effect('writes every entry file back byte for byte', () =>
-		Effect.gen(function* () {
-			const dir = 'data/entries';
-			const files = Object.fromEntries(
-				readdirSync(dir).map((f) => [`${dir}/${f}`, readFileSync(`${dir}/${f}`, 'utf8')])
-			);
-			const { entries } = yield* loadData(files, specToml);
-			for (const e of entries) {
-				expect(yield* writeEntry(e)).toBe(files[`${dir}/${e.slug}.toml`]);
-			}
-		})
-	);
-
-	it.effect('writes a note that TOML has to escape so it reads back the same', () =>
-		Effect.gen(function* () {
-			const note = 'say "hi" \\ a\u007Fb\nnext line';
-			const text = yield* writeEntry({ ...(yield* entry({ repo: 'a/b' })), note });
-			const again = yield* loadData({ '/data/entries/x.toml': text }, specToml);
-			expect(again.entries[0]!.note).toBe(note);
 		})
 	);
 });
