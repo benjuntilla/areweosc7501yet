@@ -5,10 +5,9 @@ role = "program"
 category = "clis"
 spec_revision = "0.4"
 note = "Behind the program-status experiment flag."
-last_checked_date = 2026-10-24
 
 [github]
-stars = 1100
+popular = true
 latest_release_tag = "v4.8.1"
 latest_release_date = 2026-10-22
 

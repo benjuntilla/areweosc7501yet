@@ -4,10 +4,9 @@ repo = "neovim/neovim"
 role = "program"
 category = "clis"
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 103151
+popular = true
 latest_release_tag = "v0.12.6"
 latest_release_date = 2026-10-09
 

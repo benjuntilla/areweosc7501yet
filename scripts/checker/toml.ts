@@ -22,12 +22,16 @@ export const tomlDate = (iso: string) => {
 			});
 };
 
+/** data/checker.toml for a run at `now`. */
+export const writeChecker = (now: DateTime.Utc) =>
+	Toml.stringify({ last_run: tomlDate(DateTime.formatIso(DateTime.removeTime(now))) });
+
 /** An entry file in schema key order. oxfmt has the last word on layout. */
 export const writeEntry = (entry: Entry) =>
 	Schema.encodeEffect(Entry)(entry).pipe(
 		Effect.map(
 			Struct.evolve({
-				last_checked_date: tomlDate,
+				last_checked_date: UndefinedOr.map(tomlDate),
 				github: UndefinedOr.map(Struct.evolve({ latest_release_date: UndefinedOr.map(tomlDate) })),
 				history: Array.map(Struct.evolve({ date: tomlDate }))
 			})

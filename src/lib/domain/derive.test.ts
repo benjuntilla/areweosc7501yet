@@ -29,14 +29,14 @@ const block = (
 });
 
 describe('featured', () => {
-	it('uses 1,000 stars by default', () => {
-		expect(isFeatured(entry({ github: { stars: 999 } }))).toBe(false);
-		expect(isFeatured(entry({ github: { stars: 1000 } }))).toBe(true);
+	it('features popular projects by default', () => {
+		expect(isFeatured(entry({ github: { popular: false } }))).toBe(false);
+		expect(isFeatured(entry({ github: { popular: true } }))).toBe(true);
 		expect(isFeatured(entry())).toBe(false);
 	});
-	it('lets is_featured override the stars either way', () => {
+	it('lets is_featured override popular either way', () => {
 		expect(isFeatured(entry({ is_featured: true }))).toBe(true);
-		expect(isFeatured(entry({ is_featured: false, github: { stars: 90000 } }))).toBe(false);
+		expect(isFeatured(entry({ is_featured: false, github: { popular: true } }))).toBe(false);
 	});
 });
 
@@ -57,7 +57,7 @@ describe('verdict ladder', () => {
 	});
 
 	it('scores featured entries, half for working, without libraries and engines', () => {
-		const featured = { github: { stars: 5000 } };
+		const featured = { github: { popular: true } };
 		const s = summarize(
 			[
 				entry({ ...featured, history: [block('2026-10-08', 'done', 'https://x', 'v1')] }),
@@ -185,7 +185,7 @@ describe('popover sentence', () => {
 
 	it('names the latest release for a merged commit, when there is one', () => {
 		const merged = block('2026-10-13', 'working', 'https://github.com/o/x/commit/0e1b7f4');
-		expect(one(merged, { github: { stars: 1, latest_release_tag: 'v0.49.2' } })).toBe(
+		expect(one(merged, { github: { popular: false, latest_release_tag: 'v0.49.2' } })).toBe(
 			'Merged on Oct 13, not in a release yet. Latest is v0.49.2.'
 		);
 		expect(one(merged)).toBe('Merged on Oct 13, not in a release yet.');

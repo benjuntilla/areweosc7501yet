@@ -4,10 +4,9 @@ repo = "openai/codex"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 130818
+popular = true
 latest_release_tag = "rust-v0.164.0"
 latest_release_date = 2026-10-23
 

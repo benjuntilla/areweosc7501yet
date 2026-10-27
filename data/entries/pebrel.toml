@@ -4,10 +4,9 @@ repo = "Kuddev/pebrel"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 3595
+popular = true
 latest_release_tag = "v2.2.2"
 latest_release_date = 2026-10-17
 

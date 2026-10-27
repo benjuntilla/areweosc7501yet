@@ -5,10 +5,9 @@ role = "program"
 category = "libraries"
 spec_revision = "0.4"
 note = "No tag contains it, checked Oct 22"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 397
+popular = false
 
 [[history]]
 date = 2026-10-08

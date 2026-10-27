@@ -4,10 +4,9 @@ repo = "matthewyjiang/rho"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-26
 
 [github]
-stars = 15
+popular = false
 latest_release_tag = "rho-coding-agent-v2.30.0"
 latest_release_date = 2026-10-23
 

@@ -4,10 +4,9 @@ repo = "lvndry/jazz"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 54
+popular = false
 latest_release_tag = "v0.16.21"
 latest_release_date = 2026-10-23
 

@@ -6,10 +6,9 @@ category = "coding-agents"
 is_featured = false
 spec_revision = "0.4"
 note = "0.6.0a3 doesn’t include it"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 1689
+popular = true
 latest_release_tag = "0.5.1"
 latest_release_date = 2026-10-11
 

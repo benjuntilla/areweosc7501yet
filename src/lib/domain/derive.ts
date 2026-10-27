@@ -25,8 +25,7 @@ export const verdictOf = (score: number): Verdict =>
 		Option.getOrElse((): Verdict => 'No')
 	);
 
-export const isFeatured = (e: Entry): boolean =>
-	e.is_featured ?? (e.github?.stars ?? 0) >= featuredStars;
+export const isFeatured = (e: Entry): boolean => e.is_featured ?? e.github?.popular ?? false;
 
 export const currentBlock = (e: Entry): Option.Option<HistoryBlock> => Array.last(e.history);
 

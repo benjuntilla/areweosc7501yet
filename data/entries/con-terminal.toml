@@ -5,10 +5,9 @@ role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
 note = "Every release is a beta, and the newest is GitHub’s Latest release"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 643
+popular = false
 latest_release_tag = "v0.1.0-beta.156"
 latest_release_date = 2026-10-24
 

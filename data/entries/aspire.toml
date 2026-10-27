@@ -4,10 +4,9 @@ repo = "microsoft/aspire"
 role = "program"
 category = "clis"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 6381
+popular = true
 latest_release_tag = "v13.6.4"
 latest_release_date = 2026-10-24
 
