@@ -20,6 +20,7 @@
 	let highlight: string | undefined = $state();
 
 	// A link to /#kitty unfolds kitty's tail, scrolls to the chip, flashes it and opens its popover.
+	// A link to a section scrolls to it after the search has filtered the page.
 	// A deep link wins over a search that would hide its target.
 	const followHash = async () => {
 		const hash = decodeURIComponent(page.url.hash.slice(1));
@@ -29,6 +30,14 @@
 			expanded[all] = true;
 			await tick();
 			document.querySelector(`#${CSS.escape(all)}`)?.scrollIntoView();
+			return;
+		}
+		const shown =
+			data.roles.find((r) => r.id === hash)?.categories ?? categories.filter((c) => c.id === hash);
+		if (shown.length > 0) {
+			if (countMatches(shown, query) === 0) search.query = '';
+			await tick();
+			document.querySelector(`#${CSS.escape(hash)}`)?.scrollIntoView();
 			return;
 		}
 		const category = categoryOf(categories, hash);
