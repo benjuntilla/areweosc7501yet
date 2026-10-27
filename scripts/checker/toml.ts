@@ -32,7 +32,6 @@ export const writeEntry = (entry: Entry) =>
 		Effect.map(
 			Struct.evolve({
 				last_checked_date: UndefinedOr.map(tomlDate),
-				github: UndefinedOr.map(Struct.evolve({ latest_release_date: UndefinedOr.map(tomlDate) })),
 				history: Array.map(Struct.evolve({ date: tomlDate }))
 			})
 		),

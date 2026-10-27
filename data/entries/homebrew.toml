@@ -10,5 +10,3 @@ history = []
 
 [github]
 popular = true
-latest_release_tag = "7.0.10"
-latest_release_date = 2026-10-19

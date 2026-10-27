@@ -8,8 +8,6 @@ note = "An outside contributor’s #16460 only adds specs."
 
 [github]
 popular = true
-latest_release_tag = "v0.2026.06.03.09.49.stable_00"
-latest_release_date = 2026-06-03
 
 [[history]]
 date = 2026-10-10

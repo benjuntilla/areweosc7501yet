@@ -1,14 +1,13 @@
 name = "radius-cli"
 url = "https://github.com/radiustechsystems/tools"
 repo = "radiustechsystems/tools"
+release_prefix = "radius-cli@"
 role = "program"
 category = "clis"
 spec_revision = "0.4"
 
 [github]
 popular = false
-latest_release_tag = "radius-sdk@0.6.0"
-latest_release_date = 2026-10-15
 
 [[history]]
 date = 2026-10-19

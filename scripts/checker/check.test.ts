@@ -6,7 +6,7 @@ import { HttpClient, HttpClientResponse } from 'effect/http';
 import { loadData, type SlugEntry } from '../../src/lib/domain/load.ts';
 import { Entry } from '../../src/lib/domain/schema.ts';
 import { checkerToml, specToml } from '../../src/lib/domain/fixtures.ts';
-import { checkEntry } from './check.ts';
+import { checkEntry, refresh } from './check.ts';
 import { writeEntry } from './toml.ts';
 
 // GitHub responses recorded on Oct 26, 2026, trimmed to what the checker reads and keyed by path
@@ -82,21 +82,6 @@ const termy = {
 	)
 };
 
-// crossterm left GitHub's Latest on 0.28 after it released 0.29.
-const crossterm = (status: 'ahead' | 'diverged') => ({
-	'/repos/crossterm-rs/crossterm': { stargazers_count: 3800 },
-	'/repos/crossterm-rs/crossterm/releases?per_page=30': [
-		release('crossterm-rs/crossterm', '0.29', '2025-04-05T15:21:04Z'),
-		release('crossterm-rs/crossterm', '0.28', '2024-07-31T17:41:00Z')
-	],
-	'/repos/crossterm-rs/crossterm/releases/latest': release(
-		'crossterm-rs/crossterm',
-		'0.28',
-		'2024-07-31T17:41:00Z'
-	),
-	'/repos/crossterm-rs/crossterm/compare/0.28...0.29?per_page=1': { status }
-});
-
 // A letter after the version: tmux's 3.6a is a full release, and a Python-style 3.7a1 is a
 // pre-release, here without GitHub's flag.
 const letterTags = {
@@ -106,8 +91,7 @@ const letterTags = {
 		release('tmux/tmux', '3.6a', '2026-10-20T00:00:00Z'),
 		release('tmux/tmux', '3.6', '2026-10-10T00:00:00Z')
 	],
-	'/repos/tmux/tmux/releases/latest': release('tmux/tmux', '3.6', '2026-10-10T00:00:00Z'),
-	'/repos/tmux/tmux/compare/3.6...3.6a?per_page=1': { status: 'ahead' }
+	'/repos/tmux/tmux/releases/latest': release('tmux/tmux', '3.6', '2026-10-10T00:00:00Z')
 };
 
 const kimi = {
@@ -139,7 +123,7 @@ const fakeGitHub = (recorded: Record<string, unknown>) =>
 const now = DateTime.makeUnsafe('2026-10-26T14:00:00Z');
 const lastRun = DateTime.makeUnsafe('2026-10-19');
 
-const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?: object }) =>
+const entry = (fields: { repo: string; history?: ReadonlyArray<object> }) =>
 	Schema.decodeUnknownEffect(Entry)({
 		name: 'X',
 		url: 'https://example.com',
@@ -191,11 +175,7 @@ describe('checkEntry', () => {
 				source: 'https://github.com/Kuddev/pebrel/releases/tag/v2.3.0',
 				version: 'v2.3.0'
 			});
-			expect(r.entry.github).toEqual({
-				popular: true,
-				latest_release_tag: 'v2.3.0',
-				latest_release_date: DateTime.makeUnsafe('2026-10-26')
-			});
+			expect(r.entry.github).toEqual({ popular: true });
 			expect(r.entry.last_checked_date).toBeUndefined();
 		})
 	);
@@ -264,40 +244,28 @@ describe('checkEntry', () => {
 
 	it.effect('counts the Latest rc as stable and skips pre-releases', () =>
 		Effect.gen(function* () {
-			const r = yield* run(yield* entry({ repo: 'lassejlv/termy' }), termy);
-			expect(r.entry.github?.latest_release_tag).toBe('v1.0.0-rc.8');
-		})
-	);
-
-	it.effect('takes a later release that contains Latest', () =>
-		Effect.gen(function* () {
-			const r = yield* run(yield* entry({ repo: 'crossterm-rs/crossterm' }), crossterm('ahead'));
-			expect(r.entry.github?.latest_release_tag).toBe('0.29');
-		})
-	);
-
-	it.effect("keeps Latest over a later release that doesn't contain it, like a backport", () =>
-		Effect.gen(function* () {
-			const r = yield* run(yield* entry({ repo: 'crossterm-rs/crossterm' }), crossterm('diverged'));
-			expect(r.entry.github?.latest_release_tag).toBe('0.28');
+			const { stable } = yield* refresh('lassejlv', 'termy').pipe(
+				Effect.provide(fakeGitHub(termy))
+			);
+			expect(stable.map((r) => r.tag)).toEqual(['v1.0.0-rc.8']);
 		})
 	);
 
 	it.effect("skips a pre-release tag GitHub doesn't flag, but keeps 3.6a", () =>
 		Effect.gen(function* () {
-			const r = yield* run(yield* entry({ repo: 'tmux/tmux' }), letterTags);
-			expect(r.entry.github?.latest_release_tag).toBe('3.6a');
+			const { stable } = yield* refresh('tmux', 'tmux').pipe(
+				Effect.provide(fakeGitHub(letterTags))
+			);
+			expect(stable.map((r) => r.tag)).toEqual(['3.6a', '3.6']);
 		})
 	);
 
-	it.effect('keeps a monorepo entry on its own release line', () =>
+	it.effect('counts only the releases that start with release_prefix', () =>
 		Effect.gen(function* () {
-			const e = yield* entry({
-				repo: 'MoonshotAI/kimi-code',
-				github: { popular: false, latest_release_tag: '@moonshot-ai/kimi-code@2.3.1' }
-			});
-			const r = yield* run(e, kimi);
-			expect(r.entry.github?.latest_release_tag).toBe('@moonshot-ai/kimi-code@2.3.2');
+			const { stable } = yield* refresh('MoonshotAI', 'kimi-code', '@moonshot-ai/kimi-code@').pipe(
+				Effect.provide(fakeGitHub(kimi))
+			);
+			expect(stable.map((r) => r.tag)).toEqual(['@moonshot-ai/kimi-code@2.3.2']);
 		})
 	);
 

@@ -16,6 +16,10 @@
 			"pattern": "^[\\w.-]+\\/[\\w.-]+$",
 			"description": "The GitHub owner/name that the weekly checker watches. Leave it out for projects that aren't on GitHub."
 		},
+		"release_prefix": {
+			"type": "string",
+			"description": "For a repo that releases several packages, how this package's release tags start, such as @expo/cli@. The weekly checker then looks only at those releases."
+		},
 		"role": {
 			"type": "string",
 			"enum": ["program", "terminal"],
@@ -55,13 +59,6 @@
 				"popular": {
 					"type": "boolean",
 					"description": "At least 1,000 GitHub stars at the last check."
-				},
-				"latest_release_tag": {
-					"type": "string"
-				},
-				"latest_release_date": {
-					"type": "string",
-					"format": "date"
 				}
 			},
 			"required": ["popular"],

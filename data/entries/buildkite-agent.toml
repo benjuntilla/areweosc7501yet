@@ -8,8 +8,6 @@ note = "Behind the program-status experiment flag."
 
 [github]
 popular = true
-latest_release_tag = "v4.8.1"
-latest_release_date = 2026-10-22
 
 [[history]]
 date = 2026-10-19

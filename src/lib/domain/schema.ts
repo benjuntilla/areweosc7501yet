@@ -36,9 +36,7 @@ export type HistoryBlock = typeof HistoryBlock.Type;
 export const Github = Schema.Struct({
 	popular: Schema.Boolean.pipe(
 		Schema.annotateEncoded({ description: 'At least 1,000 GitHub stars at the last check.' })
-	),
-	latest_release_tag: Schema.optionalKey(Schema.String),
-	latest_release_date: Schema.optionalKey(Day)
+	)
 }).pipe(
 	Schema.annotateEncoded({ description: "Written by the weekly checker. Don't edit it by hand." })
 );
@@ -55,6 +53,14 @@ export const entryFields = {
 			Schema.annotateEncoded({
 				description:
 					"The GitHub owner/name that the weekly checker watches. Leave it out for projects that aren't on GitHub."
+			})
+		)
+	),
+	release_prefix: Schema.optionalKey(
+		Schema.String.pipe(
+			Schema.annotateEncoded({
+				description:
+					"For a repo that releases several packages, how this package's release tags start, such as @expo/cli@. The weekly checker then looks only at those releases."
 			})
 		)
 	),

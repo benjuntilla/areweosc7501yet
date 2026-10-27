@@ -8,8 +8,6 @@ note = "Only sends after the terminal answers the query. Its docs say tmux and s
 
 [github]
 popular = true
-latest_release_tag = "v1.4.0"
-latest_release_date = 2026-10-21
 
 [[history]]
 date = 2026-10-07

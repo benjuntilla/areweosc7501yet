@@ -8,8 +8,6 @@ note = "Only the rolling tip tag has it"
 
 [github]
 popular = false
-latest_release_tag = "v0.7.11"
-latest_release_date = 2026-10-17
 
 [[history]]
 date = 2026-10-17

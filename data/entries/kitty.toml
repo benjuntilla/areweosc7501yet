@@ -8,8 +8,6 @@ note = "Caps ids at 263 bytes, the spec says 128."
 
 [github]
 popular = true
-latest_release_tag = "v0.49.2"
-latest_release_date = 2026-10-01
 
 [[history]]
 date = 2026-10-09

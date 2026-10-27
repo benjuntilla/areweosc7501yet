@@ -9,8 +9,6 @@ note = "Off by default, turned on with set -g program-status on"
 
 [github]
 popular = true
-latest_release_tag = "v3.4.0"
-latest_release_date = 2026-10-13
 
 [[history]]
 date = 2026-10-13

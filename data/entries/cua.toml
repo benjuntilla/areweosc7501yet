@@ -1,6 +1,7 @@
 name = "cua"
 url = "https://github.com/trycua/cua"
 repo = "trycua/cua"
+release_prefix = "cua-sdk-v"
 role = "program"
 category = "coding-agents"
 is_featured = false
@@ -8,8 +9,6 @@ spec_revision = "0.4"
 
 [github]
 popular = true
-latest_release_tag = "cua-spacesd-v0.8.0"
-latest_release_date = 2026-10-24
 
 [[history]]
 date = 2026-10-14T06:19:40Z

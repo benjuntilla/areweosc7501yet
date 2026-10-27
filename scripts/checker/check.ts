@@ -47,9 +47,6 @@ const preTag =
 /** Two releases with the same tag. */
 const sameTag = Equivalence.mapInput(Equivalence.String, (r: { tag_name: string }) => r.tag_name);
 
-/** The package part of a monorepo tag, like `radius-cli@` in `radius-cli@0.5.0`. */
-const prefixOf = (tag: string) => tag.replace(/v?\d[\w.+-]*$/u, '');
-
 interface Context {
 	readonly repo: string;
 	readonly owner: string;
@@ -143,54 +140,26 @@ const step = (current: HistoryBlock, ctx: Context) =>
 		}
 	});
 
-/** Whether it's popular, the current stable release, and the stable releases on its release line. */
-const refresh = (owner: string, name: string, previous: Entry['github']) =>
+/** Whether it's popular, and the stable releases on its release line. */
+export const refresh = (owner: string, name: string, prefix?: string) =>
 	Effect.gen(function* () {
 		const { stargazers_count } = yield* Gh.repos.get({ owner, repo: name });
-		const popular = stargazers_count >= featuredStars;
 		const releases = yield* Gh.repos.listReleases({ owner, repo: name, per_page: 30 });
 		const latest = yield* Gh.repos
 			.getLatestRelease({ owner, repo: name })
 			.pipe(Effect.catchTag('NotFound', () => Effect.succeed(null)));
-		const tracked = previous?.latest_release_tag;
 		// Stable means a full release, or whatever GitHub marks Latest, even with an rc tag. Latest
-		// can be older than the newest 30 releases, so it joins them. A monorepo's entry stays on
-		// the release line it already tracks. Newest published first.
-		const stable = Array.unionWith(releases, latest === null ? [] : [latest], sameTag)
-			.flatMap((r) =>
+		// can be older than the newest 30 releases, so it joins them.
+		const stable = Array.unionWith(releases, latest === null ? [] : [latest], sameTag).flatMap(
+			(r) =>
 				!r.draft &&
 				r.published_at !== null &&
 				(r.tag_name === latest?.tag_name || (!r.prerelease && !preTag.test(r.tag_name))) &&
-				(tracked === undefined || prefixOf(r.tag_name) === prefixOf(tracked))
+				(prefix === undefined || r.tag_name.startsWith(prefix))
 					? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
 					: []
-			)
-			.toSorted((a, b) => DateTime.Order(b.published, a.published));
-		// GitHub's Latest, unless a release published after it contains it: some projects leave the
-		// badge on an old release. A backport also comes after Latest, but it doesn't contain it.
-		// A monorepo's Latest can be on another line, and then it's the newest on this one.
-		const current = yield* Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
-			Option.match({
-				onNone: () => Effect.succeed(Array.head(stable)),
-				onSome: (l) =>
-					Effect.findFirst(
-						stable.filter((r) => DateTime.isGreaterThan(r.published, l.published)),
-						(r) =>
-							Gh.repos
-								.compareCommits({ owner, repo: name, basehead: `${l.tag}...${r.tag}`, per_page: 1 })
-								.pipe(Effect.map(({ status }) => status === 'ahead' || status === 'identical'))
-					).pipe(Effect.map(Option.orElse(() => Option.some(l))))
-			})
 		);
-		const github = Option.match(current, {
-			onNone: () => ({ ...previous, popular }),
-			onSome: (r) => ({
-				popular,
-				latest_release_tag: r.tag,
-				latest_release_date: DateTime.removeTime(r.published)
-			})
-		});
-		return { github, stable };
+		return { popular: stargazers_count >= featuredStars, stable };
 	});
 
 /** Refreshes `[github]` and walks the history forward as far as the evidence goes. */
@@ -199,7 +168,7 @@ export const checkEntry = (entry: SlugEntry, now: DateTime.Utc, lastRun: DateTim
 		const { repo } = entry;
 		if (repo === undefined) return { entry, changes: [], notes: [] } satisfies Checked;
 		const [owner = '', name = ''] = repo.split('/');
-		const { github, stable } = yield* refresh(owner, name, entry.github);
+		const { popular, stable } = yield* refresh(owner, name, entry.release_prefix);
 		const history = [...entry.history];
 		const changes: Array<Change> = [];
 		const notes: Array<string> = [];
@@ -217,8 +186,8 @@ export const checkEntry = (entry: SlugEntry, now: DateTime.Utc, lastRun: DateTim
 		if (entry.note !== undefined && changes.some((c) => c.from !== c.to)) {
 			notes.push(`${entry.slug} has a new state. Make sure its note is still true: ${entry.note}`);
 		}
+		const updated = { ...entry, github: { popular }, history };
 		// The run's date goes in data/checker.toml, so only entries checked by hand keep a date.
-		const updated = { ...entry, github, history };
 		const rechecked: SlugEntry = followable(updated)
 			? Struct.omit(updated, ['last_checked_date'])
 			: updated;

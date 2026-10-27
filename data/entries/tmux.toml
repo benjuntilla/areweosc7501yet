@@ -8,8 +8,6 @@ note = "With allow-passthrough on, reports still reach the outer terminal."
 
 [github]
 popular = true
-latest_release_tag = "3.8"
-latest_release_date = 2026-09-09
 
 [[history]]
 date = 2026-10-09

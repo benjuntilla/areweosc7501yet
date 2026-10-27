@@ -1,6 +1,7 @@
 name = "Expo CLI"
 url = "https://github.com/expo/expo"
 repo = "expo/expo"
+release_prefix = "@expo/cli@"
 role = "program"
 category = "clis"
 spec_revision = "0.4"
@@ -8,8 +9,6 @@ note = "An experiment that covers prompts only."
 
 [github]
 popular = true
-latest_release_tag = "patch-project@58.0.17"
-latest_release_date = 2026-10-23
 
 [[history]]
 date = 2026-10-09
