@@ -4,13 +4,25 @@ Which terminals and programs support OSC 7501, the Program Status Protocol. Live
 
 ## Development
 
-Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jdx.dev/getting-started.html#activate-mise) in your shell. It installs the Node and pnpm versions pinned in `.config/mise.toml`, then the dependencies.
+Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jdx.dev/getting-started.html#activate-mise) in your shell. It installs Node, pnpm and the check tools pinned in `.config/mise.toml`, then the dependencies.
 
-Installing dependencies also installs the git hooks in `.config/lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's checks except the build. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
+Installing dependencies also installs the git hooks in `.config/lefthook.yml`. A commit formats and lints its staged files, and a push runs CI's "Lint, check, test and build" job except `pnpm cf build`. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
+
+The push first regenerates `schema/` from `src/lib/domain/schema.ts` and `src/styles/tokens.css` from `tokens/`, and fails if either changed. Commit the regenerated files and push again.
+
+The browser check compares each page with its screenshot in `browser/screenshots/`. Screenshots differ between machines, so CI's are the baselines: when a change alters a page, the failed run uploads the new ones as the `screenshots` artifact.
+
+### Weekly checker
+
+Every Monday, `.github/workflows/checker.yml` updates the entries from GitHub and opens a PR with the changes. This runs it locally, rewriting `data/entries/` and writing the PR body to `/tmp/body.md`:
+
+```sh
+GITHUB_TOKEN=$(gh auth token) node scripts/checker/main.ts --body /tmp/body.md
+```
 
 ### Editor
 
-`.zed/settings.json` sets up Zed to format and lint exactly as CI does.
+`.zed/settings.json` sets up Zed to format with oxfmt and lint with oxlint as CI does, and to check entry files against the schema with Tombi.
 
 ## Acknowledgements
 
