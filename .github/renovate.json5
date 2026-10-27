@@ -1,7 +1,13 @@
 {
 	$schema: 'https://docs.renovatebot.com/renovate-schema.json',
-	// Recommended defaults, plus pinned GitHub Action and Docker digests.
-	extends: ['config:best-practices'],
+	// GitHub Actions keep their version tags: Renovate regenerates .github/workflows/actions.lock
+	// instead of pinning digests in the workflows.
+	extends: [
+		'config:best-practices',
+		'customManagers:githubActionsVersions',
+		'group:allNonMajor',
+		'schedule:weekly'
+	],
 	// Dependency PRs follow the repo's Conventional Commits titles: chore(deps): ...
 	semanticCommits: 'enabled'
 }
