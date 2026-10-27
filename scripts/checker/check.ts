@@ -161,11 +161,13 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 				onNone: () => Effect.succeed(Array.head(stable)),
 				onSome: (l) =>
 					Effect.findFirst(
-						stable.filter((r) => DateTime.isGreaterThan(r.published, l.published)),
+						stable
+							.filter((r) => DateTime.isGreaterThan(r.published, l.published))
+							.toSorted((a, b) => DateTime.Order(b.published, a.published)),
 						(r) =>
 							Gh.repos
 								.compareCommits({ owner, repo: name, basehead: `${l.tag}...${r.tag}`, per_page: 1 })
-								.pipe(Effect.map(({ status }) => status === 'ahead'))
+								.pipe(Effect.map(({ status }) => status === 'ahead' || status === 'identical'))
 					).pipe(Effect.map(Option.orElse(() => Option.some(l))))
 			})
 		);
