@@ -1,10 +1,10 @@
 import { describe, expect, it } from '@effect/vitest';
 import { DateTime, Effect } from 'effect';
-import { fixtureFiles, kittyToml, specToml } from './fixtures.ts';
+import { checkerToml, fixtureFiles, kittyToml, specToml } from './fixtures.ts';
 import { loadData } from './load.ts';
 
 const failure = (files: Record<string, string>) =>
-	loadData(files, specToml).pipe(
+	loadData(files, specToml, checkerToml).pipe(
 		Effect.flip,
 		Effect.map((e) => `${e.file}: ${e.message}`)
 	);
@@ -12,7 +12,7 @@ const failure = (files: Record<string, string>) =>
 describe('loadData', () => {
 	it.effect('decodes good files, sorted by slug, with dates as UTC DateTimes', () =>
 		Effect.gen(function* () {
-			const { spec, entries } = yield* loadData(fixtureFiles, specToml);
+			const { spec, entries } = yield* loadData(fixtureFiles, specToml, checkerToml);
 			expect(DateTime.formatIsoDateUtc(spec.revision[0].date)).toBe('2026-10-10');
 			expect(entries.map((e) => e.slug)).toEqual(['codex', 'kitty', 'rex', 'tiny']);
 			const codex = entries[0]!;

@@ -4,10 +4,9 @@ repo = "herdrdev/herdr"
 role = "terminal"
 category = "multiplexers"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 45704
+popular = true
 latest_release_tag = "v0.9.5"
 latest_release_date = 2026-10-14
 

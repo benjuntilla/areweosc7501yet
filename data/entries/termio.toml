@@ -4,10 +4,9 @@ repo = "termio-sh/termio"
 role = "terminal"
 category = "emulators"
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 582
+popular = false
 latest_release_tag = "v0.61.0"
 latest_release_date = 2026-10-24
 

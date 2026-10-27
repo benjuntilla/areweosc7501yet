@@ -5,10 +5,9 @@ role = "terminal"
 category = "emulators"
 is_featured = true
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 1019
+popular = true
 latest_release_tag = "v0.59.0"
 latest_release_date = 2026-10-19
 

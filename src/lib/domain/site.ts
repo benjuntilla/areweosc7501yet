@@ -10,13 +10,25 @@ import {
 	stateStart,
 	summarize
 } from './derive.ts';
+import { Day } from './formats.ts';
 import type { SlugEntry } from './load.ts';
-import { entryFields, entryRules, SpecRevision, states, type Spec } from './schema.ts';
+import {
+	type Checker,
+	entryFields,
+	entryRules,
+	SpecRevision,
+	states,
+	type Spec
+} from './schema.ts';
 
 const newestFirst = Order.flip(Order.mapInput(DateTime.Order, (r: ChangeRow) => r.date));
 
 /** Everything the pages and endpoints read, derived once per build. */
-export const buildSite = (data: { spec: Spec; entries: ReadonlyArray<SlugEntry> }) => ({
+export const buildSite = (data: {
+	spec: Spec;
+	checker: typeof Checker.Type;
+	entries: ReadonlyArray<SlugEntry>;
+}) => ({
 	spec: { current: Array.lastNonEmpty(data.spec.revision).number, revisions: data.spec.revision },
 	verdicts: {
 		program: summarize(data.entries, 'program'),
@@ -24,6 +36,7 @@ export const buildSite = (data: { spec: Spec; entries: ReadonlyArray<SlugEntry> 
 	},
 	entries: Array.map(data.entries, (e) => ({
 		...e,
+		last_checked_date: e.last_checked_date ?? data.checker.last_run,
 		state: currentState(e),
 		since: Option.getOrUndefined(Option.map(stateStart(e), (b) => b.date)),
 		featured: isFeatured(e),
@@ -52,7 +65,7 @@ const VerdictSummary = Schema.Struct({
  * removing one bumps it.
  */
 export const DataJson = Schema.Struct({
-	schemaVersion: Schema.Literal(1),
+	schemaVersion: Schema.Literal(2),
 	generatedAt: Schema.String,
 	spec: Schema.Struct({ current: Schema.String, revisions: Schema.Array(SpecRevision) }),
 	verdicts: Schema.Struct({ program: VerdictSummary, terminal: VerdictSummary }),
@@ -60,6 +73,7 @@ export const DataJson = Schema.Struct({
 		Schema.Struct({
 			slug: Schema.String,
 			...entryFields,
+			last_checked_date: Day,
 			state: Schema.Literals(states),
 			featured: Schema.Boolean
 		}).check(entryRules)
@@ -76,7 +90,7 @@ const verdictJson = (v: RoleSummary) => ({
 /** data.json as JSON, with dates encoded back to ISO strings by the schema. */
 export const toDataJson = (site: Site, generatedAt: DateTime.Utc): typeof DataJson.Encoded =>
 	Schema.encodeSync(DataJson)({
-		schemaVersion: 1,
+		schemaVersion: 2,
 		generatedAt: DateTime.formatIso(generatedAt),
 		spec: site.spec,
 		verdicts: {

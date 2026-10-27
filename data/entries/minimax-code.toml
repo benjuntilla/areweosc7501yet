@@ -8,7 +8,7 @@ note = "Ships on npm. The repo’s newest tag is still v0.6.5."
 last_checked_date = 2026-10-24
 
 [github]
-stars = 2088
+popular = true
 latest_release_tag = "v0.6.5"
 latest_release_date = 2026-10-09
 

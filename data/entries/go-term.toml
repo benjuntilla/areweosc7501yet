@@ -5,10 +5,9 @@ role = "terminal"
 category = "engines"
 spec_revision = "0.4"
 note = "Engine"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 6
+popular = false
 latest_release_tag = "v0.17.1"
 latest_release_date = 2026-10-23
 

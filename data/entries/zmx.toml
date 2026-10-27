@@ -5,10 +5,9 @@ role = "terminal"
 category = "multiplexers"
 is_featured = false
 spec_revision = "0.4"
-last_checked_date = 2026-10-25
 
 [github]
-stars = 2230
+popular = true
 latest_release_tag = "v0.8.1"
 latest_release_date = 2026-09-05
 

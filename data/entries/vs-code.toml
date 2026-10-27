@@ -9,6 +9,6 @@ last_checked_date = 2026-10-24
 history = []
 
 [github]
-stars = 194258
+popular = true
 latest_release_tag = "1.143.1"
 latest_release_date = 2026-10-22

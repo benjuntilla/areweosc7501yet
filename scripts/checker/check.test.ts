@@ -5,7 +5,7 @@ import { DateTime, Effect, Layer, Redacted, Schema } from 'effect';
 import { HttpClient, HttpClientResponse } from 'effect/http';
 import { loadData, type SlugEntry } from '../../src/lib/domain/load.ts';
 import { Entry } from '../../src/lib/domain/schema.ts';
-import { specToml } from '../../src/lib/domain/fixtures.ts';
+import { checkerToml, specToml } from '../../src/lib/domain/fixtures.ts';
 import { checkEntry } from './check.ts';
 import { writeEntry } from './toml.ts';
 
@@ -109,6 +109,7 @@ const fakeGitHub = (recorded: Record<string, unknown>) =>
 	);
 
 const now = DateTime.makeUnsafe('2026-10-26T14:00:00Z');
+const lastRun = DateTime.makeUnsafe('2026-10-19');
 
 const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?: object }) =>
 	Schema.decodeUnknownEffect(Entry)({
@@ -125,7 +126,7 @@ const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?:
 const block = (state: string, source: string, date = '2026-10-12') => ({ date, state, source });
 
 const run = (e: SlugEntry, recorded: Record<string, unknown>) =>
-	checkEntry(e, now).pipe(Effect.provide(fakeGitHub(recorded)));
+	checkEntry(e, now, lastRun).pipe(Effect.provide(fakeGitHub(recorded)));
 
 const idleTmuxClosedAs = (reason: string) =>
 	entry({
@@ -163,11 +164,11 @@ describe('checkEntry', () => {
 				version: 'v2.3.0'
 			});
 			expect(r.entry.github).toEqual({
-				stars: 3602,
+				popular: true,
 				latest_release_tag: 'v2.3.0',
 				latest_release_date: DateTime.makeUnsafe('2026-10-26')
 			});
-			expect(DateTime.formatIsoDateUtc(r.entry.last_checked_date)).toBe('2026-10-26');
+			expect(r.entry.last_checked_date).toBeUndefined();
 		})
 	);
 
@@ -244,7 +245,7 @@ describe('checkEntry', () => {
 		Effect.gen(function* () {
 			const e = yield* entry({
 				repo: 'MoonshotAI/kimi-code',
-				github: { stars: 1, latest_release_tag: '@moonshot-ai/kimi-code@2.3.1' }
+				github: { popular: false, latest_release_tag: '@moonshot-ai/kimi-code@2.3.1' }
 			});
 			const r = yield* run(e, kimi);
 			expect(r.entry.github?.latest_release_tag).toBe('@moonshot-ai/kimi-code@2.3.2');
@@ -268,7 +269,7 @@ describe('writeEntry', () => {
 			const files = Object.fromEntries(
 				readdirSync(dir).map((f) => [`${dir}/${f}`, readFileSync(`${dir}/${f}`, 'utf8')])
 			);
-			const { entries } = yield* loadData(files, specToml);
+			const { entries } = yield* loadData(files, specToml, checkerToml);
 			for (const e of entries) {
 				expect(yield* writeEntry(e)).toBe(files[`${dir}/${e.slug}.toml`]);
 			}
@@ -279,7 +280,7 @@ describe('writeEntry', () => {
 		Effect.gen(function* () {
 			const note = 'say "hi" \\ a\u007Fb\nnext line';
 			const text = yield* writeEntry({ ...(yield* entry({ repo: 'a/b' })), note });
-			const again = yield* loadData({ '/data/entries/x.toml': text }, specToml);
+			const again = yield* loadData({ '/data/entries/x.toml': text }, specToml, checkerToml);
 			expect(again.entries[0]!.note).toBe(note);
 		})
 	);

@@ -7,7 +7,7 @@ exports[`site > builds a data.json that matches its own schema > data.json 1`] =
       "category": "coding-agents",
       "featured": true,
       "github": {
-        "stars": 50000,
+        "popular": true,
       },
       "history": [
         {
@@ -42,7 +42,7 @@ exports[`site > builds a data.json that matches its own schema > data.json 1`] =
       "github": {
         "latest_release_date": "2026-10-01",
         "latest_release_tag": "v0.49.2",
-        "stars": 35419,
+        "popular": true,
       },
       "history": [
         {
@@ -93,7 +93,7 @@ exports[`site > builds a data.json that matches its own schema > data.json 1`] =
       "category": "clis",
       "featured": false,
       "github": {
-        "stars": 12,
+        "popular": false,
       },
       "history": [],
       "last_checked_date": "2026-10-24",
@@ -107,7 +107,7 @@ exports[`site > builds a data.json that matches its own schema > data.json 1`] =
     },
   ],
   "generatedAt": "2026-10-24T14:00:00.000Z",
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "spec": {
     "current": "0.4",
     "revisions": [

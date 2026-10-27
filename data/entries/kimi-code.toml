@@ -4,10 +4,9 @@ repo = "MoonshotAI/kimi-code"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-last_checked_date = 2026-10-24
 
 [github]
-stars = 8004
+popular = true
 latest_release_tag = "@moonshot-ai/kimi-code@2.3.1"
 latest_release_date = 2026-10-23
 
