@@ -15,3 +15,6 @@ overrides:
   # @lhci/cli and its prompt library ask for 0.1.x and 0.0.x, which have GHSA-ph9p-34f9-6g65
   # and GHSA-52f5-9888-hmc6. 0.2.7 fixes both and keeps fileSync and tmpNameSync, which they call.
   tmp: 0.2.7
+  # @lhci/cli asks for 8.x, which has GHSA-w5hq-g745-h8pq. 11.1.1 has the fix and still supports
+  # require and v4, the only function it calls.
+  uuid: 11.1.1
