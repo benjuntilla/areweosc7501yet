@@ -202,6 +202,6 @@
 
 	.segment:hover .name {
 		text-decoration: underline;
-		text-underline-position: from-font;
+		text-underline-position: under;
 	}
 </style>
