@@ -6,6 +6,9 @@ pre-commit:
     - name: lint
       glob: '*.{js,ts,svelte}'
       run: pnpm oxlint {staged_files}
+    - name: stylelint
+      glob: 'src/**/*.{css,svelte}'
+      run: pnpm stylelint --allow-empty-input {staged_files}
 
 pre-push:
   parallel: true
@@ -20,3 +23,5 @@ pre-push:
       run: pnpm test
     - name: schema
       run: pnpm schema && test -z "$(git status --porcelain -- schema/)"
+    - name: tokens
+      run: pnpm tokens && test -z "$(git status --porcelain -- src/styles/tokens.css)"

@@ -2,9 +2,10 @@ import { Array, DateTime, Option, Order } from 'effect';
 import { Feed } from 'feed';
 import { type ChangeRow, changeAnchor } from './derive.ts';
 import type { Site } from './site.ts';
+import { siteTitle, siteUrl } from '../meta.ts';
 
-export const origin = 'https://areweosc7501yet.com';
-const title = 'Are we OSC 7501 yet?';
+const origin = siteUrl.origin;
+const tag = `tag:${siteUrl.host},2026`;
 const limit = 50;
 
 interface Item {
@@ -19,7 +20,7 @@ const changeText = (r: ChangeRow): string =>
 	r.from === undefined ? `added as ${r.to}` : `${r.from} → ${r.to}`;
 
 const entryItem = (r: ChangeRow): Item => ({
-	id: `tag:areweosc7501yet.com,2026:${r.slug}/${DateTime.formatIso(r.date)}/${r.to}`,
+	id: `${tag}:${r.slug}/${DateTime.formatIso(r.date)}/${r.to}`,
 	title: `${r.name}: ${changeText(r)}`,
 	anchor: changeAnchor(r),
 	date: r.date,
@@ -27,7 +28,7 @@ const entryItem = (r: ChangeRow): Item => ({
 });
 
 const specItem = (s: Site['spec']['revisions'][number]): Item => ({
-	id: `tag:areweosc7501yet.com,2026:spec/${s.number}`,
+	id: `${tag}:spec/${s.number}`,
 	title: `Spec revision ${s.number}`,
 	anchor: `spec-${s.number}`,
 	date: DateTime.makeUnsafe(s.date),
@@ -47,7 +48,7 @@ export const toAtom = (site: Site): string => {
 	);
 	const feed = new Feed({
 		id: `${origin}/`,
-		title,
+		title: siteTitle,
 		description: 'Every state change for a featured entry, newest first.',
 		link: `${origin}/changes`,
 		feedLinks: { atom: `${origin}/feed.xml` },
