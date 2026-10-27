@@ -1,6 +1,12 @@
 import { basename } from 'node:path';
-import { Array, Data, Effect, Order, Record, Schema } from 'effect';
-import { Toml } from 'effect/encoding';
+import {
+	Toml,
+	TomlLocalDate,
+	TomlLocalDateTime,
+	TomlLocalTime,
+	TomlOffsetDateTime
+} from '@effected/toml';
+import { Array, Data, DateTime, Effect, Option, Order, Record, Schema } from 'effect';
 import * as patterns from './patterns.ts';
 import { Entry, Spec } from './schema.ts';
 
@@ -11,19 +17,28 @@ export class DataError extends Data.TaggedError('DataError')<{
 
 export type SlugEntry = Entry & { readonly slug: string };
 
-// Effect's TOML parser range-checks dates and returns date-times with an offset as Dates.
-// JSON turns those into the ISO strings the schema reads.
+// The TOML parser range-checks dates and gives each kind its own class. JSON writes a date-time
+// with an offset as the UTC instant the schema reads, and any other date or time as its TOML text
+// for the schema to check. DateTime can't hold a leap second, so one stays as text.
+const tomlDates = (_key: string, v: unknown) => {
+	if (v instanceof TomlOffsetDateTime) {
+		return Option.match(DateTime.make(String(v)), {
+			onNone: () => String(v),
+			onSome: DateTime.formatIso
+		});
+	}
+	return v instanceof TomlLocalDate || v instanceof TomlLocalDateTime || v instanceof TomlLocalTime
+		? String(v)
+		: v;
+};
+
 const decodeToml = <S extends Schema.Top>(schema: S, file: string, text: string) =>
-	Effect.try({
-		try: () => JSON.stringify(Toml.parse(text)),
-		catch: (e) => new DataError({ file, message: String(e) })
-	}).pipe(
+	Toml.parse(text).pipe(
+		Effect.map((toml) => JSON.stringify(toml, tomlDates)),
 		Effect.flatMap(
 			Schema.decodeUnknownEffect(Schema.fromJsonString(schema), { onExcessProperty: 'error' })
 		),
-		Effect.mapError((e) =>
-			e instanceof DataError ? e : new DataError({ file, message: String(e) })
-		)
+		Effect.mapError((e) => new DataError({ file, message: String(e) }))
 	);
 
 const Slug = Schema.String.check(Schema.isPattern(patterns.slug));
