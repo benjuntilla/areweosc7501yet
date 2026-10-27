@@ -4,3 +4,8 @@ allowBuilds:
   esbuild: true
   lefthook: true
   workerd: false
+
+overrides:
+  # get-uri, under @lhci/cli and lighthouse, still allows only 5.x, which has GHSA-c475-qrg2-pj4r.
+  # 6.x has the fix, and its one breaking change doesn't affect get-uri.
+  basic-ftp: 6.2.3
