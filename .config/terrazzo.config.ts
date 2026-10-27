@@ -1,6 +1,7 @@
 import { defineConfig } from '@terrazzo/cli';
 import css from '@terrazzo/plugin-css';
 import { Option, Schema } from 'effect';
+import { Oklch } from '../src/styles/oklch.ts';
 
 // Mode blocks carry only the collection that has the mode, so devtools shows each alias chain once.
 const semantic = [
@@ -30,12 +31,6 @@ const block = (selector: string, media?: string) => (decls: string) =>
 	media === undefined
 		? `${selector} {\n${decls}\n}`
 		: `${media} {\n\t${selector} {\n${decls}\n\t}\n}`;
-
-const Oklch = Schema.Struct({
-	colorSpace: Schema.Literal('oklch'),
-	components: Schema.Tuple([Schema.Finite, Schema.Finite, Schema.Finite]),
-	alpha: Schema.optionalKey(Schema.Finite)
-});
 
 const fmt = (n: number) => String(Number(n.toFixed(4)));
 
