@@ -16,6 +16,7 @@
 	let { category, query, expanded = $bindable(false), highlight }: Props = $props();
 
 	let toggle: HTMLButtonElement | undefined = $state();
+	let tail: HTMLDivElement | undefined = $state();
 
 	const featured = $derived(category.featured.filter((c) => matches(c, query)));
 	const more = $derived(category.more.filter((c) => matches(c, query)));
@@ -23,14 +24,16 @@
 	// Search unfolds any tail with a match.
 	const open = $derived(searching ? more.length > 0 : expanded);
 
-	// The toggle keeps focus as it moves to the end of the list, and the URL can be shared.
+	// The URL can be shared. Unfolding from the keyboard moves focus to the first revealed chip,
+	// which comes before the toggle in tab order. Otherwise the toggle keeps focus and stays in view.
 	const onclick = async () => {
 		expanded = !expanded;
 		const url = new URL(location.href);
 		url.hash = expanded ? `${category.id}-all` : '';
 		replaceState(url, {});
 		await tick();
-		toggle?.scrollIntoView({ block: 'nearest' });
+		if (expanded && toggle?.matches(':focus-visible')) tail?.querySelector('button')?.focus();
+		else toggle?.scrollIntoView({ block: 'nearest' });
 	};
 </script>
 
@@ -44,7 +47,7 @@
 				{/each}
 			</ul>
 			{#if category.more.length > 0}
-				<div class="tail" class:open id="{category.id}-more">
+				<div bind:this={tail} class="tail" class:open id="{category.id}-more">
 					<div class="tail-inner">
 						<p class="more-label type-caption">
 							More projects · {searching
