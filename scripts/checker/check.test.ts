@@ -82,6 +82,21 @@ const termy = {
 	)
 };
 
+// crossterm left GitHub's Latest on 0.28 after it released 0.29.
+const crossterm = (status: 'ahead' | 'diverged') => ({
+	'/repos/crossterm-rs/crossterm': { stargazers_count: 3800 },
+	'/repos/crossterm-rs/crossterm/releases?per_page=30': [
+		release('crossterm-rs/crossterm', '0.29', '2025-04-05T15:21:04Z'),
+		release('crossterm-rs/crossterm', '0.28', '2024-07-31T17:41:00Z')
+	],
+	'/repos/crossterm-rs/crossterm/releases/latest': release(
+		'crossterm-rs/crossterm',
+		'0.28',
+		'2024-07-31T17:41:00Z'
+	),
+	'/repos/crossterm-rs/crossterm/compare/0.28...0.29?per_page=1': { status }
+});
+
 const kimi = {
 	'/repos/MoonshotAI/kimi-code': { stargazers_count: 9000 },
 	'/repos/MoonshotAI/kimi-code/releases?per_page=30': [
@@ -238,6 +253,20 @@ describe('checkEntry', () => {
 		Effect.gen(function* () {
 			const r = yield* run(yield* entry({ repo: 'lassejlv/termy' }), termy);
 			expect(r.entry.github?.latest_release_tag).toBe('v1.0.0-rc.8');
+		})
+	);
+
+	it.effect('takes a later release that contains Latest', () =>
+		Effect.gen(function* () {
+			const r = yield* run(yield* entry({ repo: 'crossterm-rs/crossterm' }), crossterm('ahead'));
+			expect(r.entry.github?.latest_release_tag).toBe('0.29');
+		})
+	);
+
+	it.effect("keeps Latest over a later release that doesn't contain it, like a backport", () =>
+		Effect.gen(function* () {
+			const r = yield* run(yield* entry({ repo: 'crossterm-rs/crossterm' }), crossterm('diverged'));
+			expect(r.entry.github?.latest_release_tag).toBe('0.28');
 		})
 	);
 
