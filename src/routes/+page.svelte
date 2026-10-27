@@ -89,11 +89,13 @@
 </section>
 
 <style>
+	/* The top fills the first screen. On a short window it still keeps a section gap above the tracker. */
 	.top {
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-section-gap);
 		min-block-size: calc(100svb - 48px);
+		padding-block-end: var(--layout-section-gap);
 	}
 
 	.tracker {
