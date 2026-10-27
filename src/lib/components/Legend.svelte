@@ -11,43 +11,50 @@
 	];
 </script>
 
-<dl class="legend type-small">
-	{#each legend as [state, meaning] (state)}
-		<div>
-			<dt><StateGlyph {state} />{state}</dt>
-			<dd>{meaning}</dd>
-		</div>
-	{/each}
-</dl>
-<p class="learn type-small">
-	Learn more about each state <a href="/methodology"
-		>here<span class="visually-hidden">: Methodology</span></a
-	>.
-</p>
+<div class="legend">
+	<dl class="type-small">
+		{#each legend as [state, meaning] (state)}
+			<div>
+				<dt><StateGlyph {state} />{state}</dt>
+				<dd>{meaning}</dd>
+			</div>
+		{/each}
+	</dl>
+	<p class="type-small">
+		Learn more about each state <a href="/methodology"
+			>here<span class="visually-hidden">: Methodology</span></a
+		>.
+	</p>
+</div>
 
 <style>
 	.legend {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 6px var(--legend-gap);
-		margin-bottom: -4px;
+		flex-direction: column;
+		gap: var(--legend-learn-gap);
 	}
 
-	.legend div {
+	dl {
 		display: flex;
-		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--legend-item-gap) var(--legend-gap);
+	}
+
+	dl div {
+		display: flex;
 		gap: var(--legend-item-gap);
+		align-items: center;
 	}
 
 	dt {
 		display: flex;
-		align-items: center;
 		gap: var(--legend-item-gap);
+		align-items: center;
 		color: var(--legend-state-name);
 	}
 
 	dd,
-	.learn {
+	p {
 		color: var(--legend-description);
 	}
 

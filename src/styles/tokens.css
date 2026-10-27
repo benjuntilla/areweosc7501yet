@@ -24,6 +24,8 @@
 	--chip-label: var(--color-ink);
 	--chip-label-muted: var(--color-soft);
 	--chip-list-gap: var(--space-2);
+	--chip-list-label-gap: var(--space-4);
+	--chip-list-row-gap: var(--space-4);
 	--chip-padding-left: var(--space-4);
 	--chip-padding-right: var(--space-6);
 	--chip-padding-y: var(--space-2);
@@ -99,6 +101,7 @@
 	--footer-divider: var(--color-rule);
 	--footer-gap: var(--space-8);
 	--footer-link: var(--color-soft);
+	--footer-padding-top: var(--space-14);
 	--footer-text: var(--color-muted);
 	--gradient-amber: var(--amber-179);
 	--gradient-lavender: var(--lavender-175);
@@ -119,8 +122,12 @@
 	--heading-category-gap: var(--space-8);
 	--heading-count: var(--color-muted);
 	--heading-icon: var(--color-muted);
+	--heading-icon-gap: var(--space-8);
+	--heading-legend-gap: var(--space-16);
 	--heading-note: var(--color-muted);
 	--heading-text: var(--color-ink);
+	--hero-drum-gap: var(--space-7);
+	--hero-drum-margin-bottom: var(--space-18);
 	--icon-size-sm: var(--size-14);
 	--indigo-438: oklch(56.2% 0.25 282.5);
 	--lavender-175: oklch(82.5% 0.106 305.5);
@@ -138,6 +145,7 @@
 	--legend-description: var(--color-muted);
 	--legend-gap: var(--space-18);
 	--legend-item-gap: var(--space-6);
+	--legend-learn-gap: var(--space-12);
 	--legend-state-name: var(--color-ink);
 	--lime-89: oklch(91.1% 0.167 122.2);
 	--link-text: var(--color-soft);
@@ -147,9 +155,17 @@
 	--logo-tile-radius: var(--radius-12);
 	--logo-tile-ring: var(--effect-ring);
 	--logo-tile-shadow: var(--effect-shadow);
+	--menu-gap: var(--space-20);
+	--menu-group-padding-bottom: var(--space-6);
+	--menu-group-padding-top: var(--space-18);
+	--menu-item-padding-x: var(--space-12);
+	--menu-item-padding-y: var(--space-10);
+	--menu-item-radius: var(--radius-8);
+	--menu-padding-bottom: var(--space-40);
 	--meter-count: var(--color-soft);
 	--meter-count-gap: var(--space-12);
 	--meter-count-item-gap: var(--space-5);
+	--meter-gap: var(--space-14);
 	--meter-ghost-opacity: var(--opacity-ghost);
 	--meter-gradient-amber: var(--gradient-amber);
 	--meter-gradient-amber-orange: var(--gradient-oklab-mid-amber-orange);
@@ -221,6 +237,9 @@
 	--nav-toc-indent: var(--space-20);
 	/* Vertical padding of a TOC entry (Rex: 4px). */
 	--nav-toc-item-padding-y: var(--space-4);
+	--nav-toc-line-height: var(--font-line-height-16);
+	--nav-toc-padding-bottom: var(--space-4);
+	--nav-toc-size: var(--font-size-13);
 	--neutral-0: oklch(100% 0 0);
 	--neutral-0-a200: oklch(100% 0 0 / 0.2);
 	--neutral-30: oklch(97% 0.001 106.4);
@@ -264,6 +283,8 @@
 	--popover-body: var(--color-soft);
 	--popover-gap: var(--space-6);
 	--popover-meta: var(--color-muted);
+	--popover-meta-gap: var(--space-2);
+	--popover-offset: var(--space-8);
 	--popover-padding-x: var(--space-14);
 	--popover-padding-y: var(--space-12);
 	--popover-radius: var(--radius-12);
@@ -284,6 +305,7 @@
 	--radius-24: var(--size-24);
 	--radius-45: var(--size-45);
 	--radius-full: var(--size-full);
+	--rail-gap: var(--space-10);
 	--rail-ghost-opacity: var(--opacity-ghost);
 	--rail-label-count: var(--color-soft);
 	--rail-label-gap: var(--space-5);
@@ -294,6 +316,7 @@
 	--rail-track: var(--color-wash);
 	--red-280: oklch(72% 0.177 14.7);
 	--red-449: oklch(55.1% 0.22 19.4);
+	--role-gap: var(--space-28);
 	--search-background: var(--color-surface);
 	--search-focus-stroke-width: var(--stroke-2);
 	--search-gap: var(--space-8);
@@ -303,8 +326,12 @@
 	--search-padding-y: var(--space-7);
 	--search-placeholder: var(--color-muted);
 	--search-radius: var(--radius-24);
+	--search-results-gap: var(--space-16);
 	--search-ring: var(--effect-ring);
 	--search-shadow: var(--effect-shadow);
+	--sidebar-search-margin-bottom: var(--space-24);
+	--sidebar-search-margin-top: var(--space-20);
+	--sidebar-theme-toggle-margin-top: var(--space-32);
 	--size-0: 0px;
 	--size-1: 1px;
 	--size-1-2: 1.2px;
@@ -465,6 +492,8 @@
 	--verdict-gap: var(--space-4);
 	--verdict-label: var(--color-soft);
 	--verdict-label-gap: var(--space-8);
+	--verdict-list-gap: var(--space-48);
+	--verdict-meter-gap: var(--space-14);
 	--verdict-note: var(--color-muted);
 	--verdict-radius: var(--radius-12);
 	--verdict-word: var(--color-ink);

@@ -114,14 +114,14 @@
 <style>
 	.chip {
 		display: flex;
-		align-items: center;
 		gap: var(--chip-gap);
-		max-width: 280px;
+		align-items: center;
+		max-inline-size: 280px;
 		padding: var(--chip-padding-y) var(--chip-padding-right) var(--chip-padding-y)
 			var(--chip-padding-left);
-		border-radius: var(--chip-radius);
 		color: var(--chip-label);
-		text-align: left;
+		text-align: start;
+		border-radius: var(--chip-radius);
 		transition: background-color var(--motion-state-duration) var(--motion-ease-state);
 	}
 
@@ -140,7 +140,7 @@
 
 	.name {
 		display: flex;
-		min-width: 0;
+		min-inline-size: 0;
 		white-space: nowrap;
 	}
 
@@ -163,7 +163,7 @@
 	}
 
 	@keyframes highlight {
-		from,
+		0%,
 		40% {
 			background: var(--chip-background-pressed);
 		}
@@ -176,13 +176,13 @@
 	}
 
 	.popover {
-		width: min(300px, 100vw - 32px);
-		margin: 0;
+		inline-size: min(300px, 100vi - 32px);
 		padding: var(--popover-padding-y) var(--popover-padding-x);
+		margin: 0;
+		color: var(--popover-body);
+		background: var(--popover-background);
 		border: 0;
 		border-radius: var(--popover-radius);
-		background: var(--popover-background);
-		color: var(--popover-body);
 		box-shadow:
 			0 4px 6px -3px var(--popover-shadow),
 			0 2px 2px -1px var(--popover-shadow),
@@ -216,19 +216,19 @@
 
 	@supports (anchor-name: --x) {
 		.popover {
+			margin: var(--popover-offset) 0;
 			position-area: block-end span-inline-end;
 			position-try-fallbacks:
 				flip-block,
 				flip-inline,
 				flip-block flip-inline;
-			margin: 8px 0;
 		}
 	}
 
 	.head {
 		display: flex;
-		align-items: center;
 		gap: var(--popover-gap);
+		align-items: center;
 	}
 
 	.title {
@@ -243,7 +243,7 @@
 	.meta {
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
+		gap: var(--popover-meta-gap);
 		color: var(--popover-meta);
 	}
 

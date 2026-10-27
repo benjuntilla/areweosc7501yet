@@ -100,7 +100,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-section-gap);
-		min-height: calc(100svh - 48px);
+		min-block-size: calc(100svb - 48px);
 	}
 
 	.tracker {
@@ -112,16 +112,16 @@
 	.tracker-head {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-16);
+		gap: var(--heading-legend-gap);
+	}
+
+	.results {
+		margin-block-end: calc(var(--search-results-gap) - var(--layout-group-gap));
+		color: var(--content-text-muted);
 	}
 
 	.results:empty {
 		display: none;
-	}
-
-	.results {
-		margin-bottom: calc(var(--layout-group-gap) * -1 + var(--space-16));
-		color: var(--content-text-muted);
 	}
 
 	.empty-title {

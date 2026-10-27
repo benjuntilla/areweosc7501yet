@@ -51,8 +51,8 @@
 		display: inline-flex;
 		gap: var(--theme-toggle-gap);
 		padding: var(--theme-toggle-padding);
-		border-radius: var(--theme-toggle-radius);
 		background: var(--theme-toggle-track);
+		border-radius: var(--theme-toggle-radius);
 	}
 
 	:global(html:not(.js)) .theme-toggle {
@@ -61,8 +61,8 @@
 
 	button {
 		padding: var(--theme-toggle-padding) var(--theme-toggle-option-padding-x);
-		border-radius: var(--theme-toggle-option-radius);
 		color: var(--theme-toggle-label);
+		border-radius: var(--theme-toggle-option-radius);
 		transition:
 			color var(--motion-state-duration) var(--motion-ease-state),
 			background-color var(--motion-state-duration) var(--motion-ease-state);
@@ -73,8 +73,8 @@
 	}
 
 	[aria-checked='true'] {
-		background: var(--theme-toggle-thumb);
 		color: var(--theme-toggle-label-active);
+		background: var(--theme-toggle-thumb);
 		box-shadow:
 			0 2px 2px -1px var(--theme-toggle-thumb-shadow),
 			0 1px 1px -0.5px var(--theme-toggle-thumb-shadow),

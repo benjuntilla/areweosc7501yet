@@ -28,15 +28,15 @@
 	.meter {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-14);
+		gap: var(--meter-gap);
 	}
 
 	.bar {
 		position: relative;
-		height: 8px;
+		block-size: 8px;
 		overflow: hidden;
-		border-radius: var(--meter-radius);
 		background: var(--meter-track);
+		border-radius: var(--meter-radius);
 	}
 
 	/* One gradient across the whole track, clipped to the done and working spans. */
@@ -70,7 +70,7 @@
 
 	.counts span {
 		display: flex;
-		align-items: center;
 		gap: var(--meter-count-item-gap);
+		align-items: center;
 	}
 </style>

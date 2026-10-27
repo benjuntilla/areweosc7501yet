@@ -28,10 +28,10 @@
 	.logo-tile {
 		display: grid;
 		place-items: center;
-		width: var(--size);
-		height: var(--size);
-		border-radius: calc(var(--size) / 4);
+		inline-size: var(--size);
+		block-size: var(--size);
 		background: var(--logo-tile-background);
+		border-radius: calc(var(--size) / 4);
 		box-shadow:
 			0 2px 1px var(--logo-tile-shadow),
 			0 1px 0.5px var(--logo-tile-shadow),

@@ -38,7 +38,7 @@
 	.verdicts {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-48);
+		gap: var(--verdict-list-gap);
 	}
 
 	.verdict {
@@ -48,8 +48,8 @@
 
 	dt {
 		display: flex;
-		align-items: center;
 		gap: var(--verdict-label-gap);
+		align-items: center;
 		color: var(--verdict-label);
 	}
 
@@ -58,8 +58,7 @@
 	}
 
 	.type-verdict {
-		margin-top: var(--verdict-gap);
-		margin-bottom: var(--space-14);
+		margin-block: var(--verdict-gap) var(--verdict-meter-gap);
 		color: var(--verdict-word);
 	}
 </style>

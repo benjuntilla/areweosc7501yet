@@ -51,6 +51,14 @@
 		"category-gap": {
 			"$type": "dimension",
 			"$value": "{space.8}"
+		},
+		"legend-gap": {
+			"$type": "dimension",
+			"$value": "{space.16}"
+		},
+		"icon-gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
 		}
 	},
 	"chip": {
@@ -97,6 +105,14 @@
 		"list-gap": {
 			"$type": "dimension",
 			"$value": "{space.2}"
+		},
+		"list-row-gap": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"list-label-gap": {
+			"$type": "dimension",
+			"$value": "{space.4}"
 		}
 	},
 	"more-chip": {
@@ -195,6 +211,10 @@
 		"ghost-opacity": {
 			"$type": "number",
 			"$value": "{opacity.ghost}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.10}"
 		}
 	},
 	"rail-link": {
@@ -247,6 +267,14 @@
 		"radius": {
 			"$type": "dimension",
 			"$value": "{radius.12}"
+		},
+		"offset": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"meta-gap": {
+			"$type": "dimension",
+			"$value": "{space.2}"
 		}
 	},
 	"error-card": {
@@ -319,6 +347,10 @@
 		"ghost-opacity": {
 			"$type": "number",
 			"$value": "{opacity.ghost}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.14}"
 		}
 	},
 	"footer": {
@@ -337,6 +369,10 @@
 		"gap": {
 			"$type": "dimension",
 			"$value": "{space.8}"
+		},
+		"padding-top": {
+			"$type": "dimension",
+			"$value": "{space.14}"
 		}
 	},
 	"rail-label": {
@@ -411,6 +447,10 @@
 		"icon-size": {
 			"$type": "dimension",
 			"$value": "{icon.size-sm}"
+		},
+		"results-gap": {
+			"$type": "dimension",
+			"$value": "{space.16}"
 		}
 	},
 	"nav": {
@@ -480,6 +520,18 @@
 			"$type": "dimension",
 			"$value": "{space.4}",
 			"$description": "Vertical padding of a TOC entry (Rex: 4px)."
+		},
+		"toc-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"toc-size": {
+			"$type": "dimension",
+			"$value": "{font.size.13}"
+		},
+		"toc-line-height": {
+			"$type": "dimension",
+			"$value": "{font.line-height.16}"
 		}
 	},
 	"theme-toggle": {
@@ -596,6 +648,10 @@
 		"item-gap": {
 			"$type": "dimension",
 			"$value": "{space.6}"
+		},
+		"learn-gap": {
+			"$type": "dimension",
+			"$value": "{space.12}"
 		}
 	},
 	"verdict": {
@@ -622,6 +678,14 @@
 		"radius": {
 			"$type": "dimension",
 			"$value": "{radius.12}"
+		},
+		"list-gap": {
+			"$type": "dimension",
+			"$value": "{space.48}"
+		},
+		"meter-gap": {
+			"$type": "dimension",
+			"$value": "{space.14}"
 		}
 	},
 	"link": {
@@ -779,6 +843,66 @@
 				"unit": "ms"
 			},
 			"$description": "Rail label exit: all lines together, opacity ease-out, movement ease-in."
+		}
+	},
+	"hero": {
+		"drum-gap": {
+			"$type": "dimension",
+			"$value": "{space.7}"
+		},
+		"drum-margin-bottom": {
+			"$type": "dimension",
+			"$value": "{space.18}"
+		}
+	},
+	"role": {
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.28}"
+		}
+	},
+	"sidebar": {
+		"search-margin-top": {
+			"$type": "dimension",
+			"$value": "{space.20}"
+		},
+		"search-margin-bottom": {
+			"$type": "dimension",
+			"$value": "{space.24}"
+		},
+		"theme-toggle-margin-top": {
+			"$type": "dimension",
+			"$value": "{space.32}"
+		}
+	},
+	"menu": {
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.20}"
+		},
+		"padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.40}"
+		},
+		"item-padding-x": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"item-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"item-radius": {
+			"$type": "dimension",
+			"$value": "{radius.8}"
+		},
+		"group-padding-top": {
+			"$type": "dimension",
+			"$value": "{space.18}"
+		},
+		"group-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.6}"
 		}
 	}
 }

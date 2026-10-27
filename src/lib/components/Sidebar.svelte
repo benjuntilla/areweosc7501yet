@@ -24,22 +24,23 @@
 <style>
 	.sidebar {
 		position: fixed;
-		top: var(--layout-page-padding-top);
-		left: clamp(24px, 50% - 536px, 64px);
-		width: 200px;
-		max-height: calc(100svh - var(--layout-page-padding-top));
-		overflow-y: auto;
+		inset-block-start: var(--layout-page-padding-top);
+		inset-inline-start: clamp(24px, 50% - 536px, 64px);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+		inline-size: 200px;
+		max-block-size: calc(100svb - var(--layout-page-padding-top));
+		/* stylelint-disable-next-line property-layout-mappings -- overflow-block needs Safari 26 */
+		overflow-y: auto;
 	}
 
 	.sidebar > :global(.search) {
-		margin: 20px 0 24px;
+		margin: var(--sidebar-search-margin-top) 0 var(--sidebar-search-margin-bottom);
 	}
 
 	.sidebar > :global(.theme-toggle) {
-		margin: 32px 0 var(--layout-page-padding-top);
+		margin: var(--sidebar-theme-toggle-margin-top) 0 var(--layout-page-padding-top);
 	}
 
 	@media (width < 1100px) {

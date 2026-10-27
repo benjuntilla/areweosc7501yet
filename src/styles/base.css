@@ -1,24 +1,24 @@
 @font-face {
 	font-family: Inter;
 	font-style: normal;
-	font-display: swap;
 	font-weight: 100 900;
 	src: url('../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
 		format('woff2-variations');
+	font-display: swap;
 	unicode-range:
 		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
 		U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 :root {
-	color-scheme: light dark;
-	background: var(--page-background);
-	color: var(--content-text);
 	font-family: var(--type-family-sans), system-ui, sans-serif;
 	font-size: var(--type-body-size);
-	line-height: var(--type-body-line-height);
 	font-weight: var(--type-weight-regular);
 	font-feature-settings: 'tnum';
+	line-height: var(--type-body-line-height);
+	color: var(--content-text);
+	color-scheme: light dark;
+	background: var(--page-background);
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -46,8 +46,8 @@ ul,
 dl,
 dd,
 figure {
-	margin: 0;
 	padding: 0;
+	margin: 0;
 }
 
 ul {
@@ -69,10 +69,10 @@ input {
 }
 
 button {
-	background: none;
-	border: 0;
 	padding: 0;
 	cursor: pointer;
+	background: none;
+	border: 0;
 }
 
 svg {
@@ -104,15 +104,15 @@ a:active {
 .type-h1 {
 	font-size: var(--type-h1-size);
 	line-height: var(--type-h1-line-height);
-	letter-spacing: var(--type-h1-tracking);
 	color: var(--heading-text);
+	letter-spacing: var(--type-h1-tracking);
 }
 
 .type-section {
 	font-size: var(--type-section-size);
 	line-height: var(--type-section-line-height);
-	letter-spacing: var(--type-section-tracking);
 	color: var(--heading-text);
+	letter-spacing: var(--type-section-tracking);
 }
 
 .type-verdict {
@@ -130,15 +130,15 @@ a:active {
 .type-h2 {
 	font-size: var(--type-h2-size);
 	line-height: var(--type-h2-line-height);
-	letter-spacing: var(--type-h2-tracking);
 	color: var(--heading-text);
+	letter-spacing: var(--type-h2-tracking);
 }
 
 .type-h3 {
 	font-size: var(--type-h3-size);
 	line-height: var(--type-h3-line-height);
-	letter-spacing: var(--type-h3-tracking);
 	color: var(--heading-text);
+	letter-spacing: var(--type-h3-tracking);
 }
 
 .type-body {
@@ -166,24 +166,26 @@ a:active {
 }
 
 .visually-hidden:not(:focus-within, :active) {
-	clip-path: inset(50%);
-	height: 1px;
-	overflow: hidden;
 	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
 	white-space: nowrap;
-	width: 1px;
+	clip-path: inset(50%);
 }
 
 /* State names in running text get their glyph in front. */
+/* stylelint-disable declaration-property-unit-allowed-list -- spaced in em to scale with the text around it */
 .state-inline {
-	white-space: nowrap;
 	margin-inline-start: 0.2em;
+	white-space: nowrap;
 }
 
 .state-inline > svg {
 	display: inline-block;
-	width: 0.875em;
-	height: 0.875em;
-	vertical-align: -0.075em;
+	inline-size: 0.875em;
+	block-size: 0.875em;
 	margin-inline-end: 0.15em;
+	vertical-align: -0.075em;
 }
+/* stylelint-enable declaration-property-unit-allowed-list */

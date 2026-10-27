@@ -23,9 +23,9 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--footer-gap);
-		padding-top: calc(var(--footer-gap) + 6px);
-		border-top: 1px solid var(--footer-divider);
+		padding-block-start: var(--footer-padding-top);
 		color: var(--footer-text);
+		border-block-start: 1px solid var(--footer-divider);
 	}
 
 	a {

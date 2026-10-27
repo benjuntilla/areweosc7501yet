@@ -78,14 +78,14 @@
 	.category {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-8);
+		gap: var(--heading-category-gap);
 	}
 
 	.chips {
 		display: flex;
 		flex-wrap: wrap;
+		gap: var(--chip-list-row-gap) var(--chip-list-gap);
 		align-items: center;
-		gap: 4px var(--chip-list-gap);
 	}
 
 	.list {
@@ -94,30 +94,31 @@
 
 	.tail {
 		display: grid;
-		grid-template-rows: 0fr;
 		flex-basis: 100%;
+		grid-template-rows: 0fr;
 		order: 2;
 		transition: grid-template-rows var(--motion-toc-unfold-duration) cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
-	.tail.open {
+	.tail.open,
+	:global(html:not(.js)) .tail {
 		grid-template-rows: 1fr;
 		transition-timing-function: var(--motion-ease-unfold);
+	}
+
+	:global(html.js) .tail:not(.open) {
+		visibility: hidden;
 	}
 
 	.tail-inner {
 		display: flex;
 		flex-wrap: wrap;
+		gap: var(--chip-list-row-gap) var(--chip-list-gap);
 		align-items: center;
-		gap: 4px var(--chip-list-gap);
-		min-height: 0;
+		min-block-size: 0;
+		padding: var(--focus-ring-stroke-width);
+		margin: calc(var(--focus-ring-stroke-width) * -1);
 		overflow: hidden;
-		padding: 2px;
-		margin: -2px;
-	}
-
-	.tail:not(.open) .tail-inner {
-		visibility: hidden;
 	}
 
 	.tail-inner > * {
@@ -138,16 +139,16 @@
 
 	.more-label {
 		flex-basis: 100%;
-		padding-top: 4px;
+		padding-block-start: var(--chip-list-label-gap);
 		color: var(--content-text-muted);
 	}
 
 	.more-chip {
 		order: 1;
 		padding: var(--more-chip-padding-y) var(--more-chip-padding-x);
-		border-radius: var(--more-chip-radius);
-		background: var(--chip-background);
 		color: var(--chip-label-muted);
+		background: var(--chip-background);
+		border-radius: var(--more-chip-radius);
 		transition: background-color var(--motion-state-duration) var(--motion-ease-state);
 	}
 
@@ -164,13 +165,7 @@
 	}
 
 	/* Without JavaScript the tail stays open and the toggle can't work. */
-	:global(html:not(.js)) .tail {
-		grid-template-rows: 1fr;
-	}
-
-	:global(html:not(.js)) .tail-inner,
 	:global(html:not(.js)) .tail-inner > * {
-		visibility: visible;
 		opacity: 1;
 		translate: 0 0;
 	}
@@ -183,8 +178,8 @@
 		.tail,
 		.tail-inner > *,
 		.open .tail-inner > * {
-			transition: opacity var(--motion-state-duration) ease-out;
 			translate: 0 0;
+			transition: opacity var(--motion-state-duration) ease-out;
 		}
 	}
 </style>

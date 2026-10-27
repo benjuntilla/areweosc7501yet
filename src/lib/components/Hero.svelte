@@ -31,9 +31,9 @@
 	.drum-line {
 		display: flex;
 		flex-wrap: wrap;
+		column-gap: var(--hero-drum-gap);
 		align-items: center;
-		column-gap: var(--space-7);
-		margin-bottom: 18px;
+		margin-block-end: var(--hero-drum-margin-bottom);
 	}
 
 	.type-lead {
@@ -41,7 +41,7 @@
 	}
 
 	.drum-slot {
-		height: 98px;
+		block-size: 98px;
 	}
 
 	a {

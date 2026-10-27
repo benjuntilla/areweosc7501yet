@@ -29,13 +29,13 @@
 	.role {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-28);
+		gap: var(--role-gap);
 	}
 
 	h3 {
 		display: flex;
+		gap: var(--heading-icon-gap);
 		align-items: baseline;
-		gap: var(--space-8);
 	}
 
 	h3 :global(svg) {

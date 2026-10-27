@@ -47,7 +47,7 @@
 <style>
 	.search {
 		display: block;
-		width: 100%;
+		inline-size: 100%;
 	}
 
 	:global(html:not(.js)) .search {
@@ -56,11 +56,11 @@
 
 	form {
 		display: flex;
-		align-items: center;
 		gap: var(--search-gap);
+		align-items: center;
 		padding: var(--search-padding-y) var(--search-padding-x);
-		border-radius: var(--search-radius);
 		background: var(--search-background);
+		border-radius: var(--search-radius);
 		box-shadow:
 			0 2px 2px -1px var(--search-shadow),
 			0 1px 1px 0 var(--search-shadow),
@@ -77,14 +77,14 @@
 
 	input {
 		flex: 1;
-		min-width: 0;
+		min-inline-size: 0;
 		padding: 0;
-		border: 0;
-		background: none;
-		color: var(--content-text-strong);
 		font-size: var(--type-nav-size);
 		line-height: var(--type-nav-line-height);
+		color: var(--content-text-strong);
 		outline: none;
+		background: none;
+		border: 0;
 	}
 
 	input::placeholder {

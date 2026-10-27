@@ -62,10 +62,10 @@
 	.rail {
 		position: fixed;
 		inset: 12px 12px 12px auto;
-		width: clamp(80px, 50% - 460px, 480px);
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: var(--rail-gap);
+		inline-size: clamp(80px, 50% - 460px, 480px);
 	}
 
 	@media (width < 1100px) {
@@ -76,10 +76,10 @@
 
 	.segment {
 		position: relative;
-		flex: 1;
 		display: block;
-		border-radius: var(--rail-segment-radius);
+		flex: 1;
 		text-decoration: none;
+		border-radius: var(--rail-segment-radius);
 	}
 
 	.segment:focus-visible {
@@ -90,14 +90,14 @@
 		position: absolute;
 		inset: 0;
 		overflow: hidden;
-		border-radius: inherit;
 		background: var(--rail-track);
+		border-radius: inherit;
 	}
 
 	.bar::after {
-		content: '';
 		position: absolute;
 		inset: 0;
+		content: '';
 		background: var(--rail-link-hover-overlay);
 		opacity: 0;
 		transition: opacity var(--motion-state-duration) var(--motion-ease-state);
@@ -150,8 +150,8 @@
 
 	.label {
 		position: absolute;
-		top: 0;
-		right: calc(100% + 12px);
+		inset-block-start: 0;
+		inset-inline-end: calc(100% + 12px);
 		display: flex;
 		flex-direction: column;
 		white-space: nowrap;
@@ -164,8 +164,8 @@
 
 	.line {
 		display: flex;
-		align-items: center;
 		gap: var(--rail-label-gap);
+		align-items: center;
 		color: var(--rail-label-count);
 		opacity: 0;
 		translate: 0 var(--motion-rail-label-distance);

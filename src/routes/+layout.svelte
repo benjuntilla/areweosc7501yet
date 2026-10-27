@@ -74,13 +74,13 @@
 <style>
 	.skip-link {
 		position: fixed;
-		top: 16px;
-		left: clamp(24px, 50% - 536px, 64px);
+		inset-block-start: 16px;
+		inset-inline-start: clamp(24px, 50% - 536px, 64px);
 		z-index: 10;
 		padding: var(--nav-item-padding-y) var(--nav-item-padding-x);
-		border-radius: var(--nav-item-radius);
-		background: var(--card-background);
 		color: var(--content-text-strong);
+		background: var(--card-background);
+		border-radius: var(--nav-item-radius);
 		translate: 0 -200%;
 	}
 
@@ -92,20 +92,22 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-section-gap);
-		width: 576px;
-		margin-left: max(272px, 50% - 288px);
+		inline-size: 576px;
 		padding: var(--layout-page-padding-top) 0 var(--layout-page-padding-bottom);
+		/* stylelint-disable-next-line declaration-property-unit-allowed-list -- page grid: the 576px column centers in the window but stays clear of the sidebar */
+		margin-inline-start: max(272px, 50% - 288px);
 	}
 
+	/* stylelint-disable-next-line a11y/no-outline-none -- main takes focus only from the skip link, which shows the ring */
 	main:focus {
 		outline: none;
 	}
 
 	@media (width < 1100px) {
 		.column {
-			width: auto;
-			margin: 0;
+			inline-size: auto;
 			padding-inline: var(--layout-page-padding-x);
+			margin: 0;
 		}
 	}
 </style>

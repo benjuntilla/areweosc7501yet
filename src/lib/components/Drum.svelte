@@ -43,7 +43,9 @@
 
 	let dragStart = { y: 0, position: 0 };
 
+	// Preventing the default keeps a drag from selecting text.
 	const onpointerdown = (event: PointerEvent) => {
+		event.preventDefault();
 		dragging = true;
 		dragStart = { y: event.clientY, position };
 		drum?.setPointerCapture(event.pointerId);
@@ -120,15 +122,14 @@
 <style>
 	.drum {
 		position: relative;
-		width: 84px;
-		height: 98px;
-		perspective: 350px;
-		touch-action: none;
-		user-select: none;
-		cursor: grab;
+		inline-size: 84px;
+		block-size: 98px;
 		font-size: var(--type-drum-size);
 		line-height: var(--type-drum-line-height);
+		touch-action: none;
+		cursor: grab;
 		mask-image: linear-gradient(transparent, black 30%, black 70%, transparent);
+		perspective: 350px;
 	}
 
 	.dragging {
@@ -150,16 +151,13 @@
 
 	.row {
 		position: absolute;
-		top: calc(50% - var(--type-drum-line-height) / 2);
-		left: 0;
-		backface-visibility: hidden;
-		transform: rotateX(calc(var(--row) * -1deg * 360 / 14)) translateZ(58.4px);
-		white-space: nowrap;
-	}
-
-	.row {
+		inset-block-start: calc(50% - var(--type-drum-line-height) / 2);
+		inset-inline-start: 0;
 		color: var(--content-text-muted);
+		white-space: nowrap;
 		opacity: 0.55;
+		transform: rotateX(calc(var(--row) * -1deg * 360 / 14)) translateZ(58.4px);
+		backface-visibility: hidden;
 	}
 
 	.front {

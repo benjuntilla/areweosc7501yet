@@ -93,8 +93,8 @@
 <style>
 	.top-bar {
 		display: flex;
-		align-items: center;
 		gap: var(--top-bar-gap);
+		align-items: center;
 	}
 
 	@media (width >= 1100px) {
@@ -109,9 +109,9 @@
 
 	.search-row {
 		display: flex;
-		align-items: center;
 		gap: var(--top-bar-gap);
-		width: 100%;
+		align-items: center;
+		inline-size: 100%;
 	}
 
 	:global(html:not(.js)) .search-button {
@@ -124,9 +124,9 @@
 		display: grid;
 		place-items: center;
 		padding: var(--top-bar-button-padding);
-		border-radius: var(--top-bar-button-radius);
-		background: var(--top-bar-button-background);
 		color: var(--top-bar-icon-strong);
+		background: var(--top-bar-button-background);
+		border-radius: var(--top-bar-button-radius);
 		box-shadow:
 			0 2px 2px -1px var(--top-bar-button-shadow),
 			0 1px 1px -0.5px var(--top-bar-button-shadow),
@@ -134,42 +134,44 @@
 	}
 
 	.button::before {
-		content: '';
 		position: absolute;
 		inset: -4px;
+		content: '';
 	}
 
 	.sheet {
-		width: 100%;
-		max-width: none;
-		height: 100%;
-		max-height: none;
+		inline-size: 100%;
+		max-inline-size: none;
+		block-size: 100%;
+		max-block-size: none;
+		padding: var(--layout-page-padding-top) var(--layout-page-padding-x) var(--menu-padding-bottom);
 		margin: 0;
-		padding: var(--layout-page-padding-top) var(--layout-page-padding-x) var(--space-40);
-		border: 0;
-		background: var(--page-background);
-		color: inherit;
+		/* stylelint-disable-next-line property-layout-mappings -- overflow-block needs Safari 26 */
 		overflow-y: auto;
+		/* stylelint-disable-next-line plugin/use-baseline -- where it is missing, the page behind scrolls along with the menu */
 		overscroll-behavior: contain;
+		color: inherit;
+		background: var(--page-background);
+		border: 0;
 	}
 
 	.sheet[open] {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-20);
+		gap: var(--menu-gap);
 	}
 
 	.sheet :global(.item) {
-		padding: var(--space-10) var(--space-12);
-		border-radius: var(--radius-8);
+		padding: var(--menu-item-padding-y) var(--menu-item-padding-x);
 		font-size: var(--type-body-size);
 		line-height: var(--type-body-line-height);
+		border-radius: var(--menu-item-radius);
 	}
 
 	.sheet :global(.nav),
 	.sheet :global(.nav > ul > li),
 	.sheet :global(.item) {
-		width: 100%;
+		inline-size: 100%;
 	}
 
 	.sheet :global(.item[aria-current='page']) {
@@ -177,6 +179,7 @@
 	}
 
 	.sheet :global(.group) {
-		padding: var(--space-18) 0 var(--space-6) var(--space-12);
+		padding: var(--menu-group-padding-top) 0 var(--menu-group-padding-bottom)
+			var(--menu-item-padding-x);
 	}
 </style>
