@@ -35,6 +35,11 @@
 		overflow-y: auto;
 	}
 
+	/* The sidebar scrolls when the window is short, so its parts keep their size. */
+	.sidebar > :global(*) {
+		flex-shrink: 0;
+	}
+
 	.sidebar > :global(.search) {
 		margin: var(--sidebar-search-margin-top) 0 var(--sidebar-search-margin-bottom);
 	}
