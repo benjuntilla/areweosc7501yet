@@ -54,7 +54,7 @@ jobs:
           persist-credentials: false
       # The postinstall hook in .config/mise.toml runs pnpm install, which uses the frozen lockfile in CI.
       - uses: jdx/mise-action@v5.2.3
-      # Usually about 30 s, but the runner's apt mirror can slow it to 10 minutes.
+      # Usually about 30 s. A stalled apt mirror can stretch it to 10 minutes, so stop early and re-run the job.
       - run: pnpm playwright install --with-deps chromium
         timeout-minutes: 3
       - run: node scripts/ci.ts
