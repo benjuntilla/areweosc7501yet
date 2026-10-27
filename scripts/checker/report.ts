@@ -30,7 +30,7 @@ export const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) 
 				if (s.items.length < 100) break;
 			}
 		}
-		return Array.dedupeWith(
+		const found = Array.dedupeWith(
 			hits.filter(
 				(h) =>
 					h.user?.type !== 'Bot' &&
@@ -38,6 +38,24 @@ export const candidates = (tracked: ReadonlyArray<string>, since: DateTime.Utc) 
 					!tracked.some((r) => sameRepo(r, repoOf(h)))
 			),
 			(a, b) => repoOf(a) === repoOf(b)
+		);
+		// A fork whose parent or source is tracked is covered by that repo's entry.
+		return yield* Effect.filter(
+			found,
+			(h) => {
+				const [owner = '', repo = ''] = repoOf(h).split('/');
+				return Gh.repos
+					.get({ owner, repo })
+					.pipe(
+						Effect.map(
+							({ parent, source }) =>
+								![parent, source].some(
+									(f) => f !== undefined && tracked.some((r) => sameRepo(r, f.full_name))
+								)
+						)
+					);
+			},
+			{ concurrency: 4 }
 		);
 	});
 
@@ -55,7 +73,7 @@ export const body = (
 ) => {
 	const changes = results.flatMap((r) => r.changes);
 	const notes = results.flatMap((r) => r.notes);
-	return [
+	const text = [
 		'## History changes',
 		changes.length === 0
 			? 'None.'
@@ -77,4 +95,7 @@ export const body = (
 			? 'None.'
 			: stale.map((s) => `- ${s.slug}, last checked ${s.last}`).join('\n')
 	].join('\n\n');
+	// GitHub adds a "mentioned this" event to each issue or PR that a PR body links to.
+	// redirect.github.com links don't add one, which is why Dependabot uses them.
+	return text.replaceAll('https://github.com/', 'https://redirect.github.com/');
 };

@@ -1,5 +1,5 @@
 import * as Gh from '@distilled.cloud/github';
-import { DateTime, Effect, Option } from 'effect';
+import { Array, DateTime, Effect, Option } from 'effect';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
 import type { Entry, HistoryBlock, State } from '../../src/lib/domain/schema.ts';
@@ -152,16 +152,19 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 				? [{ tag: r.tag_name, url: r.html_url, published: DateTime.makeUnsafe(r.published_at) }]
 				: []
 		);
-		// GitHub lists releases newest tag first, which publish dates of backports don't follow.
-		const [newest] = stable;
-		const github =
-			newest === undefined
-				? { ...previous, stars }
-				: {
-						stars,
-						latest_release_tag: newest.tag,
-						latest_release_date: DateTime.removeTime(newest.published)
-					};
+		// GitHub's Latest, because a backport published after it comes first in the list. A
+		// monorepo's Latest can be on another line, and then it's the newest on this one.
+		const newest = Array.findFirst(stable, (r) => r.tag === latest?.tag_name).pipe(
+			Option.orElse(() => Array.head(stable))
+		);
+		const github = Option.match(newest, {
+			onNone: () => ({ ...previous, stars }),
+			onSome: (r) => ({
+				stars,
+				latest_release_tag: r.tag,
+				latest_release_date: DateTime.removeTime(r.published)
+			})
+		});
 		return { github, stable };
 	});
 
@@ -185,6 +188,9 @@ export const checkEntry = (entry: SlugEntry, now: DateTime.Utc) =>
 			const b = { ...next, date: DateTime.max(next.date, current.date) };
 			history.push(b);
 			changes.push({ slug: entry.slug, from: current.state, to: b.state, source: b.source });
+		}
+		if (entry.note !== undefined && changes.some((c) => c.from !== c.to)) {
+			notes.push(`${entry.slug} has a new state. Make sure its note is still true: ${entry.note}`);
 		}
 		const last = history.at(-1);
 		const verified = last !== undefined && Option.isSome(refOf(last.source, repo));
