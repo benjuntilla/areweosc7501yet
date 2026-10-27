@@ -37,8 +37,13 @@ export const Github = Schema.Struct({
 	popular: Schema.Boolean.pipe(
 		Schema.annotateEncoded({ description: 'At least 1,000 GitHub stars at the last check.' })
 	),
-	latest_release_tag: Schema.optionalKey(Schema.String),
-	latest_release_date: Schema.optionalKey(Day)
+	latest_release_tag: Schema.optionalKey(
+		Schema.String.pipe(
+			Schema.annotateEncoded({
+				description: 'The newest stable release. Kept only while the entry is working or blocked.'
+			})
+		)
+	)
 }).pipe(
 	Schema.annotateEncoded({ description: "Written by the weekly checker. Don't edit it by hand." })
 );

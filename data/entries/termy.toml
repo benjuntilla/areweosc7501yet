@@ -8,8 +8,6 @@ note = "The 1.0.0 release candidates are its Latest releases and what auto-updat
 
 [github]
 popular = false
-latest_release_tag = "v1.0.0-rc.8"
-latest_release_date = 2026-10-23
 
 [[history]]
 date = 2026-10-08

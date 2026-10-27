@@ -9,7 +9,6 @@ note = "Only a rolling tag"
 [github]
 popular = false
 latest_release_tag = "rolling"
-latest_release_date = 2026-07-07
 
 [[history]]
 date = 2026-10-07T17:43:11Z

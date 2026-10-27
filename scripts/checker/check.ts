@@ -1,6 +1,6 @@
 import * as Gh from '@distilled.cloud/github';
 import { Array, DateTime, Effect, Equivalence, Option, Struct } from 'effect';
-import { featuredStars } from '../../src/lib/domain/derive.ts';
+import { currentState, featuredStars } from '../../src/lib/domain/derive.ts';
 import { githubRepoOf, sameRepo } from '../../src/lib/domain/formats.ts';
 import type { SlugEntry } from '../../src/lib/domain/load.ts';
 import type { Entry, HistoryBlock, State } from '../../src/lib/domain/schema.ts';
@@ -184,11 +184,7 @@ const refresh = (owner: string, name: string, previous: Entry['github']) =>
 		);
 		const github = Option.match(current, {
 			onNone: () => ({ ...previous, popular }),
-			onSome: (r) => ({
-				popular,
-				latest_release_tag: r.tag,
-				latest_release_date: DateTime.removeTime(r.published)
-			})
+			onSome: (r) => ({ popular, latest_release_tag: r.tag })
 		});
 		return { github, stable };
 	});
@@ -217,8 +213,16 @@ export const checkEntry = (entry: SlugEntry, now: DateTime.Utc, lastRun: DateTim
 		if (entry.note !== undefined && changes.some((c) => c.from !== c.to)) {
 			notes.push(`${entry.slug} has a new state. Make sure its note is still true: ${entry.note}`);
 		}
+		// Only an entry on its way to done needs its latest release: the popover names it after a
+		// merge, and the next run reads it to keep a monorepo entry on its release line.
+		const state = currentState({ ...entry, history });
+		const updated = {
+			...entry,
+			github:
+				state === 'working' || state === 'blocked' ? github : Struct.pick(github, ['popular']),
+			history
+		};
 		// The run's date goes in data/checker.toml, so only entries checked by hand keep a date.
-		const updated = { ...entry, github, history };
 		const rechecked: SlugEntry = followable(updated)
 			? Struct.omit(updated, ['last_checked_date'])
 			: updated;

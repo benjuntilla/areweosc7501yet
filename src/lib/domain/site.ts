@@ -65,7 +65,7 @@ const VerdictSummary = Schema.Struct({
  * removing one bumps it.
  */
 export const DataJson = Schema.Struct({
-	schemaVersion: Schema.Literal(2),
+	schemaVersion: Schema.Literal(3),
 	generatedAt: Schema.String,
 	spec: Schema.Struct({ current: Schema.String, revisions: Schema.Array(SpecRevision) }),
 	verdicts: Schema.Struct({ program: VerdictSummary, terminal: VerdictSummary }),
@@ -90,7 +90,7 @@ const verdictJson = (v: RoleSummary) => ({
 /** data.json as JSON, with dates encoded back to ISO strings by the schema. */
 export const toDataJson = (site: Site, generatedAt: DateTime.Utc): typeof DataJson.Encoded =>
 	Schema.encodeSync(DataJson)({
-		schemaVersion: 2,
+		schemaVersion: 3,
 		generatedAt: DateTime.formatIso(generatedAt),
 		spec: site.spec,
 		verdicts: {

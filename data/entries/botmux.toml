@@ -9,8 +9,6 @@ note = "Reads Claude Code’s reports"
 
 [github]
 popular = true
-latest_release_tag = "v3.50.0"
-latest_release_date = 2026-10-23
 
 [[history]]
 date = 2026-10-10

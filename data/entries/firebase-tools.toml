@@ -9,7 +9,6 @@ note = "Closed in favor of a fresh implementation."
 [github]
 popular = true
 latest_release_tag = "v15.34.1"
-latest_release_date = 2026-10-22
 
 [[history]]
 date = 2026-10-08

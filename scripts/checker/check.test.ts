@@ -139,6 +139,9 @@ const fakeGitHub = (recorded: Record<string, unknown>) =>
 const now = DateTime.makeUnsafe('2026-10-26T14:00:00Z');
 const lastRun = DateTime.makeUnsafe('2026-10-19');
 
+const block = (state: string, source: string, date = '2026-10-12') => ({ date, state, source });
+
+// Working by default, because only entries in progress keep their latest release.
 const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?: object }) =>
 	Schema.decodeUnknownEffect(Entry)({
 		name: 'X',
@@ -147,11 +150,9 @@ const entry = (fields: { repo: string; history?: ReadonlyArray<object>; github?:
 		category: 'emulators',
 		spec_revision: '0.4',
 		last_checked_date: '2026-10-24',
-		history: [],
+		history: [block('working', 'https://example.com/announcement')],
 		...fields
 	}).pipe(Effect.map((e) => ({ slug: 'x', ...e })));
-
-const block = (state: string, source: string, date = '2026-10-12') => ({ date, state, source });
 
 const run = (e: SlugEntry, recorded: Record<string, unknown>) =>
 	checkEntry(e, now, lastRun).pipe(Effect.provide(fakeGitHub(recorded)));
@@ -191,11 +192,7 @@ describe('checkEntry', () => {
 				source: 'https://github.com/Kuddev/pebrel/releases/tag/v2.3.0',
 				version: 'v2.3.0'
 			});
-			expect(r.entry.github).toEqual({
-				popular: true,
-				latest_release_tag: 'v2.3.0',
-				latest_release_date: DateTime.makeUnsafe('2026-10-26')
-			});
+			expect(r.entry.github).toEqual({ popular: true });
 			expect(r.entry.last_checked_date).toBeUndefined();
 		})
 	);

@@ -8,8 +8,6 @@ note = "Engine"
 
 [github]
 popular = false
-latest_release_tag = "v0.17.1"
-latest_release_date = 2026-10-23
 
 [[history]]
 date = 2026-10-11

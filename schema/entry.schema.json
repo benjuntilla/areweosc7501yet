@@ -57,11 +57,8 @@
 					"description": "At least 1,000 GitHub stars at the last check."
 				},
 				"latest_release_tag": {
-					"type": "string"
-				},
-				"latest_release_date": {
 					"type": "string",
-					"format": "date"
+					"description": "The newest stable release. Kept only while the entry is working or blocked."
 				}
 			},
 			"required": ["popular"],

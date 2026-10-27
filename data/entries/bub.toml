@@ -10,7 +10,6 @@ note = "0.6.0a3 doesn’t include it"
 [github]
 popular = true
 latest_release_tag = "0.5.1"
-latest_release_date = 2026-10-11
 
 [[history]]
 date = 2026-10-19

@@ -40,7 +40,6 @@ exports[`site > builds a data.json that matches its own schema > data.json 1`] =
       "category": "emulators",
       "featured": true,
       "github": {
-        "latest_release_date": "2026-10-01",
         "latest_release_tag": "v0.49.2",
         "popular": true,
       },
@@ -107,7 +106,7 @@ exports[`site > builds a data.json that matches its own schema > data.json 1`] =
     },
   ],
   "generatedAt": "2026-10-24T14:00:00.000Z",
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "spec": {
     "current": "0.4",
     "revisions": [

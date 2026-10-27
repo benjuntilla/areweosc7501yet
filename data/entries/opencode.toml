@@ -9,7 +9,6 @@ note = "On dev and in the unreleased v2.1 tags. The stable 1.x line doesn’t ha
 [github]
 popular = true
 latest_release_tag = "v1.19.4"
-latest_release_date = 2026-10-22
 
 [[history]]
 date = 2026-10-10
