@@ -83,7 +83,7 @@
 	ontoggle={(event) => (menuOpen = event.newState === 'open')}
 >
 	<div class="top-bar">
-		<Logo size={36} />
+		<Logo size={36} onnavigate={closeMenu} />
 		<span class="spacer"></span>
 		<button
 			class="button"

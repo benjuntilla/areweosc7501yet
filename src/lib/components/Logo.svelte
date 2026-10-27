@@ -2,10 +2,16 @@
 	import { siteTitle } from '#lib/meta.ts';
 	import StateGlyph from './StateGlyph.svelte';
 
-	let { size = 48 }: { size?: number } = $props();
+	let { size = 48, onnavigate }: { size?: number; onnavigate?: () => void } = $props();
 </script>
 
-<a class="logo-tile" href="/" aria-label="{siteTitle} home" style:--size="{size}px">
+<a
+	class="logo-tile"
+	href="/"
+	aria-label="{siteTitle} home"
+	style:--size="{size}px"
+	onclick={onnavigate}
+>
 	<StateGlyph state="working" size={size / 2} spin={false} />
 </a>
 
