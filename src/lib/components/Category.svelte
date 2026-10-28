@@ -16,16 +16,21 @@
 	let toggle: HTMLButtonElement | undefined = $state();
 	let tail: HTMLDivElement | undefined = $state();
 	let folded = $state(false);
+	let foldShift = $state(0);
 
 	// The URL can be shared. Unfolding from the keyboard moves focus to the first revealed chip,
 	// which comes before the toggle in tab order. Otherwise the toggle keeps focus and stays in view.
 	const onclick = async () => {
+		const tailTop = tail?.offsetTop ?? 0;
 		expanded = !expanded;
 		folded = !expanded;
 		const url = new URL(location.href);
 		url.hash = expanded ? `${category.id}-all` : '';
 		replaceState(url, {});
 		await tick();
+		// When "+ N more" wraps onto a row of its own, it pushes the folding rows down by that row.
+		// Shift them back, so they fade out where they were.
+		if (!expanded && tail) foldShift = tailTop - tail.offsetTop;
 		if (expanded && toggle?.matches(':focus-visible')) tail?.querySelector('button')?.focus();
 		else toggle?.scrollIntoView({ block: 'nearest' });
 	};
@@ -40,7 +45,13 @@
 			{/each}
 		</ul>
 		{#if category.more.length > 0}
-			<div bind:this={tail} class="tail" class:open={expanded} id="{category.id}-more">
+			<div
+				bind:this={tail}
+				class="tail"
+				class:open={expanded}
+				id="{category.id}-more"
+				style:--fold-shift="{foldShift}px"
+			>
 				<div class="tail-inner">
 					<p class="more-label type-caption">More projects</p>
 					<ul class="list">
@@ -108,6 +119,7 @@
 
 	:global(html.js) .tail:not(.open) {
 		visibility: hidden;
+		translate: 0 var(--fold-shift);
 	}
 
 	.tail-inner {
