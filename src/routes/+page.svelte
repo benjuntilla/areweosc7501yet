@@ -103,13 +103,27 @@
 </section>
 
 <style>
-	/* The top fills the first screen. On a short window it still keeps a section gap above the tracker. */
+	/* The top fills the rest of the first screen, and the hero sits at its foot, one section gap
+	   above the fold. Above the top are the page padding and, below 1,100 px, the 36 px top bar and
+	   a section gap. On a short window the top still keeps a section gap above the tracker. */
 	.top {
+		--above: var(--layout-page-padding-top);
+
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-section-gap);
-		min-block-size: calc(100svb - 48px);
+		min-block-size: calc(100svb - var(--above));
 		padding-block-end: var(--layout-section-gap);
+	}
+
+	@media (width < 1100px) {
+		.top {
+			--above: calc(var(--layout-page-padding-top) + 36px + var(--layout-section-gap));
+		}
+	}
+
+	.top > :global(.hero) {
+		margin-block-start: auto;
 	}
 
 	.tracker {
