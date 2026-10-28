@@ -4,10 +4,10 @@ role = "program"
 category = "coding-agents"
 is_featured = true
 spec_revision = "0.4"
-note = "Version not published"
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-28
 
 [[history]]
 date = 2026-10-15
 state = "done"
-source = "https://kiro.dev/docs/cli/terminal-ui/"
+source = "https://kiro.dev/changelog/cli/2-32/"
+version = "2.32.0"

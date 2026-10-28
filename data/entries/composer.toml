@@ -13,3 +13,8 @@ popular = true
 date = 2026-10-09
 state = "working"
 source = "https://github.com/composer/composer/pull/13117"
+
+[[history]]
+date = 2026-10-20T20:59:13Z
+state = "working"
+source = "https://github.com/composer/composer/commit/c15dcead592824d9b9baf2cc16c3c821464b9b14"

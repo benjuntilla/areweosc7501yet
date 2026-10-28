@@ -15,3 +15,8 @@ popular = true
 date = 2026-10-16
 state = "working"
 source = "https://github.com/solana-foundation/pay/pull/509"
+
+[[history]]
+date = 2026-10-16T13:54:29Z
+state = "working"
+source = "https://github.com/solana-foundation/pay/commit/b43bd435d851cc7b653a99be3ebf38f3ee6e73e2"

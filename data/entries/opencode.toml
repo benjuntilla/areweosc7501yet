@@ -4,7 +4,7 @@ repo = "anomalyco/opencode"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-note = "On dev and in the unreleased v2.1 tags. The stable 1.x line doesn’t have it."
+note = "Only OpenCode 2 has it. OpenCode 1, still on npm as opencode-ai, doesn’t."
 
 [github]
 popular = true
@@ -18,3 +18,9 @@ source = "https://github.com/anomalyco/opencode/pull/54402"
 date = 2026-10-19T14:47:33Z
 state = "working"
 source = "https://github.com/anomalyco/opencode/commit/c7ddff776c59426e7dd63fe5a0d2a348864592ba"
+
+[[history]]
+date = 2026-10-27T09:04:44Z
+state = "done"
+source = "https://github.com/anomalyco/opencode/releases/tag/v2.2.0"
+version = "v2.2.0"
