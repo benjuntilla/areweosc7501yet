@@ -69,7 +69,7 @@ export default {
 			{
 				'/.*/': [
 					/var\(\s*--(?:(?:neutral|amber|gray|green|indigo|lavender|lime|mix|orange|pink|red|violet|size|font|space|radius|stroke)-|opacity-\d)/u,
-					/(?<![\w.-])(?=[\d.]*[1-9])\d*\.?\d+m?s\b/u
+					/(?<![\w.-])-?(?=[\d.]*[1-9])\d*\.?\d+m?s\b/u
 				]
 			},
 			{ message: 'Use a semantic or component token, not a primitive one or a literal duration' }
