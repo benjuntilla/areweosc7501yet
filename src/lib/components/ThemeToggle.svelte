@@ -49,6 +49,7 @@
 	.theme-toggle {
 		display: inline-flex;
 		gap: var(--theme-toggle-gap);
+		align-self: flex-start;
 		padding: var(--theme-toggle-padding);
 		background: var(--theme-toggle-track);
 		border-radius: var(--theme-toggle-radius);
