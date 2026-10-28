@@ -8,6 +8,7 @@
 	import StateGlyph from './StateGlyph.svelte';
 
 	let dialog: HTMLDialogElement | undefined = $state();
+	let input: HTMLInputElement | undefined = $state();
 	let list: HTMLDivElement | undefined = $state();
 	let trigger: HTMLElement | undefined;
 	let find: Awaited<ReturnType<typeof loadSearch>> | undefined = $state();
@@ -59,6 +60,9 @@
 		await morph(from, d, () => {
 			from.style.visibility = 'hidden';
 			d.showModal();
+			// The dialog has autofocus, so the field gets focus here, without a scroll. iOS scrolls to
+			// reveal a focused field, and the caret then sits off the field until the first keystroke.
+			input?.focus({ preventScroll: true });
 		});
 		landing = false;
 	};
@@ -100,6 +104,7 @@
 <dialog
 	bind:this={dialog}
 	class="search-dialog"
+	autofocus
 	data-landing={landing || undefined}
 	aria-label="Search"
 	oncancel={(event) => {
@@ -114,6 +119,7 @@
 	<div class="field">
 		<Icon name="search" class="icon" />
 		<input
+			bind:this={input}
 			bind:value={query}
 			oninput={() => (selected = 0)}
 			{onkeydown}
