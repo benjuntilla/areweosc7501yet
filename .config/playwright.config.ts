@@ -25,7 +25,7 @@ export default defineConfig({
 				preview,
 				{
 					command: [
-						'docker run --rm --init --platform linux/amd64 --publish 4800:4800',
+						'docker run --rm --init --platform linux/amd64 --publish 127.0.0.1:4800:4800',
 						'--volume ../node_modules:/node_modules:ro',
 						`mcr.microsoft.com/playwright:v${playwright.version}-noble`,
 						'node /node_modules/@playwright/test/cli.js run-server --port 4800 --host 0.0.0.0'

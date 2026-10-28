@@ -49,7 +49,10 @@ jobs:
     runs-on: ubuntu-latest
     # Playwright's image has the browsers and the fonts that screenshots render with, and
     # `pnpm screenshots` renders in the same image. Keep its tag at the @playwright/test version.
-    container: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:47b510dd9230bf0b9bfc9b20102241e577ea7a99334ab4c3ca19f19770e9b8ea
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:47b510dd9230bf0b9bfc9b20102241e577ea7a99334ab4c3ca19f19770e9b8ea
+      # The runner's user, who owns the checkout. As root, git refuses the checkout as unsafe.
+      options: --user 1001
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7.0.1
