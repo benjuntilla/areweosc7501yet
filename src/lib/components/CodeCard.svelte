@@ -39,7 +39,7 @@
 	};
 </script>
 
-<figure class="card">
+<figure class="card type-code">
 	<figcaption class="head">
 		<span class="label">{label}</span>
 		<button class="copy" type="button" hidden={!scripted} aria-label="Copy code" onclick={copy}>
@@ -67,14 +67,6 @@
 		padding: var(--code-block-head-padding-y) var(--code-block-head-padding-right)
 			var(--code-block-head-padding-y) var(--code-block-padding-x);
 		border-block-end: var(--content-divider-width) solid var(--content-divider);
-	}
-
-	.label,
-	.card :global(pre) {
-		font-family: var(--type-family-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-		font-size: var(--type-code-size);
-		line-height: var(--type-code-line-height);
-		letter-spacing: var(--type-code-tracking);
 	}
 
 	.label {
@@ -108,6 +100,12 @@
 		margin: 0;
 		/* stylelint-disable-next-line property-layout-mappings -- overflow-inline needs Safari 26 */
 		overflow-x: auto;
+		font: inherit;
 		white-space: pre;
+	}
+
+	/* Browsers give code their own monospace font, so the code takes the card's font instead. */
+	.card :global(code) {
+		font: inherit;
 	}
 </style>
