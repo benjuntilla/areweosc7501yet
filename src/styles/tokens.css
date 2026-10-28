@@ -64,6 +64,8 @@
 	--content-text-muted: var(--color-muted);
 	--content-text-strong: var(--color-ink);
 	--effect-backdrop: var(--neutral-777-a160);
+	--effect-field-ring:
+		inset 0px 0px 0px 1px var(--neutral-1000-a035), inset 0px 1px 4px var(--neutral-1000-a020);
 	--effect-hover-brightness: 0.96;
 	--effect-ring: var(--neutral-777-a070);
 	--effect-shadow: var(--neutral-777-a035);
@@ -74,6 +76,10 @@
 		0px 32px 32px -16px var(--neutral-777-a071), 0px 48px 64px -24px var(--neutral-777-a102);
 	--error-card-code-opacity: var(--opacity-dim);
 	--error-card-content: var(--color-on-accent);
+	--field-coral: var(--orange-224);
+	--field-end: var(--lime-57);
+	--field-lime: var(--lime-76);
+	--field-start: var(--lavender-171);
 	--focus-ring-radius: var(--radius-16);
 	--focus-ring-stroke: var(--color-focus);
 	--focus-ring-stroke-width: var(--stroke-2);
@@ -144,6 +150,7 @@
 	--hero-drum-margin-bottom: var(--space-18);
 	--icon-size-sm: var(--size-14);
 	--indigo-438: oklch(56.2% 0.25 282.5);
+	--lavender-171: oklch(82.9% 0.113 303.7);
 	--lavender-175: oklch(82.5% 0.106 305.5);
 	--layout-content-gap: var(--size-36);
 	--layout-group-gap: var(--size-56);
@@ -161,7 +168,11 @@
 	--legend-item-gap: var(--space-6);
 	--legend-learn-gap: var(--space-12);
 	--legend-state-name: var(--color-ink);
+	--lime-57: oklch(94.3% 0.148 122.4);
+	--lime-76: oklch(92.4% 0.177 124.1);
 	--lime-89: oklch(91.1% 0.167 122.2);
+	--lime-579: oklch(42.1% 0.128 127.7);
+	--lime-699: oklch(30.1% 0.091 127);
 	--link-text: var(--color-soft);
 	--link-text-hover: var(--color-ink);
 	--link-text-pressed: var(--color-accent-strong);
@@ -221,8 +232,8 @@
 	--motion-ease-turn: cubic-bezier(0.33, 1, 0.68, 1);
 	/* Tailwind ease-out, used by the nav TOC unfold (Rex). */
 	--motion-ease-unfold: cubic-bezier(0, 0, 0.2, 1);
-	/* deg. Rail hue-rotate at the bottom of the page; 0 at the top. */
-	--motion-rail-hue-max: 30;
+	/* One pass of the rail field's waves across a 600 px tile, about 15 px a second. */
+	--motion-rail-drift-duration: 40s;
 	/* Rail label lines rise this many px while fading in (Lift). */
 	--motion-rail-label-distance: 6px;
 	/* Rail label entrance per line (Lift). */
@@ -261,6 +272,8 @@
 	--nav-toc-padding-bottom: var(--space-4);
 	--nav-toc-size: var(--font-size-13);
 	--neutral-0: oklch(100% 0 0);
+	--neutral-0-a035: oklch(100% 0 0 / 0.035);
+	--neutral-0-a078: oklch(100% 0 0 / 0.078);
 	--neutral-0-a200: oklch(100% 0 0 / 0.2);
 	--neutral-30: oklch(97% 0.001 106.4);
 	--neutral-57: oklch(94.3% 0.003 106.5);
@@ -295,12 +308,15 @@
 	--neutral-779: oklch(22.1% 0.011 132.7);
 	--neutral-821: oklch(17.9% 0.007 135);
 	--neutral-1000: oklch(0% 0 0);
+	--neutral-1000-a020: oklch(0% 0 0 / 0.02);
+	--neutral-1000-a035: oklch(0% 0 0 / 0.035);
 	--neutral-1000-a100: oklch(0% 0 0 / 0.1);
 	--neutral-1000-a200: oklch(0% 0 0 / 0.2);
 	--neutral-1000-a302: oklch(0% 0 0 / 0.302);
 	--neutral-1000-a400: oklch(0% 0 0 / 0.4);
 	--neutral-1000-a450: oklch(0% 0 0 / 0.45);
 	--opacity-0: 0;
+	--opacity-16: 16;
 	--opacity-20: 20;
 	--opacity-28: 28;
 	--opacity-32: 32;
@@ -310,6 +326,7 @@
 	--opacity-hidden: var(--opacity-0);
 	--opacity-hover: var(--opacity-20);
 	--opacity-subtle: var(--opacity-28);
+	--orange-224: oklch(77.6% 0.172 38.4);
 	--orange-245: oklch(75.5% 0.153 41.8);
 	--orange-245-a080: oklch(75.5% 0.153 41.8 / 0.08);
 	--orange-245-a090: oklch(75.5% 0.153 41.8 / 0.09);
@@ -344,13 +361,19 @@
 	--radius-24: var(--size-24);
 	--radius-45: var(--size-45);
 	--radius-full: var(--size-full);
+	--rail-field-coral: var(--field-coral);
+	--rail-field-end: var(--field-end);
+	--rail-field-lime: var(--field-lime);
+	--rail-field-start: var(--field-start);
 	--rail-gap: var(--space-10);
 	--rail-ghost-opacity: var(--opacity-ghost);
+	--rail-grain-opacity: var(--opacity-16);
 	--rail-label-count: var(--color-soft);
 	--rail-label-gap: var(--space-5);
 	--rail-label-name: var(--color-ink);
 	--rail-link-hover-opacity: var(--opacity-hover);
 	--rail-link-hover-overlay: var(--color-hover-lighten);
+	--rail-ring: var(--effect-field-ring);
 	--rail-segment-radius: var(--radius-14);
 	--rail-track: var(--color-wash);
 	--red-280: oklch(72% 0.177 14.7);
@@ -616,6 +639,8 @@
 		--color-surface: var(--neutral-779);
 		--color-wash: var(--neutral-57-a071);
 		--effect-backdrop: var(--neutral-1000-a450);
+		--effect-field-ring:
+			inset 0px 0px 0px 1px var(--neutral-0-a078), inset 0px 1px 4px var(--neutral-0-a035);
 		--effect-hover-brightness: 1.25;
 		--effect-ring: var(--neutral-57-a080);
 		--effect-shadow: var(--neutral-1000-a200);
@@ -624,6 +649,10 @@
 			0px 2px 2px -1px var(--neutral-1000-a302), 0px 4px 4px -2px var(--neutral-1000-a302),
 			0px 8px 8px -4px var(--neutral-1000-a302), 0px 16px 16px -8px var(--neutral-1000-a302),
 			0px 32px 32px -16px var(--neutral-1000-a302), 0px 48px 64px -24px var(--neutral-1000-a400);
+		--field-coral: var(--orange-224);
+		--field-end: var(--lime-699);
+		--field-lime: var(--lime-579);
+		--field-start: var(--lavender-171);
 		--gradient-amber: var(--amber-179);
 		--gradient-lavender: var(--lavender-175);
 		--gradient-lime: var(--lime-89);
@@ -676,6 +705,8 @@
 	--color-surface: var(--neutral-779);
 	--color-wash: var(--neutral-57-a071);
 	--effect-backdrop: var(--neutral-1000-a450);
+	--effect-field-ring:
+		inset 0px 0px 0px 1px var(--neutral-0-a078), inset 0px 1px 4px var(--neutral-0-a035);
 	--effect-hover-brightness: 1.25;
 	--effect-ring: var(--neutral-57-a080);
 	--effect-shadow: var(--neutral-1000-a200);
@@ -684,6 +715,10 @@
 		0px 2px 2px -1px var(--neutral-1000-a302), 0px 4px 4px -2px var(--neutral-1000-a302),
 		0px 8px 8px -4px var(--neutral-1000-a302), 0px 16px 16px -8px var(--neutral-1000-a302),
 		0px 32px 32px -16px var(--neutral-1000-a302), 0px 48px 64px -24px var(--neutral-1000-a400);
+	--field-coral: var(--orange-224);
+	--field-end: var(--lime-699);
+	--field-lime: var(--lime-579);
+	--field-start: var(--lavender-171);
 	--gradient-amber: var(--amber-179);
 	--gradient-lavender: var(--lavender-175);
 	--gradient-lime: var(--lime-89);

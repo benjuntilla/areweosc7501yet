@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { choice } from '#lib/client/theme.svelte.ts';
 	import type { Side } from '#lib/domain/overview.ts';
+	import { MediaQuery } from 'svelte/reactivity';
 	import Icon from './Icon.svelte';
 	import StateGlyph from './StateGlyph.svelte';
 
@@ -28,9 +30,78 @@
 	});
 
 	const pct = (side: Side, n: number) => (n / side.featured) * 100;
+
+	// Noise bends the field's bands into slow waves. It moves each point up or down by up to half
+	// the warp scale, so the field reaches that far past the bar. The noise repeats every tile, and
+	// the waves drift one tile per loop.
+	const warp = 150;
+	const tile = 600;
+
+	// Safari runs a live SVG filter again on every frame of a view transition, so the search
+	// dialog's morph stuttered over the rail. Instead, the filter warps the field's background once
+	// into an image the field's size, drawn again when the field resizes or the theme changes. The
+	// live filter shows until the first image is ready. Both bars are the same size, so their fields
+	// share the image.
+	const dark = new MediaQuery('prefers-color-scheme: dark');
+	let filter: SVGFilterElement;
+	let image: string | undefined = $state();
+
+	const draw = (field: HTMLElement) => {
+		const style = getComputedStyle(field);
+		const background = ['image', 'position', 'size', 'repeat', 'color']
+			.map((part) => `background-${part}: ${style.getPropertyValue(`background-${part}`)}`)
+			.join('; ');
+		const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${field.offsetWidth}" height="${field.offsetHeight}">${filter.outerHTML}<foreignObject width="100%" height="100%" filter="url(#${filter.id})"><div xmlns="http://www.w3.org/1999/xhtml" style="height: 100%; ${background}"/></foreignObject></svg>`;
+		image = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+	};
+
+	const warpOnce = (field: HTMLElement) => {
+		// The theme sets the field's colors.
+		void [choice.theme, dark.current];
+		const observer = new ResizeObserver(() => draw(field));
+		observer.observe(field);
+		return () => observer.disconnect();
+	};
 </script>
 
-<aside class="rail" aria-label="Adoption">
+<aside
+	class="rail"
+	class:drawn={image !== undefined}
+	aria-label="Adoption"
+	style:--warp-reach="{warp / 2}px"
+	style:--tile="{tile}px"
+	style:--field-image={image}
+>
+	<svg class="defs" aria-hidden="true">
+		<filter
+			bind:this={filter}
+			id="rail-warp"
+			x="0"
+			y="0"
+			width="1"
+			height="1"
+			color-interpolation-filters="sRGB"
+		>
+			<!-- Noise cells about as big as a bar. -->
+			<feTurbulence
+				type="fractalNoise"
+				baseFrequency="0.0026"
+				numOctaves="2"
+				seed="7"
+				stitchTiles="stitch"
+				width={tile}
+			/>
+			<feTile />
+			<!-- Red holds at 0.5, so points move up and down only. -->
+			<feColorMatrix values="0 0 0 0 0.5  0 1 0 0 0  0 0 0 0 0  0 0 0 0 1" />
+			<feDisplacementMap
+				in="SourceGraphic"
+				scale={warp}
+				xChannelSelector="R"
+				yChannelSelector="G"
+			/>
+		</filter>
+	</svg>
 	{#each sides as side (side.id)}
 		<a
 			class="segment"
@@ -53,8 +124,7 @@
 				>
 			</span>
 			<span class="bar">
-				<span class="field ghost"></span>
-				<span class="field done"></span>
+				<span class="fill"><span class="field" {@attach warpOnce}></span></span>
 			</span>
 		</a>
 	{/each}
@@ -88,9 +158,25 @@
 		outline-offset: 0;
 	}
 
+	.defs {
+		position: absolute;
+		inline-size: 0;
+		block-size: 0;
+	}
+
+	.segment::after {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		content: '';
+		border-radius: inherit;
+		box-shadow: var(--rail-ring);
+	}
+
 	.bar {
 		position: absolute;
 		inset: 0;
+		container-type: size;
 		overflow: hidden;
 		background: var(--rail-track);
 		border-radius: inherit;
@@ -109,44 +195,102 @@
 		opacity: calc(var(--rail-link-hover-opacity) / 100);
 	}
 
-	/* Grey fractal noise blended soft-light, so the grain doesn't shift the gradient's colors. */
-	.field {
+	/* Done shows the field in full; working above it shows the field faintly. */
+	.fill {
 		position: absolute;
 		inset: 0;
+		mask: linear-gradient(
+			to top,
+			black var(--done),
+			color-mix(in srgb, black calc(var(--rail-ghost-opacity) * 1%), transparent) 0
+				calc(var(--done) + var(--working)),
+			transparent 0
+		);
+	}
+
+	/* White noise, blended overlay, so the grain lightens and darkens without shifting hue. */
+	.fill::after {
+		position: absolute;
+		inset: 0;
+		content: '';
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 1.48 0 0 -0.24  0 1.48 0 0 -0.24  0 1.48 0 0 -0.24  0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+		mix-blend-mode: overlay;
+		opacity: calc(var(--rail-grain-opacity) / 100);
+	}
+
+	/* One grain dot per screen pixel. */
+	@media (resolution >= 2x) {
+		.fill::after {
+			background-size: 100px;
+		}
+	}
+
+	/* The ramp is twice the bar's height. Scrolling the page slides the field up, from the ramp's
+	   first half at the top of the page to its second half at the bottom. Its stops follow
+	   smoothstep, so each color holds a little longer before it blends into the next. Past its ends,
+	   the end colors carry on. */
+	.field {
+		position: absolute;
+		inset-block-start: calc(var(--warp-reach) * -1);
+		inset-inline-start: 0;
+		inline-size: calc(100% + var(--tile));
+		block-size: calc(200cqb + var(--warp-reach) * 2);
 		background:
-			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"),
 			linear-gradient(
-				in oklab 180deg,
-				var(--gradient-lavender) 0%,
-				var(--gradient-pink) 30%,
-				var(--gradient-orange) 50%,
-				var(--gradient-amber) 72%,
-				var(--gradient-lime) 100%
-			);
-		background-blend-mode: soft-light, normal;
+					in oklab 180deg,
+					var(--rail-field-start) 0%,
+					color-mix(in oklab, var(--rail-field-start), var(--rail-field-coral) 12.6%) 8.59%,
+					color-mix(in oklab, var(--rail-field-start), var(--rail-field-coral) 47.5%) 17.18%,
+					var(--rail-field-coral) 25.77%,
+					color-mix(in oklab, var(--rail-field-coral), var(--rail-field-lime) 32.7%) 42.98%,
+					color-mix(in oklab, var(--rail-field-coral), var(--rail-field-lime) 68.9%) 60.2%,
+					var(--rail-field-lime) 77.41%,
+					color-mix(in oklab, var(--rail-field-lime), var(--rail-field-end) 52.9%) 84.94%,
+					color-mix(in oklab, var(--rail-field-lime), var(--rail-field-end) 87.6%) 92.47%,
+					var(--rail-field-end) 100%
+				)
+				0 var(--warp-reach) / 100% 200cqb no-repeat,
+			linear-gradient(var(--rail-field-end) 0 0) bottom / 100% 50% no-repeat,
+			var(--rail-field-start);
+		filter: url('#rail-warp');
 	}
 
-	.done {
-		clip-path: inset(calc(100% - var(--done)) 0 0 0);
+	.drawn .field {
+		filter: none;
 	}
 
-	.ghost {
-		opacity: calc(var(--rail-ghost-opacity) / 100);
-		clip-path: inset(calc(100% - var(--done) - var(--working)) 0 var(--done) 0);
+	.drawn .field::before {
+		position: absolute;
+		inset: 0;
+		content: '';
+		background: var(--field-image);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
+		.field {
+			animation: rail-drift var(--motion-rail-drift-duration) linear infinite;
+		}
+
 		@supports (animation-timeline: scroll()) {
-			.bar {
-				animation: rail-hue linear both;
-				animation-timeline: scroll(root);
+			.field {
+				animation:
+					rail-travel linear both,
+					rail-drift var(--motion-rail-drift-duration) linear infinite;
+				animation-timeline: scroll(root), auto;
 			}
 		}
 	}
 
-	@keyframes rail-hue {
+	/* The travel moves transform and the drift moves translate, so the two add up. */
+	@keyframes rail-travel {
 		to {
-			filter: hue-rotate(calc(var(--motion-rail-hue-max) * 1deg));
+			transform: translateY(-100cqb);
+		}
+	}
+
+	@keyframes rail-drift {
+		to {
+			translate: calc(var(--tile) * -1) 0;
 		}
 	}
 

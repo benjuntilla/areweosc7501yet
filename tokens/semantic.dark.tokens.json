@@ -266,6 +266,51 @@
 		"hover-brightness": {
 			"$type": "number",
 			"$value": 1.25
+		},
+		"field-ring": {
+			"$type": "shadow",
+			"$value": [
+				{
+					"color": "{neutral.0-a078}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 0,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 0,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 1,
+						"unit": "px"
+					},
+					"inset": true
+				},
+				{
+					"color": "{neutral.0-a035}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 1,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 4,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 0,
+						"unit": "px"
+					},
+					"inset": true
+				}
+			]
 		}
 	},
 	"state": {
@@ -342,6 +387,24 @@
 				"$type": "color",
 				"$value": "{mix.pink-lavender}"
 			}
+		}
+	},
+	"field": {
+		"start": {
+			"$type": "color",
+			"$value": "{lavender.171}"
+		},
+		"coral": {
+			"$type": "color",
+			"$value": "{orange.224}"
+		},
+		"lime": {
+			"$type": "color",
+			"$value": "{lime.579}"
+		},
+		"end": {
+			"$type": "color",
+			"$value": "{lime.699}"
 		}
 	},
 	"canvas": {

@@ -215,6 +215,30 @@
 		"gap": {
 			"$type": "dimension",
 			"$value": "{space.10}"
+		},
+		"field-start": {
+			"$type": "color",
+			"$value": "{field.start}"
+		},
+		"field-coral": {
+			"$type": "color",
+			"$value": "{field.coral}"
+		},
+		"field-lime": {
+			"$type": "color",
+			"$value": "{field.lime}"
+		},
+		"field-end": {
+			"$type": "color",
+			"$value": "{field.end}"
+		},
+		"ring": {
+			"$type": "shadow",
+			"$value": "{effect.field-ring}"
+		},
+		"grain-opacity": {
+			"$type": "number",
+			"$value": "{opacity.16}"
 		}
 	},
 	"rail-link": {
@@ -909,10 +933,13 @@
 			},
 			"$description": "Between drum lines on entrance."
 		},
-		"rail-hue-max": {
-			"$type": "number",
-			"$value": 30,
-			"$description": "deg. Rail hue-rotate at the bottom of the page; 0 at the top."
+		"rail-drift-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 40,
+				"unit": "s"
+			},
+			"$description": "One pass of the rail field's waves across a 600 px tile, about 15 px a second."
 		},
 		"state-duration": {
 			"$type": "duration",

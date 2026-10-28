@@ -10,6 +10,7 @@ const semantic = [
 	'state.**',
 	'code.**',
 	'gradient.**',
+	'field.**',
 	'canvas.**',
 	'browser.**'
 ];

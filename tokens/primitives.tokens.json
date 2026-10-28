@@ -77,6 +77,22 @@
 				"components": [0, 0, 0]
 			}
 		},
+		"0-a035": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [1, 0, 0],
+				"alpha": 0.035
+			}
+		},
+		"0-a078": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [1, 0, 0],
+				"alpha": 0.078
+			}
+		},
 		"0-a200": {
 			"$type": "color",
 			"$value": {
@@ -269,6 +285,22 @@
 				"alpha": 0.72
 			}
 		},
+		"1000-a020": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0, 0, 0],
+				"alpha": 0.02
+			}
+		},
+		"1000-a035": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0, 0, 0],
+				"alpha": 0.035
+			}
+		},
 		"1000-a100": {
 			"$type": "color",
 			"$value": {
@@ -382,6 +414,13 @@
 		}
 	},
 	"lavender": {
+		"171": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.829, 0.113, 303.7]
+			}
+		},
 		"175": {
 			"$type": "color",
 			"$value": {
@@ -391,11 +430,39 @@
 		}
 	},
 	"lime": {
+		"57": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.943, 0.148, 122.4]
+			}
+		},
+		"76": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.924, 0.177, 124.1]
+			}
+		},
 		"89": {
 			"$type": "color",
 			"$value": {
 				"colorSpace": "oklch",
 				"components": [0.911, 0.167, 122.2]
+			}
+		},
+		"579": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.421, 0.128, 127.7]
+			}
+		},
+		"699": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.301, 0.091, 127.0]
 			}
 		}
 	},
@@ -430,6 +497,13 @@
 		}
 	},
 	"orange": {
+		"224": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.776, 0.172, 38.4]
+			}
+		},
 		"245": {
 			"$type": "color",
 			"$value": {
@@ -1082,6 +1156,10 @@
 		"0": {
 			"$type": "number",
 			"$value": 0
+		},
+		"16": {
+			"$type": "number",
+			"$value": 16
 		},
 		"20": {
 			"$type": "number",
