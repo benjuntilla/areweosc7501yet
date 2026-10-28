@@ -8,7 +8,7 @@ Run `mise install` with [mise](https://mise.jdx.dev) [activated](https://mise.jd
 
 A commit formats and lints its staged files. A push runs CI's checks except the cf build. If the push changes `schema/` or `src/styles/tokens.css`, commit the new files and push again. jj doesn't run git hooks, so run `pnpm lefthook run pre-push --force` before `jj git push`.
 
-Screenshots differ between machines, so only CI compares them. When they change, CI fails and uploads the new ones: run `pnpm screenshots` and commit them.
+Screenshots only match when the browser runs in Playwright's Docker image, as it does in CI, so other runs skip them. When a page changes, run `pnpm screenshots` with Docker running and commit the screenshots that change. Without Docker, take them from the `screenshots` artifact of the failed CI run.
 
 ### Editor
 
