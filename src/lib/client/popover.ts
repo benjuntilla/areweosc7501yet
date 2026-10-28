@@ -6,7 +6,8 @@ const closeDelay = 150;
 
 /**
  * Opens a moment after the pointer stops moving over the chip. Closes a moment after it leaves, so
- * it can cross the gap between chip and popover.
+ * it can cross the gap between chip and popover. When another popover is open, this one replaces
+ * it at once, with no fade either way.
  */
 export const hoverIntent = (popover: HTMLElement) => {
 	let cancel: (() => void) | undefined;
@@ -17,8 +18,11 @@ export const hoverIntent = (popover: HTMLElement) => {
 	return {
 		enter: (event: PointerEvent) => {
 			if (event.pointerType !== 'mouse') return;
-			later(popover.matches(':popover-open') ? 0 : openDelay, () => {
+			const shown = document.querySelector(':popover-open');
+			later(shown ? 0 : openDelay, () => {
 				popover.showPopover();
+				if (shown && shown !== popover)
+					for (const fade of [...popover.getAnimations(), ...shown.getAnimations()]) fade.finish();
 			});
 		},
 		leave: (event: PointerEvent) => {
