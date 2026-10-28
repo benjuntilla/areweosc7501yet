@@ -42,7 +42,7 @@
 		{#if category.more.length > 0}
 			<div bind:this={tail} class="tail" class:open={expanded} id="{category.id}-more">
 				<div class="tail-inner">
-					<p class="more-label type-caption">More projects · {category.more.length}</p>
+					<p class="more-label type-caption">More projects</p>
 					<ul class="list">
 						{#each category.more as chip (chip.slug)}
 							<Chip {chip} highlight={highlight === chip.slug} />
