@@ -1029,6 +1029,10 @@
 		"theme-toggle-margin-top": {
 			"$type": "dimension",
 			"$value": "{space.32}"
+		},
+		"scroll-fade": {
+			"$type": "dimension",
+			"$value": "{space.32}"
 		}
 	},
 	"menu": {

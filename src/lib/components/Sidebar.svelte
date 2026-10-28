@@ -40,11 +40,59 @@
 		margin: calc(var(--ring-room) * -1);
 		/* stylelint-disable-next-line property-layout-mappings -- overflow-block needs Safari 26 */
 		overflow-y: auto;
+
+		/* Focus scrolls clear of the fades below. */
+		scroll-padding-block: calc(var(--sidebar-scroll-fade) + var(--ring-room));
+		mask: linear-gradient(
+			transparent,
+			black var(--fade-start),
+			black calc(100% - var(--fade-end)),
+			transparent
+		);
 	}
 
 	/* The sidebar scrolls when the window is short, so its parts keep their size. */
 	.sidebar > :global(*) {
 		flex-shrink: 0;
+	}
+
+	/* An edge that cuts off more to scroll fades out, so the sidebar reads as a scroll area. The
+	   fades follow the scroll position, and a sidebar that fits has none. */
+	@property --fade-start {
+		syntax: '<length>';
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@property --fade-end {
+		syntax: '<length>';
+		inherits: false;
+		initial-value: 0;
+	}
+
+	@supports (animation-timeline: scroll()) and (animation-range: normal) {
+		.sidebar {
+			/* Longhands, so the build keeps the duration at auto, which spans each range. */
+			animation-name: sidebar-fade-start, sidebar-fade-end;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
+			animation-timeline: scroll(self);
+			animation-range:
+				0 var(--sidebar-scroll-fade),
+				calc(100% - var(--sidebar-scroll-fade)) 100%;
+		}
+	}
+
+	@keyframes sidebar-fade-start {
+		to {
+			--fade-start: var(--sidebar-scroll-fade);
+		}
+	}
+
+	@keyframes sidebar-fade-end {
+		from {
+			--fade-end: var(--sidebar-scroll-fade);
+		}
 	}
 
 	.sidebar > :global(.search) {
