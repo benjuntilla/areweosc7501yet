@@ -128,6 +128,11 @@
 		/* Hidden from view only, so screen readers keep the column headers. */
 		thead {
 			position: absolute;
+			/* stylelint-disable unit-disallowed-list -- screen readers skip an element with no size */
+			inline-size: 1px;
+			block-size: 1px;
+			/* stylelint-enable unit-disallowed-list */
+			overflow: hidden;
 			clip-path: inset(50%);
 		}
 
