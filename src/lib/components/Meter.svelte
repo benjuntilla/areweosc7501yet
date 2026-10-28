@@ -33,7 +33,7 @@
 
 	.bar {
 		position: relative;
-		block-size: 8px;
+		block-size: var(--meter-height);
 		overflow: hidden;
 		background: var(--meter-track);
 		border-radius: var(--meter-radius);

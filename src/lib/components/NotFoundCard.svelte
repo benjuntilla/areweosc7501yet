@@ -173,8 +173,8 @@
 
 	.caption {
 		position: absolute;
-		inset-block-start: 20px;
-		inset-inline-start: 24px;
+		inset-block-start: var(--error-card-caption-top);
+		inset-inline-start: var(--error-card-caption-left);
 		font-family: var(--type-family-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 		font-size: var(--type-code-size);
 		line-height: var(--type-code-line-height);
@@ -193,12 +193,13 @@
 		.piece {
 			transform-box: view-box;
 			animation:
-				fall var(--fall) cubic-bezier(0.42, 0, 1, 1) var(--delay) backwards,
-				spin var(--fall) cubic-bezier(0, 0, 0.58, 1) var(--delay) backwards;
+				fall var(--fall) ease-in var(--delay) backwards,
+				spin var(--fall) ease-out var(--delay) backwards;
 		}
 
 		.bounce {
-			animation: bounce 280ms linear calc(var(--delay) + var(--fall));
+			animation: bounce var(--motion-error-card-bounce-duration) linear
+				calc(var(--delay) + var(--fall));
 		}
 	}
 
@@ -217,11 +218,11 @@
 	@keyframes bounce {
 		50% {
 			translate: 0 var(--bounce);
-			animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
+			animation-timing-function: ease-in;
 		}
 
 		0% {
-			animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+			animation-timing-function: ease-out;
 		}
 	}
 </style>

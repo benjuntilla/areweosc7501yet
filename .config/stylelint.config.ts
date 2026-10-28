@@ -32,7 +32,7 @@ export default {
 			{ available: 'newly', ignoreProperties: { 'font-family': ['ui-monospace'] } }
 		],
 
-		// Colors, spacing, radii and type come from tokens.
+		// Colors, lengths, durations, easings, opacities and type come from tokens.
 		'color-no-hex': true,
 		// A mask only reads alpha, so black there means opaque, not a color.
 		'color-named': ['never', { ignoreProperties: ['/^mask/'] }],
@@ -46,26 +46,33 @@ export default {
 			'lch',
 			'oklab',
 			'oklch',
-			'color'
+			'color',
+			'cubic-bezier'
 		],
+		// Media queries can't read custom properties, so breakpoints stay in px.
+		'unit-disallowed-list': [['px', 'rem'], { ignoreMediaFeatureNames: { px: ['width'] } }],
 		// Unlike declaration-strict-value, this also sees lengths inside calc(), min() and max().
 		'declaration-property-unit-allowed-list': {
 			'/^(margin|padding)|gap$|radius$|^(font-size|letter-spacing)$/': ['%']
 		},
-		// Weights and line heights are often unitless, so the unit rule can't see them.
+		// Weights, line heights and opacities are often unitless, so the unit rules can't see them.
 		'scale-unlimited/declaration-strict-value': [
-			['font-weight', 'line-height'],
-			{ ignoreValues: ['inherit'], ignoreAtRules: ['@font-face'] }
+			['font-weight', 'line-height', 'opacity'],
+			{
+				ignoreValues: { 'font-weight': 'inherit', 'line-height': 'inherit', opacity: ['0', '1'] },
+				ignoreAtRules: ['@font-face']
+			}
 		],
-		// The space, radius and stroke steps are named by value and alias one size each in every mode,
-		// so they count as primitives too.
+		// No primitives and no literal durations. The space, radius and stroke steps are named by value
+		// and alias one size each in every mode, so they count as primitives too. A 0s delay is fine.
 		'declaration-property-value-disallowed-list': [
 			{
 				'/.*/': [
-					/var\(\s*--(?:(?:neutral|amber|gray|green|indigo|lavender|lime|mix|orange|pink|red|violet|size|font|space|radius|stroke)-|opacity-\d)/u
+					/var\(\s*--(?:(?:neutral|amber|gray|green|indigo|lavender|lime|mix|orange|pink|red|violet|size|font|space|radius|stroke)-|opacity-\d)/u,
+					/(?<![\w.-])(?=[\d.]*[1-9])\d*\.?\d+m?s\b/u
 				]
 			},
-			{ message: 'Use a semantic or component token, not a primitive one' }
+			{ message: 'Use a semantic or component token, not a primitive one or a literal duration' }
 		]
 	}
 } satisfies Config;

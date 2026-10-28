@@ -25,7 +25,7 @@
 		gap: var(--footer-gap);
 		padding-block-start: var(--footer-padding-top);
 		color: var(--footer-text);
-		border-block-start: 1px solid var(--footer-divider);
+		border-block-start: var(--footer-divider-width) solid var(--footer-divider);
 	}
 
 	a {

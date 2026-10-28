@@ -175,8 +175,8 @@
 <style>
 	.drum {
 		position: relative;
-		inline-size: 84px;
-		block-size: 98px;
+		inline-size: var(--hero-drum-width);
+		block-size: var(--hero-drum-height);
 		font-size: var(--type-drum-size);
 		line-height: var(--type-drum-line-height);
 		touch-action: none;
@@ -195,7 +195,7 @@
 		inset-inline: 0;
 		color: var(--content-text-muted);
 		white-space: nowrap;
-		opacity: 0.55;
+		opacity: calc(var(--hero-drum-row-opacity) / 100);
 	}
 
 	.front {
@@ -213,7 +213,7 @@
 	@keyframes reveal {
 		from {
 			opacity: 0;
-			translate: 0 8px;
+			translate: 0 var(--motion-drum-reveal-distance);
 		}
 	}
 </style>
