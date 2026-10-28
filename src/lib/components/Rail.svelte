@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { cover } from '#lib/client/cover.svelte.ts';
 	import { choice } from '#lib/client/theme.svelte.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import { MediaQuery } from 'svelte/reactivity';
@@ -8,26 +9,9 @@
 
 	let { sides }: { sides: ReadonlyArray<Side> } = $props();
 
-	// A side's label shows once its verdict has scrolled past the top of the window. Pages
-	// without verdicts show both labels from the start.
+	// A side's label shows once the overview's content covers its verdict. Pages without verdicts
+	// show both labels from the start.
 	const overview = $derived(page.url.pathname === '/');
-	let past: Record<string, boolean> = $state({});
-
-	$effect(() => {
-		if (!overview) return;
-		past = {};
-		const observer = new IntersectionObserver((entries) => {
-			for (const entry of entries) {
-				const id = entry.target.id.replace('verdict-', '');
-				past[id] = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
-			}
-		});
-		for (const side of sides) {
-			const verdict = document.querySelector(`#verdict-${side.id}`);
-			if (verdict) observer.observe(verdict);
-		}
-		return () => observer.disconnect();
-	});
 
 	const pct = (side: Side, n: number) => (n / side.featured) * 100;
 
@@ -112,7 +96,7 @@
 		>
 			<span
 				class="label type-caption"
-				class:shown={!overview || past[side.id] === true}
+				class:shown={!overview || cover.covered[side.id] === true}
 				aria-hidden="true"
 			>
 				<span class="line name" style:--i="0"><Icon name={side.role} size={12} />{side.name}</span>

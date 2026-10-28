@@ -1005,6 +1005,12 @@
 			"$value": "{space.18}"
 		}
 	},
+	"tracker": {
+		"cover-lead": {
+			"$type": "dimension",
+			"$value": "{space.24}"
+		}
+	},
 	"role": {
 		"gap": {
 			"$type": "dimension",

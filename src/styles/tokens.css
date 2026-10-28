@@ -530,6 +530,7 @@
 	--top-bar-icon: var(--color-soft);
 	--top-bar-icon-strong: var(--color-ink);
 	--top-bar-on-accent: var(--color-on-accent);
+	--tracker-cover-lead: var(--space-24);
 	--type-annotation-line-height: var(--font-line-height-18);
 	--type-annotation-size: var(--font-size-12);
 	--type-annotation-tracking: var(--font-tracking-0);

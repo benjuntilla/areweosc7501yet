@@ -1,8 +1,10 @@
 <script lang="ts">
 	import Drum from './Drum.svelte';
+
+	let { element = $bindable() }: { element?: HTMLElement | undefined } = $props();
 </script>
 
-<section class="hero" aria-labelledby="about">
+<section class="hero" aria-labelledby="about" bind:this={element}>
 	<h2 class="type-section" id="about">What’s that?</h2>
 	<div class="drum-line">
 		<p class="type-lead">

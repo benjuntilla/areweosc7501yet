@@ -4,7 +4,12 @@
 	import Icon from './Icon.svelte';
 	import Meter from './Meter.svelte';
 
-	let { sides }: { sides: ReadonlyArray<Side> } = $props();
+	interface Props {
+		sides: ReadonlyArray<Side>;
+		element?: HTMLElement | undefined;
+	}
+
+	let { sides, element = $bindable() }: Props = $props();
 </script>
 
 <svelte:head>
@@ -15,7 +20,7 @@
 	/>
 </svelte:head>
 
-<section class="question" aria-labelledby="title">
+<section class="question" aria-labelledby="title" bind:this={element}>
 	<h1 class="type-h1" id="title">{siteTitle}</h1>
 	<dl class="verdicts">
 		{#each sides as side (side.id)}

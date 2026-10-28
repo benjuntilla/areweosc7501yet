@@ -21,10 +21,16 @@
 	let position = $state(restingPosition);
 	let dragging = $state(false);
 	let hovered = false;
-	let visible = true;
 	let lastInput = 0;
 	let frame = 0;
 	let drum: HTMLDivElement | undefined = $state();
+
+	// The drum shows when it is on screen and the content that slides over the top hasn't covered it.
+	const seen = () => {
+		if (!drum) return false;
+		const box = drum.getBoundingClientRect();
+		return drum.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
+	};
 
 	// Reduced motion is read on every check, so changing the setting stops or resumes the turns.
 	const held = () =>
@@ -32,9 +38,9 @@
 		hovered ||
 		dragging ||
 		frame !== 0 ||
-		!visible ||
 		document.hidden ||
-		performance.now() - lastInput < 2000;
+		performance.now() - lastInput < 2000 ||
+		!seen();
 
 	const stop = () => {
 		cancelAnimationFrame(frame);
@@ -64,16 +70,10 @@
 	};
 
 	onMount(() => {
-		if (!drum) return;
-		const observer = new IntersectionObserver(([entry]) => {
-			visible = entry?.isIntersecting ?? true;
-		});
-		observer.observe(drum);
 		const stopTurning = forkScoped(
 			autoTurn({ interval: 1500, held, turn: () => play(turn(position, 0.62)) })
 		);
 		return () => {
-			observer.disconnect();
 			stopTurning();
 			stop();
 		};

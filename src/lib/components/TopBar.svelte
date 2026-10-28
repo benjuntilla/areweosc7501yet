@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { cover, uncover } from '#lib/client/cover.svelte.ts';
 	import { loadSearch, searchKeys } from '#lib/client/search.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import Icon from './Icon.svelte';
@@ -23,7 +24,13 @@
 	const closeMenu = () => sheet?.close();
 </script>
 
-<header class="top-bar">
+<header
+	id="top-bar"
+	class="top-bar"
+	class:stays={cover.stays !== undefined}
+	style:--fade={cover.fade}
+	onfocusin={(event) => uncover(event.currentTarget)}
+>
 	<Logo size={36} />
 	<span class="spacer"></span>
 	<button
@@ -88,6 +95,17 @@
 		header.top-bar {
 			display: none;
 		}
+	}
+
+	/* On the overview, the bar stays put and fades with the top. Focus shows it in full. */
+	.stays {
+		position: sticky;
+		inset-block-start: var(--layout-page-padding-top);
+		opacity: var(--fade);
+	}
+
+	.stays:has(:focus-visible) {
+		opacity: 1;
 	}
 
 	.spacer {
