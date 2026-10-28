@@ -21,6 +21,23 @@ export const wordAt = (row: number, position: number): Word => {
 	return words[mod(front + offset, words.length)] ?? 'working';
 };
 
+// The ring's radius, and how far the eye sits from the front row, in px.
+const radius = 58.4;
+const distance = 350;
+
+/**
+ * Where perspective puts a row that has turned `turned` rows past the front, as a flat move and
+ * scale. A row that faces away gets no height. Safari draws a view transition's snapshot of the
+ * page without 3D, so a 3D transform would jump when the search dialog opens and closes.
+ */
+export const rowTransform = (turned: number) => {
+	const angle = (turned / rows) * 2 * Math.PI;
+	const near = distance / (distance + radius * (1 - Math.cos(angle)));
+	const y = -radius * Math.sin(angle) * near;
+	const height = near * (Math.cos(angle) - (radius * near * Math.sin(angle) ** 2) / distance);
+	return `translateY(${y}px) scale(${near}, ${Math.max(height, 0)})`;
+};
+
 /**
  * A motion: the position `t` seconds after it starts, or undefined once it rests on a row.
  * The drum's position counts rows, so a whole number faces front.

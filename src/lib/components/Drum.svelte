@@ -6,6 +6,7 @@
 		release,
 		restingPosition,
 		rows,
+		rowTransform,
 		type Sample,
 		turn,
 		wheelSpeed,
@@ -15,7 +16,6 @@
 	import { Effect } from 'effect';
 	import { onMount } from 'svelte';
 
-	const step = 360 / rows;
 	const rowHeight = 26;
 
 	let position = $state(restingPosition);
@@ -159,20 +159,17 @@
 	{onpointerup}
 	onpointercancel={onpointerup}
 >
-	<div class="ring" style:rotate="x {position * step}deg">
-		{#each { length: rows } as _, row (row)}
-			{@const offset =
-				((((row - Math.round(position)) % rows) + rows + rows / 2) % rows) - rows / 2}
-			{@const word = wordAt(row, position)}
-			<span
-				class="row"
-				class:front={offset === 0}
-				style:--row={row}
-				style:--offset={offset}
-				style:--word-color="var(--status-{word})">{word}.</span
-			>
-		{/each}
-	</div>
+	{#each { length: rows } as _, row (row)}
+		{@const offset = ((((row - Math.round(position)) % rows) + rows + rows / 2) % rows) - rows / 2}
+		{@const word = wordAt(row, position)}
+		<span
+			class="row"
+			class:front={offset === 0}
+			style:transform={rowTransform(position - row)}
+			style:--offset={offset}
+			style:--word-color="var(--status-{word})">{word}.</span
+		>
+	{/each}
 </div>
 
 <style>
@@ -185,29 +182,20 @@
 		touch-action: none;
 		cursor: grab;
 		mask-image: linear-gradient(transparent, black 30%, black 70%, transparent);
-		perspective: 350px;
 	}
 
 	.dragging {
 		cursor: grabbing;
 	}
 
-	.ring {
-		position: absolute;
-		inset: 0;
-		transform-style: preserve-3d;
-		translate: 0 0 -58.4px;
-	}
-
+	/* Rows span the drum, so they scale about its center. */
 	.row {
 		position: absolute;
 		inset-block-start: calc(50% - var(--type-drum-line-height) / 2);
-		inset-inline-start: 0;
+		inset-inline: 0;
 		color: var(--content-text-muted);
 		white-space: nowrap;
 		opacity: 0.55;
-		transform: rotateX(calc(var(--row) * -1deg * 360 / 14)) translateZ(58.4px);
-		backface-visibility: hidden;
 	}
 
 	.front {
