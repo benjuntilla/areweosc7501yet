@@ -20,6 +20,15 @@
 	unicode-range: U+2197;
 }
 
+@font-face {
+	font-family: 'Geist Mono';
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('../../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2')
+		format('woff2-variations');
+	font-display: swap;
+}
+
 :root {
 	/* The sidebar sits left of the centered column, between a smallest and a largest inset. */
 	--sidebar-inset: clamp(
@@ -228,6 +237,14 @@ tbody tr {
 	letter-spacing: var(--type-caption-tracking);
 }
 
+.type-code {
+	font-family: var(--type-family-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: var(--type-code-size);
+	font-weight: var(--type-code-weight);
+	line-height: var(--type-code-line-height);
+	letter-spacing: var(--type-code-tracking);
+}
+
 /* stylelint-disable unit-disallowed-list -- screen readers skip an element with no size */
 .visually-hidden:not(:focus-within, :active) {
 	position: absolute;
@@ -280,6 +297,7 @@ tbody tr {
 .page code {
 	font-family: var(--type-family-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 	font-size: var(--type-code-size);
+	font-weight: var(--type-code-weight);
 	line-height: var(--type-code-size);
 	letter-spacing: var(--type-code-tracking);
 }
