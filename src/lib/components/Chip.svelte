@@ -119,7 +119,7 @@
 		display: flex;
 		gap: var(--chip-gap);
 		align-items: center;
-		max-inline-size: 280px;
+		max-inline-size: var(--chip-max-width);
 		padding: var(--chip-padding-y) var(--chip-padding-right) var(--chip-padding-y)
 			var(--chip-padding-left);
 		color: var(--chip-label);
@@ -162,7 +162,7 @@
 	}
 
 	.highlight {
-		animation: highlight 1.6s var(--motion-ease-state);
+		animation: highlight var(--motion-chip-highlight-duration) var(--motion-ease-state);
 	}
 
 	@keyframes highlight {
@@ -182,18 +182,14 @@
 	.popover {
 		flex-direction: column;
 		gap: var(--popover-gap);
-		inline-size: min(300px, 100vi - 32px);
+		inline-size: min(var(--popover-width), 100vi - var(--layout-page-padding-x) * 2);
 		padding: var(--popover-padding-y) var(--popover-padding-x);
 		margin: 0;
 		color: var(--popover-body);
 		background: var(--popover-background);
 		border: 0;
 		border-radius: var(--popover-radius);
-		box-shadow:
-			0 4px 6px -3px var(--popover-shadow),
-			0 2px 2px -1px var(--popover-shadow),
-			0 1px 1px 0 var(--popover-shadow),
-			0 0 0 1px var(--popover-ring);
+		box-shadow: var(--popover-shadow);
 		opacity: 0;
 		transition:
 			opacity var(--motion-state-duration) ease-out,

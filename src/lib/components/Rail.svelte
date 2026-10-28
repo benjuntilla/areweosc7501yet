@@ -115,13 +115,18 @@
 </aside>
 
 <style>
+	/* The rail takes the room right of the column, less a gap, between a smallest and a largest width. */
 	.rail {
 		position: fixed;
-		inset: 12px 12px 12px auto;
+		inset: var(--rail-inset) var(--rail-inset) var(--rail-inset) auto;
 		display: flex;
 		flex-direction: column;
 		gap: var(--rail-gap);
-		inline-size: clamp(80px, 50% - 460px, 480px);
+		inline-size: clamp(
+			var(--rail-min-width),
+			50% - var(--page-column-width) / 2 - var(--rail-content-gap) - var(--rail-inset),
+			var(--rail-max-width)
+		);
 	}
 
 	@media (width < 1100px) {
@@ -253,7 +258,7 @@
 	.label {
 		position: absolute;
 		inset-block-start: 0;
-		inset-inline-end: calc(100% + 12px);
+		inset-inline-end: calc(100% + var(--rail-label-offset));
 		display: flex;
 		flex-direction: column;
 		white-space: nowrap;

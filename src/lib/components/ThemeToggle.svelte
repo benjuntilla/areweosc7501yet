@@ -73,9 +73,6 @@
 	[aria-checked='true'] {
 		color: var(--theme-toggle-label-active);
 		background: var(--theme-toggle-thumb);
-		box-shadow:
-			0 2px 2px -1px var(--theme-toggle-thumb-shadow),
-			0 1px 1px -0.5px var(--theme-toggle-thumb-shadow),
-			0 0 0 0.5px var(--theme-toggle-thumb-ring);
+		box-shadow: var(--theme-toggle-thumb-shadow);
 	}
 </style>

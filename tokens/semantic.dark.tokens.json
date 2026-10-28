@@ -94,6 +94,156 @@
 			"$type": "color",
 			"$value": "{neutral.57-a080}"
 		},
+		"shadow-surface": {
+			"$type": "shadow",
+			"$value": [
+				{
+					"color": "{effect.shadow}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 4,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 6,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -3,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{effect.shadow}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 2,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 2,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -1,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{effect.shadow}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 1,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 1,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 0,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{effect.ring}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 0,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 0,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 1,
+						"unit": "px"
+					},
+					"inset": false
+				}
+			]
+		},
+		"shadow-icon": {
+			"$type": "shadow",
+			"$value": [
+				{
+					"color": "{effect.shadow}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 2,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 2,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -1,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{effect.shadow}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 1,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 1,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -0.5,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{effect.ring}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 0,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 0,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 0.5,
+						"unit": "px"
+					},
+					"inset": false
+				}
+			]
+		},
 		"backdrop": {
 			"$type": "color",
 			"$value": "{neutral.1000-a450}"

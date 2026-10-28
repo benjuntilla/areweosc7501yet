@@ -211,7 +211,7 @@
 	}
 
 	tbody th {
-		inline-size: 160px;
+		inline-size: var(--table-row-head-width);
 		color: var(--content-text-strong);
 	}
 </style>

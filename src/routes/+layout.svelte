@@ -73,8 +73,8 @@
 <style>
 	.skip-link {
 		position: fixed;
-		inset-block-start: 16px;
-		inset-inline-start: clamp(24px, 50% - 536px, 64px);
+		inset-block-start: var(--page-skip-link-top);
+		inset-inline-start: var(--sidebar-inset);
 		z-index: 10;
 		padding: var(--nav-item-padding-y) var(--nav-item-padding-x);
 		color: var(--content-text-strong);
@@ -87,14 +87,17 @@
 		translate: 0 0;
 	}
 
+	/* The column centers in the window but stays clear of the sidebar. */
 	.column {
 		display: flex;
 		flex-direction: column;
 		gap: var(--layout-section-gap);
-		inline-size: 576px;
+		inline-size: var(--page-column-width);
 		padding: var(--layout-page-padding-top) 0 var(--layout-page-padding-bottom);
-		/* stylelint-disable-next-line declaration-property-unit-allowed-list -- page grid: the 576px column centers in the window but stays clear of the sidebar */
-		margin-inline-start: max(272px, 50% - 288px);
+		margin-inline-start: max(
+			var(--sidebar-inset-min) + var(--sidebar-width) + var(--sidebar-column-gap),
+			50% - var(--page-column-width) / 2
+		);
 	}
 
 	/* stylelint-disable-next-line a11y/no-outline-none -- main takes focus only from the skip link, which shows the ring */
