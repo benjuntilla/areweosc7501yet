@@ -10,6 +10,8 @@
 	let link: HTMLAnchorElement | undefined = $state();
 	let open = $state(false);
 
+	// Hover opens the popover once the pointer rests on the chip. It waits for the pointer to move,
+	// so a chip that scrolls under a still pointer, as on a jump to an entry, leaves it alone.
 	const intent = $derived(popover ? hoverIntent(popover) : undefined);
 
 	// Long names truncate in the middle, like Finder: the start shrinks, the end stays.
@@ -61,7 +63,7 @@
 		aria-haspopup="dialog"
 		aria-expanded={open}
 		aria-label="{chip.name}, {chip.state}"
-		onpointerenter={(e) => intent?.enter(e)}
+		onpointermove={(e) => intent?.enter(e)}
 		onpointerleave={(e) => intent?.leave(e)}
 		{onfocus}
 		{onkeydown}

@@ -38,11 +38,13 @@
 	--code-string: var(--color-focus);
 	--color-accent: var(--orange-245);
 	--color-accent-strong: var(--orange-456);
+	--color-accent-wash: var(--orange-245-a090);
 	--color-error: var(--red-449);
 	--color-faint: var(--neutral-140);
 	--color-focus: var(--violet-481);
 	--color-hover-lighten: var(--neutral-0);
 	--color-ink: var(--neutral-777);
+	--color-mark: var(--orange-245-a200);
 	--color-muted: var(--neutral-456);
 	--color-on-accent: var(--neutral-0);
 	--color-paper: var(--neutral-30);
@@ -58,8 +60,14 @@
 	--content-text: var(--color-soft);
 	--content-text-muted: var(--color-muted);
 	--content-text-strong: var(--color-ink);
+	--effect-backdrop: var(--neutral-777-a160);
 	--effect-ring: var(--neutral-777-a070);
 	--effect-shadow: var(--neutral-777-a035);
+	--effect-shadow-dialog:
+		0px 0px 0px 1px var(--neutral-777-a071), 0px 1px 1px var(--neutral-777-a031),
+		0px 2px 2px -1px var(--neutral-777-a039), 0px 4px 4px -2px var(--neutral-777-a039),
+		0px 8px 8px -4px var(--neutral-777-a051), 0px 16px 16px -8px var(--neutral-777-a059),
+		0px 32px 32px -16px var(--neutral-777-a071), 0px 48px 64px -24px var(--neutral-777-a102);
 	--error-card-code-opacity: var(--opacity-dim);
 	--error-card-content: var(--color-on-accent);
 	--focus-ring-radius: var(--radius-16);
@@ -85,7 +93,9 @@
 	--font-size-14: 14px;
 	--font-size-15: 15px;
 	--font-size-18: 18px;
+	--font-size-19: 19px;
 	--font-size-20: 20px;
+	--font-size-22: 22px;
 	--font-size-28: 28px;
 	--font-size-32: 32px;
 	--font-size-36: 36px;
@@ -197,6 +207,8 @@
 	--motion-drum-start-delay: 1000ms;
 	/* One drum turn to the next word. */
 	--motion-drum-step-duration: 620ms;
+	/* Search morph (Rex). */
+	--motion-ease-morph: cubic-bezier(0.2, 0.9, 0.3, 1);
 	/* Ease-out quint-ish. Drum entrance. */
 	--motion-ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
 	/* Hover and pressed state changes (ease-out). */
@@ -215,6 +227,10 @@
 	--motion-rail-label-exit-duration: 160ms;
 	/* Delay between rail label lines, top first (Lift). */
 	--motion-rail-label-stagger: 40ms;
+	/* Search button to dialog morph, both ways, and the backdrop fade (Rex: .28s). */
+	--motion-search-morph-duration: 280ms;
+	/* The search dialog shadow fades in after the morph lands (ease-out). */
+	--motion-search-shadow-duration: 220ms;
 	/* Hover/pressed color changes on chips, nav and links. */
 	--motion-state-duration: 120ms;
 	/* Nav TOC unfold/fold: grid-template-rows 0fr↔1fr + opacity (Rex: 200ms). */
@@ -244,8 +260,10 @@
 	--neutral-0-a200: oklch(100% 0 0 / 0.2);
 	--neutral-30: oklch(97% 0.001 106.4);
 	--neutral-57: oklch(94.3% 0.003 106.5);
+	--neutral-57-a051: oklch(94.3% 0.003 106.5 / 0.051);
 	--neutral-57-a071: oklch(94.3% 0.003 106.5 / 0.0706);
 	--neutral-57-a080: oklch(94.3% 0.003 106.5 / 0.08);
+	--neutral-57-a102: oklch(94.3% 0.003 106.5 / 0.102);
 	--neutral-57-a141: oklch(94.3% 0.003 106.5 / 0.1412);
 	--neutral-57-a220: oklch(94.3% 0.003 106.5 / 0.22);
 	--neutral-57-a620: oklch(94.3% 0.003 106.5 / 0.6196);
@@ -254,10 +272,16 @@
 	--neutral-456: oklch(54.4% 0.008 132.5);
 	--neutral-592: oklch(40.8% 0.015 135);
 	--neutral-777: oklch(22.3% 0.015 136.8);
+	--neutral-777-a031: oklch(22.3% 0.015 136.8 / 0.0314);
 	--neutral-777-a035: oklch(22.3% 0.015 136.8 / 0.035);
+	--neutral-777-a039: oklch(22.3% 0.015 136.8 / 0.0392);
 	--neutral-777-a051: oklch(22.3% 0.015 136.8 / 0.051);
+	--neutral-777-a059: oklch(22.3% 0.015 136.8 / 0.0588);
 	--neutral-777-a070: oklch(22.3% 0.015 136.8 / 0.07);
+	--neutral-777-a071: oklch(22.3% 0.015 136.8 / 0.0706);
+	--neutral-777-a102: oklch(22.3% 0.015 136.8 / 0.102);
 	--neutral-777-a122: oklch(22.3% 0.015 136.8 / 0.1216);
+	--neutral-777-a160: oklch(22.3% 0.015 136.8 / 0.16);
 	--neutral-777-a200: oklch(22.3% 0.015 136.8 / 0.2);
 	--neutral-777-a720: oklch(22.3% 0.015 136.8 / 0.72);
 	--neutral-779: oklch(22.1% 0.011 132.7);
@@ -265,6 +289,9 @@
 	--neutral-1000: oklch(0% 0 0);
 	--neutral-1000-a100: oklch(0% 0 0 / 0.1);
 	--neutral-1000-a200: oklch(0% 0 0 / 0.2);
+	--neutral-1000-a302: oklch(0% 0 0 / 0.302);
+	--neutral-1000-a400: oklch(0% 0 0 / 0.4);
+	--neutral-1000-a450: oklch(0% 0 0 / 0.45);
 	--opacity-0: 0;
 	--opacity-20: 20;
 	--opacity-28: 28;
@@ -276,6 +303,10 @@
 	--opacity-hover: var(--opacity-20);
 	--opacity-subtle: var(--opacity-28);
 	--orange-245: oklch(75.5% 0.153 41.8);
+	--orange-245-a080: oklch(75.5% 0.153 41.8 / 0.08);
+	--orange-245-a090: oklch(75.5% 0.153 41.8 / 0.09);
+	--orange-245-a200: oklch(75.5% 0.153 41.8 / 0.2);
+	--orange-245-a220: oklch(75.5% 0.153 41.8 / 0.22);
 	--orange-456: oklch(54.4% 0.184 36.5);
 	--page-background: var(--color-paper);
 	--pink-200: oklch(80% 0.103 352.6);
@@ -318,7 +349,39 @@
 	--red-449: oklch(55.1% 0.22 19.4);
 	--role-gap: var(--space-28);
 	--search-background: var(--color-surface);
-	--search-focus-stroke-width: var(--stroke-2);
+	--search-dialog-backdrop: var(--effect-backdrop);
+	--search-dialog-background: var(--color-surface);
+	--search-dialog-caret: var(--color-accent);
+	--search-dialog-empty-padding-bottom: var(--space-20);
+	--search-dialog-empty-padding-top: var(--space-4);
+	--search-dialog-esc-size: var(--font-size-19);
+	--search-dialog-heading-padding-bottom: var(--space-6);
+	--search-dialog-heading-padding-top: var(--space-10);
+	--search-dialog-icon: var(--color-muted);
+	--search-dialog-icon-size: var(--size-22);
+	--search-dialog-input-gap: var(--size-13);
+	--search-dialog-input-height: var(--size-48);
+	--search-dialog-input-padding-x: var(--size-17);
+	--search-dialog-input-size: var(--font-size-22);
+	--search-dialog-input-tracking: var(--font-tracking-minus-0-225);
+	--search-dialog-item-gap: var(--space-10);
+	--search-dialog-item-padding-x: var(--space-12);
+	--search-dialog-item-padding-y: var(--space-8);
+	--search-dialog-item-radius: var(--radius-12);
+	--search-dialog-mark: var(--color-mark);
+	--search-dialog-mark-bleed: var(--size-1);
+	--search-dialog-mark-radius: var(--size-3);
+	--search-dialog-max-height: var(--size-576);
+	--search-dialog-meta: var(--color-muted);
+	--search-dialog-placeholder: var(--color-muted);
+	--search-dialog-radius: var(--radius-24);
+	--search-dialog-results-padding: var(--space-8);
+	--search-dialog-selected: var(--color-accent-wash);
+	--search-dialog-shadow: var(--effect-shadow-dialog);
+	--search-dialog-state-line-height: var(--font-line-height-16);
+	--search-dialog-state-size: var(--font-size-13);
+	--search-dialog-text: var(--color-ink);
+	--search-dialog-width: var(--size-512);
 	--search-gap: var(--space-8);
 	--search-icon: var(--color-muted);
 	--search-icon-size: var(--icon-size-sm);
@@ -326,7 +389,6 @@
 	--search-padding-y: var(--space-7);
 	--search-placeholder: var(--color-muted);
 	--search-radius: var(--radius-24);
-	--search-results-gap: var(--space-16);
 	--search-ring: var(--effect-ring);
 	--search-shadow: var(--effect-shadow);
 	--sidebar-search-margin-bottom: var(--space-24);
@@ -349,8 +411,10 @@
 	--size-10: 10px;
 	--size-11: 11px;
 	--size-12: 12px;
+	--size-13: 13px;
 	--size-14: 14px;
 	--size-16: 16px;
+	--size-17: 17px;
 	--size-18: 18px;
 	--size-20: 20px;
 	--size-21: 21px;
@@ -369,6 +433,8 @@
 	--size-80: 80px;
 	--size-96: 96px;
 	--size-112: 112px;
+	--size-512: 512px;
+	--size-576: 576px;
 	--size-full: 999px;
 	--space-1: var(--size-1);
 	--space-2: var(--size-2);
@@ -517,11 +583,13 @@
 		--code-string: var(--color-focus);
 		--color-accent: var(--orange-245);
 		--color-accent-strong: var(--orange-245);
+		--color-accent-wash: var(--orange-245-a080);
 		--color-error: var(--red-280);
 		--color-faint: var(--neutral-592);
 		--color-focus: var(--violet-260);
 		--color-hover-lighten: var(--neutral-0);
 		--color-ink: var(--neutral-57);
+		--color-mark: var(--orange-245-a220);
 		--color-muted: var(--neutral-378);
 		--color-on-accent: var(--neutral-0);
 		--color-paper: var(--neutral-821);
@@ -531,8 +599,14 @@
 		--color-success: var(--green-227);
 		--color-surface: var(--neutral-779);
 		--color-wash: var(--neutral-57-a071);
+		--effect-backdrop: var(--neutral-1000-a450);
 		--effect-ring: var(--neutral-57-a080);
 		--effect-shadow: var(--neutral-1000-a200);
+		--effect-shadow-dialog:
+			0px 0px 0px 1px var(--neutral-57-a102), inset 0px 1px var(--neutral-57-a051),
+			0px 2px 2px -1px var(--neutral-1000-a302), 0px 4px 4px -2px var(--neutral-1000-a302),
+			0px 8px 8px -4px var(--neutral-1000-a302), 0px 16px 16px -8px var(--neutral-1000-a302),
+			0px 32px 32px -16px var(--neutral-1000-a302), 0px 48px 64px -24px var(--neutral-1000-a400);
 		--gradient-amber: var(--amber-179);
 		--gradient-lavender: var(--lavender-175);
 		--gradient-lime: var(--lime-89);
@@ -565,11 +639,13 @@
 	--code-string: var(--color-focus);
 	--color-accent: var(--orange-245);
 	--color-accent-strong: var(--orange-245);
+	--color-accent-wash: var(--orange-245-a080);
 	--color-error: var(--red-280);
 	--color-faint: var(--neutral-592);
 	--color-focus: var(--violet-260);
 	--color-hover-lighten: var(--neutral-0);
 	--color-ink: var(--neutral-57);
+	--color-mark: var(--orange-245-a220);
 	--color-muted: var(--neutral-378);
 	--color-on-accent: var(--neutral-0);
 	--color-paper: var(--neutral-821);
@@ -579,8 +655,14 @@
 	--color-success: var(--green-227);
 	--color-surface: var(--neutral-779);
 	--color-wash: var(--neutral-57-a071);
+	--effect-backdrop: var(--neutral-1000-a450);
 	--effect-ring: var(--neutral-57-a080);
 	--effect-shadow: var(--neutral-1000-a200);
+	--effect-shadow-dialog:
+		0px 0px 0px 1px var(--neutral-57-a102), inset 0px 1px var(--neutral-57-a051),
+		0px 2px 2px -1px var(--neutral-1000-a302), 0px 4px 4px -2px var(--neutral-1000-a302),
+		0px 8px 8px -4px var(--neutral-1000-a302), 0px 16px 16px -8px var(--neutral-1000-a302),
+		0px 32px 32px -16px var(--neutral-1000-a302), 0px 48px 64px -24px var(--neutral-1000-a400);
 	--gradient-amber: var(--amber-179);
 	--gradient-lavender: var(--lavender-175);
 	--gradient-lime: var(--lime-89);

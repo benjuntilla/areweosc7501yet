@@ -4,7 +4,10 @@ import { forkScoped } from './fiber.ts';
 const openDelay = 200;
 const closeDelay = 150;
 
-/** Closes a moment after the pointer leaves, so it can cross the gap between chip and popover. */
+/**
+ * Opens a moment after the pointer stops moving over the chip. Closes a moment after it leaves, so
+ * it can cross the gap between chip and popover.
+ */
 export const hoverIntent = (popover: HTMLElement) => {
 	let cancel: (() => void) | undefined;
 	const later = (ms: number, f: () => void) => {

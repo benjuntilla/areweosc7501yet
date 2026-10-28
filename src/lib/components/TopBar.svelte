@@ -1,20 +1,18 @@
 <script lang="ts">
-	import { tick } from 'svelte';
+	import { loadSearch, searchKeys } from '#lib/client/search.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import Icon from './Icon.svelte';
 	import Logo from './Logo.svelte';
 	import Nav from './Nav.svelte';
-	import SearchField from './SearchField.svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 
 	interface Props {
 		sides: ReadonlyArray<Side>;
 		current?: string | undefined;
-		searching?: boolean;
-		searchInput?: HTMLInputElement | undefined;
+		onsearch: (trigger: HTMLElement) => void;
 	}
 
-	let { sides, current, searching = $bindable(false), searchInput = $bindable() }: Props = $props();
+	let { sides, current, onsearch }: Props = $props();
 
 	let sheet: HTMLDialogElement | undefined = $state();
 	let menuOpen = $state(false);
@@ -23,56 +21,35 @@
 	// browsers without them (Safari before 26.2); the command then finds the menu already in that state.
 	const openMenu = () => sheet?.showModal();
 	const closeMenu = () => sheet?.close();
-
-	let searchButton: HTMLButtonElement | undefined = $state();
-
-	const closeSearch = async () => {
-		searching = false;
-		await tick();
-		searchButton?.focus();
-	};
-
-	const openSearch = async () => {
-		searching = true;
-		await tick();
-		searchInput?.focus();
-	};
 </script>
 
 <header class="top-bar">
-	{#if searching}
-		<div class="search-row">
-			<SearchField bind:input={searchInput} onescape={closeSearch} />
-			<button class="button" type="button" aria-label="Close search" onclick={closeSearch}>
-				<Icon name="close" />
-			</button>
-		</div>
-	{:else}
-		<Logo size={36} />
-		<span class="spacer"></span>
-		<button
-			bind:this={searchButton}
-			class="button search-button"
-			type="button"
-			aria-label="Search"
-			aria-expanded={searching}
-			onclick={openSearch}
-		>
-			<Icon name="search" />
-		</button>
-		<button
-			class="button"
-			type="button"
-			aria-label="Menu"
-			aria-expanded={menuOpen}
-			aria-haspopup="dialog"
-			commandfor="menu"
-			command="show-modal"
-			onclick={openMenu}
-		>
-			<Icon name="menu" />
-		</button>
-	{/if}
+	<Logo size={36} />
+	<span class="spacer"></span>
+	<button
+		class="button search-button"
+		type="button"
+		aria-label="Search"
+		aria-haspopup="dialog"
+		aria-keyshortcuts={searchKeys}
+		onpointerenter={loadSearch}
+		onfocus={loadSearch}
+		onclick={(event) => onsearch(event.currentTarget)}
+	>
+		<Icon name="search" />
+	</button>
+	<button
+		class="button"
+		type="button"
+		aria-label="Menu"
+		aria-expanded={menuOpen}
+		aria-haspopup="dialog"
+		commandfor="menu"
+		command="show-modal"
+		onclick={openMenu}
+	>
+		<Icon name="menu" />
+	</button>
 </header>
 
 <dialog
@@ -115,13 +92,6 @@
 
 	.spacer {
 		flex: 1;
-	}
-
-	.search-row {
-		display: flex;
-		gap: var(--top-bar-gap);
-		align-items: center;
-		inline-size: 100%;
 	}
 
 	:global(html:not(.js)) .search-button {

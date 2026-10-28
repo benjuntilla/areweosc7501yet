@@ -2,21 +2,21 @@
 	import type { Side } from '#lib/domain/overview.ts';
 	import Logo from './Logo.svelte';
 	import Nav from './Nav.svelte';
-	import SearchField from './SearchField.svelte';
+	import SearchPill from './SearchPill.svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 
 	interface Props {
 		sides: ReadonlyArray<Side>;
 		current?: string | undefined;
-		searchInput?: HTMLInputElement | undefined;
+		onsearch: (trigger: HTMLElement) => void;
 	}
 
-	let { sides, current, searchInput = $bindable() }: Props = $props();
+	let { sides, current, onsearch }: Props = $props();
 </script>
 
 <header class="sidebar">
 	<Logo />
-	<SearchField bind:input={searchInput} />
+	<SearchPill {onsearch} />
 	<Nav {sides} {current} />
 	<ThemeToggle />
 </header>

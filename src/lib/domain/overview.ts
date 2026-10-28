@@ -48,8 +48,6 @@ export interface Chip {
 	readonly sourceLabel: string | undefined;
 	readonly specRevision: string;
 	readonly checked: string;
-	/** Lowercase text the search filter matches: name, aliases and GitHub owner/name. */
-	readonly terms: string;
 }
 
 export interface CategoryView {
@@ -85,8 +83,7 @@ const toChip = (e: SiteEntry): Chip => {
 		source,
 		sourceLabel: source === undefined ? undefined : sourceLabel(source),
 		specRevision: e.spec_revision,
-		checked: formatDay(e.last_checked_date),
-		terms: [e.name, ...(e.aliases ?? []), e.repo ?? ''].join('\n').toLowerCase()
+		checked: formatDay(e.last_checked_date)
 	};
 };
 

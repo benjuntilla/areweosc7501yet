@@ -85,6 +85,14 @@
 				"alpha": 0.2
 			}
 		},
+		"57-a051": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.943, 0.003, 106.5],
+				"alpha": 0.051
+			}
+		},
 		"57-a071": {
 			"$type": "color",
 			"$value": {
@@ -99,6 +107,14 @@
 				"colorSpace": "oklch",
 				"components": [0.943, 0.003, 106.5],
 				"alpha": 0.08
+			}
+		},
+		"57-a102": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.943, 0.003, 106.5],
+				"alpha": 0.102
 			}
 		},
 		"57-a141": {
@@ -125,12 +141,28 @@
 				"alpha": 0.6196
 			}
 		},
+		"777-a031": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.223, 0.015, 136.8],
+				"alpha": 0.0314
+			}
+		},
 		"777-a035": {
 			"$type": "color",
 			"$value": {
 				"colorSpace": "oklch",
 				"components": [0.223, 0.015, 136.8],
 				"alpha": 0.035
+			}
+		},
+		"777-a039": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.223, 0.015, 136.8],
+				"alpha": 0.0392
 			}
 		},
 		"777-a051": {
@@ -141,6 +173,14 @@
 				"alpha": 0.051
 			}
 		},
+		"777-a059": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.223, 0.015, 136.8],
+				"alpha": 0.0588
+			}
+		},
 		"777-a070": {
 			"$type": "color",
 			"$value": {
@@ -149,12 +189,36 @@
 				"alpha": 0.07
 			}
 		},
+		"777-a071": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.223, 0.015, 136.8],
+				"alpha": 0.0706
+			}
+		},
+		"777-a102": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.223, 0.015, 136.8],
+				"alpha": 0.102
+			}
+		},
 		"777-a122": {
 			"$type": "color",
 			"$value": {
 				"colorSpace": "oklch",
 				"components": [0.223, 0.015, 136.8],
 				"alpha": 0.1216
+			}
+		},
+		"777-a160": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.223, 0.015, 136.8],
+				"alpha": 0.16
 			}
 		},
 		"777-a200": {
@@ -187,6 +251,30 @@
 				"colorSpace": "oklch",
 				"components": [0, 0, 0],
 				"alpha": 0.2
+			}
+		},
+		"1000-a302": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0, 0, 0],
+				"alpha": 0.302
+			}
+		},
+		"1000-a400": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0, 0, 0],
+				"alpha": 0.4
+			}
+		},
+		"1000-a450": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0, 0, 0],
+				"alpha": 0.45
 			}
 		}
 	},
@@ -323,6 +411,38 @@
 				"colorSpace": "oklch",
 				"components": [0.544, 0.184, 36.5]
 			}
+		},
+		"245-a080": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.755, 0.153, 41.8],
+				"alpha": 0.08
+			}
+		},
+		"245-a090": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.755, 0.153, 41.8],
+				"alpha": 0.09
+			}
+		},
+		"245-a200": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.755, 0.153, 41.8],
+				"alpha": 0.2
+			}
+		},
+		"245-a220": {
+			"$type": "color",
+			"$value": {
+				"colorSpace": "oklch",
+				"components": [0.755, 0.153, 41.8],
+				"alpha": 0.22
+			}
 		}
 	},
 	"pink": {
@@ -458,6 +578,13 @@
 				"unit": "px"
 			}
 		},
+		"13": {
+			"$type": "dimension",
+			"$value": {
+				"value": 13,
+				"unit": "px"
+			}
+		},
 		"14": {
 			"$type": "dimension",
 			"$value": {
@@ -469,6 +596,13 @@
 			"$type": "dimension",
 			"$value": {
 				"value": 16,
+				"unit": "px"
+			}
+		},
+		"17": {
+			"$type": "dimension",
+			"$value": {
+				"value": 17,
 				"unit": "px"
 			}
 		},
@@ -598,6 +732,20 @@
 				"unit": "px"
 			}
 		},
+		"512": {
+			"$type": "dimension",
+			"$value": {
+				"value": 512,
+				"unit": "px"
+			}
+		},
+		"576": {
+			"$type": "dimension",
+			"$value": {
+				"value": 576,
+				"unit": "px"
+			}
+		},
 		"1_17": {
 			"$type": "dimension",
 			"$value": {
@@ -671,10 +819,24 @@
 					"unit": "px"
 				}
 			},
+			"19": {
+				"$type": "dimension",
+				"$value": {
+					"value": 19,
+					"unit": "px"
+				}
+			},
 			"20": {
 				"$type": "dimension",
 				"$value": {
 					"value": 20,
+					"unit": "px"
+				}
+			},
+			"22": {
+				"$type": "dimension",
+				"$value": {
+					"value": 22,
 					"unit": "px"
 				}
 			},

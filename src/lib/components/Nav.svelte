@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { search } from '#lib/client/search.svelte.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import Icon from './Icon.svelte';
 
@@ -21,12 +20,6 @@
 		{ href: 'https://github.com/benjuntilla/areweosc7501yet', label: 'GitHub', reload: true }
 	];
 
-	// A section link clears the search, so the section it points to is on the page.
-	const toSection = () => {
-		search.query = '';
-		onnavigate?.();
-	};
-
 	const here = (href: string) => (page.url.pathname === href ? 'page' : undefined);
 	const at = (id: string) => (page.url.pathname === '/' && current === id ? 'location' : undefined);
 </script>
@@ -44,7 +37,7 @@
 							class="toc-link side"
 							href="/#{side.id}"
 							aria-current={at(side.id)}
-							onclick={toSection}
+							onclick={onnavigate}
 						>
 							<Icon name={side.role} size={12} />{side.name}
 						</a>
@@ -55,7 +48,7 @@
 										class="toc-link"
 										href="/#{category.id}"
 										aria-current={at(category.id)}
-										onclick={toSection}>{category.name}</a
+										onclick={onnavigate}>{category.name}</a
 									>
 								</li>
 							{/each}

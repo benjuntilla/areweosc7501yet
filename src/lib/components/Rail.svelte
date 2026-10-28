@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { search } from '#lib/client/search.svelte.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import Icon from './Icon.svelte';
 	import StateGlyph from './StateGlyph.svelte';
@@ -36,7 +35,6 @@
 		<a
 			class="segment"
 			href="/#{side.id}"
-			onclick={() => (search.query = '')}
 			aria-label="{side.name}: {side.done} of {side.featured} done, {side.working} working, jump to list"
 			style:--done="{pct(side, side.done)}%"
 			style:--working="{pct(side, side.working)}%"

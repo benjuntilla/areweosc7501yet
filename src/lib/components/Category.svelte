@@ -1,29 +1,21 @@
 <script lang="ts">
 	import { replaceState } from '$app/navigation';
-	import { matches } from '#lib/client/filter.ts';
 	import type { CategoryView } from '#lib/domain/overview.ts';
 	import { tick } from 'svelte';
 	import Chip from './Chip.svelte';
 
 	interface Props {
 		category: CategoryView;
-		query: string;
 		/** Unfolded by a deep link, such as /#kitty or /#coding-agents-all. */
 		expanded?: boolean;
 		highlight?: string | undefined;
 	}
 
-	let { category, query, expanded = $bindable(false), highlight }: Props = $props();
+	let { category, expanded = $bindable(false), highlight }: Props = $props();
 
 	let toggle: HTMLButtonElement | undefined = $state();
 	let tail: HTMLDivElement | undefined = $state();
 	let folded = $state(false);
-
-	const featured = $derived(category.featured.filter((c) => matches(c, query)));
-	const more = $derived(category.more.filter((c) => matches(c, query)));
-	const searching = $derived(query.trim() !== '');
-	// Search unfolds any tail with a match.
-	const open = $derived(searching ? more.length > 0 : expanded);
 
 	// The URL can be shared. Unfolding from the keyboard moves focus to the first revealed chip,
 	// which comes before the toggle in tab order. Otherwise the toggle keeps focus and stays in view.
@@ -39,46 +31,38 @@
 	};
 </script>
 
-{#if featured.length > 0 || more.length > 0}
-	<section class="category" id={category.id} aria-labelledby="{category.id}-head">
-		<h4 class="type-h3" id="{category.id}-head">{category.name}</h4>
-		<div class="chips">
-			<ul class="list">
-				{#each featured as chip (chip.slug)}
-					<Chip {chip} highlight={highlight === chip.slug} />
-				{/each}
-			</ul>
-			{#if category.more.length > 0}
-				<div bind:this={tail} class="tail" class:open id="{category.id}-more">
-					<div class="tail-inner">
-						<p class="more-label type-caption">
-							More projects · {searching
-								? `${more.length} of ${category.more.length}`
-								: category.more.length}
-						</p>
-						<ul class="list">
-							{#each more as chip (chip.slug)}
-								<Chip {chip} highlight={highlight === chip.slug} />
-							{/each}
-						</ul>
-					</div>
+<section class="category" id={category.id} aria-labelledby="{category.id}-head">
+	<h4 class="type-h3" id="{category.id}-head">{category.name}</h4>
+	<div class="chips">
+		<ul class="list">
+			{#each category.featured as chip (chip.slug)}
+				<Chip {chip} highlight={highlight === chip.slug} />
+			{/each}
+		</ul>
+		{#if category.more.length > 0}
+			<div bind:this={tail} class="tail" class:open={expanded} id="{category.id}-more">
+				<div class="tail-inner">
+					<p class="more-label type-caption">More projects · {category.more.length}</p>
+					<ul class="list">
+						{#each category.more as chip (chip.slug)}
+							<Chip {chip} highlight={highlight === chip.slug} />
+						{/each}
+					</ul>
 				</div>
-				{#if !searching}
-					<button
-						bind:this={toggle}
-						class="more-chip type-small"
-						class:open
-						class:folded
-						type="button"
-						aria-expanded={open}
-						aria-controls="{category.id}-more"
-						{onclick}>{open ? 'Show fewer' : `+ ${category.more.length} more`}</button
-					>
-				{/if}
-			{/if}
-		</div>
-	</section>
-{/if}
+			</div>
+			<button
+				bind:this={toggle}
+				class="more-chip type-small"
+				class:open={expanded}
+				class:folded
+				type="button"
+				aria-expanded={expanded}
+				aria-controls="{category.id}-more"
+				{onclick}>{expanded ? 'Show fewer' : `+ ${category.more.length} more`}</button
+			>
+		{/if}
+	</div>
+</section>
 
 <style>
 	.category {

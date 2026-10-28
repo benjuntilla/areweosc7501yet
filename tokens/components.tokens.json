@@ -440,17 +440,143 @@
 			"$type": "dimension",
 			"$value": "{radius.24}"
 		},
-		"focus-stroke-width": {
-			"$type": "dimension",
-			"$value": "{stroke.2}"
-		},
 		"icon-size": {
 			"$type": "dimension",
 			"$value": "{icon.size-sm}"
+		}
+	},
+	"search-dialog": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.surface}"
 		},
-		"results-gap": {
+		"backdrop": {
+			"$type": "color",
+			"$value": "{effect.backdrop}"
+		},
+		"text": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"caret": {
+			"$type": "color",
+			"$value": "{color.accent}"
+		},
+		"icon": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"placeholder": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"meta": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"selected": {
+			"$type": "color",
+			"$value": "{color.accent-wash}"
+		},
+		"mark": {
+			"$type": "color",
+			"$value": "{color.mark}"
+		},
+		"shadow": {
+			"$type": "shadow",
+			"$value": "{effect.shadow-dialog}"
+		},
+		"width": {
 			"$type": "dimension",
-			"$value": "{space.16}"
+			"$value": "{size.512}"
+		},
+		"max-height": {
+			"$type": "dimension",
+			"$value": "{size.576}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.24}"
+		},
+		"input-height": {
+			"$type": "dimension",
+			"$value": "{size.48}"
+		},
+		"input-padding-x": {
+			"$type": "dimension",
+			"$value": "{size.17}"
+		},
+		"input-gap": {
+			"$type": "dimension",
+			"$value": "{size.13}"
+		},
+		"icon-size": {
+			"$type": "dimension",
+			"$value": "{size.22}"
+		},
+		"input-size": {
+			"$type": "dimension",
+			"$value": "{font.size.22}"
+		},
+		"input-tracking": {
+			"$type": "dimension",
+			"$value": "{font.tracking.minus-0_225}"
+		},
+		"esc-size": {
+			"$type": "dimension",
+			"$value": "{font.size.19}"
+		},
+		"state-size": {
+			"$type": "dimension",
+			"$value": "{font.size.13}"
+		},
+		"state-line-height": {
+			"$type": "dimension",
+			"$value": "{font.line-height.16}"
+		},
+		"results-padding": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"heading-padding-top": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"heading-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		},
+		"item-padding-x": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"item-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"item-gap": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"item-radius": {
+			"$type": "dimension",
+			"$value": "{radius.12}"
+		},
+		"mark-radius": {
+			"$type": "dimension",
+			"$value": "{size.3}"
+		},
+		"mark-bleed": {
+			"$type": "dimension",
+			"$value": "{size.1}"
+		},
+		"empty-padding-top": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"empty-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.20}"
 		}
 	},
 	"nav": {
@@ -843,6 +969,27 @@
 				"unit": "ms"
 			},
 			"$description": "Rail label exit: all lines together, opacity ease-out, movement ease-in."
+		},
+		"search-morph-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 280,
+				"unit": "ms"
+			},
+			"$description": "Search button to dialog morph, both ways, and the backdrop fade (Rex: .28s)."
+		},
+		"ease-morph": {
+			"$type": "cubicBezier",
+			"$value": [0.2, 0.9, 0.3, 1],
+			"$description": "Search morph (Rex)."
+		},
+		"search-shadow-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 220,
+				"unit": "ms"
+			},
+			"$description": "The search dialog shadow fades in after the morph lands (ease-out)."
 		}
 	},
 	"hero": {

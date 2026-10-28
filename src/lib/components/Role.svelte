@@ -5,12 +5,11 @@
 
 	interface Props {
 		role: RoleView;
-		query: string;
 		expanded: Record<string, boolean>;
 		highlight: string | undefined;
 	}
 
-	let { role, query, expanded = $bindable(), highlight }: Props = $props();
+	let { role, expanded = $bindable(), highlight }: Props = $props();
 </script>
 
 <section class="role" id={role.id} aria-labelledby="{role.id}-head">
@@ -18,7 +17,6 @@
 	{#each role.categories as category (category.id)}
 		<Category
 			{category}
-			{query}
 			bind:expanded={() => expanded[category.id] ?? false, (v) => (expanded[category.id] = v)}
 			{highlight}
 		/>

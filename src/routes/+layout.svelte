@@ -6,33 +6,37 @@
 	import { page } from '$app/state';
 	import Footer from '#lib/components/Footer.svelte';
 	import Rail from '#lib/components/Rail.svelte';
+	import SearchDialog from '#lib/components/SearchDialog.svelte';
 	import Sidebar from '#lib/components/Sidebar.svelte';
 	import TopBar from '#lib/components/TopBar.svelte';
 	import { siteTitle } from '#lib/meta.ts';
-	import { tick } from 'svelte';
 	import type { LayoutProps } from './$types';
 
 	let { data, children }: LayoutProps = $props();
 
-	let sidebarInput: HTMLInputElement | undefined = $state();
-	let topBarInput: HTMLInputElement | undefined = $state();
-	let searching = $state(false);
+	let searchDialog: SearchDialog | undefined = $state();
 	let current: string | undefined = $state();
 
 	const sectionIds = $derived(
 		data.sides.flatMap((side) => [side.id].concat(side.categories.map((c) => c.id)))
 	);
 
-	// ⌘K or Ctrl+K focuses search from anywhere: the sidebar field, or the top bar's on phones.
-	const onkeydown = async (event: KeyboardEvent) => {
-		if (event.key.toLowerCase() !== 'k' || !(event.metaKey || event.ctrlKey)) return;
+	const onsearch = (trigger: HTMLElement) => void searchDialog?.open(trigger);
+
+	// ⌘K or Ctrl+K opens search from anywhere, and so does / outside a text field. Either presses the
+	// search button that shows: the sidebar's, or the top bar's below 1,100 px.
+	const onkeydown = (event: KeyboardEvent) => {
+		const k = event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey);
+		const slash =
+			event.key === '/' &&
+			!(
+				event.target instanceof Element &&
+				event.target.matches('input, textarea, [contenteditable]')
+			);
+		if (!k && !slash) return;
 		event.preventDefault();
-		if (sidebarInput?.checkVisibility()) sidebarInput.focus();
-		else {
-			searching = true;
-			await tick();
-			topBarInput?.focus();
-		}
+		const buttons = document.querySelectorAll<HTMLElement>('[aria-keyshortcuts]');
+		[...buttons].find((button) => button.checkVisibility())?.click();
 	};
 
 	// A new page lands at once. Only moves within a page glide.
@@ -44,7 +48,7 @@
 		document.documentElement.style.scrollBehavior = '';
 	});
 
-	// Search removes and recreates sections, so look them up on each scroll.
+	// The overview's sections come and go with the page, so look them up on each scroll.
 	const onscroll = () => {
 		const sections = sectionIds.flatMap((id) => document.querySelector(`#${id}`) ?? []);
 		current = sections.findLast((s) => s.getBoundingClientRect().top < innerHeight / 3)?.id;
@@ -70,10 +74,10 @@
 
 <a class="skip-link" href="#content">Skip to content</a>
 
-<Sidebar sides={data.sides} {current} bind:searchInput={sidebarInput} />
+<Sidebar sides={data.sides} {current} {onsearch} />
 
 <div class="column">
-	<TopBar sides={data.sides} {current} bind:searching bind:searchInput={topBarInput} />
+	<TopBar sides={data.sides} {current} {onsearch} />
 	<main id="content" tabindex="-1">
 		{@render children()}
 	</main>
@@ -81,6 +85,8 @@
 </div>
 
 <Rail sides={data.sides} />
+
+<SearchDialog bind:this={searchDialog} />
 
 <style>
 	.skip-link {
