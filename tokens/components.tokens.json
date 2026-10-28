@@ -29,6 +29,10 @@
 		"icon-strong": {
 			"$type": "color",
 			"$value": "{color.ink}"
+		},
+		"section-gap": {
+			"$type": "dimension",
+			"$value": "{space.12}"
 		}
 	},
 	"heading": {
@@ -756,6 +760,38 @@
 		"comment": {
 			"$type": "color",
 			"$value": "{code.comment}"
+		},
+		"head-gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"head-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"head-padding-right": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"padding-x": {
+			"$type": "dimension",
+			"$value": "{space.16}"
+		},
+		"padding-top": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.14}"
+		},
+		"button-padding": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"button-radius": {
+			"$type": "dimension",
+			"$value": "{radius.6}"
 		}
 	},
 	"legend": {
