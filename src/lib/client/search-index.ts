@@ -1,4 +1,4 @@
-import { Array, Effect, Order, Record, String as Str } from 'effect';
+import { Array, Effect, Order, Record, RegExp, String as Str } from 'effect';
 import { FetchHttpClient, HttpClient, HttpClientResponse } from 'effect/http';
 import MiniSearch from 'minisearch';
 import { SearchRecords } from '#lib/domain/search.ts';
@@ -14,13 +14,7 @@ const markWords = (name: string, query: string) => {
 	);
 	return Str.split(
 		name,
-		new RegExp(
-			`(${Array.join(
-				Array.map(longestFirst, (w) => RegExp.escape(w)),
-				'|'
-			)})`,
-			'iu'
-		)
+		new RegExp.RegExp(`(${Array.join(Array.map(longestFirst, RegExp.escape), '|')})`, 'iu')
 	);
 };
 
