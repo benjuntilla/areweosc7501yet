@@ -113,20 +113,15 @@
 		}
 	}
 
-	/* Each dot fades on, stays lit for half the loop, and fades off, so three consecutive dots are lit. */
+	/* Each dot brightens for half the loop and dims for the other half, so about three dots are lit. */
 	@keyframes spin {
-		0% {
-			opacity: calc(var(--state-glyph-icon-opacity) / 100);
-		}
-
-		12%,
-		50% {
-			opacity: 1;
-		}
-
-		62%,
+		0%,
 		100% {
 			opacity: calc(var(--state-glyph-icon-opacity) / 100);
+		}
+
+		50% {
+			opacity: 1;
 		}
 	}
 </style>
