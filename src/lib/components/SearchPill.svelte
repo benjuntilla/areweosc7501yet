@@ -24,6 +24,7 @@
 </button>
 
 <style>
+	/* Rex's pill: the page color inside a 1 px edge that darkens toward the bottom. */
 	.search {
 		display: flex;
 		gap: var(--search-gap);
@@ -31,13 +32,23 @@
 		inline-size: 100%;
 		padding: var(--search-padding-y) var(--search-padding-x);
 		color: var(--search-placeholder);
-		background: var(--search-background);
-		border: 0;
+		background:
+			linear-gradient(var(--search-background), var(--search-background)) padding-box,
+			linear-gradient(var(--search-edge-top), var(--search-edge-bottom)) border-box;
+		border: var(--search-edge-width) solid transparent;
 		border-radius: var(--search-radius);
-		box-shadow:
-			0 2px 2px -1px var(--search-shadow),
-			0 1px 1px 0 var(--search-shadow),
-			0 0 0 1px var(--search-ring);
+		transition: filter var(--motion-state-duration) var(--motion-ease-state);
+	}
+
+	.search:hover {
+		filter: brightness(var(--search-hover-brightness));
+	}
+
+	.search:focus-visible {
+		background:
+			linear-gradient(var(--search-focus-tint), var(--search-focus-tint)) padding-box,
+			linear-gradient(var(--search-background), var(--search-background)) padding-box,
+			linear-gradient(var(--search-edge-top), var(--search-edge-bottom)) border-box;
 	}
 
 	:global(html:not(.js)) .search {

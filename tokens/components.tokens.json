@@ -406,15 +406,19 @@
 	"search": {
 		"background": {
 			"$type": "color",
-			"$value": "{color.surface}"
+			"$value": "{color.paper}"
 		},
-		"ring": {
+		"edge-top": {
 			"$type": "color",
-			"$value": "{effect.ring}"
+			"$value": "{color.edge-top}"
 		},
-		"shadow": {
+		"edge-bottom": {
 			"$type": "color",
-			"$value": "{effect.shadow}"
+			"$value": "{color.edge-bottom}"
+		},
+		"focus-tint": {
+			"$type": "color",
+			"$value": "{color.focus-wash}"
 		},
 		"icon": {
 			"$type": "color",
@@ -440,9 +444,17 @@
 			"$type": "dimension",
 			"$value": "{radius.24}"
 		},
+		"edge-width": {
+			"$type": "dimension",
+			"$value": "{stroke.1}"
+		},
 		"icon-size": {
 			"$type": "dimension",
 			"$value": "{icon.size-sm}"
+		},
+		"hover-brightness": {
+			"$type": "number",
+			"$value": "{effect.hover-brightness}"
 		}
 	},
 	"search-dialog": {

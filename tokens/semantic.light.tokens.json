@@ -28,6 +28,14 @@
 			"$type": "color",
 			"$value": "{neutral.777-a122}"
 		},
+		"edge-top": {
+			"$type": "color",
+			"$value": "{neutral.777-a040}"
+		},
+		"edge-bottom": {
+			"$type": "color",
+			"$value": "{neutral.777-a130}"
+		},
 		"wash": {
 			"$type": "color",
 			"$value": "{neutral.777-a051}"
@@ -55,6 +63,10 @@
 		"focus": {
 			"$type": "color",
 			"$value": "{violet.481}"
+		},
+		"focus-wash": {
+			"$type": "color",
+			"$value": "{violet.481-a090}"
 		},
 		"error": {
 			"$type": "color",
@@ -250,6 +262,10 @@
 					"inset": false
 				}
 			]
+		},
+		"hover-brightness": {
+			"$type": "number",
+			"$value": 0.96
 		}
 	},
 	"state": {
