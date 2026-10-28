@@ -87,7 +87,7 @@
 		flex-wrap: wrap;
 		gap: var(--chip-list-row-gap) var(--chip-list-gap);
 		align-items: center;
-		transition: margin-block-end var(--motion-toc-unfold-duration) cubic-bezier(0.4, 0, 0.2, 1);
+		transition: margin-block-end var(--motion-toc-unfold-duration) var(--motion-ease-fold);
 	}
 
 	/* A folded tail still starts a flex line of its own, so take back the row gap above it. */
@@ -106,7 +106,7 @@
 		grid-template-rows: 0fr;
 		order: 2;
 		transition:
-			grid-template-rows var(--motion-toc-unfold-duration) cubic-bezier(0.4, 0, 0.2, 1),
+			grid-template-rows var(--motion-toc-unfold-duration) var(--motion-ease-fold),
 			visibility 0s var(--motion-toc-unfold-duration);
 	}
 
