@@ -20,6 +20,8 @@ export default defineConfig({
 		'eslint/no-redeclare': 'off',
 		// Exhaustive switches over a union return on every path; TypeScript already checks it.
 		'typescript/consistent-return': 'off',
+		// Stylesheets are imported for their side effect.
+		'import/no-unassigned-import': ['error', { allow: ['**/*.css'] }],
 		'vitest/no-standalone-expect': ['error', { additionalTestBlockFunctions: ['it.effect'] }]
 	},
 	// Paths match from .config/, so each starts with **/.

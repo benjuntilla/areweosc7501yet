@@ -3,7 +3,8 @@
  * ------------------------------------------- */
 
 :root {
-	--amber-179: oklch(82.1% 0.134 66.3);
+	--amber-176: oklch(82.4% 0.133 64.1);
+	--amber-469: oklch(53.1% 0.104 96.7);
 	--browser-dark-strip: var(--gray-752);
 	--browser-dark-tab: var(--gray-667);
 	--browser-dark-title: var(--gray-64);
@@ -24,6 +25,8 @@
 	--chip-label: var(--color-ink);
 	--chip-label-muted: var(--color-soft);
 	--chip-list-gap: var(--space-2);
+	--chip-list-label-gap: var(--space-4);
+	--chip-list-row-gap: var(--space-8);
 	--chip-padding-left: var(--space-4);
 	--chip-padding-right: var(--space-6);
 	--chip-padding-y: var(--space-2);
@@ -36,11 +39,16 @@
 	--code-string: var(--color-focus);
 	--color-accent: var(--orange-245);
 	--color-accent-strong: var(--orange-456);
+	--color-accent-wash: var(--orange-245-a090);
+	--color-edge-bottom: var(--neutral-777-a130);
+	--color-edge-top: var(--neutral-777-a040);
 	--color-error: var(--red-449);
 	--color-faint: var(--neutral-140);
 	--color-focus: var(--violet-481);
+	--color-focus-wash: var(--violet-481-a090);
 	--color-hover-lighten: var(--neutral-0);
 	--color-ink: var(--neutral-777);
+	--color-mark: var(--orange-245-a200);
 	--color-muted: var(--neutral-456);
 	--color-on-accent: var(--neutral-0);
 	--color-paper: var(--neutral-30);
@@ -56,10 +64,25 @@
 	--content-text: var(--color-soft);
 	--content-text-muted: var(--color-muted);
 	--content-text-strong: var(--color-ink);
+	--effect-backdrop: var(--neutral-777-a160);
+	--effect-field-ring:
+		inset 0px 0px 0px 1px var(--neutral-1000-a035), inset 0px 1px 4px var(--neutral-1000-a020);
+	--effect-hover-brightness: 0.96;
 	--effect-ring: var(--neutral-777-a070);
 	--effect-shadow: var(--neutral-777-a035);
+	--effect-shadow-dialog:
+		0px 0px 0px 1px var(--neutral-777-a071), 0px 1px 1px var(--neutral-777-a031),
+		0px 2px 2px -1px var(--neutral-777-a039), 0px 4px 4px -2px var(--neutral-777-a039),
+		0px 8px 8px -4px var(--neutral-777-a051), 0px 16px 16px -8px var(--neutral-777-a059),
+		0px 32px 32px -16px var(--neutral-777-a071), 0px 48px 64px -24px var(--neutral-777-a102);
 	--error-card-code-opacity: var(--opacity-dim);
 	--error-card-content: var(--color-on-accent);
+	--field-end: var(--lime-57);
+	--field-ramp:
+		var(--lavender-171) 0%, var(--lavender-178) 8.59%, var(--pink-196) 17.18%,
+		var(--orange-224) 25.77%, var(--amber-176) 42.98%, var(--lime-122) 60.2%, var(--lime-76) 77.41%,
+		var(--lime-66) 84.94%, var(--lime-59) 92.47%, var(--lime-57) 100%;
+	--field-start: var(--lavender-171);
 	--focus-ring-radius: var(--radius-16);
 	--focus-ring-stroke: var(--color-focus);
 	--focus-ring-stroke-width: var(--stroke-2);
@@ -83,7 +106,9 @@
 	--font-size-14: 14px;
 	--font-size-15: 15px;
 	--font-size-18: 18px;
+	--font-size-19: 19px;
 	--font-size-20: 20px;
+	--font-size-22: 22px;
 	--font-size-28: 28px;
 	--font-size-32: 32px;
 	--font-size-36: 36px;
@@ -99,16 +124,8 @@
 	--footer-divider: var(--color-rule);
 	--footer-gap: var(--space-8);
 	--footer-link: var(--color-soft);
+	--footer-padding-top: var(--space-22);
 	--footer-text: var(--color-muted);
-	--gradient-amber: var(--amber-179);
-	--gradient-lavender: var(--lavender-175);
-	--gradient-lime: var(--lime-89);
-	--gradient-oklab-mid-amber-orange: var(--mix-amber-orange);
-	--gradient-oklab-mid-lime-amber: var(--mix-lime-amber);
-	--gradient-oklab-mid-orange-pink: var(--mix-orange-pink);
-	--gradient-oklab-mid-pink-lavender: var(--mix-pink-lavender);
-	--gradient-orange: var(--color-accent);
-	--gradient-pink: var(--pink-200);
 	--gray-64: oklch(93.6% 0.005 258.3);
 	--gray-91: oklch(90.9% 0.008 260.7);
 	--gray-667: oklch(33.3% 0.007 274.8);
@@ -119,11 +136,16 @@
 	--heading-category-gap: var(--space-8);
 	--heading-count: var(--color-muted);
 	--heading-icon: var(--color-muted);
+	--heading-icon-gap: var(--space-8);
+	--heading-legend-gap: var(--space-16);
 	--heading-note: var(--color-muted);
 	--heading-text: var(--color-ink);
+	--hero-drum-gap: var(--space-7);
+	--hero-drum-margin-bottom: var(--space-18);
 	--icon-size-sm: var(--size-14);
 	--indigo-438: oklch(56.2% 0.25 282.5);
-	--lavender-175: oklch(82.5% 0.106 305.5);
+	--lavender-171: oklch(82.9% 0.113 303.7);
+	--lavender-178: oklch(82.2% 0.099 316.3);
 	--layout-content-gap: var(--size-36);
 	--layout-group-gap: var(--size-56);
 	--layout-head-gap: var(--size-10);
@@ -138,8 +160,17 @@
 	--legend-description: var(--color-muted);
 	--legend-gap: var(--space-18);
 	--legend-item-gap: var(--space-6);
+	--legend-learn-gap: var(--space-12);
 	--legend-state-name: var(--color-ink);
-	--lime-89: oklch(91.1% 0.167 122.2);
+	--lime-57: oklch(94.3% 0.148 122.4);
+	--lime-59: oklch(94.1% 0.152 122.6);
+	--lime-66: oklch(93.4% 0.162 123.3);
+	--lime-76: oklch(92.4% 0.177 124.1);
+	--lime-122: oklch(87.8% 0.137 101.2);
+	--lime-579: oklch(42.1% 0.128 127.7);
+	--lime-643: oklch(35.7% 0.108 127.4);
+	--lime-684: oklch(31.6% 0.096 127.1);
+	--lime-699: oklch(30.1% 0.091 127);
 	--link-text: var(--color-soft);
 	--link-text-hover: var(--color-ink);
 	--link-text-pressed: var(--color-accent-strong);
@@ -147,25 +178,22 @@
 	--logo-tile-radius: var(--radius-12);
 	--logo-tile-ring: var(--effect-ring);
 	--logo-tile-shadow: var(--effect-shadow);
+	--menu-gap: var(--space-20);
+	--menu-group-padding-bottom: var(--space-6);
+	--menu-group-padding-top: var(--space-18);
+	--menu-item-padding-x: var(--space-12);
+	--menu-item-padding-y: var(--space-10);
+	--menu-item-radius: var(--radius-8);
+	--menu-padding-bottom: var(--space-40);
 	--meter-count: var(--color-soft);
 	--meter-count-gap: var(--space-12);
 	--meter-count-item-gap: var(--space-5);
+	/* Lavender, coral, lime, and pale lime (dark: olive and deep green), blended in OKLab. The stops follow smoothstep, so each color holds a little longer before it blends into the next. */
+	--meter-field: var(--field-ramp);
+	--meter-gap: var(--space-14);
 	--meter-ghost-opacity: var(--opacity-ghost);
-	--meter-gradient-amber: var(--gradient-amber);
-	--meter-gradient-amber-orange: var(--gradient-oklab-mid-amber-orange);
-	--meter-gradient-lavender: var(--gradient-lavender);
-	--meter-gradient-lime: var(--gradient-lime);
-	--meter-gradient-lime-amber: var(--gradient-oklab-mid-lime-amber);
-	--meter-gradient-orange: var(--gradient-orange);
-	--meter-gradient-orange-pink: var(--gradient-oklab-mid-orange-pink);
-	--meter-gradient-pink: var(--gradient-pink);
-	--meter-gradient-pink-lavender: var(--gradient-oklab-mid-pink-lavender);
 	--meter-radius: var(--radius-4);
 	--meter-track: var(--color-wash);
-	--mix-amber-orange: oklch(78.8% 0.14 53.2);
-	--mix-lime-amber: oklch(86.6% 0.133 97.6);
-	--mix-orange-pink: oklch(77.7% 0.117 22.3);
-	--mix-pink-lavender: oklch(81.2% 0.096 328.7);
 	--more-chip-background-hover: var(--color-rule);
 	--more-chip-background-pressed: var(--color-press);
 	--more-chip-padding-x: var(--space-8);
@@ -181,6 +209,8 @@
 	--motion-drum-start-delay: 1000ms;
 	/* One drum turn to the next word. */
 	--motion-drum-step-duration: 620ms;
+	/* Search morph (Rex). */
+	--motion-ease-morph: cubic-bezier(0.2, 0.9, 0.3, 1);
 	/* Ease-out quint-ish. Drum entrance. */
 	--motion-ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
 	/* Hover and pressed state changes (ease-out). */
@@ -189,8 +219,8 @@
 	--motion-ease-turn: cubic-bezier(0.33, 1, 0.68, 1);
 	/* Tailwind ease-out, used by the nav TOC unfold (Rex). */
 	--motion-ease-unfold: cubic-bezier(0, 0, 0.2, 1);
-	/* deg. Rail hue-rotate at the bottom of the page; 0 at the top. */
-	--motion-rail-hue-max: 30;
+	/* One pass of the rail field's waves across a 600 px tile, about 15 px a second. */
+	--motion-rail-drift-duration: 40s;
 	/* Rail label lines rise this many px while fading in (Lift). */
 	--motion-rail-label-distance: 6px;
 	/* Rail label entrance per line (Lift). */
@@ -199,6 +229,10 @@
 	--motion-rail-label-exit-duration: 160ms;
 	/* Delay between rail label lines, top first (Lift). */
 	--motion-rail-label-stagger: 40ms;
+	/* Search button to dialog morph, both ways, and the backdrop fade (Rex: .28s). */
+	--motion-search-morph-duration: 280ms;
+	/* The search dialog shadow fades in after the morph lands (ease-out). */
+	--motion-search-shadow-duration: 220ms;
 	/* Hover/pressed color changes on chips, nav and links. */
 	--motion-state-duration: 120ms;
 	/* Nav TOC unfold/fold: grid-template-rows 0fr↔1fr + opacity (Rex: 200ms). */
@@ -221,13 +255,22 @@
 	--nav-toc-indent: var(--space-20);
 	/* Vertical padding of a TOC entry (Rex: 4px). */
 	--nav-toc-item-padding-y: var(--space-4);
+	--nav-toc-line-height: var(--font-line-height-16);
+	--nav-toc-padding-bottom: var(--space-4);
+	--nav-toc-size: var(--font-size-13);
 	--neutral-0: oklch(100% 0 0);
+	--neutral-0-a035: oklch(100% 0 0 / 0.035);
+	--neutral-0-a078: oklch(100% 0 0 / 0.078);
 	--neutral-0-a200: oklch(100% 0 0 / 0.2);
 	--neutral-30: oklch(97% 0.001 106.4);
 	--neutral-57: oklch(94.3% 0.003 106.5);
+	--neutral-57-a051: oklch(94.3% 0.003 106.5 / 0.051);
+	--neutral-57-a060: oklch(94.3% 0.003 106.5 / 0.06);
 	--neutral-57-a071: oklch(94.3% 0.003 106.5 / 0.0706);
 	--neutral-57-a080: oklch(94.3% 0.003 106.5 / 0.08);
+	--neutral-57-a102: oklch(94.3% 0.003 106.5 / 0.102);
 	--neutral-57-a141: oklch(94.3% 0.003 106.5 / 0.1412);
+	--neutral-57-a180: oklch(94.3% 0.003 106.5 / 0.18);
 	--neutral-57-a220: oklch(94.3% 0.003 106.5 / 0.22);
 	--neutral-57-a620: oklch(94.3% 0.003 106.5 / 0.6196);
 	--neutral-140: oklch(86% 0.001 106.4);
@@ -235,18 +278,32 @@
 	--neutral-456: oklch(54.4% 0.008 132.5);
 	--neutral-592: oklch(40.8% 0.015 135);
 	--neutral-777: oklch(22.3% 0.015 136.8);
+	--neutral-777-a031: oklch(22.3% 0.015 136.8 / 0.0314);
 	--neutral-777-a035: oklch(22.3% 0.015 136.8 / 0.035);
+	--neutral-777-a039: oklch(22.3% 0.015 136.8 / 0.0392);
+	--neutral-777-a040: oklch(22.3% 0.015 136.8 / 0.04);
 	--neutral-777-a051: oklch(22.3% 0.015 136.8 / 0.051);
+	--neutral-777-a059: oklch(22.3% 0.015 136.8 / 0.0588);
 	--neutral-777-a070: oklch(22.3% 0.015 136.8 / 0.07);
+	--neutral-777-a071: oklch(22.3% 0.015 136.8 / 0.0706);
+	--neutral-777-a102: oklch(22.3% 0.015 136.8 / 0.102);
 	--neutral-777-a122: oklch(22.3% 0.015 136.8 / 0.1216);
+	--neutral-777-a130: oklch(22.3% 0.015 136.8 / 0.13);
+	--neutral-777-a160: oklch(22.3% 0.015 136.8 / 0.16);
 	--neutral-777-a200: oklch(22.3% 0.015 136.8 / 0.2);
 	--neutral-777-a720: oklch(22.3% 0.015 136.8 / 0.72);
 	--neutral-779: oklch(22.1% 0.011 132.7);
 	--neutral-821: oklch(17.9% 0.007 135);
 	--neutral-1000: oklch(0% 0 0);
+	--neutral-1000-a020: oklch(0% 0 0 / 0.02);
+	--neutral-1000-a035: oklch(0% 0 0 / 0.035);
 	--neutral-1000-a100: oklch(0% 0 0 / 0.1);
 	--neutral-1000-a200: oklch(0% 0 0 / 0.2);
+	--neutral-1000-a302: oklch(0% 0 0 / 0.302);
+	--neutral-1000-a400: oklch(0% 0 0 / 0.4);
+	--neutral-1000-a450: oklch(0% 0 0 / 0.45);
 	--opacity-0: 0;
+	--opacity-16: 16;
 	--opacity-20: 20;
 	--opacity-28: 28;
 	--opacity-32: 32;
@@ -256,14 +313,22 @@
 	--opacity-hidden: var(--opacity-0);
 	--opacity-hover: var(--opacity-20);
 	--opacity-subtle: var(--opacity-28);
+	--orange-224: oklch(77.6% 0.172 38.4);
 	--orange-245: oklch(75.5% 0.153 41.8);
+	--orange-245-a080: oklch(75.5% 0.153 41.8 / 0.08);
+	--orange-245-a090: oklch(75.5% 0.153 41.8 / 0.09);
+	--orange-245-a200: oklch(75.5% 0.153 41.8 / 0.2);
+	--orange-245-a220: oklch(75.5% 0.153 41.8 / 0.22);
+	--orange-340: oklch(66% 0.124 58.2);
 	--orange-456: oklch(54.4% 0.184 36.5);
 	--page-background: var(--color-paper);
-	--pink-200: oklch(80% 0.103 352.6);
+	--pink-196: oklch(80.4% 0.097 0.8);
 	--popover-background: var(--color-surface);
 	--popover-body: var(--color-soft);
 	--popover-gap: var(--space-6);
 	--popover-meta: var(--color-muted);
+	--popover-meta-gap: var(--space-2);
+	--popover-offset: var(--space-8);
 	--popover-padding-x: var(--space-14);
 	--popover-padding-y: var(--space-12);
 	--popover-radius: var(--radius-12);
@@ -284,27 +349,74 @@
 	--radius-24: var(--size-24);
 	--radius-45: var(--size-45);
 	--radius-full: var(--size-full);
+	/* Lavender, coral, lime, and pale lime (dark: olive and deep green), blended in OKLab. The stops follow smoothstep, so each color holds a little longer before it blends into the next. */
+	--rail-field: var(--field-ramp);
+	--rail-field-end: var(--field-end);
+	--rail-field-start: var(--field-start);
+	--rail-gap: var(--space-10);
 	--rail-ghost-opacity: var(--opacity-ghost);
+	--rail-grain-opacity: var(--opacity-16);
 	--rail-label-count: var(--color-soft);
 	--rail-label-gap: var(--space-5);
 	--rail-label-name: var(--color-ink);
 	--rail-link-hover-opacity: var(--opacity-hover);
 	--rail-link-hover-overlay: var(--color-hover-lighten);
+	--rail-ring: var(--effect-field-ring);
 	--rail-segment-radius: var(--radius-14);
 	--rail-track: var(--color-wash);
 	--red-280: oklch(72% 0.177 14.7);
 	--red-449: oklch(55.1% 0.22 19.4);
-	--search-background: var(--color-surface);
-	--search-focus-stroke-width: var(--stroke-2);
+	--role-gap: var(--space-28);
+	--search-background: var(--color-paper);
+	--search-dialog-backdrop: var(--effect-backdrop);
+	--search-dialog-background: var(--color-surface);
+	--search-dialog-caret: var(--color-accent);
+	--search-dialog-empty-padding-bottom: var(--space-20);
+	--search-dialog-empty-padding-top: var(--space-4);
+	--search-dialog-esc-size: var(--font-size-19);
+	--search-dialog-heading-padding-bottom: var(--space-6);
+	--search-dialog-heading-padding-top: var(--space-10);
+	--search-dialog-icon: var(--color-muted);
+	--search-dialog-icon-size: var(--size-22);
+	--search-dialog-input-gap: var(--size-13);
+	--search-dialog-input-height: var(--size-48);
+	--search-dialog-input-padding-x: var(--size-17);
+	--search-dialog-input-size: var(--font-size-22);
+	--search-dialog-input-tracking: var(--font-tracking-minus-0-225);
+	--search-dialog-item-gap: var(--space-10);
+	--search-dialog-item-padding-x: var(--space-12);
+	--search-dialog-item-padding-y: var(--space-8);
+	--search-dialog-item-radius: var(--radius-12);
+	--search-dialog-mark: var(--color-mark);
+	--search-dialog-mark-bleed: var(--size-1);
+	--search-dialog-mark-radius: var(--size-3);
+	--search-dialog-max-height: var(--size-576);
+	--search-dialog-meta: var(--color-muted);
+	--search-dialog-placeholder: var(--color-muted);
+	--search-dialog-radius: var(--radius-24);
+	--search-dialog-results-padding: var(--space-8);
+	--search-dialog-selected: var(--color-accent-wash);
+	--search-dialog-shadow: var(--effect-shadow-dialog);
+	--search-dialog-state-line-height: var(--font-line-height-16);
+	--search-dialog-state-size: var(--font-size-13);
+	--search-dialog-text: var(--color-ink);
+	--search-dialog-width: var(--size-512);
+	--search-edge-bottom: var(--color-edge-bottom);
+	--search-edge-top: var(--color-edge-top);
+	--search-edge-width: var(--stroke-1);
+	--search-focus-tint: var(--color-focus-wash);
 	--search-gap: var(--space-8);
+	--search-hover-brightness: var(--effect-hover-brightness);
 	--search-icon: var(--color-muted);
 	--search-icon-size: var(--icon-size-sm);
 	--search-padding-x: var(--space-12);
 	--search-padding-y: var(--space-7);
 	--search-placeholder: var(--color-muted);
 	--search-radius: var(--radius-24);
-	--search-ring: var(--effect-ring);
-	--search-shadow: var(--effect-shadow);
+	--sidebar-scroll-fade: var(--space-32);
+	--sidebar-search-margin-bottom: var(--space-24);
+	--sidebar-search-margin-top: var(--space-20);
+	--sidebar-theme-toggle-margin-top: var(--space-32);
 	--size-0: 0px;
 	--size-1: 1px;
 	--size-1-2: 1.2px;
@@ -322,8 +434,10 @@
 	--size-10: 10px;
 	--size-11: 11px;
 	--size-12: 12px;
+	--size-13: 13px;
 	--size-14: 14px;
 	--size-16: 16px;
+	--size-17: 17px;
 	--size-18: 18px;
 	--size-20: 20px;
 	--size-21: 21px;
@@ -342,6 +456,8 @@
 	--size-80: 80px;
 	--size-96: 96px;
 	--size-112: 112px;
+	--size-512: 512px;
+	--size-576: 576px;
 	--size-full: 999px;
 	--space-1: var(--size-1);
 	--space-2: var(--size-2);
@@ -415,6 +531,7 @@
 	--top-bar-icon: var(--color-soft);
 	--top-bar-icon-strong: var(--color-ink);
 	--top-bar-on-accent: var(--color-on-accent);
+	--tracker-cover-lead: var(--space-24);
 	--type-annotation-line-height: var(--font-line-height-18);
 	--type-annotation-size: var(--font-size-12);
 	--type-annotation-tracking: var(--font-tracking-0);
@@ -465,11 +582,15 @@
 	--verdict-gap: var(--space-4);
 	--verdict-label: var(--color-soft);
 	--verdict-label-gap: var(--space-8);
+	--verdict-list-gap: var(--space-48);
+	--verdict-meter-gap: var(--space-14);
 	--verdict-note: var(--color-muted);
 	--verdict-radius: var(--radius-12);
 	--verdict-word: var(--color-ink);
 	--violet-260: oklch(74% 0.174 307.9);
+	--violet-260-a090: oklch(74% 0.174 307.9 / 0.09);
 	--violet-481: oklch(51.9% 0.204 306.4);
+	--violet-481-a090: oklch(51.9% 0.204 306.4 / 0.09);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -488,11 +609,16 @@
 		--code-string: var(--color-focus);
 		--color-accent: var(--orange-245);
 		--color-accent-strong: var(--orange-245);
+		--color-accent-wash: var(--orange-245-a080);
+		--color-edge-bottom: var(--neutral-57-a060);
+		--color-edge-top: var(--neutral-57-a180);
 		--color-error: var(--red-280);
 		--color-faint: var(--neutral-592);
 		--color-focus: var(--violet-260);
+		--color-focus-wash: var(--violet-260-a090);
 		--color-hover-lighten: var(--neutral-0);
 		--color-ink: var(--neutral-57);
+		--color-mark: var(--orange-245-a220);
 		--color-muted: var(--neutral-378);
 		--color-on-accent: var(--neutral-0);
 		--color-paper: var(--neutral-821);
@@ -502,17 +628,24 @@
 		--color-success: var(--green-227);
 		--color-surface: var(--neutral-779);
 		--color-wash: var(--neutral-57-a071);
+		--effect-backdrop: var(--neutral-1000-a450);
+		--effect-field-ring:
+			inset 0px 0px 0px 1px var(--neutral-0-a078), inset 0px 1px 4px var(--neutral-0-a035);
+		--effect-hover-brightness: 1.25;
 		--effect-ring: var(--neutral-57-a080);
 		--effect-shadow: var(--neutral-1000-a200);
-		--gradient-amber: var(--amber-179);
-		--gradient-lavender: var(--lavender-175);
-		--gradient-lime: var(--lime-89);
-		--gradient-oklab-mid-amber-orange: var(--mix-amber-orange);
-		--gradient-oklab-mid-lime-amber: var(--mix-lime-amber);
-		--gradient-oklab-mid-orange-pink: var(--mix-orange-pink);
-		--gradient-oklab-mid-pink-lavender: var(--mix-pink-lavender);
-		--gradient-orange: var(--color-accent);
-		--gradient-pink: var(--pink-200);
+		--effect-shadow-dialog:
+			0px 0px 0px 1px var(--neutral-57-a102), inset 0px 1px var(--neutral-57-a051),
+			0px 2px 2px -1px var(--neutral-1000-a302), 0px 4px 4px -2px var(--neutral-1000-a302),
+			0px 8px 8px -4px var(--neutral-1000-a302), 0px 16px 16px -8px var(--neutral-1000-a302),
+			0px 32px 32px -16px var(--neutral-1000-a302), 0px 48px 64px -24px var(--neutral-1000-a400);
+		--field-end: var(--lime-699);
+		/* Lavender, coral, lime, and pale lime (dark: olive and deep green), blended in OKLab. The stops follow smoothstep, so each color holds a little longer before it blends into the next. */
+		--field-ramp:
+			var(--lavender-171) 0%, var(--lavender-178) 8.59%, var(--pink-196) 17.18%,
+			var(--orange-224) 25.77%, var(--orange-340) 42.98%, var(--amber-469) 60.2%,
+			var(--lime-579) 77.41%, var(--lime-643) 84.94%, var(--lime-684) 92.47%, var(--lime-699) 100%;
+		--field-start: var(--lavender-171);
 		--state-blocked: var(--color-focus);
 		--state-done: var(--color-success);
 		--state-error: var(--color-error);
@@ -536,11 +669,16 @@
 	--code-string: var(--color-focus);
 	--color-accent: var(--orange-245);
 	--color-accent-strong: var(--orange-245);
+	--color-accent-wash: var(--orange-245-a080);
+	--color-edge-bottom: var(--neutral-57-a060);
+	--color-edge-top: var(--neutral-57-a180);
 	--color-error: var(--red-280);
 	--color-faint: var(--neutral-592);
 	--color-focus: var(--violet-260);
+	--color-focus-wash: var(--violet-260-a090);
 	--color-hover-lighten: var(--neutral-0);
 	--color-ink: var(--neutral-57);
+	--color-mark: var(--orange-245-a220);
 	--color-muted: var(--neutral-378);
 	--color-on-accent: var(--neutral-0);
 	--color-paper: var(--neutral-821);
@@ -550,17 +688,24 @@
 	--color-success: var(--green-227);
 	--color-surface: var(--neutral-779);
 	--color-wash: var(--neutral-57-a071);
+	--effect-backdrop: var(--neutral-1000-a450);
+	--effect-field-ring:
+		inset 0px 0px 0px 1px var(--neutral-0-a078), inset 0px 1px 4px var(--neutral-0-a035);
+	--effect-hover-brightness: 1.25;
 	--effect-ring: var(--neutral-57-a080);
 	--effect-shadow: var(--neutral-1000-a200);
-	--gradient-amber: var(--amber-179);
-	--gradient-lavender: var(--lavender-175);
-	--gradient-lime: var(--lime-89);
-	--gradient-oklab-mid-amber-orange: var(--mix-amber-orange);
-	--gradient-oklab-mid-lime-amber: var(--mix-lime-amber);
-	--gradient-oklab-mid-orange-pink: var(--mix-orange-pink);
-	--gradient-oklab-mid-pink-lavender: var(--mix-pink-lavender);
-	--gradient-orange: var(--color-accent);
-	--gradient-pink: var(--pink-200);
+	--effect-shadow-dialog:
+		0px 0px 0px 1px var(--neutral-57-a102), inset 0px 1px var(--neutral-57-a051),
+		0px 2px 2px -1px var(--neutral-1000-a302), 0px 4px 4px -2px var(--neutral-1000-a302),
+		0px 8px 8px -4px var(--neutral-1000-a302), 0px 16px 16px -8px var(--neutral-1000-a302),
+		0px 32px 32px -16px var(--neutral-1000-a302), 0px 48px 64px -24px var(--neutral-1000-a400);
+	--field-end: var(--lime-699);
+	/* Lavender, coral, lime, and pale lime (dark: olive and deep green), blended in OKLab. The stops follow smoothstep, so each color holds a little longer before it blends into the next. */
+	--field-ramp:
+		var(--lavender-171) 0%, var(--lavender-178) 8.59%, var(--pink-196) 17.18%,
+		var(--orange-224) 25.77%, var(--orange-340) 42.98%, var(--amber-469) 60.2%,
+		var(--lime-579) 77.41%, var(--lime-643) 84.94%, var(--lime-684) 92.47%, var(--lime-699) 100%;
+	--field-start: var(--lavender-171);
 	--state-blocked: var(--color-focus);
 	--state-done: var(--color-success);
 	--state-error: var(--color-error);

@@ -28,6 +28,14 @@
 			"$type": "color",
 			"$value": "{neutral.777-a122}"
 		},
+		"edge-top": {
+			"$type": "color",
+			"$value": "{neutral.777-a040}"
+		},
+		"edge-bottom": {
+			"$type": "color",
+			"$value": "{neutral.777-a130}"
+		},
 		"wash": {
 			"$type": "color",
 			"$value": "{neutral.777-a051}"
@@ -40,6 +48,14 @@
 			"$type": "color",
 			"$value": "{orange.456}"
 		},
+		"accent-wash": {
+			"$type": "color",
+			"$value": "{orange.245-a090}"
+		},
+		"mark": {
+			"$type": "color",
+			"$value": "{orange.245-a200}"
+		},
 		"on-accent": {
 			"$type": "color",
 			"$value": "{neutral.0}"
@@ -47,6 +63,10 @@
 		"focus": {
 			"$type": "color",
 			"$value": "{violet.481}"
+		},
+		"focus-wash": {
+			"$type": "color",
+			"$value": "{violet.481-a090}"
 		},
 		"error": {
 			"$type": "color",
@@ -73,6 +93,224 @@
 		"ring": {
 			"$type": "color",
 			"$value": "{neutral.777-a070}"
+		},
+		"backdrop": {
+			"$type": "color",
+			"$value": "{neutral.777-a160}"
+		},
+		"shadow-dialog": {
+			"$type": "shadow",
+			"$value": [
+				{
+					"color": "{neutral.777-a071}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 0,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 0,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 1,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{neutral.777-a031}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 1,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 1,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 0,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{neutral.777-a039}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 2,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 2,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -1,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{neutral.777-a039}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 4,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 4,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -2,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{neutral.777-a051}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 8,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 8,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -4,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{neutral.777-a059}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 16,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 16,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -8,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{neutral.777-a071}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 32,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 32,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -16,
+						"unit": "px"
+					},
+					"inset": false
+				},
+				{
+					"color": "{neutral.777-a102}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 48,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 64,
+						"unit": "px"
+					},
+					"spread": {
+						"value": -24,
+						"unit": "px"
+					},
+					"inset": false
+				}
+			]
+		},
+		"hover-brightness": {
+			"$type": "number",
+			"$value": 0.96
+		},
+		"field-ring": {
+			"$type": "shadow",
+			"$value": [
+				{
+					"color": "{neutral.1000-a035}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 0,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 0,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 1,
+						"unit": "px"
+					},
+					"inset": true
+				},
+				{
+					"color": "{neutral.1000-a020}",
+					"offsetX": {
+						"value": 0,
+						"unit": "px"
+					},
+					"offsetY": {
+						"value": 1,
+						"unit": "px"
+					},
+					"blur": {
+						"value": 4,
+						"unit": "px"
+					},
+					"spread": {
+						"value": 0,
+						"unit": "px"
+					},
+					"inset": true
+				}
+			]
 		}
 	},
 	"state": {
@@ -111,44 +349,60 @@
 			"$value": "{color.focus}"
 		}
 	},
-	"gradient": {
-		"lime": {
+	"field": {
+		"start": {
 			"$type": "color",
-			"$value": "{lime.89}"
+			"$value": "{lavender.171}"
 		},
-		"amber": {
+		"end": {
 			"$type": "color",
-			"$value": "{amber.179}"
+			"$value": "{lime.57}"
 		},
-		"orange": {
-			"$type": "color",
-			"$value": "{color.accent}"
-		},
-		"pink": {
-			"$type": "color",
-			"$value": "{pink.200}"
-		},
-		"lavender": {
-			"$type": "color",
-			"$value": "{lavender.175}"
-		},
-		"oklab-mid": {
-			"lime-amber": {
-				"$type": "color",
-				"$value": "{mix.lime-amber}"
-			},
-			"amber-orange": {
-				"$type": "color",
-				"$value": "{mix.amber-orange}"
-			},
-			"orange-pink": {
-				"$type": "color",
-				"$value": "{mix.orange-pink}"
-			},
-			"pink-lavender": {
-				"$type": "color",
-				"$value": "{mix.pink-lavender}"
-			}
+		"ramp": {
+			"$type": "gradient",
+			"$value": [
+				{
+					"color": "{lavender.171}",
+					"position": 0
+				},
+				{
+					"color": "{lavender.178}",
+					"position": 0.0859
+				},
+				{
+					"color": "{pink.196}",
+					"position": 0.1718
+				},
+				{
+					"color": "{orange.224}",
+					"position": 0.2577
+				},
+				{
+					"color": "{amber.176}",
+					"position": 0.4298
+				},
+				{
+					"color": "{lime.122}",
+					"position": 0.602
+				},
+				{
+					"color": "{lime.76}",
+					"position": 0.7741
+				},
+				{
+					"color": "{lime.66}",
+					"position": 0.8494
+				},
+				{
+					"color": "{lime.59}",
+					"position": 0.9247
+				},
+				{
+					"color": "{lime.57}",
+					"position": 1
+				}
+			],
+			"$description": "Lavender, coral, lime, and pale lime (dark: olive and deep green), blended in OKLab. The stops follow smoothstep, so each color holds a little longer before it blends into the next."
 		}
 	},
 	"canvas": {

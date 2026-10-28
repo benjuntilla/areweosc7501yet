@@ -1,0 +1,12 @@
+name = "Ghostty"
+url = "https://github.com/ghostty-org/ghostty"
+repo = "ghostty-org/ghostty"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+note = "libghostty-vt parses reports, but the app drops them."
+last_checked_date = 2026-10-24
+history = []
+
+[github]
+popular = true

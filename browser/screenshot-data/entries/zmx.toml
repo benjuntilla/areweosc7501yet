@@ -1,0 +1,15 @@
+name = "zmx"
+url = "https://github.com/neurosnap/zmx"
+repo = "neurosnap/zmx"
+role = "terminal"
+category = "multiplexers"
+is_featured = false
+spec_revision = "0.4"
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-18T15:43:40Z
+state = "blocked"
+source = "https://github.com/neurosnap/zmx/pull/289"

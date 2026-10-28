@@ -51,6 +51,14 @@
 		"category-gap": {
 			"$type": "dimension",
 			"$value": "{space.8}"
+		},
+		"legend-gap": {
+			"$type": "dimension",
+			"$value": "{space.16}"
+		},
+		"icon-gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
 		}
 	},
 	"chip": {
@@ -97,6 +105,14 @@
 		"list-gap": {
 			"$type": "dimension",
 			"$value": "{space.2}"
+		},
+		"list-row-gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"list-label-gap": {
+			"$type": "dimension",
+			"$value": "{space.4}"
 		}
 	},
 	"more-chip": {
@@ -195,6 +211,30 @@
 		"ghost-opacity": {
 			"$type": "number",
 			"$value": "{opacity.ghost}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"field": {
+			"$type": "gradient",
+			"$value": "{field.ramp}"
+		},
+		"field-start": {
+			"$type": "color",
+			"$value": "{field.start}"
+		},
+		"field-end": {
+			"$type": "color",
+			"$value": "{field.end}"
+		},
+		"ring": {
+			"$type": "shadow",
+			"$value": "{effect.field-ring}"
+		},
+		"grain-opacity": {
+			"$type": "number",
+			"$value": "{opacity.16}"
 		}
 	},
 	"rail-link": {
@@ -247,6 +287,14 @@
 		"radius": {
 			"$type": "dimension",
 			"$value": "{radius.12}"
+		},
+		"offset": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"meta-gap": {
+			"$type": "dimension",
+			"$value": "{space.2}"
 		}
 	},
 	"error-card": {
@@ -268,41 +316,9 @@
 			"$type": "color",
 			"$value": "{color.soft}"
 		},
-		"gradient-lime": {
-			"$type": "color",
-			"$value": "{gradient.lime}"
-		},
-		"gradient-lime-amber": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.lime-amber}"
-		},
-		"gradient-amber": {
-			"$type": "color",
-			"$value": "{gradient.amber}"
-		},
-		"gradient-amber-orange": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.amber-orange}"
-		},
-		"gradient-orange": {
-			"$type": "color",
-			"$value": "{gradient.orange}"
-		},
-		"gradient-orange-pink": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.orange-pink}"
-		},
-		"gradient-pink": {
-			"$type": "color",
-			"$value": "{gradient.pink}"
-		},
-		"gradient-pink-lavender": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.pink-lavender}"
-		},
-		"gradient-lavender": {
-			"$type": "color",
-			"$value": "{gradient.lavender}"
+		"field": {
+			"$type": "gradient",
+			"$value": "{field.ramp}"
 		},
 		"radius": {
 			"$type": "dimension",
@@ -319,6 +335,10 @@
 		"ghost-opacity": {
 			"$type": "number",
 			"$value": "{opacity.ghost}"
+		},
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.14}"
 		}
 	},
 	"footer": {
@@ -337,6 +357,10 @@
 		"gap": {
 			"$type": "dimension",
 			"$value": "{space.8}"
+		},
+		"padding-top": {
+			"$type": "dimension",
+			"$value": "{space.22}"
 		}
 	},
 	"rail-label": {
@@ -370,15 +394,19 @@
 	"search": {
 		"background": {
 			"$type": "color",
-			"$value": "{color.surface}"
+			"$value": "{color.paper}"
 		},
-		"ring": {
+		"edge-top": {
 			"$type": "color",
-			"$value": "{effect.ring}"
+			"$value": "{color.edge-top}"
 		},
-		"shadow": {
+		"edge-bottom": {
 			"$type": "color",
-			"$value": "{effect.shadow}"
+			"$value": "{color.edge-bottom}"
+		},
+		"focus-tint": {
+			"$type": "color",
+			"$value": "{color.focus-wash}"
 		},
 		"icon": {
 			"$type": "color",
@@ -404,13 +432,151 @@
 			"$type": "dimension",
 			"$value": "{radius.24}"
 		},
-		"focus-stroke-width": {
+		"edge-width": {
 			"$type": "dimension",
-			"$value": "{stroke.2}"
+			"$value": "{stroke.1}"
 		},
 		"icon-size": {
 			"$type": "dimension",
 			"$value": "{icon.size-sm}"
+		},
+		"hover-brightness": {
+			"$type": "number",
+			"$value": "{effect.hover-brightness}"
+		}
+	},
+	"search-dialog": {
+		"background": {
+			"$type": "color",
+			"$value": "{color.surface}"
+		},
+		"backdrop": {
+			"$type": "color",
+			"$value": "{effect.backdrop}"
+		},
+		"text": {
+			"$type": "color",
+			"$value": "{color.ink}"
+		},
+		"caret": {
+			"$type": "color",
+			"$value": "{color.accent}"
+		},
+		"icon": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"placeholder": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"meta": {
+			"$type": "color",
+			"$value": "{color.muted}"
+		},
+		"selected": {
+			"$type": "color",
+			"$value": "{color.accent-wash}"
+		},
+		"mark": {
+			"$type": "color",
+			"$value": "{color.mark}"
+		},
+		"shadow": {
+			"$type": "shadow",
+			"$value": "{effect.shadow-dialog}"
+		},
+		"width": {
+			"$type": "dimension",
+			"$value": "{size.512}"
+		},
+		"max-height": {
+			"$type": "dimension",
+			"$value": "{size.576}"
+		},
+		"radius": {
+			"$type": "dimension",
+			"$value": "{radius.24}"
+		},
+		"input-height": {
+			"$type": "dimension",
+			"$value": "{size.48}"
+		},
+		"input-padding-x": {
+			"$type": "dimension",
+			"$value": "{size.17}"
+		},
+		"input-gap": {
+			"$type": "dimension",
+			"$value": "{size.13}"
+		},
+		"icon-size": {
+			"$type": "dimension",
+			"$value": "{size.22}"
+		},
+		"input-size": {
+			"$type": "dimension",
+			"$value": "{font.size.22}"
+		},
+		"input-tracking": {
+			"$type": "dimension",
+			"$value": "{font.tracking.minus-0_225}"
+		},
+		"esc-size": {
+			"$type": "dimension",
+			"$value": "{font.size.19}"
+		},
+		"state-size": {
+			"$type": "dimension",
+			"$value": "{font.size.13}"
+		},
+		"state-line-height": {
+			"$type": "dimension",
+			"$value": "{font.line-height.16}"
+		},
+		"results-padding": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"heading-padding-top": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"heading-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.6}"
+		},
+		"item-padding-x": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"item-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"item-gap": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"item-radius": {
+			"$type": "dimension",
+			"$value": "{radius.12}"
+		},
+		"mark-radius": {
+			"$type": "dimension",
+			"$value": "{size.3}"
+		},
+		"mark-bleed": {
+			"$type": "dimension",
+			"$value": "{size.1}"
+		},
+		"empty-padding-top": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"empty-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.20}"
 		}
 	},
 	"nav": {
@@ -480,6 +646,18 @@
 			"$type": "dimension",
 			"$value": "{space.4}",
 			"$description": "Vertical padding of a TOC entry (Rex: 4px)."
+		},
+		"toc-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"toc-size": {
+			"$type": "dimension",
+			"$value": "{font.size.13}"
+		},
+		"toc-line-height": {
+			"$type": "dimension",
+			"$value": "{font.line-height.16}"
 		}
 	},
 	"theme-toggle": {
@@ -596,6 +774,10 @@
 		"item-gap": {
 			"$type": "dimension",
 			"$value": "{space.6}"
+		},
+		"learn-gap": {
+			"$type": "dimension",
+			"$value": "{space.12}"
 		}
 	},
 	"verdict": {
@@ -622,6 +804,14 @@
 		"radius": {
 			"$type": "dimension",
 			"$value": "{radius.12}"
+		},
+		"list-gap": {
+			"$type": "dimension",
+			"$value": "{space.48}"
+		},
+		"meter-gap": {
+			"$type": "dimension",
+			"$value": "{space.14}"
 		}
 	},
 	"link": {
@@ -707,10 +897,13 @@
 			},
 			"$description": "Between drum lines on entrance."
 		},
-		"rail-hue-max": {
-			"$type": "number",
-			"$value": 30,
-			"$description": "deg. Rail hue-rotate at the bottom of the page; 0 at the top."
+		"rail-drift-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 40,
+				"unit": "s"
+			},
+			"$description": "One pass of the rail field's waves across a 600 px tile, about 15 px a second."
 		},
 		"state-duration": {
 			"$type": "duration",
@@ -779,6 +972,97 @@
 				"unit": "ms"
 			},
 			"$description": "Rail label exit: all lines together, opacity ease-out, movement ease-in."
+		},
+		"search-morph-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 280,
+				"unit": "ms"
+			},
+			"$description": "Search button to dialog morph, both ways, and the backdrop fade (Rex: .28s)."
+		},
+		"ease-morph": {
+			"$type": "cubicBezier",
+			"$value": [0.2, 0.9, 0.3, 1],
+			"$description": "Search morph (Rex)."
+		},
+		"search-shadow-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 220,
+				"unit": "ms"
+			},
+			"$description": "The search dialog shadow fades in after the morph lands (ease-out)."
+		}
+	},
+	"hero": {
+		"drum-gap": {
+			"$type": "dimension",
+			"$value": "{space.7}"
+		},
+		"drum-margin-bottom": {
+			"$type": "dimension",
+			"$value": "{space.18}"
+		}
+	},
+	"tracker": {
+		"cover-lead": {
+			"$type": "dimension",
+			"$value": "{space.24}"
+		}
+	},
+	"role": {
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.28}"
+		}
+	},
+	"sidebar": {
+		"search-margin-top": {
+			"$type": "dimension",
+			"$value": "{space.20}"
+		},
+		"search-margin-bottom": {
+			"$type": "dimension",
+			"$value": "{space.24}"
+		},
+		"theme-toggle-margin-top": {
+			"$type": "dimension",
+			"$value": "{space.32}"
+		},
+		"scroll-fade": {
+			"$type": "dimension",
+			"$value": "{space.32}"
+		}
+	},
+	"menu": {
+		"gap": {
+			"$type": "dimension",
+			"$value": "{space.20}"
+		},
+		"padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.40}"
+		},
+		"item-padding-x": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"item-padding-y": {
+			"$type": "dimension",
+			"$value": "{space.10}"
+		},
+		"item-radius": {
+			"$type": "dimension",
+			"$value": "{radius.8}"
+		},
+		"group-padding-top": {
+			"$type": "dimension",
+			"$value": "{space.18}"
+		},
+		"group-padding-bottom": {
+			"$type": "dimension",
+			"$value": "{space.6}"
 		}
 	}
 }

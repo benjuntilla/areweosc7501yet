@@ -9,8 +9,9 @@ export default defineConfig({
 	ignoreSnapshots: process.env['CI'] === undefined,
 	updateSnapshots: 'changed',
 	snapshotPathTemplate: '{testDir}/screenshots/{arg}-{projectName}{ext}',
+	// Screenshots mode builds the pages from browser/screenshot-data, a fixed copy of some entries.
 	webServer: {
-		command: 'pnpm preview --port 4799 --strictPort',
+		command: 'pnpm build --mode screenshots && pnpm preview --port 4799 --strictPort',
 		port: 4799
 	},
 	use: { baseURL: 'http://localhost:4799' },

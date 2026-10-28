@@ -1,0 +1,16 @@
+name = "bub"
+url = "https://github.com/bubbuild/bub"
+repo = "bubbuild/bub"
+role = "program"
+category = "coding-agents"
+is_featured = false
+spec_revision = "0.4"
+note = "0.6.0a3 doesn’t include it"
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-19
+state = "working"
+source = "https://github.com/bubbuild/bub/pull/345"

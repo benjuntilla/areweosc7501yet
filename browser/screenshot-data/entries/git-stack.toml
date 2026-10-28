@@ -1,0 +1,15 @@
+name = "git-stack"
+url = "https://github.com/DomBlack/git-stack"
+repo = "DomBlack/git-stack"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+
+[github]
+popular = false
+
+[[history]]
+date = 2026-10-07
+state = "done"
+source = "https://github.com/DomBlack/git-stack/releases/tag/v0.2.0"
+version = "v0.2.0"

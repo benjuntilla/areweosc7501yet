@@ -1,0 +1,20 @@
+name = "tmux"
+url = "https://github.com/tmux/tmux"
+repo = "tmux/tmux"
+role = "terminal"
+category = "multiplexers"
+spec_revision = "0.4"
+note = "With allow-passthrough on, reports still reach the outer terminal."
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-09
+state = "idle"
+source = "https://github.com/tmux/tmux/issues/5713"
+
+[[history]]
+date = 2026-10-09T10:35:28Z
+state = "error"
+source = "https://github.com/tmux/tmux/issues/5713#issuecomment-6079182674"
