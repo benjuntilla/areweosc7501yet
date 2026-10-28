@@ -25,7 +25,12 @@
 	// The search button grows into the dialog and shrinks back into it. With reduced motion, on
 	// touch screens, or without view transitions, the dialog just appears.
 	const morph = async (from: HTMLElement, to: HTMLElement, swap: () => void) => {
-		if (prefersReducedMotion() || matchMedia('(pointer: coarse)').matches) return swap();
+		if (
+			prefersReducedMotion() ||
+			matchMedia('(pointer: coarse)').matches ||
+			!('startViewTransition' in document)
+		)
+			return swap();
 		from.style.viewTransitionName = 'search';
 		await document.startViewTransition(() => {
 			from.style.viewTransitionName = '';
