@@ -35,7 +35,6 @@
 	font-family: var(--type-family-sans), system-ui, sans-serif;
 	font-size: var(--type-body-size);
 	font-weight: var(--type-weight-regular);
-	font-feature-settings: 'tnum';
 	line-height: var(--type-body-line-height);
 	color: var(--content-text);
 	color-scheme: light dark;
