@@ -33,8 +33,6 @@ pre-push:
             run: pnpm check
           - name: test
             run: pnpm test
-          - name: knip
-            run: pnpm knip
           - name: duplicates
             run: pnpm jscpd .
           - name: typos
@@ -58,3 +56,9 @@ pre-push:
                         run: pnpm playwright test --config .config/playwright.config.ts && test -z "$(git status --porcelain -- browser/screenshots/)"
                 - name: lighthouse
                   run: CHROME_PATH="$(node -p "require('@playwright/test').chromium.executablePath()")" pnpm lhci autorun --config .config/lighthouserc.json
+    # Check, test and build run svelte-kit sync, which deletes and rewrites the root route's
+    # ./$types, so knip runs after them.
+    - group:
+        jobs:
+          - name: knip
+            run: pnpm knip
