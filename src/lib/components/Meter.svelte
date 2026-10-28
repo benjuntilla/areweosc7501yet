@@ -39,18 +39,12 @@
 		border-radius: var(--meter-radius);
 	}
 
-	/* One gradient across the whole track, clipped to the done and working spans. */
+	/* One gradient across the whole track, clipped to the done and working spans. Its lime end is
+	   where done starts. */
 	.fill {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(
-			in oklab 90deg,
-			var(--meter-gradient-lime) 0%,
-			var(--meter-gradient-amber) 28%,
-			var(--meter-gradient-orange) 50%,
-			var(--meter-gradient-pink) 70%,
-			var(--meter-gradient-lavender) 100%
-		);
+		background: linear-gradient(in oklab 270deg, var(--meter-field));
 	}
 
 	.done {

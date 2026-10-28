@@ -9,7 +9,6 @@ const semantic = [
 	'effect.**',
 	'state.**',
 	'code.**',
-	'gradient.**',
 	'field.**',
 	'canvas.**',
 	'browser.**'

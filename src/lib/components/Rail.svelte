@@ -226,9 +226,8 @@
 	}
 
 	/* The ramp is twice the bar's height. Scrolling the page slides the field up, from the ramp's
-	   first half at the top of the page to its second half at the bottom. Its stops follow
-	   smoothstep, so each color holds a little longer before it blends into the next. Past its ends,
-	   the end colors carry on. */
+	   first half at the top of the page to its second half at the bottom. Past its ends, the end
+	   colors carry on. */
 	.field {
 		position: absolute;
 		inset-block-start: calc(var(--warp-reach) * -1);
@@ -236,20 +235,8 @@
 		inline-size: calc(100% + var(--tile));
 		block-size: calc(200cqb + var(--warp-reach) * 2);
 		background:
-			linear-gradient(
-					in oklab 180deg,
-					var(--rail-field-start) 0%,
-					color-mix(in oklab, var(--rail-field-start), var(--rail-field-coral) 12.6%) 8.59%,
-					color-mix(in oklab, var(--rail-field-start), var(--rail-field-coral) 47.5%) 17.18%,
-					var(--rail-field-coral) 25.77%,
-					color-mix(in oklab, var(--rail-field-coral), var(--rail-field-lime) 32.7%) 42.98%,
-					color-mix(in oklab, var(--rail-field-coral), var(--rail-field-lime) 68.9%) 60.2%,
-					var(--rail-field-lime) 77.41%,
-					color-mix(in oklab, var(--rail-field-lime), var(--rail-field-end) 52.9%) 84.94%,
-					color-mix(in oklab, var(--rail-field-lime), var(--rail-field-end) 87.6%) 92.47%,
-					var(--rail-field-end) 100%
-				)
-				0 var(--warp-reach) / 100% 200cqb no-repeat,
+			linear-gradient(in oklab 180deg, var(--rail-field)) 0 var(--warp-reach) / 100% 200cqb
+				no-repeat,
 			linear-gradient(var(--rail-field-end) 0 0) bottom / 100% 50% no-repeat,
 			var(--rail-field-start);
 		filter: url('#rail-warp');

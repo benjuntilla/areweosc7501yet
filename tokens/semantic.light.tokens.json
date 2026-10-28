@@ -349,62 +349,60 @@
 			"$value": "{color.focus}"
 		}
 	},
-	"gradient": {
-		"lime": {
-			"$type": "color",
-			"$value": "{lime.89}"
-		},
-		"amber": {
-			"$type": "color",
-			"$value": "{amber.179}"
-		},
-		"orange": {
-			"$type": "color",
-			"$value": "{color.accent}"
-		},
-		"pink": {
-			"$type": "color",
-			"$value": "{pink.200}"
-		},
-		"lavender": {
-			"$type": "color",
-			"$value": "{lavender.175}"
-		},
-		"oklab-mid": {
-			"lime-amber": {
-				"$type": "color",
-				"$value": "{mix.lime-amber}"
-			},
-			"amber-orange": {
-				"$type": "color",
-				"$value": "{mix.amber-orange}"
-			},
-			"orange-pink": {
-				"$type": "color",
-				"$value": "{mix.orange-pink}"
-			},
-			"pink-lavender": {
-				"$type": "color",
-				"$value": "{mix.pink-lavender}"
-			}
-		}
-	},
 	"field": {
 		"start": {
 			"$type": "color",
 			"$value": "{lavender.171}"
 		},
-		"coral": {
-			"$type": "color",
-			"$value": "{orange.224}"
-		},
-		"lime": {
-			"$type": "color",
-			"$value": "{lime.76}"
-		},
 		"end": {
 			"$type": "color",
 			"$value": "{lime.57}"
+		},
+		"ramp": {
+			"$type": "gradient",
+			"$value": [
+				{
+					"color": "{lavender.171}",
+					"position": 0
+				},
+				{
+					"color": "{lavender.178}",
+					"position": 0.0859
+				},
+				{
+					"color": "{pink.196}",
+					"position": 0.1718
+				},
+				{
+					"color": "{orange.224}",
+					"position": 0.2577
+				},
+				{
+					"color": "{amber.176}",
+					"position": 0.4298
+				},
+				{
+					"color": "{lime.122}",
+					"position": 0.602
+				},
+				{
+					"color": "{lime.76}",
+					"position": 0.7741
+				},
+				{
+					"color": "{lime.66}",
+					"position": 0.8494
+				},
+				{
+					"color": "{lime.59}",
+					"position": 0.9247
+				},
+				{
+					"color": "{lime.57}",
+					"position": 1
+				}
+			],
+			"$description": "Lavender, coral, lime, and pale lime (dark: olive and deep green), blended in OKLab. The stops follow smoothstep, so each color holds a little longer before it blends into the next."
 		}
 	},
 	"canvas": {

@@ -216,17 +216,13 @@
 			"$type": "dimension",
 			"$value": "{space.10}"
 		},
+		"field": {
+			"$type": "gradient",
+			"$value": "{field.ramp}"
+		},
 		"field-start": {
 			"$type": "color",
 			"$value": "{field.start}"
-		},
-		"field-coral": {
-			"$type": "color",
-			"$value": "{field.coral}"
-		},
-		"field-lime": {
-			"$type": "color",
-			"$value": "{field.lime}"
 		},
 		"field-end": {
 			"$type": "color",
@@ -320,41 +316,9 @@
 			"$type": "color",
 			"$value": "{color.soft}"
 		},
-		"gradient-lime": {
-			"$type": "color",
-			"$value": "{gradient.lime}"
-		},
-		"gradient-lime-amber": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.lime-amber}"
-		},
-		"gradient-amber": {
-			"$type": "color",
-			"$value": "{gradient.amber}"
-		},
-		"gradient-amber-orange": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.amber-orange}"
-		},
-		"gradient-orange": {
-			"$type": "color",
-			"$value": "{gradient.orange}"
-		},
-		"gradient-orange-pink": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.orange-pink}"
-		},
-		"gradient-pink": {
-			"$type": "color",
-			"$value": "{gradient.pink}"
-		},
-		"gradient-pink-lavender": {
-			"$type": "color",
-			"$value": "{gradient.oklab-mid.pink-lavender}"
-		},
-		"gradient-lavender": {
-			"$type": "color",
-			"$value": "{gradient.lavender}"
+		"field": {
+			"$type": "gradient",
+			"$value": "{field.ramp}"
 		},
 		"radius": {
 			"$type": "dimension",
