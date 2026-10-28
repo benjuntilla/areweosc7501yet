@@ -17,6 +17,8 @@ export default defineConfig(({ mode }) => {
 					mode: 'hash',
 					directives: {
 						'default-src': ['self'],
+						// Cloudflare adds its Web Analytics beacon to every page. The beacon reports to this site.
+						'script-src': ['self', 'https://static.cloudflareinsights.com'],
 						// Svelte's style: directives render as style attributes.
 						'style-src-attr': ['unsafe-inline'],
 						// The rail's grain is an SVG data URI.
