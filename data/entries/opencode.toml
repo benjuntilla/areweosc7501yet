@@ -4,7 +4,7 @@ repo = "anomalyco/opencode"
 role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
-note = "On dev and in the unreleased v2.1 tags. The stable 1.x line doesn’t have it."
+note = "Only OpenCode 2 has it. OpenCode 1, still on npm as opencode-ai, doesn’t."
 
 [github]
 popular = true

@@ -4,10 +4,11 @@ role = "program"
 category = "coding-agents"
 is_featured = true
 spec_revision = "0.4"
-note = "No changelog entry yet."
-last_checked_date = 2026-10-24
+note = "No changelog entry yet. The released CLI sends reports from this build on."
+last_checked_date = 2026-10-28
 
 [[history]]
-date = 2026-10-07
-state = "working"
-source = "https://x.com/mitchellh/status/2107894687587795079"
+date = 2026-10-07T00:30:14Z
+state = "done"
+source = "https://www.npmjs.com/package/@ampcode/cli/v/0.0.1791331298-ge8fb65"
+version = "0.0.1791331298-ge8fb65"

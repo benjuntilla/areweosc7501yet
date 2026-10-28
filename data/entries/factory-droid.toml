@@ -4,6 +4,11 @@ role = "program"
 category = "coding-agents"
 is_featured = true
 spec_revision = "0.4"
-note = "v0.236.0 added “Terminal activity status”, but the changelog doesn’t name OSC 7501."
-last_checked_date = 2026-10-24
-history = []
+note = "The changelog calls it “Terminal activity status”."
+last_checked_date = 2026-10-28
+
+[[history]]
+date = 2026-10-08
+state = "done"
+source = "https://docs.factory.com/changelog/release-notes#v0.236.0"
+version = "v0.236.0"

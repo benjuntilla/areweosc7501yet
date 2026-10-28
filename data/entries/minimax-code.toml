@@ -5,7 +5,7 @@ role = "program"
 category = "coding-agents"
 spec_revision = "0.4"
 note = "Ships on npm. The repo’s newest tag is still v0.6.5."
-last_checked_date = 2026-10-24
+last_checked_date = 2026-10-28
 
 [github]
 popular = true
