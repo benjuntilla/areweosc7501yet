@@ -108,18 +108,24 @@
 
 	@media (prefers-reduced-motion: no-preference) {
 		.spin .dot {
-			animation: spin 1200ms steps(1, end) infinite;
+			animation: spin 1200ms ease-in-out infinite;
 			animation-delay: calc(var(--i) * 200ms - 1200ms);
 		}
 	}
 
-	/* Each dot stays lit for half the loop, so three consecutive dots are always on. */
+	/* Each dot fades on, stays lit for half the loop, and fades off, so three consecutive dots are lit. */
 	@keyframes spin {
 		0% {
+			opacity: calc(var(--state-glyph-icon-opacity) / 100);
+		}
+
+		12%,
+		50% {
 			opacity: 1;
 		}
 
-		50% {
+		62%,
+		100% {
 			opacity: calc(var(--state-glyph-icon-opacity) / 100);
 		}
 	}
