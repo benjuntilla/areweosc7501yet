@@ -1,0 +1,14 @@
+name = "Determinate Nix"
+url = "https://github.com/DeterminateSystems/nix-src"
+repo = "DeterminateSystems/nix-src"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+
+[github]
+popular = false
+
+[[history]]
+date = 2026-10-22
+state = "working"
+source = "https://github.com/DeterminateSystems/nix-src/pull/721"
