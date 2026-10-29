@@ -37,8 +37,9 @@
 	// Once the bar is out of sight, any scroll up brings it back and the next scroll down takes it
 	// away. At the very top of the page it is in its own place again.
 	const onscroll = () => {
-		// iOS bounces past the end of the page, and the bounce back is not a scroll up.
-		const y = Math.min(scrollY, document.documentElement.scrollHeight - innerHeight);
+		// iOS bounces past the end of the page, and the bounce back is not a scroll up. The end can be
+		// up to a pixel short of this, as scrollHeight is a whole number.
+		const y = Math.min(scrollY, document.documentElement.scrollHeight - innerHeight - 1);
 		if (y <= 0) slide = undefined;
 		else if (y < lastY && (slide !== undefined || outOfSight())) slide = 'in';
 		else if (y > lastY && slide === 'in') slide = 'out';
