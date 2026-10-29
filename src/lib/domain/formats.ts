@@ -63,14 +63,19 @@ export const Url = Schema.String.check(
 );
 export const Repo = Schema.String.check(Schema.isPattern(patterns.repo));
 
-/** The path of a link to one item in a GitHub repository, like /owner/name/pull/123. */
-export const GitHubItemPath = Schema.TemplateLiteralParser([
+const githubItem = [
 	'/',
 	Repo,
 	'/',
 	Schema.Literals(['pull', 'issues', 'commit']),
 	'/',
 	Schema.String.check(Schema.isPattern(/^\w+$/u))
+] as const;
+
+/** The path of a link to one item in a GitHub repository, like /owner/name/pull/123 or a page under it. */
+export const GitHubItemPath = Schema.Union([
+	Schema.TemplateLiteralParser(githubItem),
+	Schema.TemplateLiteralParser([...githubItem, '/', Schema.String])
 ]);
 
 /** owner/name when the URL is a GitHub repository (or a page inside one). */
