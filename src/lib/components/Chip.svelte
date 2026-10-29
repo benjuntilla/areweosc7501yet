@@ -37,10 +37,14 @@
 		link?.focus();
 	};
 
-	// A mouse click on an open popover keeps it open; touch toggles it natively.
+	// A mouse click on an open popover keeps it open; touch toggles it natively. The pointer type
+	// comes from the press, because iOS Safari reports a tap's click as a mouse click. A click with
+	// no press, as from a screen reader, toggles.
+	let pointerType = '';
+
 	const onclick = (event: MouseEvent) => {
-		if (event instanceof PointerEvent && event.pointerType === 'mouse' && open)
-			event.preventDefault();
+		if (pointerType === 'mouse' && open) event.preventDefault();
+		pointerType = '';
 	};
 
 	// Tabbing past the chip and its popover closes it.
@@ -63,6 +67,7 @@
 		aria-haspopup="dialog"
 		aria-expanded={open}
 		aria-label="{chip.name}, {chip.state}"
+		onpointerdown={(e) => (pointerType = e.pointerType)}
 		onpointermove={(e) => intent?.enter(e)}
 		onpointerleave={(e) => intent?.leave(e)}
 		{onfocus}
