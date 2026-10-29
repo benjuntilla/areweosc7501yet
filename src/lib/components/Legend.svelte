@@ -11,16 +11,29 @@
 	];
 </script>
 
-<dl class="type-small">
-	{#each legend as [state, meaning] (state)}
-		<div>
-			<dt><StateGlyph {state} />{state}</dt>
-			<dd>{meaning}</dd>
-		</div>
-	{/each}
-</dl>
+<div class="legend">
+	<dl class="type-small">
+		{#each legend as [state, meaning] (state)}
+			<div>
+				<dt><StateGlyph {state} />{state}</dt>
+				<dd>{meaning}</dd>
+			</div>
+		{/each}
+	</dl>
+	<p class="type-small">
+		Learn more about each state <a href="/methodology"
+			>here<span class="visually-hidden">: Methodology</span></a
+		>.
+	</p>
+</div>
 
 <style>
+	.legend {
+		display: flex;
+		flex-direction: column;
+		gap: var(--legend-learn-gap);
+	}
+
 	dl {
 		display: flex;
 		flex-wrap: wrap;
@@ -40,7 +53,12 @@
 		color: var(--legend-state-name);
 	}
 
-	dd {
+	dd,
+	p {
 		color: var(--legend-description);
+	}
+
+	a {
+		color: var(--content-text-strong);
 	}
 </style>

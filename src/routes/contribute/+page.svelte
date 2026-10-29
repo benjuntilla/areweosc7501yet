@@ -34,8 +34,9 @@
 			<a href="{repo}/tree/main/data/entries"><code>data/entries/</code></a>, named after the
 			project. The <code>[[history]]</code> blocks are in chronological order, so the last block
 			shows the current state and its source. If the state changes, add a new block at the end. If
-			the new state is done and the project is on GitHub, add <code>version</code> with the release that
-			contains the support. Use a primary source, such as the PR or the release notes.
+			the new state is done and the project is on GitHub, add <code>version</code> with the release
+			that contains the support. Use a primary source, such as the PR or the release notes.
+			<a href="/methodology">Methodology</a> lists what counts as a source.
 		</p>
 		<p>As an example, this is the file for kitty:</p>
 		<CodeCard label="data/entries/kitty.toml" code={data.kitty} html={data.html} />

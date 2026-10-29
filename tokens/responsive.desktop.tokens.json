@@ -468,6 +468,10 @@
 			"regular": {
 				"$type": "fontWeight",
 				"$value": "{font.weight.regular}"
+			},
+			"medium": {
+				"$type": "fontWeight",
+				"$value": "{font.weight.medium}"
 			}
 		}
 	},
