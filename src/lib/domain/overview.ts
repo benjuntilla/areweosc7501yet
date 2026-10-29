@@ -1,6 +1,6 @@
-import { Array, Option, Order, String as Str } from 'effect';
+import { Array, Match, Option, Order, Schema, String as Str } from 'effect';
 import { formatDay } from './derive.ts';
-import { githubRepoOf } from './formats.ts';
+import { GitHubItemPath, Repo } from './formats.ts';
 import { categoriesByRole, type Category, type Role, roles, states, type State } from './schema.ts';
 import type { Site } from './site.ts';
 
@@ -22,20 +22,34 @@ export const categoryNavNames: Record<Category, string> = {
 	multiplexers: 'Multiplexers & inboxes'
 };
 
+/** The path of a link to a GitHub release, like /owner/name/releases/tag/v1.2. */
+const GitHubReleasePath = Schema.TemplateLiteralParser([
+	'/',
+	Repo,
+	'/releases/tag/',
+	Schema.String
+]);
+
 /** A short name for a source link: owner/name@sha, owner/name#123, owner/name v1.2 or the bare URL. */
-export const sourceLabel = (url: string): string =>
-	Option.match(githubRepoOf(url), {
-		onNone: () => Str.replace(/^https:\/\/(www\.)?/u, '')(url),
-		onSome: (repo) => {
-			const pr = /\/(?:pull|issues)\/(\d+)/u.exec(url);
-			if (pr) return `${repo}#${pr[1] ?? ''}`;
-			const sha = /\/commit\/([0-9a-f]{7})/u.exec(url);
-			if (sha) return `${repo}@${sha[1] ?? ''}`;
-			const tag = /\/releases\/tag\/([^/?#]+)/u.exec(url);
-			if (tag) return `${repo} ${tag[1] ?? ''}`;
-			return Str.replace(/^https:\/\/github\.com\//u, '')(url);
-		}
-	});
+export const sourceLabel = (url: string): string => {
+	const { hostname, pathname } = new URL(url);
+	return Match.value({
+		hostname,
+		item: Option.getOrUndefined(Schema.decodeUnknownOption(GitHubItemPath)(pathname)),
+		release: Option.getOrUndefined(Schema.decodeUnknownOption(GitHubReleasePath)(pathname))
+	}).pipe(
+		Match.not({ hostname: 'github.com' }, () => Str.replace(/^https:\/\/(www\.)?/u, '')(url)),
+		Match.when({ item: Match.defined }, ({ item: [, repo, , kind, , id] }) =>
+			Match.value(kind).pipe(
+				Match.when(Match.is('pull', 'issues'), () => `${repo}#${id}`),
+				Match.when('commit', () => `${repo}@${id.slice(0, 7)}`),
+				Match.exhaustive
+			)
+		),
+		Match.when({ release: Match.defined }, ({ release: [, repo, , tag] }) => `${repo} ${tag}`),
+		Match.orElse(() => Str.replace(/^https:\/\/github\.com\//u, '')(url))
+	);
+};
 
 export interface Chip {
 	readonly slug: string;
