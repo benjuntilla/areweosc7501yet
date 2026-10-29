@@ -1044,7 +1044,7 @@
 				"value": 200,
 				"unit": "ms"
 			},
-			"$description": "Below 1,100 px the top bar slides in from above on a scroll up, and out on the next scroll down (ease-unfold)."
+			"$description": "Below 1,100 px, when the page stops with the top bar part way in, the bar finishes sliding the way it was going (ease-unfold)."
 		}
 	},
 	"hero": {

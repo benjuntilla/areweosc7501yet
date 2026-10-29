@@ -2,6 +2,7 @@
 	import { cover } from '#lib/client/cover.svelte.ts';
 	import { loadSearch, searchKeys } from '#lib/client/search.ts';
 	import type { Side } from '#lib/domain/overview.ts';
+	import { Number as Num } from 'effect';
 	import Icon from './Icon.svelte';
 	import Logo from './Logo.svelte';
 	import Nav from './Nav.svelte';
@@ -24,8 +25,12 @@
 	const closeMenu = () => sheet?.close();
 
 	let bar: HTMLElement;
-	// The bar is in its own place, or it has slid in at the top of the window, or out above it.
-	let slide: 'in' | 'out' | undefined = $state();
+	let strip: HTMLElement;
+	// Out of its own place, the bar is pinned to the top of the window, and this much of it shows.
+	let pinned = $state(false);
+	let shown = $state(0);
+	let settling = $state(false);
+	let goingUp = false;
 	let lastY = 0;
 	let lastEnd = 0;
 
@@ -35,8 +40,9 @@
 		return bottom <= 0 || bottom > cover.edge;
 	};
 
-	// Once the bar is out of sight, any scroll up brings it back and the next scroll down takes it
-	// away. At the very top of the page it is in its own place again.
+	// Once the bar is out of sight, it moves with the page: each scroll up brings that much of it
+	// down into the window, and each scroll down takes that much back up. At the very top of the page
+	// it is in its own place again.
 	const onscroll = () => {
 		// iOS bounces past the end of the page, and the bounce back is not a scroll up. The end can be
 		// up to a pixel short of this, as scrollHeight is a whole number. When a mobile toolbar hides,
@@ -44,26 +50,41 @@
 		// a scroll up or down either.
 		const end = document.documentElement.scrollHeight - innerHeight - 1;
 		const y = Math.min(scrollY, end);
-		if (y <= 0) slide = undefined;
-		else if (end === lastEnd) {
-			if (y < lastY && (slide !== undefined || outOfSight())) slide = 'in';
-			else if (y > lastY && slide === 'in') slide = 'out';
-		}
+		const up = end === lastEnd ? lastY - y : 0;
 		lastY = y;
 		lastEnd = end;
+		if (y <= 0) {
+			pinned = false;
+			shown = 0;
+			settling = false;
+		} else if (up !== 0 && (pinned || (up > 0 && outOfSight()))) {
+			pinned = true;
+			settling = false;
+			goingUp = up > 0;
+			shown = Num.clamp(shown + up, { minimum: 0, maximum: strip.offsetHeight });
+		}
+	};
+
+	// When the page stops with the bar part way in, the bar finishes the way it was going.
+	const onscrollend = () => {
+		if (!pinned) return;
+		settling = true;
+		shown = goingUp ? strip.offsetHeight : 0;
 	};
 </script>
 
-<svelte:window {onscroll} />
+<svelte:window {onscroll} {onscrollend} />
 
 <header
 	id="top-bar"
 	class:stays={cover.stays !== undefined}
+	class:pinned
+	class:settling
 	style:--fade={cover.fade}
-	data-slide={slide}
+	style:--shown="{shown}px"
 	bind:this={bar}
 >
-	<div class="top-bar">
+	<div class="top-bar" bind:this={strip}>
 		<Logo size={36} />
 		<span class="spacer"></span>
 		<button
@@ -145,15 +166,15 @@
 		opacity: var(--fade);
 	}
 
-	/* When the bar comes back, or holds keyboard focus, it is fixed to the top of the window above
+	/* Out of its own place, or holding keyboard focus, the bar is fixed to the top of the window above
 	   the content, on a strip of the page's paper. Its place in the page stays empty. */
-	header:is([data-slide], :has(:global(:focus-visible))) {
+	header:is(.pinned, :has(:global(:focus-visible))) {
 		position: static;
 		block-size: 36px;
 		opacity: 1;
 	}
 
-	header:is([data-slide], :has(:global(:focus-visible))) > .top-bar {
+	header:is(.pinned, :has(:global(:focus-visible))) > .top-bar {
 		position: fixed;
 		inset: 0 0 auto;
 		z-index: 1;
@@ -161,23 +182,15 @@
 		background: var(--page-background);
 	}
 
-	header[data-slide='out']:not(:has(:global(:focus-visible))) > .top-bar {
-		translate: 0 -100%;
+	/* It shows as far as the page has scrolled up since it went out of sight, and keyboard focus
+	   shows all of it. */
+	header.pinned:not(:has(:global(:focus-visible))) > .top-bar {
+		translate: 0 calc(var(--shown) - 100%);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		header[data-slide='in'] > .top-bar {
-			animation: slide-in var(--motion-top-bar-slide-duration) var(--motion-ease-unfold);
-		}
-
-		header[data-slide='out'] > .top-bar {
+		header.settling > .top-bar {
 			transition: translate var(--motion-top-bar-slide-duration) var(--motion-ease-unfold);
-		}
-	}
-
-	@keyframes slide-in {
-		from {
-			translate: 0 -100%;
 		}
 	}
 
