@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { siteTitle } from '#lib/meta.ts';
 	import CodeCard from '#lib/components/CodeCard.svelte';
+	import Head from '#lib/components/Head.svelte';
 	import { contributeSections } from '#lib/toc.ts';
 	import type { PageProps } from './$types';
 
@@ -10,10 +11,10 @@
 	const repo = 'https://github.com/benjuntilla/areweosc7501yet';
 </script>
 
-<svelte:head>
-	<title>Contribute · {siteTitle}</title>
-	<meta name="description" content="Report a change or edit the data behind {siteTitle}" />
-</svelte:head>
+<Head
+	title="Contribute · {siteTitle}"
+	description="Report a change or edit the data behind {siteTitle}"
+/>
 
 <article class="page">
 	<h1 class="type-h1">Contribute</h1>
