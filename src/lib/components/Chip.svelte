@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { hoverIntent, placeUnder } from '#lib/client/popover.ts';
 	import type { Chip } from '#lib/domain/overview.ts';
+	import MiddleEllipsis from './MiddleEllipsis.svelte';
 	import StateGlyph from './StateGlyph.svelte';
 
 	let { chip, highlight = false }: { chip: Chip; highlight?: boolean } = $props();
@@ -13,12 +14,6 @@
 	// Hover opens the popover once the pointer rests on the chip. It waits for the pointer to move,
 	// so a chip that scrolls under a still pointer, as on a jump to an entry, leaves it alone.
 	const intent = $derived(popover ? hoverIntent(popover) : undefined);
-
-	// Long names truncate in the middle, like Finder: the start shrinks, the end stays.
-	const split = $derived.by(() => {
-		const tail = Math.min(20, Math.floor(chip.name.length / 2));
-		return [chip.name.slice(0, chip.name.length - tail), chip.name.slice(chip.name.length - tail)];
-	});
 
 	const ontoggle = (event: ToggleEvent) => {
 		open = event.newState === 'open';
@@ -71,9 +66,7 @@
 		{onfocusout}
 	>
 		<StateGlyph state={chip.state} />
-		<span class="name"
-			><span class="start">{split[0]}</span><span class="end">{split[1]}</span></span
-		>
+		<MiddleEllipsis text={chip.name} />
 	</button>
 	<div
 		bind:this={popover}
@@ -139,26 +132,6 @@
 
 	.chip:active {
 		background: var(--chip-background-pressed);
-	}
-
-	.name {
-		display: flex;
-		min-inline-size: 0;
-		white-space: nowrap;
-	}
-
-	.start,
-	.end {
-		white-space: pre;
-	}
-
-	.start {
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.end {
-		flex-shrink: 0;
 	}
 
 	.highlight {

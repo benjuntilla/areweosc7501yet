@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { siteTitle } from '#lib/meta.ts';
+	import MiddleEllipsis from '#lib/components/MiddleEllipsis.svelte';
 	import StateGlyph from '#lib/components/StateGlyph.svelte';
 	import type { PageProps } from './$types';
 
@@ -48,7 +49,10 @@
 							</th>
 							<td class="change">{row.change}</td>
 							<td class="source">
-								<a href={row.source}>{row.sourceLabel}</a>
+								<!-- A short commit hash stays whole at the end. Screen readers pause where the label splits, so the link is named with the full label. -->
+								<a href={row.source} title={row.sourceLabel} aria-label={row.sourceLabel}
+									><MiddleEllipsis text={row.sourceLabel} tail={7} /></a
+								>
 							</td>
 						</tr>
 					{/each}
@@ -100,6 +104,11 @@
 
 	.source {
 		inline-size: 150px;
+	}
+
+	.source a {
+		display: inline-flex;
+		max-inline-size: 100%;
 	}
 
 	tbody tr {
@@ -164,7 +173,9 @@
 		}
 
 		.source {
+			flex: 1;
 			order: 4;
+			min-inline-size: 0;
 			margin-block-start: var(--change-row-line-gap);
 		}
 	}
