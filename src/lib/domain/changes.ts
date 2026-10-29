@@ -77,18 +77,23 @@ const newestDayFirst = Order.combine(
 const weekOf = (day: string) =>
 	DateTime.startOf(DateTime.makeUnsafe(day), 'week', { weekStartsOn: 1 });
 
-/** The Changes page: state changes and spec revisions, newest first, in Monday-start UTC weeks. */
+/** The Changes page: state changes and spec revisions, newest first, in Monday-start UTC weeks. A week before the newest row's year names its year. */
 export const changeWeeks = (site: Site): ReadonlyArray<Week> => {
 	const rows = Array.sort(
 		[...Array.map(site.changes, entryRow), ...Array.map(site.spec.revisions, specRow)],
 		newestDayFirst
 	);
 	if (!Array.isReadonlyArrayNonEmpty(rows)) return [];
+	const newestYear = DateTime.getPartUtc(DateTime.makeUnsafe(Array.headNonEmpty(rows).day), 'year');
 	return Array.map(
 		Array.groupWith(rows, (a, b) => utcDay(weekOf(a.day)) === utcDay(weekOf(b.day))),
 		(week) => {
 			const monday = weekOf(Array.headNonEmpty(week).day);
-			return { id: `week-${utcDay(monday)}`, label: `Week of ${formatDay(monday)}`, rows: week };
+			const day =
+				DateTime.getPartUtc(monday, 'year') === newestYear
+					? formatDay(monday)
+					: DateTime.formatUtc(monday, { locale: 'en-US', dateStyle: 'medium' });
+			return { id: `week-${utcDay(monday)}`, label: `Week of ${day}`, rows: week };
 		}
 	);
 };
