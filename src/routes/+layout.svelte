@@ -45,7 +45,9 @@
 </script>
 
 <svelte:head>
+	<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 	<link rel="preload" href={inter} as="font" type="font/woff2" crossorigin="anonymous" />
 	<link rel="alternate" type="application/atom+xml" title={siteTitle} href="/feed.xml" />
 </svelte:head>
