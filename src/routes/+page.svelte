@@ -137,8 +137,8 @@
 
 <style>
 	/* The top fills the rest of the first screen, and the hero sits at its foot, one section gap
-	   above the fold. Above the top are the page padding and, below 1,100 px, the 36 px top bar and
-	   a section gap. On a short window the top still keeps a section gap above the tracker. */
+	   above the fold. Above the top are the page padding and, below 1,100 px, the top bar and a
+	   section gap. On a short window the top still keeps a section gap above the tracker. */
 	.top {
 		--above: var(--layout-page-padding-top);
 
@@ -151,7 +151,9 @@
 
 	@media (width < 1100px) {
 		.top {
-			--above: calc(var(--layout-page-padding-top) + 36px + var(--layout-section-gap));
+			--above: calc(
+				var(--layout-page-padding-top) + var(--top-bar-height) + var(--layout-section-gap)
+			);
 		}
 	}
 

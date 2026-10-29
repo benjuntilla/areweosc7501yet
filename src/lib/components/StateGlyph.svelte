@@ -108,8 +108,10 @@
 
 	@media (prefers-reduced-motion: no-preference) {
 		.spin .dot {
-			animation: spin 1200ms ease-in-out infinite;
-			animation-delay: calc(var(--i) * 200ms - 1200ms);
+			animation: spin var(--motion-working-spin-duration) ease-in-out infinite;
+			animation-delay: calc(
+				var(--i) * var(--motion-working-spin-stagger) - var(--motion-working-spin-duration)
+			);
 		}
 	}
 

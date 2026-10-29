@@ -39,18 +39,18 @@
 
 <style>
 	/* The sidebar scrolls, and a scroll box clips what reaches past it. So it reaches past its content
-	   by a focus ring's width and its 2 px offset, and the rings show in full. */
+	   by a focus ring's width and offset, and the rings show in full. */
 	.sidebar {
-		--ring-room: calc(var(--focus-ring-stroke-width) + 2px);
+		--ring-room: calc(var(--focus-ring-stroke-width) + var(--focus-ring-offset));
 
 		position: fixed;
 		inset-block-start: var(--layout-page-padding-top);
-		inset-inline-start: clamp(24px, 50% - 536px, 64px);
+		inset-inline-start: var(--sidebar-inset);
 		box-sizing: content-box;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		inline-size: 200px;
+		inline-size: var(--sidebar-width);
 		max-block-size: calc(100svb - var(--layout-page-padding-top) - var(--ring-room));
 		padding: var(--ring-room);
 		margin: calc(var(--ring-room) * -1);

@@ -74,12 +74,12 @@
 	}
 
 	.date {
-		inline-size: 72px;
+		inline-size: var(--change-row-date-width);
 		color: var(--content-text-muted);
 	}
 
 	.entry {
-		inline-size: 176px;
+		inline-size: var(--change-row-entry-width);
 	}
 
 	tbody .entry {
@@ -95,12 +95,12 @@
 
 	.glyph {
 		flex-shrink: 0;
-		inline-size: 14px;
-		block-size: 14px;
+		inline-size: var(--icon-size-sm);
+		block-size: var(--icon-size-sm);
 	}
 
 	.source {
-		inline-size: 150px;
+		inline-size: var(--change-row-source-width);
 	}
 
 	.source a {
@@ -128,8 +128,10 @@
 		/* Hidden from view only, so screen readers keep the column headers. */
 		thead {
 			position: absolute;
+			/* stylelint-disable unit-disallowed-list -- screen readers skip an element with no size */
 			inline-size: 1px;
 			block-size: 1px;
+			/* stylelint-enable unit-disallowed-list */
 			overflow: hidden;
 			clip-path: inset(50%);
 		}

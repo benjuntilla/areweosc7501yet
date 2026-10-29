@@ -3,12 +3,24 @@
 		"background": {
 			"$type": "color",
 			"$value": "{color.paper}"
+		},
+		"column-width": {
+			"$type": "dimension",
+			"$value": "{size.576}"
+		},
+		"skip-link-top": {
+			"$type": "dimension",
+			"$value": "{space.16}"
 		}
 	},
 	"content": {
 		"divider": {
 			"$type": "color",
 			"$value": "{color.rule}"
+		},
+		"divider-width": {
+			"$type": "dimension",
+			"$value": "{stroke.1}"
 		},
 		"text": {
 			"$type": "color",
@@ -110,6 +122,10 @@
 			"$type": "dimension",
 			"$value": "{radius.6}"
 		},
+		"max-width": {
+			"$type": "dimension",
+			"$value": "{size.280}"
+		},
 		"list-gap": {
 			"$type": "dimension",
 			"$value": "{space.2}"
@@ -150,13 +166,9 @@
 			"$type": "color",
 			"$value": "{color.surface}"
 		},
-		"ring": {
-			"$type": "color",
-			"$value": "{effect.ring}"
-		},
 		"shadow": {
-			"$type": "color",
-			"$value": "{effect.shadow}"
+			"$type": "shadow",
+			"$value": "{effect.shadow-surface}"
 		},
 		"radius": {
 			"$type": "dimension",
@@ -171,6 +183,10 @@
 		"stroke-width": {
 			"$type": "dimension",
 			"$value": "{stroke.2}"
+		},
+		"offset": {
+			"$type": "dimension",
+			"$value": "{space.2}"
 		},
 		"radius": {
 			"$type": "dimension",
@@ -224,6 +240,26 @@
 			"$type": "dimension",
 			"$value": "{space.10}"
 		},
+		"inset": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"min-width": {
+			"$type": "dimension",
+			"$value": "{size.80}"
+		},
+		"max-width": {
+			"$type": "dimension",
+			"$value": "{size.480}"
+		},
+		"content-gap": {
+			"$type": "dimension",
+			"$value": "{size.160}"
+		},
+		"label-offset": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
 		"field": {
 			"$type": "gradient",
 			"$value": "{field.ramp}"
@@ -260,13 +296,9 @@
 			"$type": "color",
 			"$value": "{color.surface}"
 		},
-		"ring": {
-			"$type": "color",
-			"$value": "{effect.ring}"
-		},
 		"shadow": {
-			"$type": "color",
-			"$value": "{effect.shadow}"
+			"$type": "shadow",
+			"$value": "{effect.shadow-surface}"
 		},
 		"title": {
 			"$type": "color",
@@ -296,6 +328,10 @@
 			"$type": "dimension",
 			"$value": "{radius.12}"
 		},
+		"width": {
+			"$type": "dimension",
+			"$value": "{size.300}"
+		},
 		"offset": {
 			"$type": "dimension",
 			"$value": "{space.8}"
@@ -322,6 +358,14 @@
 			"$type": "dimension",
 			"$value": "{radius.16}"
 		},
+		"caption-top": {
+			"$type": "dimension",
+			"$value": "{space.20}"
+		},
+		"caption-left": {
+			"$type": "dimension",
+			"$value": "{space.24}"
+		},
 		"grain-opacity": {
 			"$type": "number",
 			"$value": "{opacity.16}"
@@ -344,6 +388,10 @@
 			"$type": "dimension",
 			"$value": "{radius.4}"
 		},
+		"height": {
+			"$type": "dimension",
+			"$value": "{size.8}"
+		},
 		"count-gap": {
 			"$type": "dimension",
 			"$value": "{space.12}"
@@ -365,6 +413,10 @@
 		"divider": {
 			"$type": "color",
 			"$value": "{color.rule}"
+		},
+		"divider-width": {
+			"$type": "dimension",
+			"$value": "{stroke.1}"
 		},
 		"text": {
 			"$type": "color",
@@ -398,13 +450,9 @@
 			"$type": "color",
 			"$value": "{color.surface}"
 		},
-		"ring": {
-			"$type": "color",
-			"$value": "{effect.ring}"
-		},
 		"shadow": {
-			"$type": "color",
-			"$value": "{effect.shadow}"
+			"$type": "shadow",
+			"$value": "{effect.shadow-icon}"
 		},
 		"radius": {
 			"$type": "dimension",
@@ -666,6 +714,18 @@
 			"$value": "{space.20}",
 			"$description": "Left padding of a TOC entry; the guide sits at 4 px, the tick runs 4→12 px (Rex: 1.5em at 13 px)."
 		},
+		"toc-guide-inset": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		},
+		"toc-guide-width": {
+			"$type": "dimension",
+			"$value": "{stroke.1}"
+		},
+		"toc-tick-length": {
+			"$type": "dimension",
+			"$value": "{size.8}"
+		},
 		"toc-item-padding-y": {
 			"$type": "dimension",
 			"$value": "{space.4}",
@@ -693,13 +753,9 @@
 			"$type": "color",
 			"$value": "{color.surface}"
 		},
-		"thumb-ring": {
-			"$type": "color",
-			"$value": "{effect.ring}"
-		},
 		"thumb-shadow": {
-			"$type": "color",
-			"$value": "{effect.shadow}"
+			"$type": "shadow",
+			"$value": "{effect.shadow-icon}"
 		},
 		"label": {
 			"$type": "color",
@@ -735,13 +791,9 @@
 			"$type": "color",
 			"$value": "{color.surface}"
 		},
-		"button-ring": {
-			"$type": "color",
-			"$value": "{effect.ring}"
-		},
 		"button-shadow": {
-			"$type": "color",
-			"$value": "{effect.shadow}"
+			"$type": "shadow",
+			"$value": "{effect.shadow-icon}"
 		},
 		"icon": {
 			"$type": "color",
@@ -759,6 +811,10 @@
 			"$type": "dimension",
 			"$value": "{space.8}"
 		},
+		"height": {
+			"$type": "dimension",
+			"$value": "{size.36}"
+		},
 		"button-padding": {
 			"$type": "dimension",
 			"$value": "{space.11}"
@@ -766,6 +822,10 @@
 		"button-radius": {
 			"$type": "dimension",
 			"$value": "{radius.18}"
+		},
+		"button-hit-outset": {
+			"$type": "dimension",
+			"$value": "{space.4}"
 		}
 	},
 	"code-block": {
@@ -910,6 +970,10 @@
 		"cell-gap": {
 			"$type": "dimension",
 			"$value": "{space.6}"
+		},
+		"row-head-width": {
+			"$type": "dimension",
+			"$value": "{size.160}"
 		}
 	},
 	"motion": {
@@ -952,6 +1016,14 @@
 				"unit": "ms"
 			},
 			"$description": "Between drum lines on entrance."
+		},
+		"drum-reveal-distance": {
+			"$type": "dimension",
+			"$value": {
+				"value": 8,
+				"unit": "px"
+			},
+			"$description": "Drum lines rise this many px while fading in."
 		},
 		"rail-drift-duration": {
 			"$type": "duration",
@@ -996,6 +1068,11 @@
 			"$type": "cubicBezier",
 			"$value": [0, 0, 0.2, 1],
 			"$description": "Tailwind ease-out, used by the nav TOC unfold (Rex)."
+		},
+		"ease-fold": {
+			"$type": "cubicBezier",
+			"$value": [0.4, 0, 0.2, 1],
+			"$description": "Ease-in-out, used when a category folds its chips away."
 		},
 		"rail-label-duration": {
 			"$type": "duration",
@@ -1049,6 +1126,38 @@
 				"unit": "ms"
 			},
 			"$description": "The search dialog shadow fades in after the morph lands (ease-out)."
+		},
+		"chip-highlight-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 1600,
+				"unit": "ms"
+			},
+			"$description": "A chip flashes its pressed color when search jumps to it."
+		},
+		"working-spin-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 1200,
+				"unit": "ms"
+			},
+			"$description": "One loop of the working glyph: each dot brightens, then dims."
+		},
+		"working-spin-stagger": {
+			"$type": "duration",
+			"$value": {
+				"value": 200,
+				"unit": "ms"
+			},
+			"$description": "Between the working glyph's dots."
+		},
+		"error-card-bounce-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 280,
+				"unit": "ms"
+			},
+			"$description": "A 404 piece bounces once after it lands."
 		}
 	},
 	"hero": {
@@ -1059,6 +1168,18 @@
 		"drum-margin-bottom": {
 			"$type": "dimension",
 			"$value": "{space.18}"
+		},
+		"drum-width": {
+			"$type": "dimension",
+			"$value": "{size.84}"
+		},
+		"drum-height": {
+			"$type": "dimension",
+			"$value": "{size.98}"
+		},
+		"drum-row-opacity": {
+			"$type": "number",
+			"$value": "{opacity.55}"
 		}
 	},
 	"tracker": {
@@ -1089,6 +1210,22 @@
 		"scroll-fade": {
 			"$type": "dimension",
 			"$value": "{space.32}"
+		},
+		"width": {
+			"$type": "dimension",
+			"$value": "{size.200}"
+		},
+		"column-gap": {
+			"$type": "dimension",
+			"$value": "{space.48}"
+		},
+		"inset-min": {
+			"$type": "dimension",
+			"$value": "{size.24}"
+		},
+		"inset-max": {
+			"$type": "dimension",
+			"$value": "{size.64}"
 		}
 	},
 	"menu": {
@@ -1133,6 +1270,18 @@
 		"line-gap": {
 			"$type": "dimension",
 			"$value": "{space.4}"
+		},
+		"date-width": {
+			"$type": "dimension",
+			"$value": "{size.72}"
+		},
+		"entry-width": {
+			"$type": "dimension",
+			"$value": "{size.176}"
+		},
+		"source-width": {
+			"$type": "dimension",
+			"$value": "{size.150}"
 		}
 	}
 }
