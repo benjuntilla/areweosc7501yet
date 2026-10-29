@@ -16,21 +16,27 @@
 			range.selectNodeContents(label);
 			return range.getBoundingClientRect().width;
 		};
+		// The text cut to `kept` characters around the ellipsis. The end fills up first, so it shrinks
+		// only when the start is gone and it still doesn't fit.
+		const cut = (kept: number) =>
+			kept <= end.length
+				? `…${text.slice(text.length - kept)}`
+				: `${start.slice(0, kept - end.length)}…${end}`;
 		const update = () => {
 			if (label.textContent !== text) label.textContent = text;
 			// With the full text in, the label is as wide as it can get.
 			const room = label.getBoundingClientRect().width;
 			if (width() <= room) return;
-			// The longest start that fits next to the ellipsis and the end.
+			// The most characters that fit.
 			let low = 0;
-			let high = start.length - 1;
+			let high = text.length - 1;
 			while (low < high) {
 				const mid = Math.ceil((low + high) / 2);
-				label.textContent = `${start.slice(0, mid)}…${end}`;
+				label.textContent = cut(mid);
 				if (width() <= room) low = mid;
 				else high = mid - 1;
 			}
-			label.textContent = `${start.slice(0, low)}…${end}`;
+			label.textContent = cut(low);
 		};
 		update();
 		// The text gets wider or narrower when the web font replaces the fallback font.
