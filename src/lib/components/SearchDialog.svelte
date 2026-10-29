@@ -55,6 +55,8 @@
 		selected = 0;
 		void loadSearch().then((f) => (find = f));
 		landing = true;
+		// A smooth scroll still running would carry the dialog off screen, so it stops here.
+		scrollTo({ top: scrollY, behavior: 'instant' });
 		await tick();
 		await morph(from, d, () => {
 			from.style.visibility = 'hidden';
