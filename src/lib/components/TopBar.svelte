@@ -3,6 +3,7 @@
 	import { loadSearch, searchKeys } from '#lib/client/search.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import { Number as Num } from 'effect';
+	import { flushSync } from 'svelte';
 	import Icon from './Icon.svelte';
 	import Logo from './Logo.svelte';
 	import Nav from './Nav.svelte';
@@ -26,10 +27,15 @@
 
 	let bar: HTMLElement;
 	let strip: HTMLElement;
-	// Out of its own place, the bar is pinned to the top of the window, and this much of it shows.
+	// Out of its own place, the bar is pinned to the top of the window. Scrolled up to the anchor, all
+	// of it shows. One strip's height further down, it has all gone up, and in between it moves with
+	// the page.
 	let pinned = $state(false);
+	let anchor = $state(0);
+	let height = $state(0);
 	let shown = $state(0);
 	let settling = $state(false);
+	let settleFrom = $state(0);
 	let goingUp = false;
 	let lastY = 0;
 	let lastEnd = 0;
@@ -51,25 +57,33 @@
 		const end = document.documentElement.scrollHeight - innerHeight - 1;
 		const y = Math.min(scrollY, end);
 		const up = end === lastEnd ? lastY - y : 0;
-		lastY = y;
-		lastEnd = end;
 		if (y <= 0) {
 			pinned = false;
-			shown = 0;
 			settling = false;
 		} else if (up !== 0 && (pinned || (up > 0 && outOfSight()))) {
-			pinned = true;
+			if (!pinned) {
+				// The strip has its full height only once the bar is pinned.
+				flushSync(() => (pinned = true));
+				height = strip.offsetHeight;
+				anchor = lastY - height;
+			}
 			settling = false;
 			goingUp = up > 0;
-			shown = Num.clamp(shown + up, { minimum: 0, maximum: strip.offsetHeight });
+			// Past either end of its way, the bar holds still, so the anchor moves along with the page.
+			anchor = Num.clamp(anchor, { minimum: y - height, maximum: y });
+			shown = anchor + height - y;
 		}
+		lastY = y;
+		lastEnd = end;
 	};
 
 	// When the page stops with the bar part way in, the bar finishes the way it was going.
 	const onscrollend = () => {
 		if (!pinned) return;
+		settleFrom = shown;
+		shown = goingUp ? height : 0;
+		anchor = lastY + shown - height;
 		settling = true;
-		shown = goingUp ? strip.offsetHeight : 0;
 	};
 </script>
 
@@ -82,6 +96,8 @@
 	class:settling
 	style:--fade={cover.fade}
 	style:--shown="{shown}px"
+	style:--follow="{anchor}px {anchor + height}px"
+	style:--settle-from="{settleFrom}px"
 	bind:this={bar}
 >
 	<div class="top-bar" bind:this={strip}>
@@ -182,15 +198,43 @@
 		background: var(--page-background);
 	}
 
-	/* It shows as far as the page has scrolled up since it went out of sight, and keyboard focus
-	   shows all of it. */
+	/* It shows as far as the scrolls have brought it in, and keyboard focus shows all of it. */
 	header.pinned:not(:has(:global(:focus-visible))) > .top-bar {
 		translate: 0 calc(var(--shown) - 100%);
 	}
 
+	/* Where it can, the page's own scrolling moves the bar, so it keeps up with the finger on iOS,
+	   which scrolls apart from scripts. Longhands, so the build keeps the duration at auto, which spans
+	   the range. */
+	@supports (animation-timeline: scroll()) and (animation-range: normal) {
+		header.pinned:not(.settling, :has(:global(:focus-visible))) > .top-bar {
+			animation-name: top-bar-follow;
+			animation-timing-function: linear;
+			animation-fill-mode: both;
+			animation-timeline: scroll(root);
+			animation-range: var(--follow);
+		}
+	}
+
+	@keyframes top-bar-follow {
+		from {
+			translate: 0 0;
+		}
+
+		to {
+			translate: 0 -100%;
+		}
+	}
+
 	@media (prefers-reduced-motion: no-preference) {
 		header.settling > .top-bar {
-			transition: translate var(--motion-top-bar-slide-duration) var(--motion-ease-unfold);
+			animation: top-bar-settle var(--motion-top-bar-slide-duration) var(--motion-ease-unfold);
+		}
+	}
+
+	@keyframes top-bar-settle {
+		from {
+			translate: 0 calc(var(--settle-from) - 100%);
 		}
 	}
 
