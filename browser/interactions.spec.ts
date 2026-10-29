@@ -25,7 +25,9 @@ test('a chip’s popover opens on keyboard focus and on hover, and Esc closes it
 	await page.goto('/', { waitUntil: 'networkidle' });
 	const chip = page.getByRole('button', { name: /^kitty,/u });
 	const popover = page.getByRole('dialog', { name: 'kitty' });
-	await chip.focus();
+	await page.getByRole('button', { name: /^Alacritty,/u }).focus();
+	await page.keyboard.press('Shift+Tab');
+	await expect(chip).toBeFocused();
 	await expect(popover).toBeVisible();
 	await page.keyboard.press('Escape');
 	await expect(popover).toBeHidden();
