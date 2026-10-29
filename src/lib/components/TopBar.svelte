@@ -57,16 +57,18 @@
 		const end = document.documentElement.scrollHeight - innerHeight - 1;
 		const y = Math.min(scrollY, end);
 		const up = end === lastEnd ? lastY - y : 0;
-		if (y <= 0) {
+		// From 1,100 px the bar does not show at all.
+		if (y <= 0 || bar.offsetHeight === 0) {
 			pinned = false;
 			settling = false;
 		} else if (up !== 0 && (pinned || (up > 0 && outOfSight()))) {
 			if (!pinned) {
 				// The strip has its full height only once the bar is pinned.
 				flushSync(() => (pinned = true));
-				height = strip.offsetHeight;
-				anchor = lastY - height;
+				anchor = lastY - strip.offsetHeight;
 			}
+			// The strip's height changes with the window's width.
+			height = strip.offsetHeight;
 			settling = false;
 			goingUp = up > 0;
 			// Past either end of its way, the bar holds still, so the anchor moves along with the page.
