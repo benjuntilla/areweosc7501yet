@@ -363,7 +363,7 @@
 		"code": {
 			"size": {
 				"$type": "dimension",
-				"$value": "{font.size.13}"
+				"$value": "{font.size.14}"
 			},
 			"line-height": {
 				"$type": "dimension",
@@ -372,6 +372,10 @@
 			"tracking": {
 				"$type": "dimension",
 				"$value": "{font.tracking.0}"
+			},
+			"weight": {
+				"$type": "fontWeight",
+				"$value": "{font.weight.460}"
 			}
 		},
 		"section": {
