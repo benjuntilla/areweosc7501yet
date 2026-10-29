@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cover, uncover } from '#lib/client/cover.svelte.ts';
+	import { cover } from '#lib/client/cover.svelte.ts';
 	import { loadSearch, searchKeys } from '#lib/client/search.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import Icon from './Icon.svelte';
@@ -22,41 +22,67 @@
 	// browsers without them (Safari before 26.2); the command then finds the menu already in that state.
 	const openMenu = () => sheet?.showModal();
 	const closeMenu = () => sheet?.close();
+
+	let bar: HTMLElement;
+	// The bar is in its own place, or it has slid in at the top of the window, or out above it.
+	let slide: 'in' | 'out' | undefined = $state();
+	let lastY = 0;
+
+	// In its own place, the bar has scrolled off the window or the overview's content covers it.
+	const outOfSight = () => {
+		const { bottom } = bar.getBoundingClientRect();
+		return bottom <= 0 || bottom > cover.edge;
+	};
+
+	// Once the bar is out of sight, any scroll up brings it back and the next scroll down takes it
+	// away. At the very top of the page it is in its own place again.
+	const onscroll = () => {
+		// iOS bounces past the end of the page, and the bounce back is not a scroll up.
+		const y = Math.min(scrollY, document.documentElement.scrollHeight - innerHeight);
+		if (y <= 0) slide = undefined;
+		else if (y < lastY && (slide !== undefined || outOfSight())) slide = 'in';
+		else if (y > lastY && slide === 'in') slide = 'out';
+		lastY = y;
+	};
 </script>
+
+<svelte:window {onscroll} />
 
 <header
 	id="top-bar"
-	class="top-bar"
 	class:stays={cover.stays !== undefined}
 	style:--fade={cover.fade}
-	onfocusin={(event) => uncover(event.currentTarget)}
+	data-slide={slide}
+	bind:this={bar}
 >
-	<Logo size={36} />
-	<span class="spacer"></span>
-	<button
-		class="button search-button"
-		type="button"
-		aria-label="Search"
-		aria-haspopup="dialog"
-		aria-keyshortcuts={searchKeys}
-		onpointerenter={loadSearch}
-		onfocus={loadSearch}
-		onclick={(event) => onsearch(event.currentTarget)}
-	>
-		<Icon name="search" />
-	</button>
-	<button
-		class="button"
-		type="button"
-		aria-label="Menu"
-		aria-expanded={menuOpen}
-		aria-haspopup="dialog"
-		commandfor="menu"
-		command="show-modal"
-		onclick={openMenu}
-	>
-		<Icon name="menu" />
-	</button>
+	<div class="top-bar">
+		<Logo size={36} />
+		<span class="spacer"></span>
+		<button
+			class="button search-button"
+			type="button"
+			aria-label="Search"
+			aria-haspopup="dialog"
+			aria-keyshortcuts={searchKeys}
+			onpointerenter={loadSearch}
+			onfocus={loadSearch}
+			onclick={(event) => onsearch(event.currentTarget)}
+		>
+			<Icon name="search" />
+		</button>
+		<button
+			class="button"
+			type="button"
+			aria-label="Menu"
+			aria-expanded={menuOpen}
+			aria-haspopup="dialog"
+			commandfor="menu"
+			command="show-modal"
+			onclick={openMenu}
+		>
+			<Icon name="menu" />
+		</button>
+	</div>
 </header>
 
 <dialog
@@ -92,20 +118,59 @@
 	}
 
 	@media (width >= 1100px) {
-		header.top-bar {
+		header {
 			display: none;
 		}
 	}
 
-	/* On the overview, the bar stays put and fades with the top. Focus shows it in full. */
+	/* A link or focus that scrolls up brings the bar back, so what it scrolls to lands below it. */
+	@media (width < 1100px) {
+		:global(:root) {
+			scroll-padding-block-start: calc(var(--layout-page-padding-top) * 2 + 36px);
+		}
+	}
+
+	/* On the overview, the bar stays put and fades with the top. */
 	.stays {
 		position: sticky;
 		inset-block-start: var(--layout-page-padding-top);
 		opacity: var(--fade);
 	}
 
-	.stays:has(:focus-visible) {
+	/* When the bar comes back, or holds keyboard focus, it is fixed to the top of the window above
+	   the content, on a strip of the page's paper. Its place in the page stays empty. */
+	header:is([data-slide], :has(:global(:focus-visible))) {
+		position: static;
+		block-size: 36px;
 		opacity: 1;
+	}
+
+	header:is([data-slide], :has(:global(:focus-visible))) > .top-bar {
+		position: fixed;
+		inset: 0 0 auto;
+		z-index: 1;
+		padding: var(--layout-page-padding-top) var(--layout-page-padding-x);
+		background: var(--page-background);
+	}
+
+	header[data-slide='out']:not(:has(:global(:focus-visible))) > .top-bar {
+		translate: 0 -100%;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		header[data-slide='in'] > .top-bar {
+			animation: slide-in var(--motion-top-bar-slide-duration) var(--motion-ease-unfold);
+		}
+
+		header[data-slide='out'] > .top-bar {
+			transition: translate var(--motion-top-bar-slide-duration) var(--motion-ease-unfold);
+		}
+	}
+
+	@keyframes slide-in {
+		from {
+			translate: 0 -100%;
+		}
 	}
 
 	.spacer {

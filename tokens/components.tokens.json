@@ -1037,6 +1037,14 @@
 				"unit": "ms"
 			},
 			"$description": "The search dialog shadow fades in after the morph lands (ease-out)."
+		},
+		"top-bar-slide-duration": {
+			"$type": "duration",
+			"$value": {
+				"value": 200,
+				"unit": "ms"
+			},
+			"$description": "Below 1,100 px the top bar slides in from above on a scroll up, and out on the next scroll down (ease-unfold)."
 		}
 	},
 	"hero": {
