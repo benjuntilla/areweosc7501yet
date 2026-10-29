@@ -22,6 +22,7 @@
 		{ href: '/contribute', label: 'Contribute' }
 	];
 	const resources = [
+		{ href: '/changes', label: 'Changes' },
 		{ href: '/feed.xml', label: 'Atom feed', reload: true },
 		{ href: '/data.json', label: 'Data as JSON', reload: true },
 		{ href: 'https://github.com/benjuntilla/areweosc7501yet', label: 'GitHub', reload: true }

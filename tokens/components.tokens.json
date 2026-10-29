@@ -1108,5 +1108,19 @@
 			"$type": "dimension",
 			"$value": "{space.6}"
 		}
+	},
+	"change-row": {
+		"column-gap": {
+			"$type": "dimension",
+			"$value": "{space.8}"
+		},
+		"padding-y": {
+			"$type": "dimension",
+			"$value": "{space.12}"
+		},
+		"line-gap": {
+			"$type": "dimension",
+			"$value": "{space.4}"
+		}
 	}
 }
