@@ -39,6 +39,7 @@
 	let goingUp = false;
 	let lastY = 0;
 	let lastEnd = 0;
+	let lastPageHeight = 0;
 
 	// In its own place, the bar has scrolled off the window or the overview's content covers it.
 	const outOfSight = () => {
@@ -51,16 +52,22 @@
 	// it is in its own place again.
 	const onscroll = () => {
 		// iOS bounces past the end of the page, and the bounce back is not a scroll up. The end can be
-		// up to a pixel short of this, as scrollHeight is a whole number. When a mobile toolbar hides,
-		// the window grows and the end moves up, and near the end the page moves with it. That is not
-		// a scroll up or down either.
-		const end = document.documentElement.scrollHeight - innerHeight - 1;
+		// up to a pixel short of this, as scrollHeight is a whole number.
+		const pageHeight = document.documentElement.scrollHeight;
+		const end = pageHeight - innerHeight - 1;
 		const y = Math.min(scrollY, end);
-		const up = end === lastEnd ? lastY - y : 0;
+		const up = lastY - y;
+		// The browser moves the page by itself when the page grows or shrinks, and near the end when
+		// a mobile toolbar hides or shows and the window grows or shrinks. Then the bar holds still.
+		// Further up, the toolbar does not move the page, so the scroll is the finger's.
+		const pushed =
+			pageHeight !== lastPageHeight || (end !== lastEnd && y >= Math.min(end, lastEnd));
 		// From 1,100 px the bar does not show at all.
 		if (y <= 0 || bar.offsetHeight === 0) {
 			pinned = false;
 			settling = false;
+		} else if (pushed) {
+			anchor += y - lastY;
 		} else if (up !== 0 && (pinned || (up > 0 && outOfSight()))) {
 			if (!pinned) {
 				// The strip has its full height only once the bar is pinned.
@@ -77,6 +84,7 @@
 		}
 		lastY = y;
 		lastEnd = end;
+		lastPageHeight = pageHeight;
 	};
 
 	// When the page stops with the bar part way in, the bar finishes the way it was going.
