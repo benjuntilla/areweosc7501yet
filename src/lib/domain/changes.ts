@@ -1,5 +1,6 @@
-import { Array, DateTime, Match, Order, String as Str } from 'effect';
+import { Array, DateTime, Match, Option, Order, Schema, String as Str } from 'effect';
 import { type ChangeRow, changeAnchor, formatDay, utcDay } from './derive.ts';
+import { GitHubItemPath } from './formats.ts';
 import type { State } from './schema.ts';
 import type { Site } from './site.ts';
 
@@ -24,14 +25,18 @@ export interface Week {
 /** A short name for the source: the version it shipped in, the PR or issue, the commit, or the kind of page. */
 const sourceLabel = (r: ChangeRow): string => {
 	const { hostname, pathname } = new URL(r.source);
-	// A GitHub link reads /owner/name/<kind>/<id>.
-	const [, , kind, id = ''] = Str.split(pathname.slice(1), '/');
+	const item = Option.getOrUndefined(Schema.decodeUnknownOption(GitHubItemPath)(pathname));
 	const host = Str.replace(/^www\./u, '')(hostname);
-	return Match.value({ ...r, kind, host }).pipe(
+	return Match.value({ ...r, item, host }).pipe(
 		Match.when({ version: Match.string }, ({ version }) => version),
-		Match.when({ kind: 'pull' }, () => `PR #${id}`),
-		Match.when({ kind: 'issues' }, () => `#${id}`),
-		Match.when({ kind: 'commit' }, () => id.slice(0, 7)),
+		Match.when({ item: Match.defined }, ({ item: [, , , kind, , id] }) =>
+			Match.value(kind).pipe(
+				Match.when('pull', () => `PR #${id}`),
+				Match.when('issues', () => `#${id}`),
+				Match.when('commit', () => id.slice(0, 7)),
+				Match.exhaustive
+			)
+		),
 		Match.when({ host: Match.is('x.com', 'twitter.com') }, () => 'post on X'),
 		Match.when({ to: 'done' }, () => `${Str.split(r.name, ' ')[0]} docs`),
 		Match.orElse(() => host)
