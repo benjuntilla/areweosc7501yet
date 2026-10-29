@@ -4,7 +4,7 @@ repo = "NixOS/nix"
 role = "program"
 category = "clis"
 spec_revision = "0.4"
-note = "Determinate Nix has an open PR."
+note = "Determinate Nix, a Nix distribution, has its own entry."
 last_checked_date = 2026-10-29
 history = []
 
