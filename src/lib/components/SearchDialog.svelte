@@ -55,9 +55,12 @@
 		selected = 0;
 		void loadSearch().then((f) => (find = f));
 		landing = true;
+		// A smooth scroll still running would carry the dialog off screen, so it stops here.
+		scrollTo({ top: scrollY, behavior: 'instant' });
 		await tick();
 		await morph(from, d, () => {
 			from.style.visibility = 'hidden';
+			d.style.setProperty('--scroll-y', `${scrollY}px`);
 			d.showModal();
 		});
 		landing = false;
@@ -177,8 +180,17 @@
 </dialog>
 
 <style>
+	/* iOS places the caret by the page, and a fixed dialog can sit a little off from where the
+	   page puts it, which leaves the caret above the field. So the dialog sits on the page, where
+	   the window was when it opened, and the page holds still while it is open. */
+	:global(:root:has(.search-dialog[open])) {
+		overflow: hidden;
+		scrollbar-gutter: stable;
+	}
+
 	.search-dialog {
-		inset-block-start: 12vb;
+		position: absolute;
+		inset-block: calc(var(--scroll-y) + 12vb) auto;
 		inline-size: min(var(--search-dialog-width), 100vi - 32px);
 		max-inline-size: none;
 		max-block-size: min(var(--search-dialog-max-height), 76vb);
