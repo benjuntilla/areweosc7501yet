@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 54 54">
+	<style>
+		.shadow {
+			fill: #181d16;
+			fill-opacity: 0.035;
+		}
+		.ring {
+			fill: #181d16;
+			fill-opacity: 0.07;
+		}
+		.tile {
+			fill: #fff;
+		}
+		.glyph {
+			fill: #c33700;
+		}
+		.glyph circle:nth-child(n + 4) {
+			opacity: 0.28;
+		}
+		@media (prefers-color-scheme: dark) {
+			.shadow {
+				fill: #000;
+				fill-opacity: 0.2;
+			}
+			.ring {
+				fill: #ececea;
+				fill-opacity: 0.08;
+			}
+			.tile {
+				fill: #191c17;
+			}
+			.glyph {
+				fill: #ff8b5d;
+			}
+		}
+	</style>
+	<filter id="blur-1px"><feGaussianBlur stdDeviation="0.5" /></filter>
+	<filter id="blur-half-px"><feGaussianBlur stdDeviation="0.25" /></filter>
+	<rect class="shadow" y="2" width="48" height="48" rx="12" filter="url(#blur-1px)" />
+	<rect class="shadow" y="1" width="48" height="48" rx="12" filter="url(#blur-half-px)" />
+	<rect class="ring" x="-0.5" y="-0.5" width="49" height="49" rx="12.5" />
+	<rect class="tile" width="48" height="48" rx="12" />
+	<g class="glyph" transform="translate(12 12) scale(1.7143)">
+		<circle cx="5" cy="3.25" r="1.35" />
+		<circle cx="9" cy="3.25" r="1.35" />
+		<circle cx="5" cy="7" r="1.35" />
+		<circle cx="9" cy="7" r="1.35" />
+		<circle cx="5" cy="10.75" r="1.35" />
+		<circle cx="9" cy="10.75" r="1.35" />
+	</g>
+</svg>

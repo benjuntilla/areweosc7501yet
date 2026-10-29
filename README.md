@@ -1,8 +1,5 @@
 <div align="center">
-	<picture>
-		<source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
-		<img src=".github/logo-light.svg" alt="" width="112">
-	</picture>
+	<img src=".github/logo.svg" alt="" width="112">
 	<h1>Are we OSC 7501 yet?</h1>
 	<p>
 		<i>Which terminals and programs support OSC 7501, the <a href="https://www.superlogical.com/rex/docs/build/program-status">Program Status Protocol</a>.</i>
