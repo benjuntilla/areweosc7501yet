@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { siteTitle } from '#lib/meta.ts';
+	import Head from '#lib/components/Head.svelte';
 	import MiddleEllipsis from '#lib/components/MiddleEllipsis.svelte';
 	import StateGlyph from '#lib/components/StateGlyph.svelte';
 	import type { PageProps } from './$types';
@@ -7,13 +7,10 @@
 	let { data }: PageProps = $props();
 </script>
 
-<svelte:head>
-	<title>Changes · {siteTitle}</title>
-	<meta
-		name="description"
-		content="Every OSC 7501 state change for a featured program or terminal, newest first."
-	/>
-</svelte:head>
+<Head
+	title="Changes"
+	description="Every OSC 7501 state change for a featured program or terminal, newest first."
+/>
 
 <article class="page">
 	<div class="page-head">
