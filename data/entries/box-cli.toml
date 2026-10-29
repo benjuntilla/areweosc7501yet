@@ -1,0 +1,14 @@
+name = "Box CLI"
+url = "https://developer.box.com/guides/cli/"
+repo = "box/boxcli"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+
+[github]
+popular = false
+
+[[history]]
+date = 2026-10-20
+state = "working"
+source = "https://github.com/box/boxcli/pull/729"

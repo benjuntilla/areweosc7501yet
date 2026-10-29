@@ -1,0 +1,21 @@
+name = "WebKit tools"
+url = "https://docs.webkit.org/#building-webkit"
+repo = "WebKit/WebKit"
+role = "program"
+category = "clis"
+aliases = ["build-webkit", "run-webkit-tests", "run-api-tests"]
+spec_revision = "0.4"
+note = "On the main branch. WebKit doesn't release these scripts."
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-27
+state = "working"
+source = "https://github.com/WebKit/WebKit/pull/78471"
+
+[[history]]
+date = 2026-10-28T06:12:30Z
+state = "working"
+source = "https://github.com/WebKit/WebKit/commit/6740c3a3f01a5a450fa7698037385790dfa3aa87"
