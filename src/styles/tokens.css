@@ -89,6 +89,9 @@
 		0px 32px 32px -16px var(--neutral-777-a071), 0px 48px 64px -24px var(--neutral-777-a102);
 	--error-card-code-opacity: var(--opacity-dim);
 	--error-card-content: var(--color-on-accent);
+	--error-card-field: var(--field-ramp);
+	--error-card-grain-opacity: var(--opacity-16);
+	--error-card-radius: var(--radius-16);
 	--field-end: var(--lime-57);
 	--field-ramp:
 		var(--lavender-171) 0%, var(--lavender-178) 8.59%, var(--pink-196) 17.18%,
