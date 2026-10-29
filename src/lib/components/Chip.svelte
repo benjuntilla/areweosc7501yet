@@ -38,11 +38,13 @@
 	};
 
 	// A mouse click on an open popover keeps it open; touch toggles it natively. The pointer type
-	// comes from the press, because iOS Safari reports a tap's click as a mouse click.
+	// comes from the press, because iOS Safari reports a tap's click as a mouse click. A click with
+	// no press, as from a screen reader, toggles.
 	let pointerType = '';
 
 	const onclick = (event: MouseEvent) => {
 		if (pointerType === 'mouse' && open) event.preventDefault();
+		pointerType = '';
 	};
 
 	// Tabbing past the chip and its popover closes it.
