@@ -27,6 +27,7 @@
 	// The bar is in its own place, or it has slid in at the top of the window, or out above it.
 	let slide: 'in' | 'out' | undefined = $state();
 	let lastY = 0;
+	let lastEnd = 0;
 
 	// In its own place, the bar has scrolled off the window or the overview's content covers it.
 	const outOfSight = () => {
@@ -38,12 +39,18 @@
 	// away. At the very top of the page it is in its own place again.
 	const onscroll = () => {
 		// iOS bounces past the end of the page, and the bounce back is not a scroll up. The end can be
-		// up to a pixel short of this, as scrollHeight is a whole number.
-		const y = Math.min(scrollY, document.documentElement.scrollHeight - innerHeight - 1);
+		// up to a pixel short of this, as scrollHeight is a whole number. When a mobile toolbar hides,
+		// the window grows and the end moves up, and near the end the page moves with it. That is not
+		// a scroll up or down either.
+		const end = document.documentElement.scrollHeight - innerHeight - 1;
+		const y = Math.min(scrollY, end);
 		if (y <= 0) slide = undefined;
-		else if (y < lastY && (slide !== undefined || outOfSight())) slide = 'in';
-		else if (y > lastY && slide === 'in') slide = 'out';
+		else if (end === lastEnd) {
+			if (y < lastY && (slide !== undefined || outOfSight())) slide = 'in';
+			else if (y > lastY && slide === 'in') slide = 'out';
+		}
 		lastY = y;
+		lastEnd = end;
 	};
 </script>
 
