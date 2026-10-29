@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/state';
+	import { sectionIds, spy } from '#lib/client/spy.ts';
 	import type { Side } from '#lib/domain/overview.ts';
 	import Logo from './Logo.svelte';
 	import Nav from './Nav.svelte';
@@ -7,11 +9,25 @@
 
 	interface Props {
 		sides: ReadonlyArray<Side>;
+		/** The section in view, from scroll-spy, for the nav here and in the phone menu. */
 		current?: string | undefined;
 		onsearch: (trigger: HTMLElement) => void;
 	}
 
-	let { sides, current, onsearch }: Props = $props();
+	let { sides, current = $bindable(), onsearch }: Props = $props();
+
+	const ids = $derived(
+		sectionIds(
+			page.url.pathname,
+			sides.flatMap((side) => [side.id].concat(side.categories.map((c) => c.id)))
+		)
+	);
+
+	$effect(() =>
+		spy(ids, (id) => {
+			current = id;
+		})
+	);
 </script>
 
 <header class="sidebar">
