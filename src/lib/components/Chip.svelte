@@ -218,15 +218,30 @@
 		}
 	}
 
+	/* The popover lines up with an edge of its chip. The margin on its far side keeps it inside the
+	   page padding: where neither edge leaves room, as on phones, it centers on the chip instead. */
 	@supports (anchor-name: --x) {
 		.popover {
-			margin: var(--popover-offset) 0;
+			margin-block: var(--popover-offset);
+			margin-inline: 0 var(--layout-page-padding-x);
 			position-area: block-end span-inline-end;
 			position-try-fallbacks:
 				flip-block,
 				flip-inline,
-				flip-block flip-inline;
+				flip-block flip-inline,
+				--centered-below,
+				--centered-above;
 		}
+	}
+
+	@position-try --centered-below {
+		margin-inline: var(--layout-page-padding-x);
+		position-area: block-end span-all;
+	}
+
+	@position-try --centered-above {
+		margin-inline: var(--layout-page-padding-x);
+		position-area: block-start span-all;
 	}
 
 	.head {
