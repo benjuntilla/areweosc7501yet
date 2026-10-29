@@ -5,8 +5,8 @@
 		<i>Which terminals and programs support OSC 7501, the <a href="https://www.superlogical.com/rex/docs/build/program-status">Program Status Protocol</a>.</i>
 	</p>
 	<p>
-		<a href="https://areweosc7501yet.com/#programs"><img alt="Programs" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fareweosc7501yet.com%2Fdata.json&query=%24.verdicts.program.word&label=programs&color=c33700&style=flat-square"></a>
-		<a href="https://areweosc7501yet.com/#terminals"><img alt="Terminals" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fareweosc7501yet.com%2Fdata.json&query=%24.verdicts.terminal.word&label=terminals&color=c33700&style=flat-square"></a>
+		<a href="https://areweosc7501yet.com/#programs"><img alt="Programs verdict" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fareweosc7501yet.com%2Fdata.json&query=%24.verdicts.program.word&label=programs&color=c33700&style=flat-square"></a>
+		<a href="https://areweosc7501yet.com/#terminals"><img alt="Terminals verdict" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fareweosc7501yet.com%2Fdata.json&query=%24.verdicts.terminal.word&label=terminals&color=c33700&style=flat-square"></a>
 		<a href="LICENSE"><img alt="Code: MIT" src="https://img.shields.io/badge/code-MIT-873ac2?style=flat-square"></a>
 		<a href="data/LICENSE"><img alt="Data: CC0" src="https://img.shields.io/badge/data-CC0-873ac2?style=flat-square"></a>
 	</p>
