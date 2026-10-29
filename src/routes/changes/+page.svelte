@@ -49,7 +49,7 @@
 							</th>
 							<td class="change">{row.change}</td>
 							<td class="source">
-								<!-- A short commit hash stays whole at the end. Screen readers pause where the label splits, so the link is named with the full label. -->
+								<!-- A short commit hash stays whole at the end. The link is named with the full label, because the shown label can be cut. -->
 								<a href={row.source} title={row.sourceLabel} aria-label={row.sourceLabel}
 									><MiddleEllipsis text={row.sourceLabel} tail={7} /></a
 								>
