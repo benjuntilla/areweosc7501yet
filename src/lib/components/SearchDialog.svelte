@@ -8,7 +8,6 @@
 	import StateGlyph from './StateGlyph.svelte';
 
 	let dialog: HTMLDialogElement | undefined = $state();
-	let input: HTMLInputElement | undefined = $state();
 	let list: HTMLDivElement | undefined = $state();
 	let trigger: HTMLElement | undefined;
 	let find: Awaited<ReturnType<typeof loadSearch>> | undefined = $state();
@@ -59,10 +58,8 @@
 		await tick();
 		await morph(from, d, () => {
 			from.style.visibility = 'hidden';
+			d.style.setProperty('--scroll-y', `${scrollY}px`);
 			d.showModal();
-			// The dialog has autofocus, so the field gets focus here, without a scroll. iOS scrolls to
-			// reveal a focused field, and the caret then sits off the field until the first keystroke.
-			input?.focus({ preventScroll: true });
 		});
 		landing = false;
 	};
@@ -104,7 +101,6 @@
 <dialog
 	bind:this={dialog}
 	class="search-dialog"
-	autofocus
 	data-landing={landing || undefined}
 	aria-label="Search"
 	oncancel={(event) => {
@@ -119,7 +115,6 @@
 	<div class="field">
 		<Icon name="search" class="icon" />
 		<input
-			bind:this={input}
 			bind:value={query}
 			oninput={() => (selected = 0)}
 			{onkeydown}
@@ -175,8 +170,17 @@
 </dialog>
 
 <style>
+	/* iOS places the caret by the page, and a fixed dialog can sit a little off from where the
+	   page puts it, which leaves the caret above the field. So the dialog sits on the page, where
+	   the window was when it opened, and the page holds still while it is open. */
+	:global(:root:has(.search-dialog[open])) {
+		overflow: hidden;
+		scrollbar-gutter: stable;
+	}
+
 	.search-dialog {
-		inset-block-start: 12vb;
+		position: absolute;
+		inset-block: calc(var(--scroll-y) + 12vb) auto;
 		inline-size: min(var(--search-dialog-width), 100vi - 32px);
 		max-inline-size: none;
 		max-block-size: min(var(--search-dialog-max-height), 76vb);
