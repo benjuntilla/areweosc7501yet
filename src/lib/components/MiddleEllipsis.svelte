@@ -49,10 +49,15 @@
 <span class="middle-ellipsis" {@attach fit}>{text}</span>
 
 <style>
-	/* Until the script runs, long text ends in the browser's own ellipsis. */
+	/*
+	 * Until the script runs, long text ends in the browser's own ellipsis.
+	 * It clips only sideways, since Firefox and Safari cut a link underline below the line box.
+	 * A clip isn't a scroll container, so the flex item needs a zero minimum size to shrink.
+	 */
 	.middle-ellipsis {
 		display: block;
-		overflow: hidden;
+		min-inline-size: 0;
+		overflow: clip visible;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
