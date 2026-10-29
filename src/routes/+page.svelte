@@ -90,11 +90,13 @@
 		const observer = new ResizeObserver(measure);
 		observer.observe(top);
 		addEventListener('resize', measure);
-		addEventListener('scroll', onscroll, { passive: true });
+		// The document hears the scroll before the window does, so the top bar, which listens on the
+		// window, reads where the content is after this scroll.
+		document.addEventListener('scroll', onscroll, { passive: true });
 		return () => {
 			observer.disconnect();
 			removeEventListener('resize', measure);
-			removeEventListener('scroll', onscroll);
+			document.removeEventListener('scroll', onscroll);
 			cover.stays = undefined;
 			cover.fade = 1;
 			cover.edge = Infinity;

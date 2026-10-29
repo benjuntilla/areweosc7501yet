@@ -248,6 +248,8 @@
 	--motion-state-duration: 120ms;
 	/* Nav TOC unfold/fold: grid-template-rows 0fr↔1fr + opacity (Rex: 200ms). */
 	--motion-toc-unfold-duration: 200ms;
+	/* Below 1,100 px, when the page stops with the top bar part way in, the bar finishes sliding the way it was going (ease-unfold). */
+	--motion-top-bar-slide-duration: 200ms;
 	--nav-divider: var(--color-rule);
 	--nav-group-gap: var(--space-6);
 	--nav-group-label: var(--color-muted);
