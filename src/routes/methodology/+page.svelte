@@ -24,7 +24,7 @@
 </script>
 
 <Head
-	title="Methodology · {siteTitle}"
+	title="Methodology"
 	description="How {siteTitle} decides each state and each verdict, and where its data comes from."
 />
 

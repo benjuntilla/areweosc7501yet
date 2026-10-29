@@ -11,10 +11,7 @@
 	const repo = 'https://github.com/benjuntilla/areweosc7501yet';
 </script>
 
-<Head
-	title="Contribute · {siteTitle}"
-	description="Report a change or edit the data behind {siteTitle}"
-/>
+<Head title="Contribute" description="Report a change or edit the data behind {siteTitle}" />
 
 <article class="page">
 	<h1 class="type-h1">Contribute</h1>

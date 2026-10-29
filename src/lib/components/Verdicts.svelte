@@ -13,10 +13,7 @@
 	let { sides, element = $bindable() }: Props = $props();
 </script>
 
-<Head
-	title={siteTitle}
-	description="Which programs and terminals support OSC 7501, the Program Status Protocol."
-/>
+<Head description="Which programs and terminals support OSC 7501, the Program Status Protocol." />
 
 <section class="question" aria-labelledby="title" bind:this={element}>
 	<h1 class="type-h1" id="title">{siteTitle}</h1>

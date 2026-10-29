@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { siteTitle } from '#lib/meta.ts';
 	import CodeCard from '#lib/components/CodeCard.svelte';
 	import Head from '#lib/components/Head.svelte';
 	import type { PageProps } from './$types';
@@ -8,7 +7,7 @@
 </script>
 
 <Head
-	title="Test your terminal · {siteTitle}"
+	title="Test your terminal"
 	description="Check whether your terminal answers the OSC 7501 query."
 />
 
