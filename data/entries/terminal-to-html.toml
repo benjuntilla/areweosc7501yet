@@ -1,0 +1,14 @@
+name = "terminal-to-html"
+url = "https://buildkite.github.io/terminal-to-html/"
+repo = "buildkite/terminal-to-html"
+role = "terminal"
+category = "engines"
+spec_revision = "0.4"
+
+[github]
+popular = false
+
+[[history]]
+date = 2026-10-21
+state = "working"
+source = "https://github.com/buildkite/terminal-to-html/pull/289"

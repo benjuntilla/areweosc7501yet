@@ -1,0 +1,19 @@
+name = "furyctl"
+url = "https://docs.sighup.io/furyctl/"
+repo = "sighupio/furyctl"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+
+[github]
+popular = false
+
+[[history]]
+date = 2026-10-23
+state = "working"
+source = "https://github.com/sighupio/furyctl/pull/812"
+
+[[history]]
+date = 2026-10-27T09:29:55Z
+state = "working"
+source = "https://github.com/sighupio/furyctl/commit/d199fa552ad8418119f22bbf57b28e18472c8154"
