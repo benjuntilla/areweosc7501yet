@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { siteTitle } from '#lib/meta.ts';
 	import CodeCard from '#lib/components/CodeCard.svelte';
+	import Head from '#lib/components/Head.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 </script>
 
-<svelte:head>
-	<title>Test your terminal · {siteTitle}</title>
-	<meta name="description" content="Check whether your terminal answers the OSC 7501 query." />
-</svelte:head>
+<Head
+	title="Test your terminal"
+	description="Check whether your terminal answers the OSC 7501 query."
+/>
 
 <article class="page-head">
 	<h1 class="type-h1">Test your terminal</h1>

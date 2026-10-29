@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { siteTitle } from '#lib/meta.ts';
+	import Head from '#lib/components/Head.svelte';
 	import StateGlyph from '#lib/components/StateGlyph.svelte';
 	import StateWord from '#lib/components/StateWord.svelte';
 	import { featuredStars, ladderRows } from '#lib/domain/derive.ts';
@@ -22,13 +23,10 @@
 	const spec = 'https://www.superlogical.com/rex/docs/build/program-status';
 </script>
 
-<svelte:head>
-	<title>Methodology · {siteTitle}</title>
-	<meta
-		name="description"
-		content="How {siteTitle} decides each state and each verdict, and where its data comes from."
-	/>
-</svelte:head>
+<Head
+	title="Methodology"
+	description="How {siteTitle} decides each state and each verdict, and where its data comes from."
+/>
 
 {#snippet definition(section: { id: string; label: string }, state: State)}
 	<h2 class="type-h2 definition" id={section.id}>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Side } from '#lib/domain/overview.ts';
 	import { siteTitle } from '#lib/meta.ts';
+	import Head from './Head.svelte';
 	import Icon from './Icon.svelte';
 	import Meter from './Meter.svelte';
 
@@ -12,13 +13,7 @@
 	let { sides, element = $bindable() }: Props = $props();
 </script>
 
-<svelte:head>
-	<title>{siteTitle}</title>
-	<meta
-		name="description"
-		content="Which programs and terminals support OSC 7501, the Program Status Protocol."
-	/>
-</svelte:head>
+<Head description="Which programs and terminals support OSC 7501, the Program Status Protocol." />
 
 <section class="question" aria-labelledby="title" bind:this={element}>
 	<h1 class="type-h1" id="title">{siteTitle}</h1>
