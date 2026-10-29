@@ -13,7 +13,6 @@
 		<a href="LICENSE"><img alt="Code: MIT" src="https://img.shields.io/badge/code-MIT-873ac2?style=flat-square"></a>
 		<a href="data/LICENSE"><img alt="Data: CC0" src="https://img.shields.io/badge/data-CC0-873ac2?style=flat-square"></a>
 	</p>
-	<br>
 	<p>
 		<b>
 			<a href="https://areweosc7501yet.com">Website</a>
