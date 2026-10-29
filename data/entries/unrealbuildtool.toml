@@ -1,0 +1,14 @@
+name = "UnrealBuildTool"
+url = "https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-build-tool-in-unreal-engine"
+role = "program"
+category = "clis"
+is_featured = true
+aliases = ["UBT", "Unreal Engine"]
+spec_revision = "0.4"
+note = "To open the commit, link your GitHub account to Epic Games."
+last_checked_date = 2026-10-29
+
+[[history]]
+date = 2026-10-28
+state = "working"
+source = "https://github.com/EpicGames/UnrealEngine/commit/36fc3835afff6e1bca2d0e8d1bf6878ef83397cf"
