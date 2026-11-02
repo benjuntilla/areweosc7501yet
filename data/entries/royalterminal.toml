@@ -13,3 +13,14 @@ popular = false
 date = 2026-10-09T16:54:31Z
 state = "working"
 source = "https://github.com/royalapplications/RoyalTerminal/pull/121"
+
+[[history]]
+date = 2026-10-30T11:55:44Z
+state = "working"
+source = "https://github.com/royalapplications/RoyalTerminal/commit/4af3d3b68821c8278213fe1d135d16fdda4de5dc"
+
+[[history]]
+date = 2026-10-30T12:48:14Z
+state = "done"
+source = "https://github.com/royalapplications/RoyalTerminal/releases/tag/v0.7.0"
+version = "v0.7.0"
