@@ -1,0 +1,14 @@
+name = "Indicatif"
+url = "https://github.com/console-rs/indicatif"
+repo = "console-rs/indicatif"
+role = "program"
+category = "libraries"
+spec_revision = "0.4"
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-08
+state = "idle"
+source = "https://github.com/console-rs/indicatif/issues/845"
