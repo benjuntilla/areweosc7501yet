@@ -43,7 +43,7 @@
 	}
 
 	.drum-slot {
-		block-size: 98px;
+		block-size: var(--hero-drum-height);
 	}
 
 	a {

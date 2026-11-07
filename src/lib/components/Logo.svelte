@@ -23,9 +23,6 @@
 		block-size: var(--size);
 		background: var(--logo-tile-background);
 		border-radius: calc(var(--size) / 4);
-		box-shadow:
-			0 2px 1px var(--logo-tile-shadow),
-			0 1px 0.5px var(--logo-tile-shadow),
-			0 0 0 0.5px var(--logo-tile-ring);
+		box-shadow: var(--logo-tile-shadow);
 	}
 </style>

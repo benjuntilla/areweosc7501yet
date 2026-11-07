@@ -125,15 +125,12 @@
 		color: var(--top-bar-icon-strong);
 		background: var(--top-bar-button-background);
 		border-radius: var(--top-bar-button-radius);
-		box-shadow:
-			0 2px 2px -1px var(--top-bar-button-shadow),
-			0 1px 1px -0.5px var(--top-bar-button-shadow),
-			0 0 0 0.5px var(--top-bar-button-ring);
+		box-shadow: var(--top-bar-button-shadow);
 	}
 
 	.button::before {
 		position: absolute;
-		inset: -4px;
+		inset: calc(var(--top-bar-button-hit-outset) * -1);
 		content: '';
 	}
 
