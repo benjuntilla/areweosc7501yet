@@ -1,0 +1,15 @@
+name = "Qoder CLI"
+url = "https://qoder.com/cli"
+role = "program"
+category = "coding-agents"
+is_featured = true
+aliases = ["qodercli"]
+spec_revision = "0.4"
+note = "Closed source. The 1.1.82 changelog entry calls it “session status reporting”. Set QODER_PROGRAM_STATUS=0 to turn it off."
+last_checked_date = 2026-11-04
+
+[[history]]
+date = 2026-11-03T13:57:35Z
+state = "done"
+source = "https://qoder.com/en/changelog?page=1&type=cli"
+version = "1.1.82"
