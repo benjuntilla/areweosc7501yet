@@ -1,0 +1,20 @@
+name = "Mayoi"
+url = "https://github.com/sorrycc/Mayoi"
+repo = "sorrycc/Mayoi"
+role = "terminal"
+category = "emulators"
+spec_revision = "0.4"
+
+[github]
+popular = false
+
+[[history]]
+date = 2026-11-02T07:49:01Z
+state = "working"
+source = "https://github.com/sorrycc/Mayoi/commit/7d107de76add0afeca883bf441751cd9a61e4744"
+
+[[history]]
+date = 2026-11-02T13:11:19Z
+state = "done"
+source = "https://github.com/sorrycc/Mayoi/releases/tag/v0.17.0"
+version = "v0.17.0"
