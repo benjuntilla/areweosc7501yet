@@ -172,18 +172,21 @@ const doneHasVersion = (e: EntryForRules) =>
 		)
 	);
 
-const historyInOrder = (e: EntryForRules) =>
-	Array.flatMap(e.history, (h, i) =>
-		Option.match(Array.get(e.history, i - 1), {
+/** One issue for each item in `items`, stored under `key`, that is dated before the one above it. */
+const datesInOrder = (key: string, items: ReadonlyArray<{ readonly date: DateTime.Utc }>) =>
+	Array.flatMap(items, (item, i) =>
+		Option.match(Array.get(items, i - 1), {
 			onNone: () => [],
 			onSome: (prev) =>
 				issueIf(
-					DateTime.isLessThan(h.date, prev.date),
-					['history', i, 'date'],
-					'history must be in date order'
+					DateTime.isLessThan(item.date, prev.date),
+					[key, i, 'date'],
+					`${key} must be in date order`
 				)
 		})
 	);
+
+const historyInOrder = (e: EntryForRules) => datesInOrder('history', e.history);
 
 /** Cross-field rules for an entry. Also applied to each entry in data.json. */
 export const entryRules = Schema.makeFilter<EntryForRules>(
@@ -203,8 +206,8 @@ export const SpecRevision = Schema.Struct({ number: Schema.String, date: Day, ur
 /** data/checker.toml, written by the weekly checker. */
 export const Checker = Schema.Struct({ last_run: Day });
 
-/** data/spec.toml */
+/** data/spec.toml. The first revision is the published one, and the last is current. */
 export const Spec = Schema.Struct({
 	revision: Schema.NonEmptyArray(SpecRevision)
-});
+}).check(Schema.makeFilter((s) => datesInOrder('revision', s.revision)));
 export type Spec = typeof Spec.Type;

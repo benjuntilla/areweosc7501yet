@@ -137,6 +137,30 @@ a[href^='http']::after {
 	outline-offset: 2px;
 }
 
+table {
+	inline-size: 100%;
+	border-collapse: collapse;
+	background: var(--card-background);
+	border-radius: var(--card-radius);
+	box-shadow: var(--card-elevation);
+}
+
+th,
+td {
+	padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+	font-weight: inherit;
+	text-align: start;
+}
+
+thead th {
+	color: var(--content-text-muted);
+}
+
+tr + tr,
+tbody tr {
+	border-block-start: 1px solid var(--content-divider);
+}
+
 .type-h1 {
 	font-size: var(--type-h1-size);
 	line-height: var(--type-h1-line-height);

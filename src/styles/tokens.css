@@ -18,6 +18,9 @@
 	--card-radius: var(--radius-12);
 	--card-ring: var(--effect-ring);
 	--card-shadow: var(--effect-shadow);
+	--change-row-column-gap: var(--space-8);
+	--change-row-line-gap: var(--space-4);
+	--change-row-padding-y: var(--space-12);
 	--chip-background: var(--color-wash);
 	--chip-background-hover: var(--color-wash);
 	--chip-background-pressed: var(--color-rule);
