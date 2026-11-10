@@ -12,3 +12,14 @@ popular = true
 date = 2026-10-12
 state = "working"
 source = "https://github.com/QwenLM/qwen-code/pull/13994"
+
+[[history]]
+date = 2026-11-06T09:34:41Z
+state = "working"
+source = "https://github.com/QwenLM/qwen-code/pull/16407"
+
+[[history]]
+date = 2026-11-06T16:07:57Z
+state = "done"
+source = "https://github.com/QwenLM/qwen-code/releases/tag/v0.26.9"
+version = "v0.26.9"
