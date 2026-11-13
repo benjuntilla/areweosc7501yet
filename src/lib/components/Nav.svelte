@@ -173,7 +173,10 @@
 		padding-inline-start: 0;
 	}
 
+	/* The guide runs down the list, and a tick leaves it at the middle of each item's first line. */
 	.toc > li {
+		--tick-top: calc(var(--nav-toc-item-padding-y) + var(--nav-toc-line-height) / 2);
+
 		position: relative;
 		padding-inline-start: var(--nav-toc-indent);
 	}
@@ -181,23 +184,23 @@
 	.toc > li::before {
 		position: absolute;
 		inset-block: 0;
-		inset-inline-start: 4px;
-		inline-size: 1px;
+		inset-inline-start: var(--nav-toc-guide-inset);
+		inline-size: var(--nav-toc-guide-width);
 		content: '';
 		background: var(--nav-toc-guide);
 	}
 
 	.toc > li:last-child::before {
 		inset-block-end: auto;
-		block-size: 12px;
+		block-size: var(--tick-top);
 	}
 
 	.toc > li::after {
 		position: absolute;
-		inset-block-start: 12px;
-		inset-inline-start: 4px;
-		inline-size: 8px;
-		block-size: 1px;
+		inset-block-start: var(--tick-top);
+		inset-inline-start: var(--nav-toc-guide-inset);
+		inline-size: var(--nav-toc-tick-length);
+		block-size: var(--nav-toc-guide-width);
 		content: '';
 		background: var(--nav-toc-guide);
 	}
@@ -211,7 +214,7 @@
 		line-height: var(--nav-toc-line-height);
 		color: var(--nav-item);
 		text-decoration: none;
-		transition: color 100ms cubic-bezier(0.4, 0, 0.2, 1);
+		transition: var(--transition-state);
 	}
 
 	.toc-link:hover {

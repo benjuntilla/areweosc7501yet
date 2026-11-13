@@ -191,7 +191,7 @@
 	.search-dialog {
 		position: absolute;
 		inset-block: calc(var(--scroll-y) + 12vb) auto;
-		inline-size: min(var(--search-dialog-width), 100vi - 32px);
+		inline-size: min(var(--search-dialog-width), 100vi - var(--layout-page-padding-x) * 2);
 		max-inline-size: none;
 		max-block-size: min(var(--search-dialog-max-height), 76vb);
 		padding: 0;

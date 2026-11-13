@@ -57,7 +57,7 @@
 		overflow: hidden;
 		background: var(--card-background);
 		border-radius: var(--card-radius);
-		box-shadow: var(--card-elevation);
+		box-shadow: var(--card-shadow);
 	}
 
 	.head {
@@ -66,7 +66,7 @@
 		align-items: center;
 		padding: var(--code-block-head-padding-y) var(--code-block-head-padding-right)
 			var(--code-block-head-padding-y) var(--code-block-padding-x);
-		border-block-end: 1px solid var(--content-divider);
+		border-block-end: var(--content-divider-width) solid var(--content-divider);
 	}
 
 	.label,
