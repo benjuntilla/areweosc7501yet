@@ -1211,6 +1211,10 @@
 			}
 		},
 		"weight": {
+			"460": {
+				"$type": "fontWeight",
+				"$value": 460
+			},
 			"regular": {
 				"$type": "fontWeight",
 				"$value": 400

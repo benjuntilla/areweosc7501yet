@@ -1,7 +1,7 @@
 <!-- Decorative: 4, the idle ring and 4 fall into a pile with a few state glyphs on top.
      Shapes, resting angles and timings come from the design's 404 card. -->
 <div class="card grain" aria-hidden="true">
-	<p class="caption">state=error:app=404</p>
+	<p class="caption type-code">state=error:app=404</p>
 	<svg viewBox="0 0 576 360" fill="none">
 		<g
 			class="piece"
@@ -175,10 +175,6 @@
 		position: absolute;
 		inset-block-start: var(--error-card-caption-top);
 		inset-inline-start: var(--error-card-caption-left);
-		font-family: var(--type-family-mono), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-		font-size: var(--type-code-size);
-		line-height: var(--type-code-line-height);
-		letter-spacing: var(--type-code-tracking);
 		opacity: calc(var(--error-card-code-opacity) / 100);
 	}
 

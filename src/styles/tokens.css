@@ -148,6 +148,7 @@
 	--font-tracking-minus-0-56: -0.56px;
 	--font-tracking-minus-0-225: -0.225px;
 	--font-tracking-minus-1-5: -1.5px;
+	--font-weight-460: 460;
 	--font-weight-medium: 500;
 	--font-weight-regular: 400;
 	--footer-divider: var(--color-rule);
@@ -614,8 +615,9 @@
 	--type-caption-size: var(--font-size-12);
 	--type-caption-tracking: var(--font-tracking-0);
 	--type-code-line-height: var(--font-line-height-22-5);
-	--type-code-size: var(--font-size-13);
+	--type-code-size: var(--font-size-14);
 	--type-code-tracking: var(--font-tracking-0);
+	--type-code-weight: var(--font-weight-460);
 	--type-cover-line-height: var(--font-line-height-104);
 	--type-cover-size: var(--font-size-96);
 	--type-cover-tracking: var(--font-tracking-minus-1-5);
@@ -876,8 +878,9 @@
 		--type-caption-size: var(--font-size-12);
 		--type-caption-tracking: var(--font-tracking-0);
 		--type-code-line-height: var(--font-line-height-22-5);
-		--type-code-size: var(--font-size-13);
+		--type-code-size: var(--font-size-14);
 		--type-code-tracking: var(--font-tracking-0);
+		--type-code-weight: var(--font-weight-460);
 		--type-cover-line-height: var(--font-line-height-104);
 		--type-cover-size: var(--font-size-96);
 		--type-cover-tracking: var(--font-tracking-minus-1-5);
@@ -995,8 +998,9 @@
 		--type-caption-size: var(--font-size-12);
 		--type-caption-tracking: var(--font-tracking-0);
 		--type-code-line-height: var(--font-line-height-22-5);
-		--type-code-size: var(--font-size-13);
+		--type-code-size: var(--font-size-14);
 		--type-code-tracking: var(--font-tracking-0);
+		--type-code-weight: var(--font-weight-460);
 		--type-cover-line-height: var(--font-line-height-104);
 		--type-cover-size: var(--font-size-96);
 		--type-cover-tracking: var(--font-tracking-minus-1-5);
