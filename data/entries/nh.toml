@@ -1,0 +1,14 @@
+name = "nh"
+url = "https://github.com/nix-community/nh"
+repo = "nix-community/nh"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+
+[github]
+popular = true
+
+[[history]]
+date = 2026-10-20
+state = "idle"
+source = "https://github.com/nix-community/nh/issues/832"
