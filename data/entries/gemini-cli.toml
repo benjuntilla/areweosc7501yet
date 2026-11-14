@@ -17,3 +17,8 @@ source = "https://github.com/google-gemini/gemini-cli/issues/29710"
 date = 2026-10-24T20:19:23Z
 state = "working"
 source = "https://github.com/google-gemini/gemini-cli/pull/29918"
+
+[[history]]
+date = 2026-11-08T01:36:58Z
+state = "blocked"
+source = "https://github.com/google-gemini/gemini-cli/pull/29918"
