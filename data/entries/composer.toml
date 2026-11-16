@@ -18,3 +18,9 @@ source = "https://github.com/composer/composer/pull/13117"
 date = 2026-10-20T20:59:13Z
 state = "working"
 source = "https://github.com/composer/composer/commit/c15dcead592824d9b9baf2cc16c3c821464b9b14"
+
+[[history]]
+date = 2026-10-29T09:35:10Z
+state = "done"
+source = "https://github.com/composer/composer/releases/tag/2.11.0"
+version = "2.11.0"

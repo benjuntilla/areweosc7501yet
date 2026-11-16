@@ -18,3 +18,8 @@ source = "https://github.com/microsoft/intelligent-terminal/issues/1096"
 date = 2026-10-25T13:18:14Z
 state = "working"
 source = "https://github.com/microsoft/intelligent-terminal/pull/1232"
+
+[[history]]
+date = 2026-11-12T07:00:43Z
+state = "blocked"
+source = "https://github.com/microsoft/intelligent-terminal/pull/1232"

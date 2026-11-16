@@ -23,3 +23,9 @@ source = "https://github.com/kovidgoyal/kitty/pull/10657"
 date = 2026-10-13
 state = "working"
 source = "https://github.com/kovidgoyal/kitty/commit/0e1b7f4812bf297639999a362672c4271e42ed0c"
+
+[[history]]
+date = 2026-11-03T13:56:09Z
+state = "done"
+source = "https://github.com/kovidgoyal/kitty/releases/tag/v0.50.0"
+version = "v0.50.0"
