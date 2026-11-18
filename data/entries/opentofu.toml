@@ -1,0 +1,12 @@
+name = "OpenTofu"
+url = "https://opentofu.org"
+repo = "opentofu/opentofu"
+role = "program"
+category = "clis"
+spec_revision = "0.4"
+note = "No OSC 7501 work upstream as of the last check."
+last_checked_date = 2026-11-07
+history = []
+
+[github]
+popular = true
