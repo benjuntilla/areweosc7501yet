@@ -1,0 +1,12 @@
+{
+	"mcpServers": {
+		"momentic": {
+			"command": "pnpm",
+			"args": ["exec", "momentic", "mcp", "--config", "momentic.config.yaml"]
+		},
+		"momentic-hosted": {
+			"type": "http",
+			"url": "https://mcp.momentic.ai"
+		}
+	}
+}

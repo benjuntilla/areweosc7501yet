@@ -1,0 +1,13 @@
+fileType: momentic/test/v2
+id: areweosc7501yet-search
+description: Find a program with search and open its entry on the overview
+defaultEnv: production
+steps:
+  - click: Find a program search button
+  - type:
+      text: alacritty
+      into: Find a program search field
+  - click: Alacritty option in the search results
+  - waitForUrl:
+      substring: '#alacritty'
+  - assert: The search dialog is closed and a popover for Alacritty is open on the overview
