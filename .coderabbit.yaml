@@ -2,6 +2,9 @@
 # Keep the organization's settings (review profile and so on) for anything not set here.
 inheritance: true
 reviews:
+  # `momentic skills` generates these and rewrites them on each upgrade, so fixes belong upstream.
+  path_filters:
+    - '!.claude/skills/**'
   auto_review:
     # Review every push; never pause a busy branch.
     auto_pause_after_reviewed_commits: 0

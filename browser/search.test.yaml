@@ -3,7 +3,7 @@ id: areweosc7501yet-search
 description: Find a program with search and open its entry on the overview
 defaultEnv: production
 steps:
-  - click: Search button in the top bar
+  - click: Find a program search button
   - type:
       text: alacritty
       into: Find a program search field
