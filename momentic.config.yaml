@@ -61,8 +61,8 @@ ai:
 
 # One entry per environment. Read envVariables in tests as {{env.NAME}}. See https://momentic.ai/docs/configuration/environment-variables
 environments:
-  - name: web
-    baseUrl: https://static.momentic.ai/wizard/index.html
-    envVariables:
-      USERNAME: standard_user
-      PASSWORD: secret_sauce
+  - name: production
+    baseUrl: https://areweosc7501yet.com
+  # The working tree, served by `pnpm build && pnpm preview`. Pick it with --env local.
+  - name: local
+    baseUrl: http://localhost:4173
