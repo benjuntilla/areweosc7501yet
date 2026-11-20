@@ -17,3 +17,9 @@ source = "https://github.com/lpdink/wing-agent/pull/177"
 date = 2026-10-09T14:11:58Z
 state = "working"
 source = "https://github.com/lpdink/wing-agent/commit/0c290fb70cde6138298ddd531ec8b30fb7216983"
+
+[[history]]
+date = 2026-10-28T14:15:30Z
+state = "done"
+source = "https://github.com/lpdink/wing-agent/releases/tag/v0.7.0"
+version = "v0.7.0"

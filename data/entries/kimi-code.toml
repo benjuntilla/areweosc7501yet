@@ -18,3 +18,9 @@ source = "https://github.com/MoonshotAI/kimi-code/pull/4347"
 date = 2026-10-26T13:05:24Z
 state = "working"
 source = "https://github.com/MoonshotAI/kimi-code/commit/b3c6e0a75a3b1716a360a75eed7194be9b97c176"
+
+[[history]]
+date = 2026-10-28T11:45:13Z
+state = "done"
+source = "https://github.com/MoonshotAI/kimi-code/releases/tag/%40moonshot-ai/kimi-code%402.4.0"
+version = "@moonshot-ai/kimi-code@2.4.0"
