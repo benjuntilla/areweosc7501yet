@@ -57,13 +57,13 @@ importers:
         specifier: 2.6.2
         version: 2.6.2
       '@sveltejs/adapter-static':
-        specifier: ^4.0.0
+        specifier: 4.0.1
         version: 4.0.1(@sveltejs/kit@3.1.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.2)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)(yaml@2.9.1)))(svelte@5.57.2)(typescript@6.0.3)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)(yaml@2.9.1)))
       '@sveltejs/kit':
-        specifier: ^3.0.0
+        specifier: 3.1.1
         version: 3.1.1(@opentelemetry/api@1.9.1)(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.2)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)(yaml@2.9.1)))(svelte@5.57.2)(typescript@6.0.3)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)(yaml@2.9.1))
       '@sveltejs/vite-plugin-svelte':
-        specifier: ^7.2.0
+        specifier: 7.3.1
         version: 7.3.1(svelte@5.57.2)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)(yaml@2.9.1))
       '@terrazzo/cli':
         specifier: 2.10.0
@@ -117,7 +117,7 @@ importers:
         specifier: 2.0.0
         version: 2.0.0(postcss@8.5.31)
       shiki:
-        specifier: ^4.5.0
+        specifier: 4.5.0
         version: 4.5.0
       stylelint:
         specifier: 17.16.0
@@ -141,16 +141,16 @@ importers:
         specifier: 1.4.8
         version: 1.4.8(stylelint@17.16.0(supports-color@10.2.2))
       svelte:
-        specifier: ^5.57.1
+        specifier: 5.57.2
         version: 5.57.2
       svelte-check:
-        specifier: ^4.6.0
+        specifier: 4.7.7
         version: 4.7.7(picomatch@4.0.7)(svelte@5.57.2)(typescript@6.0.3)
       typescript:
-        specifier: ^6.0.3
+        specifier: 6.0.3
         version: 6.0.3
       vite:
-        specifier: ^8.3.0
+        specifier: 8.3.5
         version: 8.3.5(@types/node@26.6.5)(jiti@2.7.0)(yaml@2.9.1)
       vitest:
         specifier: 5.0.5
