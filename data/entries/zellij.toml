@@ -17,3 +17,9 @@ source = "https://github.com/zellij-org/zellij/pull/5734"
 date = 2026-10-20
 state = "working"
 source = "https://github.com/zellij-org/zellij/commit/3ce7e7dc719d7945c6ab7cb0f9785099c5a74f58"
+
+[[history]]
+date = 2026-11-11T09:43:57Z
+state = "done"
+source = "https://github.com/zellij-org/zellij/releases/tag/v0.46.0"
+version = "v0.46.0"

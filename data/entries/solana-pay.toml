@@ -20,3 +20,9 @@ source = "https://github.com/solana-foundation/pay/pull/509"
 date = 2026-10-16T13:54:29Z
 state = "working"
 source = "https://github.com/solana-foundation/pay/commit/b43bd435d851cc7b653a99be3ebf38f3ee6e73e2"
+
+[[history]]
+date = 2026-11-08T03:32:59Z
+state = "done"
+source = "https://github.com/solana-foundation/pay/releases/tag/pay-v0.30.0"
+version = "pay-v0.30.0"

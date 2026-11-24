@@ -14,3 +14,8 @@ popular = true
 date = 2026-10-14T06:19:40Z
 state = "working"
 source = "https://github.com/trycua/cua/pull/5155"
+
+[[history]]
+date = 2026-11-10T03:35:53Z
+state = "working"
+source = "https://github.com/trycua/cua/commit/f54ca3de1cd7468a5ec2e74be571a80d9b2b532b"
