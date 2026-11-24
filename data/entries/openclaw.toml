@@ -17,3 +17,9 @@ source = "https://github.com/openclaw/openclaw/pull/175692"
 date = 2026-10-18T01:10:48Z
 state = "working"
 source = "https://github.com/openclaw/openclaw/commit/3d61650b022fba9a0563ff5f32ac820449d63104"
+
+[[history]]
+date = 2026-11-17T10:47:56Z
+state = "done"
+source = "https://github.com/openclaw/openclaw/releases/tag/v2026.11.5"
+version = "v2026.11.5"

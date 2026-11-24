@@ -18,3 +18,9 @@ source = "https://github.com/wanggang316/codans/pull/253"
 date = 2026-10-17T06:35:10Z
 state = "working"
 source = "https://github.com/wanggang316/codans/commit/a27124709af3a7b23c1725be51f3773bcfae1efa"
+
+[[history]]
+date = 2026-10-31T15:27:04Z
+state = "done"
+source = "https://github.com/wanggang316/codans/releases/tag/v0.8.0"
+version = "v0.8.0"

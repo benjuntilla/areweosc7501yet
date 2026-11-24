@@ -6,6 +6,9 @@ category = "coding-agents"
 spec_revision = "0.4"
 note = "No lifecycle reporting. State in third-party tools is inferred from its chat log."
 
+[github]
+popular = true
+
 [[history]]
 date = 2026-11-17
 state = "idle"
